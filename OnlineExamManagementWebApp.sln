@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.8
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExamManagementWebApp", "OnlineExamManagementWebApp\OnlineExamManagementWebApp.csproj", "{0A97370A-F236-4D65-A4A6-CC6FD9FD103C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExamManagementWebApp.Tests", "OnlineExamManagementWebApp.Tests\OnlineExamManagementWebApp.Tests.csproj", "{9BCE57C5-AB05-4DF4-8D9A-7E24CCECB774}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExamManagementWebApp.Models", "OnlineExamManagementWebApp.Models\OnlineExamManagementWebApp.Models.csproj", "{E6A4533C-D956-4F43-A9A5-FAB8E34EEB84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExamManagementWebApp.BLL", "OnlineExamManagementWebApp.BLL\OnlineExamManagementWebApp.BLL.csproj", "{452ECC4F-061F-483F-A155-B111BCBE8943}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExamManagementWebApp.Repository", "OnlineExamManagementWebApp.Repository\OnlineExamManagementWebApp.Repository.csproj", "{F7A12BBB-0D16-46B4-8AB7-95B7D2347B27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExamManagementWebApp.DatabaseContext", "OnlineExamManagementWebApp.DatabaseContext\OnlineExamManagementWebApp.DatabaseContext.csproj", "{BB2076C3-3E1B-45C0-BC29-3272622D81A8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0A97370A-F236-4D65-A4A6-CC6FD9FD103C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A97370A-F236-4D65-A4A6-CC6FD9FD103C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A97370A-F236-4D65-A4A6-CC6FD9FD103C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A97370A-F236-4D65-A4A6-CC6FD9FD103C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BCE57C5-AB05-4DF4-8D9A-7E24CCECB774}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BCE57C5-AB05-4DF4-8D9A-7E24CCECB774}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BCE57C5-AB05-4DF4-8D9A-7E24CCECB774}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BCE57C5-AB05-4DF4-8D9A-7E24CCECB774}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6A4533C-D956-4F43-A9A5-FAB8E34EEB84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6A4533C-D956-4F43-A9A5-FAB8E34EEB84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6A4533C-D956-4F43-A9A5-FAB8E34EEB84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6A4533C-D956-4F43-A9A5-FAB8E34EEB84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{452ECC4F-061F-483F-A155-B111BCBE8943}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{452ECC4F-061F-483F-A155-B111BCBE8943}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{452ECC4F-061F-483F-A155-B111BCBE8943}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{452ECC4F-061F-483F-A155-B111BCBE8943}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7A12BBB-0D16-46B4-8AB7-95B7D2347B27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7A12BBB-0D16-46B4-8AB7-95B7D2347B27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7A12BBB-0D16-46B4-8AB7-95B7D2347B27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7A12BBB-0D16-46B4-8AB7-95B7D2347B27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB2076C3-3E1B-45C0-BC29-3272622D81A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB2076C3-3E1B-45C0-BC29-3272622D81A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB2076C3-3E1B-45C0-BC29-3272622D81A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB2076C3-3E1B-45C0-BC29-3272622D81A8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3BE6B09C-002E-4B1C-863C-4FA1AA0F4999}
+	EndGlobalSection
+EndGlobal
