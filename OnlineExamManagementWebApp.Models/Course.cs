@@ -27,5 +27,7 @@ namespace OnlineExamManagementWebApp.Models {
         public List<Exam> Exams { get; set; }
 
         public Organization Organization { get; set; }
+
+        public int OrganizationId { get; set; }
     }
 }

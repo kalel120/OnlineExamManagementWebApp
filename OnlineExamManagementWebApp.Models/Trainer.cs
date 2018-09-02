@@ -10,6 +10,10 @@ namespace OnlineExamManagementWebApp.Models {
         public string Name { get; set; }
 
         [Required]
+        [MaxLength(20)]
+        public string Contact { get; set; }
+
+        [Required]
         public string Email { get; set; }
 
         [Required]
@@ -33,6 +37,7 @@ namespace OnlineExamManagementWebApp.Models {
         public byte[] Image { get; set; }
 
         public Organization Organization { get; set; }
+
         public int OrganizationId { get; set; }
     }
 }
