@@ -3,19 +3,19 @@
 @{
     ViewBag.Title = "View";
 }
-
+<link href="~/Content/css/select2.min.css" rel="stylesheet" />
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">       
+    <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Organizations, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.OrganizationId, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Organizations, Model.Organizations, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.OrganizationId, Model.Organizations, new { @class = "form-control",id="org-list" })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -59,14 +59,14 @@
                 @Html.ValidationMessageFor(model => model.Outline, "", new { @class = "text-danger" })
             </div>
         </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.Tags, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.SelectedTags, Model.Tags ,new { htmlAttributes = new { @class = "form-control", id="tag-list", multiple="multiple" } })
-                @Html.ValidationMessageFor(model => model.Outline, "", new { @class = "text-danger" })
-            </div>
-        </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.SelectedTags, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.SelectedTags, Model.Tags ,new { htmlAttributes = new { @class = "form-control", id="tag-list", multiple="multiple" } })
+                    @Html.ValidationMessageFor(model => model.Outline, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -78,4 +78,12 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/select2.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('#org-list').select2({
+                placeholder: "Select Organization Code"
+            });
+        });
+    </script>
 }
