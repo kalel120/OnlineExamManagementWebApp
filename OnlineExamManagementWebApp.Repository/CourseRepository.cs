@@ -21,5 +21,14 @@ namespace OnlineExamManagementWebApp.Repository {
             _dbContext.Courses.Add(course);
             return _dbContext.SaveChanges() > 0;
         }
+
+        public bool IsDuplicateCode(string courseCode) {
+            Course course = _dbContext.Courses.Where(c => c.Code == courseCode).FirstOrDefault();
+            if (course==null) {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
