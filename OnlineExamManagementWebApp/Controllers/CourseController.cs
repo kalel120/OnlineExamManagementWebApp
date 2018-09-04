@@ -4,14 +4,13 @@ using OnlineExamManagementWebApp.ViewModels;
 
 namespace OnlineExamManagementWebApp.Controllers {
     public class CourseController : Controller {
-        private CourseManager _courseManager = new CourseManager();
+        private readonly CourseManager _courseManager = new CourseManager();
 
         public ActionResult Entry() {
-            // Load all Organizations from database
-            var organizations = _courseManager.GetAllOrganizations();
-            var courseEntryViewModel = new CourseEntryViewModel();
-
-            courseEntryViewModel.Organizations = organizations;
+            var courseEntryViewModel = new CourseEntryViewModel {
+                Organizations = _courseManager.GetAllOrganizations(),
+                Tags = new SelectList(_courseManager.GetAllTags())
+            };
 
             return View(courseEntryViewModel);
         }

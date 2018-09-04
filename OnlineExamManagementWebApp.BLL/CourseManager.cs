@@ -13,5 +13,9 @@ namespace OnlineExamManagementWebApp.BLL {
             organizations.Insert(0, new SelectListItem() { Value = "", Text = "--Select Organization--" });
             return organizations;
         }
+
+        public IEnumerable GetAllTags() {
+            return _unitOfWork._tagRepository.GetAllTagNames();
+        }
     }
 }
