@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using OnlineExamManagementWebApp.Models;
 
 namespace OnlineExamManagementWebApp.ViewModels {
     public class CourseEntryViewModel {
