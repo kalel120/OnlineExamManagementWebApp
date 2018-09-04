@@ -51,7 +51,7 @@ namespace OnlineExamManagementWebApp.BLL {
         }
 
         public bool IsCourseSaved(Course course) {
-            var isDuplicateCode = _unitOfWork._courseRepository.IsDuplicateCode(course.Code);
+            var isDuplicateCode = _unitOfWork._courseRepository.IsDuplicateCode(course.Code,course.OrganizationId);
             if (isDuplicateCode) {
                 return false;
             }

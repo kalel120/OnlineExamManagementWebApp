@@ -27,6 +27,7 @@ namespace OnlineExamManagementWebApp.ViewModels {
 
         public IEnumerable<SelectListItem> Tags { get; set; }
 
+        [Required]
         [Display(Name = "Tags")]
         public List<string> SelectedTags { get; set; }
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using OnlineExamManagementWebApp.DatabaseContext;
@@ -22,13 +23,15 @@ namespace OnlineExamManagementWebApp.Repository {
             return _dbContext.SaveChanges() > 0;
         }
 
-        public bool IsDuplicateCode(string courseCode) {
-            Course course = _dbContext.Courses.Where(c => c.Code == courseCode).FirstOrDefault();
+        public bool IsDuplicateCode(string courseCode, int organizationId) {
+            Course course = _dbContext.Courses.Where(c => c.Code == courseCode & c.OrganizationId== organizationId).FirstOrDefault();
             if (course==null) {
                 return false;
             }
 
             return true;
         }
+
+       
     }
 }
