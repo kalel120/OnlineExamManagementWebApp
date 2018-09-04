@@ -4,6 +4,12 @@
     ViewBag.Title = "View";
 }
 <link href="~/Content/css/select2.min.css" rel="stylesheet" />
+@if (ViewBag.Result==true) {
+    <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Saved Successfully</strong>
+    </div>
+}
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
@@ -11,7 +17,7 @@
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
+              
         <div class="form-group">
             @Html.LabelFor(model => model.OrganizationId, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -90,6 +96,8 @@
                 tokenSeparators: [',', ' '],
                 placeholder: "Select or create tags"
             });
+
+            $('.close').alert();
         });
     </script>
 }

@@ -9,32 +9,37 @@ namespace OnlineExamManagementWebApp.Controllers {
         private readonly CourseManager _courseManager = new CourseManager();
 
         public ActionResult Entry() {
+            return View(GetCourseEntryViewModel());
+        }
+
+        private CourseEntryViewModel GetCourseEntryViewModel() {
             var courseEntryViewModel = new CourseEntryViewModel {
                 Organizations = _courseManager.GetAllOrganizations(),
                 Tags = new SelectList(_courseManager.GetAllTags())
             };
-
-            return View(courseEntryViewModel);
+            return courseEntryViewModel;
         }
 
         [HttpPost]
         public ActionResult Entry(CourseEntryViewModel viewModel) {
-            var course = new Course {
-                OrganizationId = viewModel.OrganizationId,
-                Name = viewModel.Name,
-                Code = viewModel.Code,
-                Duration = viewModel.Duration,
-                Credit = viewModel.Credit,
-                Outline = viewModel.Outline,
-                Tags = _courseManager.GetReleventTags(viewModel.SelectedTags)
-            };
-            
+            if (ModelState.IsValid) {
+                var course = new Course {
+                    OrganizationId = viewModel.OrganizationId,
+                    Name = viewModel.Name,
+                    Code = viewModel.Code,
+                    Duration = viewModel.Duration,
+                    Credit = viewModel.Credit,
+                    Outline = viewModel.Outline,
+                    Tags = _courseManager.GetReleventTags(viewModel.SelectedTags)
+                };
+                if (!_courseManager.IsCourseSaved(course))
+                    return RedirectToAction("Error");
+                ViewBag.Result = true;
+                ModelState.Clear();
+                return View(GetCourseEntryViewModel());
+            }
 
-            if (!_courseManager.IsCourseSaved(course))
-                return RedirectToAction("Error");
-
-            ViewBag.Message = "Saved Successfully";
-            return RedirectToAction("Entry");
+            return RedirectToAction("Error");
         }
 
         public ActionResult Error() {
