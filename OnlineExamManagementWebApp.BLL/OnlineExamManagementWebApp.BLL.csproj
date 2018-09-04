@@ -65,6 +65,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OnlineExamManagementWebApp.Models\OnlineExamManagementWebApp.Models.csproj">
+      <Project>{E6A4533C-D956-4F43-A9A5-FAB8E34EEB84}</Project>
+      <Name>OnlineExamManagementWebApp.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OnlineExamManagementWebApp.Repository\OnlineExamManagementWebApp.Repository.csproj">
       <Project>{f7a12bbb-0d16-46b4-8ab7-95b7d2347b27}</Project>
       <Name>OnlineExamManagementWebApp.Repository</Name>
