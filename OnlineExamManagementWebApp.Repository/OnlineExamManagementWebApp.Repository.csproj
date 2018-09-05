@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CourseRepository.cs" />
+    <Compile Include="OrganizationRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TagRepository.cs" />
     <Compile Include="UnitOfWork.cs" />

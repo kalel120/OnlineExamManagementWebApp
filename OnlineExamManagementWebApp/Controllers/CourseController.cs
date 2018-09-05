@@ -38,15 +38,26 @@ namespace OnlineExamManagementWebApp.Controllers {
                 TempData["Course"] = course;
                 ModelState.Clear();
 
-                return View();
+                return RedirectToAction("Information");
             }
 
             return RedirectToAction("Error");
         }
 
         public ActionResult Information() {
+            var course = (Course) TempData["Course"];
+            course.Organization = _courseManager.GetOrganizationById(course.OrganizationId);
 
-            return View();
+            var courseBasicInfoVm = new CourseBasicInfoViewModel {
+                OrganizationCode = course.Organization.Code,
+                Name = course.Name,
+                Code = course.Code,
+                Duration = course.Duration,
+                Credit = course.Credit,
+                Outline = course.Outline
+            };
+
+            return View(courseBasicInfoVm);
         }
 
         public ActionResult Error() {

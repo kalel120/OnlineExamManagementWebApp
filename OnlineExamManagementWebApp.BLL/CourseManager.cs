@@ -10,7 +10,7 @@ namespace OnlineExamManagementWebApp.BLL {
         private UnitOfWork _unitOfWork = new UnitOfWork();
 
         public List<SelectListItem> GetAllOrganizations() {
-            var organizations = _unitOfWork._courseRepository.GetAllOrganizations();
+            var organizations = _unitOfWork._orgRepository.GetAllOrganizations();
             organizations.Insert(0, new SelectListItem() { Value = "", Text = "--Select Organization--" });
             return organizations;
         }
@@ -56,6 +56,10 @@ namespace OnlineExamManagementWebApp.BLL {
                 return false;
             }
             return _unitOfWork._courseRepository.AddCourse(course);
+        }
+
+        public Organization GetOrganizationById(int organizationId) {
+            return _unitOfWork._orgRepository.GetOrganizationById(organizationId);
         }
     }
 }
