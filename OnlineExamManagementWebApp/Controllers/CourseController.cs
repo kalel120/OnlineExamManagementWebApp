@@ -34,12 +34,19 @@ namespace OnlineExamManagementWebApp.Controllers {
                 };
                 if (!_courseManager.IsCourseSaved(course))
                     return RedirectToAction("Error");
-                ViewBag.Result = true;
+                
+                TempData["Course"] = course;
                 ModelState.Clear();
-                return View(GetCourseEntryViewModel());
+
+                return View();
             }
 
             return RedirectToAction("Error");
+        }
+
+        public ActionResult Information() {
+
+            return View();
         }
 
         public ActionResult Error() {
