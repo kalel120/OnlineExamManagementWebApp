@@ -17,6 +17,10 @@ namespace OnlineExamManagementWebApp.Repository {
 
         public bool IsDuplicateCode(string courseCode, int organizationId) {
             return _dbContext.Courses.Where(c => c.Code == courseCode & c.OrganizationId== organizationId).FirstOrDefault() != null;
-        }       
+        }
+
+        public Course GetCourseById(int? id) {
+            return _dbContext.Courses.FirstOrDefault(c => c.Id == id);
+        }
     }
 }

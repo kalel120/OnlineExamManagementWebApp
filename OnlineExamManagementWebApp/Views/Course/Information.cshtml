@@ -42,7 +42,7 @@
 
     <div id="assign-trainer" class="tab-pane">
         @{
-            Html.RenderPartial("_AssignTrainer", Model.AssignTrainerVm);
+            Html.RenderPartial("_AssignTrainer");
         }
     </div>
     <div id="create-exams" class="tab-pane"></div>
@@ -53,7 +53,7 @@
     <script type="text/javascript">
         $(function () {
             $('#ddl-trainers').select2({
-                placeholder: "Select Trainer",
+                placeholder: "--Select Trainer--",
                 ajax: {
                     url: "/Course/GetTrainers",
                     dataType: "json",
@@ -68,11 +68,6 @@
                         };
                     }
                 }
-            });
-
-            $('#ddl-trainers').on('change',function(){
-                let value=$(this).val();
-                alert(value);
             });
         });
     </script>

@@ -1,8 +1,29 @@
-﻿
+﻿<link href="~/Content/css/select2.css" rel="stylesheet" />
+<br />
+<form method="post">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2">
+                <label class="control-label col-md-2">Trainer</label>
+            </div>
+            <div class="col-md-4">
+                <select class="form-control" id="ddl-trainers" style="width: 300px"></select>
+            </div>
 
-<link href="~/Content/css/select2.css" rel="stylesheet" />
-<div class="form-group">
+            <div class="col-md-2">
+                <input type="submit" value="Add" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
 
-    <h3>Trainers</h3>
-    <select class="form-control" id="ddl-trainers" style="width: 300px"></select>
-</div>
+<br />
+<br />
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Lead Trainer?</th>
+        <th>Action</th>
+    </tr>
+</table>
+

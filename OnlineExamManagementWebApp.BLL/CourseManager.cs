@@ -61,5 +61,9 @@ namespace OnlineExamManagementWebApp.BLL {
         public Organization GetOrganizationById(int organizationId) {
             return _unitOfWork._orgRepository.GetOrganizationById(organizationId);
         }
+
+        public Course GetCourseById(int? id) {
+            return _unitOfWork._courseRepository.GetCourseById(id);
+        }
     }
 }

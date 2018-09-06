@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using OnlineExamManagementWebApp.BLL;
 using OnlineExamManagementWebApp.Models;
@@ -36,18 +37,19 @@ namespace OnlineExamManagementWebApp.Controllers {
                 };
                 if (!_courseManager.IsCourseSaved(course))
                     return RedirectToAction("Error");
-                
-                TempData["Course"] = course;
-                ModelState.Clear();
 
-                return RedirectToAction("Information");
+                return RedirectToAction("Information", new { id = course.Id });
             }
 
             return RedirectToAction("Error");
         }
 
-        public ActionResult Information() {
-            var course = (Course) TempData["Course"];
+        public ActionResult Information(int? id) {
+            if (id == null) {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var course = _courseManager.GetCourseById(id);
             course.Organization = _courseManager.GetOrganizationById(course.OrganizationId);
 
             var courseBasicInfoVm = new CourseBasicInfoViewModel {
@@ -56,7 +58,7 @@ namespace OnlineExamManagementWebApp.Controllers {
                 Code = course.Code,
                 Duration = course.Duration,
                 Credit = course.Credit,
-                Outline = course.Outline,                
+                Outline = course.Outline,
             };
 
             return View(courseBasicInfoVm);
@@ -65,12 +67,10 @@ namespace OnlineExamManagementWebApp.Controllers {
         // Get all trainers using select2 ajax call
         public JsonResult GetTrainers(string searchTerm) {
             var trainerList = _trainerManager.GetAllTrainers();
-
             if (searchTerm != null) {
                 trainerList = trainerList.Where(t => t.Name.Contains(searchTerm)).ToList();
             }
-
-            var modifiedList = trainerList.Select(x => new { id=x.Id, text=x.Name });
+            var modifiedList = trainerList.Select(x => new { id = x.Id, text = x.Name });
 
             return Json(modifiedList, JsonRequestBehavior.AllowGet);
         }
