@@ -52,6 +52,10 @@
     <Compile Include="Migrations\201809021653364_Initial.Designer.cs">
       <DependentUpon>201809021653364_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809061518361_ChangedTrainerPostalCodeType.cs" />
+    <Compile Include="Migrations\201809061518361_ChangedTrainerPostalCodeType.Designer.cs">
+      <DependentUpon>201809061518361_ChangedTrainerPostalCodeType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -68,6 +72,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201809021653364_Initial.resx">
       <DependentUpon>201809021653364_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809061518361_ChangedTrainerPostalCodeType.resx">
+      <DependentUpon>201809061518361_ChangedTrainerPostalCodeType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
