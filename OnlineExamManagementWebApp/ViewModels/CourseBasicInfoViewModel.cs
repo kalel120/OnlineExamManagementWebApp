@@ -16,5 +16,7 @@ namespace OnlineExamManagementWebApp.ViewModels {
 
         [AllowHtml]
         public string Outline { get; set; }
+
+        public AssignTrainerViewModel AssignTrainerVm { get; set; }
     }
 }
