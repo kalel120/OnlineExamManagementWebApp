@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using OnlineExamManagementWebApp.BLL;
 using OnlineExamManagementWebApp.Models;
@@ -7,6 +8,7 @@ using OnlineExamManagementWebApp.ViewModels;
 namespace OnlineExamManagementWebApp.Controllers {
     public class CourseController : Controller {
         private readonly CourseManager _courseManager = new CourseManager();
+        private readonly TrainerManager _trainerManager = new TrainerManager();
 
         public ActionResult Entry() {
             return View(GetCourseEntryViewModel());
@@ -54,10 +56,23 @@ namespace OnlineExamManagementWebApp.Controllers {
                 Code = course.Code,
                 Duration = course.Duration,
                 Credit = course.Credit,
-                Outline = course.Outline
+                Outline = course.Outline,                
             };
 
             return View(courseBasicInfoVm);
+        }
+
+        // Get all trainers using select2 ajax call
+        public JsonResult GetTrainers(string searchTerm) {
+            var trainerList = _trainerManager.GetAllTrainers();
+
+            if (searchTerm != null) {
+                trainerList = trainerList.Where(t => t.Name.Contains(searchTerm)).ToList();
+            }
+
+            var modifiedList = trainerList.Select(x => new { id=x.Id, text=x.Name });
+
+            return Json(modifiedList, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Error() {

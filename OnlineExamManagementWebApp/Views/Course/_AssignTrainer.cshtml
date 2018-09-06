@@ -1,15 +1,8 @@
-﻿@model OnlineExamManagementWebApp.ViewModels.AssignTrainerViewModel
+﻿
 
 <link href="~/Content/css/select2.css" rel="stylesheet" />
 <div class="form-group">
-    @Html.LabelFor(m => m.TrainerId)
-    @Html.DropDownListFor(m => m.TrainerId, Model.Trainers,new {@class = "form-control", id="trainers"})
+
+    <h3>Trainers</h3>
+    <select class="form-control" id="ddl-trainers" style="width: 300px"></select>
 </div>
-
-
-@section scripts{
-    <script src="~/Scripts/select2.js"></script>
-    <script type="text/javascript">
-
-    </script>
-}
