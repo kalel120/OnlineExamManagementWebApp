@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using OnlineExamManagementWebApp.BLL;
@@ -38,13 +37,13 @@ namespace OnlineExamManagementWebApp.Controllers {
                 if (!_courseManager.IsCourseSaved(course))
                     return RedirectToAction("Error");
 
-                return RedirectToAction("Information", new { id = course.Id });
+                return RedirectToAction("Edit", new { id = course.Id });
             }
 
             return RedirectToAction("Error");
         }
 
-        public ActionResult Information(int? id) {
+        public ActionResult Edit(int? id) {
             if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }

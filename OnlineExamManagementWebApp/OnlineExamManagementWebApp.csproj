@@ -255,7 +255,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Course\Entry.cshtml" />
-    <Content Include="Views\Course\Information.cshtml" />
+    <Content Include="Views\Course\Edit.cshtml" />
     <Content Include="Views\Course\_AssignTrainer.cshtml" />
   </ItemGroup>
   <ItemGroup>
