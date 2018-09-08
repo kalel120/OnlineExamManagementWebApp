@@ -53,6 +53,7 @@ namespace OnlineExamManagementWebApp.Controllers {
 
             var courseEditVm = new CourseEditViewModel {
                 Id = course.Id,
+                OrganizationId = course.OrganizationId,
                 OrganizationCode = course.Organization.Code,
                 Name = course.Name,
                 Code = course.Code,
@@ -65,8 +66,8 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         // Get all trainers using select2 ajax call
-        public JsonResult GetTrainers(string searchTerm) {
-            var trainerList = _trainerManager.GetAllTrainers();
+        public JsonResult GetTrainers(string searchTerm,int orgId) {
+            var trainerList = _trainerManager.GetAllTrainers(orgId);
             if (searchTerm != null) {
                 trainerList = trainerList.Where(t => t.Name.Contains(searchTerm)).ToList();
             }
@@ -83,6 +84,10 @@ namespace OnlineExamManagementWebApp.Controllers {
 
         public ActionResult Error() {
             return View("Error");
+        }
+
+        public JsonResult AssignTrainer(AssignTrainerViewModel assignTrainer) {
+            return Json(1, JsonRequestBehavior.AllowGet);
         }
     }
 }

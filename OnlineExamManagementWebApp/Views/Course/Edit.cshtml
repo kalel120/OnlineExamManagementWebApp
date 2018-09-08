@@ -15,6 +15,7 @@
     <div id="basic-tab" class="tab-pane active">
         <br />
         @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.OrganizationId)
         <div class="form-group">
             @Html.LabelFor(m => m.OrganizationCode)
             @Html.TextBoxFor(m => m.OrganizationCode, new { @class = "form-control" })
@@ -52,16 +53,25 @@
 @section scripts {
     <script src="~/Scripts/select2.js"></script>
     <script type="text/javascript">
+        function deleteAlert(trainerName) {
+            var ans = confirm("Are you sure you want to delete " + trainerName + " Record?");
+            alert(ans);
+        }
+
+
         $(function () {
+            var organizationId = $('#OrganizationId').val();
             $('#ddl-trainers').select2({
                 placeholder: "--Select Trainer--",
                 ajax: {
                     url: "/Course/GetTrainers",
                     dataType: "json",
                     data: function (params) {
-                        return {
-                            searchTerm: params.term
-                        };
+                        var query = {
+                            searchTerm: params.term,
+                            orgId: organizationId
+                        }
+                        return query;
                     },
                     processResults: function (data, params) {
                         return {
@@ -70,8 +80,6 @@
                     }
                 }
             });
-
-
 
             // Load assigned trainer from database in assigned trainer tab
             var courseId = $('#Id').val();
@@ -82,30 +90,33 @@
                     url: "/Course/GetTrainersByCourse/" + courseId,
                     type: "GET",
                     contentType: 'application/json',
-                    success: function(result) {
+                    success: function (result) {
                         var html = '';
-                        $.each(result, function(key,item) {
+                        $.each(result, function (key, item) {
                             html += '<tr>';
-                            html += '<td>' + item.Name + '</td>';
+                            html += "<td><input type=hidden value='" + item.Id + "'/>";
+                            html += item.Name + '</td>';
                             html += '<td><input type="radio" name="IsLead"/> </td>';
                             html += "<td> <a href='#'> Edit |</a>";
-                            html += "<a href='#'> Remove </a></td>";
+                            html += "<a href='#' onclick='deleteAlert(\"" + item.Name + "\")'> Remove </a></td>";
                             html += '</tr>';
                         });
 
                         $('#table-body').html(html);
                     },
 
-                    error: function(message) {
+                    error: function (message) {
                         alert(message.responseText);
                     }
                 });
             }
 
-            var index = 0;
+
             // add to table with with add button click
+            var index = 0;
+            var trainers = new Array();
+
             $('#add-to-table').click(function () {
-                var courseId = $('#Id').val();
                 var selectedTrainerId = $('#ddl-trainers').val();
                 var selectedTrainerName = $('#ddl-trainers').children("option").filter(":selected").text();
 
@@ -125,9 +136,40 @@
                 tr += tdTrainerName + tdIsLead + tdAction + "</tr>";
 
                 $('#table-body').append(tr);
+                trainers.push(selectedTrainerId);
                 index++;
             });
 
+
+            // Save to database functionality
+            $('#save-button').click(function () {
+                var leadTrainerId = $('input[name="IsLead"]:checked').closest('tr').find('input[type=hidden]').val();
+
+                var assignVm = {
+                    CourseId: courseId,
+                    Trainers: trainers,
+                    LeadTrainerId: leadTrainerId
+                };
+
+                console.log(assignVm);
+
+                $.ajax({
+                    url: "/Course/AssignTrainer",
+                    data: JSON.stringify(assignVm),
+                    type: "POST",
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    success: function (result) {
+                        loadTrainersById(courseId);
+                    },
+                    error: function (message) {
+                        alert(message.responseText);
+                    }
+                });
+            });
+
         });
+
+
     </script>
 }

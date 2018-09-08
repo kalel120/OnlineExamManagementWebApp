@@ -11,8 +11,8 @@ namespace OnlineExamManagementWebApp.Repository {
             _dbContext = dbContext;
         }
 
-        public List<Trainer> GetAllTrainers() {
-            return _dbContext.Trainers.ToList();
+        public List<Trainer> GetAllTrainers(int orgId) {
+            return _dbContext.Trainers.Where(t=>t.OrganizationId==orgId).ToList();
         }
 
         public List<Trainer> GetTrainersByCourseId(int id) {

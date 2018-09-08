@@ -5,6 +5,8 @@ namespace OnlineExamManagementWebApp.ViewModels {
     public class CourseEditViewModel {
         public int Id { get; set; }
 
+        public int OrganizationId { get; set; }
+
         [Display(Name = "Organization")]
         public string OrganizationCode { get; set; }
 
