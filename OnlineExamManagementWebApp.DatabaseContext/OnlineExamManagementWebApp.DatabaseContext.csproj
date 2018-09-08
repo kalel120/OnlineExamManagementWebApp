@@ -56,6 +56,10 @@
     <Compile Include="Migrations\201809061518361_ChangedTrainerPostalCodeType.Designer.cs">
       <DependentUpon>201809061518361_ChangedTrainerPostalCodeType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809080252441_Fixed_CourseTrainerRelationship_AddedListOfTrainersInCourseModel.cs" />
+    <Compile Include="Migrations\201809080252441_Fixed_CourseTrainerRelationship_AddedListOfTrainersInCourseModel.Designer.cs">
+      <DependentUpon>201809080252441_Fixed_CourseTrainerRelationship_AddedListOfTrainersInCourseModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -75,6 +79,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809061518361_ChangedTrainerPostalCodeType.resx">
       <DependentUpon>201809061518361_ChangedTrainerPostalCodeType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809080252441_Fixed_CourseTrainerRelationship_AddedListOfTrainersInCourseModel.resx">
+      <DependentUpon>201809080252441_Fixed_CourseTrainerRelationship_AddedListOfTrainersInCourseModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
