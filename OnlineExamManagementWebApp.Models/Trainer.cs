@@ -29,9 +29,7 @@ namespace OnlineExamManagementWebApp.Models {
 
         [Required]
         public string Country { get; set; }
-
-        public bool IsLead { get; set; }
-
+        
         public List<Course> Courses { get; set; }
 
         public byte[] Image { get; set; }

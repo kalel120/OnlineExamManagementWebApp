@@ -31,5 +31,7 @@ namespace OnlineExamManagementWebApp.Models {
         public Organization Organization { get; set; }
 
         public int OrganizationId { get; set; }
+
+        public int? LeadTrainerId { get; set; }
     }
 }
