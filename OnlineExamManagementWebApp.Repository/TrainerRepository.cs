@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OnlineExamManagementWebApp.DatabaseContext;
 using OnlineExamManagementWebApp.Models;
 
@@ -16,6 +13,14 @@ namespace OnlineExamManagementWebApp.Repository {
 
         public List<Trainer> GetAllTrainers() {
             return _dbContext.Trainers.ToList();
+        }
+
+        public List<Trainer> GetTrainersByCourseId(int id) {
+            //var listTrainerId = from trainers in _dbContext.Trainers
+            //    where trainers.Courses.Any(c => c.Id == id)
+            //    select trainers;
+
+            return _dbContext.Trainers.Where(t => t.Courses.Any(c => c.Id == id)).ToList();
         }
     }
 }

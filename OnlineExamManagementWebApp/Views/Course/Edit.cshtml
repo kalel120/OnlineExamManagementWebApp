@@ -71,7 +71,37 @@
                 }
             });
 
-            
+
+
+            // Load assigned trainer from database in assigned trainer tab
+            var courseId = $('#Id').val();
+            loadTrainersById(courseId);
+
+            function loadTrainersById(courseId) {
+                $.ajax({
+                    url: "/Course/GetTrainersByCourse/" + courseId,
+                    type: "GET",
+                    contentType: 'application/json',
+                    success: function(result) {
+                        var html = '';
+                        $.each(result, function(key,item) {
+                            html += '<tr>';
+                            html += '<td>' + item.Name + '</td>';
+                            html += '<td><input type="radio" name="IsLead"/> </td>';
+                            html += "<td> <a href='#'> Edit |</a>";
+                            html += "<a href='#'> Remove </a></td>";
+                            html += '</tr>';
+                        });
+
+                        $('#table-body').html(html);
+                    },
+
+                    error: function(message) {
+                        alert(message.responseText);
+                    }
+                });
+            }
+
             var index = 0;
             // add to table with with add button click
             $('#add-to-table').click(function () {
@@ -95,9 +125,9 @@
                 tr += tdTrainerName + tdIsLead + tdAction + "</tr>";
 
                 $('#table-body').append(tr);
-                index++;                
+                index++;
             });
-           
+
         });
     </script>
 }
