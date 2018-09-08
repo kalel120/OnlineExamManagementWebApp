@@ -11,7 +11,13 @@
             </div>
 
             <div class="col-md-2">
-                <input type="submit" value="Add" class="btn btn-primary" />
+                <input type="button" value="Add" class="btn btn-success" id="add-to-table" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                <input type="button" value="Save" class="btn btn-primary" id="save-button" />
             </div>
         </div>
     </div>
@@ -20,10 +26,14 @@
 <br />
 <br />
 <table class="table">
-    <tr>
-        <th>Name</th>
-        <th>Lead Trainer?</th>
-        <th>Action</th>
-    </tr>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Lead Trainer?</th>
+            <th>Action</th>
+        </tr>
+
+    </thead>
+    <tbody id="table-body"></tbody>
 </table>
 

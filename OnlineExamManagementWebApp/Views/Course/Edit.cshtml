@@ -69,6 +69,19 @@
                     }
                 }
             });
+            var index = 0;
+            // add to table with with add button click
+            $('#add-to-table').click(function () {
+                var selectedTrainerId = $('#ddl-trainers').val();
+                var selectedTrainerName = $('#ddl-trainers').text();
+
+                var tr = "<tr>";
+                var td = "<td><input type='hidden' name='Trainers[" + index + "].Id' value='" + selectedTrainerId + "'/>" + selectedTrainerName + "</td>";
+                tr += td + "</tr>";
+
+                $('#table-body').append(tr);
+                index++;
+            });
         });
     </script>
 }
