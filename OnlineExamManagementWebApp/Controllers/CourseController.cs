@@ -51,7 +51,8 @@ namespace OnlineExamManagementWebApp.Controllers {
             var course = _courseManager.GetCourseById(id);
             course.Organization = _courseManager.GetOrganizationById(course.OrganizationId);
 
-            var courseBasicInfoVm = new CourseBasicInfoViewModel {
+            var courseEditVm = new CourseEditViewModel {
+                Id = course.Id,
                 OrganizationCode = course.Organization.Code,
                 Name = course.Name,
                 Code = course.Code,
@@ -60,7 +61,7 @@ namespace OnlineExamManagementWebApp.Controllers {
                 Outline = course.Outline,
             };
 
-            return View(courseBasicInfoVm);
+            return View(courseEditVm);
         }
 
         // Get all trainers using select2 ajax call

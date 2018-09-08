@@ -144,7 +144,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AssignTrainerViewModel.cs" />
-    <Compile Include="ViewModels\CourseBasicInfoViewModel.cs" />
+    <Compile Include="ViewModels\CourseEditViewModel.cs" />
     <Compile Include="ViewModels\CourseEntryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -2,7 +2,9 @@
 using System.Web.Mvc;
 
 namespace OnlineExamManagementWebApp.ViewModels {
-    public class CourseBasicInfoViewModel {
+    public class CourseEditViewModel {
+        public int Id { get; set; }
+
         [Display(Name = "Organization")]
         public string OrganizationCode { get; set; }
 
@@ -16,7 +18,6 @@ namespace OnlineExamManagementWebApp.ViewModels {
 
         [AllowHtml]
         public string Outline { get; set; }
-
-        public AssignTrainerViewModel AssignTrainerVm { get; set; }
+        
     }
 }
