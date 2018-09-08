@@ -60,6 +60,10 @@
     <Compile Include="Migrations\201809080252441_Fixed_CourseTrainerRelationship_AddedListOfTrainersInCourseModel.Designer.cs">
       <DependentUpon>201809080252441_Fixed_CourseTrainerRelationship_AddedListOfTrainersInCourseModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809080950099_Fix_Course_LeadTrainer_Relation.cs" />
+    <Compile Include="Migrations\201809080950099_Fix_Course_LeadTrainer_Relation.Designer.cs">
+      <DependentUpon>201809080950099_Fix_Course_LeadTrainer_Relation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -82,6 +86,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809080252441_Fixed_CourseTrainerRelationship_AddedListOfTrainersInCourseModel.resx">
       <DependentUpon>201809080252441_Fixed_CourseTrainerRelationship_AddedListOfTrainersInCourseModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809080950099_Fix_Course_LeadTrainer_Relation.resx">
+      <DependentUpon>201809080950099_Fix_Course_LeadTrainer_Relation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
