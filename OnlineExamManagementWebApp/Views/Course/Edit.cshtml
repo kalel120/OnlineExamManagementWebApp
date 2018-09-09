@@ -4,6 +4,9 @@
     ViewBag.Title = "title";
 }
 
+
+
+
 <br />
 <ul class="nav nav-tabs">
     <li role="presentation" class="active"><a href="#basic-tab" data-toggle="tab">Basic Info</a></li>
@@ -52,6 +55,7 @@
 
 @section scripts {
     <script src="~/Scripts/select2.js"></script>
+
     <script type="text/javascript">
         function deleteAlert(trainerName) {
             var ans = confirm("Are you sure you want to delete " + trainerName + " Record?");
@@ -81,6 +85,8 @@
                     }
                 }
             });
+
+            $('#table-course2trainer').DataTable();
 
             // Load assigned trainer from database in assigned trainer tab
             var courseId = $('#Id').val();
@@ -176,10 +182,15 @@
             $('#save-button').click(function () {
                 //var leadTrainerId = $('input[name="IsLead"]:checked').closest('tr').find('input[type=hidden]').val();
 
+                if (!trainers || trainers.length === 0) {
+                    alert('alredy exists');
+                    return;
+                }
+
                 if (!confirm('Are you sure you want to add?')) {
                     return;
                 }
-                
+
                 $.ajax({
                     url: "/Course/AssignTrainer",
                     data: JSON.stringify(trainers),
