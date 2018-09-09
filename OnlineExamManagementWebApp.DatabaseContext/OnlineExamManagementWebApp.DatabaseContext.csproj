@@ -64,6 +64,10 @@
     <Compile Include="Migrations\201809080950099_Fix_Course_LeadTrainer_Relation.Designer.cs">
       <DependentUpon>201809080950099_Fix_Course_LeadTrainer_Relation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809090453400_changed courseTrainer rel from m2m to 1tom.cs" />
+    <Compile Include="Migrations\201809090453400_changed courseTrainer rel from m2m to 1tom.Designer.cs">
+      <DependentUpon>201809090453400_changed courseTrainer rel from m2m to 1tom.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -89,6 +93,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809080950099_Fix_Course_LeadTrainer_Relation.resx">
       <DependentUpon>201809080950099_Fix_Course_LeadTrainer_Relation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809090453400_changed courseTrainer rel from m2m to 1tom.resx">
+      <DependentUpon>201809090453400_changed courseTrainer rel from m2m to 1tom.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

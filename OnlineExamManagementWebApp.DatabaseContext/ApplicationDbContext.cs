@@ -8,5 +8,7 @@ namespace OnlineExamManagementWebApp.DatabaseContext {
         public DbSet<Exam> Exams { get; set; }
         public DbSet<Trainer> Trainers { get; set; }
         public DbSet<Organization> Organizations { get; set; }
+
+        public DbSet<CourseTrainer> CourseTrainers { get; set; }
     }
 }

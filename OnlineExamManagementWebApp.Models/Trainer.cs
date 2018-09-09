@@ -30,7 +30,7 @@ namespace OnlineExamManagementWebApp.Models {
         [Required]
         public string Country { get; set; }
         
-        public List<Course> Courses { get; set; }
+        public List<CourseTrainer> CourseTrainers { get; set; }
 
         public byte[] Image { get; set; }
 

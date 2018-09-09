@@ -77,10 +77,10 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         // Get trainers associated with course
-        public JsonResult GetTrainersByCourse(int id) {
-            var trainerList = _trainerManager.GetTrainersByCourseId(id);
-            return Json(trainerList, JsonRequestBehavior.AllowGet);
-        }
+        //public JsonResult GetTrainersByCourse(int id) {
+        //    var trainerList = _trainerManager.GetTrainersByCourseId(id);
+        //    return Json(trainerList, JsonRequestBehavior.AllowGet);
+        //}
 
         public ActionResult Error() {
             return View("Error");
