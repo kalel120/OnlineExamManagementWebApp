@@ -8,10 +8,6 @@ namespace OnlineExamManagementWebApp.BLL {
 
         public List<Trainer> GetAllTrainers(int orgId) {
             return _unitOfWork.TrainerRepository.GetAllTrainers(orgId);
-        }
-
-        public List<Trainer> GetTrainersByCourseId(int id) {
-            return _unitOfWork.TrainerRepository.GetTrainersByCourseId(id);
-        }
+        }        
     }
 }

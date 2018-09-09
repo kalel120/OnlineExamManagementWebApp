@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using OnlineExamManagementWebApp.BLL;
@@ -9,6 +10,7 @@ namespace OnlineExamManagementWebApp.Controllers {
     public class CourseController : Controller {
         private readonly CourseManager _courseManager = new CourseManager();
         private readonly TrainerManager _trainerManager = new TrainerManager();
+        private readonly CourseTrainerManager _courseTrainerManager = new CourseTrainerManager();
 
         public ActionResult Entry() {
             return View(GetCourseEntryViewModel());
@@ -77,9 +79,20 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         // Get trainers associated with course
-        public JsonResult GetTrainersByCourse(int id) {
-            var trainerList = _trainerManager.GetTrainersByCourseId(id);
-            return Json(trainerList, JsonRequestBehavior.AllowGet);
+        public JsonResult GetTrainersByCourse(int id) {            
+            var courseTrainerList = _courseTrainerManager.GetCourseTrainersByCourseId(id);
+            var assignTrainerVmList = new List<AssignTrainerViewModel>();
+
+            foreach (var courseTrainer in courseTrainerList) {
+                var assignTrainerVm = new AssignTrainerViewModel {
+                    CourseId = courseTrainer.CourseId,
+                    TrainerName = courseTrainer.Trainer.Name,
+                    IsLead = courseTrainer.IsLead
+                };
+                assignTrainerVmList.Add(assignTrainerVm);
+            }
+
+            return Json(assignTrainerVmList, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Error() {

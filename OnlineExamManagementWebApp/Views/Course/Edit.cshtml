@@ -94,11 +94,11 @@
                         var html = '';
                         $.each(result, function (key, item) {
                             html += '<tr>';
-                            html += "<td><input type=hidden value='" + item.Id + "'/>";
-                            html += item.Name + '</td>';
-                            html += '<td><input type="radio" name="IsLead"/> </td>';
+                            html += "<td><input type=hidden value='" + item.CourseId + "'/>";
+                            html += item.TrainerName+ '</td>';
+                            html += '<td><input type="radio" name="IsLead" checked=' + item.IsLead+' disabled="disabled"/> </td>';
                             html += "<td> <a href='#'> Edit |</a>";
-                            html += "<a href='#' onclick='deleteAlert(\"" + item.Name + "\")'> Remove </a></td>";
+                            html += "<a href='#' onclick='deleteAlert(\"" + item.TrainerName + "\")'> Remove </a></td>";
                             html += '</tr>';
                         });
 
@@ -127,7 +127,7 @@
                 tdTrainerName += selectedTrainerName;
                 tdTrainerName += "</td>";
 
-                var tdIsLead = '<td><input type="radio" name="IsLead"/> </td>';
+                var tdIsLead = '<td><input type="radio" name="IsLead" disabled="disabled"/> </td>';
 
                 var tdAction = "<td> <a href='#'> Edit |</a>";
                 tdAction += "<a href='#'> Remove </a>";

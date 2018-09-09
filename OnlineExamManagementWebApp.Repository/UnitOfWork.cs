@@ -8,5 +8,6 @@ namespace OnlineExamManagementWebApp.Repository {
         public TagRepository _tagRepository = new TagRepository(_dbContext);
         public OrganizationRepository _orgRepository = new OrganizationRepository(_dbContext);
         public TrainerRepository TrainerRepository = new TrainerRepository(_dbContext);
+        public CourseTrainerRepository CourseTrainerRepository = new CourseTrainerRepository(_dbContext);
     }
 }

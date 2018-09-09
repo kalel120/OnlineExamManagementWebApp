@@ -8,8 +8,8 @@ namespace OnlineExamManagementWebApp.ViewModels {
 
         public int CourseId { get; set; }
 
-        public List<int> Trainers { get; set; }
+        public string TrainerName{ get; set; }
 
-        public int LeadTrainerId { get; set; }
+        public bool IsLead { get; set; }
     }
 }
