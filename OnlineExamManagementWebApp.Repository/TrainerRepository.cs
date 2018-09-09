@@ -12,15 +12,14 @@ namespace OnlineExamManagementWebApp.Repository {
         }
 
         public List<Trainer> GetAllTrainers(int orgId) {
-            return _dbContext.Trainers.Where(t=>t.OrganizationId==orgId).ToList();
+            return _dbContext.Trainers.Where(t=>t.OrganizationId==orgId).ToList();            
         }
 
-        //public List<Trainer> GetTrainersByCourseId(int id) {
-        //    //var listTrainerId = from trainers in _dbContext.Trainers
-        //    //    where trainers.Courses.Any(c => c.Id == id)
-        //    //    select trainers;
-
-        //    return _dbContext.Trainers.Where(t => t.Courses.Any(c => c.Id == id)).ToList();
-        //}
+        public List<Trainer> GetTrainersByCourseId(int id) {            
+            return _dbContext.CourseTrainers
+                .Where(ct => ct.CourseId == id)
+                .Select(ct => ct.Trainer)
+                .ToList();
+        }
     }
 }
