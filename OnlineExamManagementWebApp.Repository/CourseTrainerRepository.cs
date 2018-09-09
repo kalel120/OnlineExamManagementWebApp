@@ -21,5 +21,10 @@ namespace OnlineExamManagementWebApp.Repository {
                 .Include(ct => ct.Trainer)
                 .ToList();
         }
+
+        public bool AssignTrainerOfACourse(List<CourseTrainer> courseTrainers) {
+            _dbContext.CourseTrainers.AddRange(courseTrainers);
+            return _dbContext.SaveChanges() > 0;
+        }
     }
 }

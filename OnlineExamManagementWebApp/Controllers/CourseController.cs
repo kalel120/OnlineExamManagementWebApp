@@ -87,6 +87,7 @@ namespace OnlineExamManagementWebApp.Controllers {
                 var assignTrainerVm = new AssignTrainerViewModel {
                     CourseId = courseTrainer.CourseId,
                     TrainerName = courseTrainer.Trainer.Name,
+                    TrainerId = courseTrainer.TrainerId,
                     IsLead = courseTrainer.IsLead
                 };
                 assignTrainerVmList.Add(assignTrainerVm);
@@ -99,8 +100,21 @@ namespace OnlineExamManagementWebApp.Controllers {
             return View("Error");
         }
 
-        public JsonResult AssignTrainer(AssignTrainerViewModel assignTrainer) {
-            return Json(1, JsonRequestBehavior.AllowGet);
+        public JsonResult AssignTrainer(List<AssignTrainerViewModel> assignTrainer) {
+            var courseTrainerList = new List<CourseTrainer>();
+            foreach (var item in assignTrainer) {
+                courseTrainerList.Add(                
+                    new CourseTrainer {
+                        CourseId = item.CourseId,
+                        TrainerId = item.TrainerId,
+                        IsLead = item.IsLead
+                    }
+                );
+            }
+
+            var result = _courseTrainerManager.AssignTrainerOfACourse(courseTrainerList);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
 }

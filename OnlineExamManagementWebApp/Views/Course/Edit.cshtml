@@ -61,6 +61,7 @@
 
         $(function () {
             var organizationId = $('#OrganizationId').val();
+
             $('#ddl-trainers').select2({
                 placeholder: "--Select Trainer--",
                 ajax: {
@@ -93,10 +94,15 @@
                     success: function (result) {
                         var html = '';
                         $.each(result, function (key, item) {
+                            var rbValue = '<td><input type="radio" name="IsLead" disabled="disabled"/> </td>';
+                            if (item.IsLead) {
+                                rbValue = '<td><input type="radio" name="IsLead" disabled="disabled" checked/> </td>';
+                            }
+
                             html += '<tr>';
                             html += "<td><input type=hidden value='" + item.CourseId + "'/>";
-                            html += item.TrainerName+ '</td>';
-                            html += '<td><input type="radio" name="IsLead" checked=' + item.IsLead+' disabled="disabled"/> </td>';
+                            html += item.TrainerName + '</td>';
+                            html += rbValue;
                             html += "<td> <a href='#'> Edit |</a>";
                             html += "<a href='#' onclick='deleteAlert(\"" + item.TrainerName + "\")'> Remove </a></td>";
                             html += '</tr>';
@@ -106,9 +112,15 @@
                     },
 
                     error: function (message) {
-                        alert(message.responseText);
+                        alert('Something is wrong!');
                     }
                 });
+            }
+
+
+            // clear checkbox
+            function clearCheckBox() {
+                $('#is-lead').prop('checked', false);
             }
 
 
@@ -120,6 +132,15 @@
                 var selectedTrainerId = $('#ddl-trainers').val();
                 var selectedTrainerName = $('#ddl-trainers').children("option").filter(":selected").text();
 
+                // prevent user from checking the is lead checkbox
+                var isLead = $('#is-lead').prop('checked');
+
+                if (($("input[name='IsLead']:checked").val()) && isLead) {
+                    alert('Lead already defined');
+                    clearCheckBox();
+                    return;
+                }
+
 
                 var tr = "<tr>";
                 var tdTrainerName = "<td><input type='hidden' name='Trainers[" + index + "].Id' value='" + selectedTrainerId + "'/>";
@@ -130,36 +151,44 @@
                 var tdIsLead = '<td><input type="radio" name="IsLead" disabled="disabled"/> </td>';
 
                 var tdAction = "<td> <a href='#'> Edit |</a>";
-                tdAction += "<a href='#'> Remove </a>";
+                tdAction += "<a href='#' onclick='deleteAlert(\"" + selectedTrainerName + "\")'> Remove </a>";
                 tdAction += "</td>";
 
                 tr += tdTrainerName + tdIsLead + tdAction + "</tr>";
 
                 $('#table-body').append(tr);
-                trainers.push(selectedTrainerId);
+
+
+                var assignVm = {
+                    CourseId: courseId,
+                    TrainerName: selectedTrainerName,
+                    TrainerId: selectedTrainerId,
+                    IsLead: isLead
+                }
+                trainers.push(assignVm);
+
+                clearCheckBox();
                 index++;
             });
 
 
             // Save to database functionality
             $('#save-button').click(function () {
-                var leadTrainerId = $('input[name="IsLead"]:checked').closest('tr').find('input[type=hidden]').val();
+                //var leadTrainerId = $('input[name="IsLead"]:checked').closest('tr').find('input[type=hidden]').val();
 
-                var assignVm = {
-                    CourseId: courseId,
-                    Trainers: trainers,
-                    LeadTrainerId: leadTrainerId
-                };
-
-                console.log(assignVm);
-
+                if (!confirm('Are you sure you want to add?')) {
+                    return;
+                }
+                
                 $.ajax({
                     url: "/Course/AssignTrainer",
-                    data: JSON.stringify(assignVm),
+                    data: JSON.stringify(trainers),
                     type: "POST",
                     contentType: 'application/json',
                     dataType: 'json',
                     success: function (result) {
+                        alert(result);
+                        trainers.length = 0;
                         loadTrainersById(courseId);
                     },
                     error: function (message) {
