@@ -86,7 +86,6 @@
                 }
             });
 
-            $('#table-course2trainer').DataTable();
 
             // Load assigned trainer from database in assigned trainer tab
             var courseId = $('#Id').val();
@@ -106,7 +105,7 @@
                             }
 
                             html += '<tr>';
-                            html += "<td><input type=hidden value='" + item.CourseId + "'/>";
+                            html += "<td><input type=hidden name='Trainers[" + key + "].Id' value='" + item.TrainerId + "'/>";
                             html += item.TrainerName + '</td>';
                             html += rbValue;
                             html += "<td> <a href='#'> Edit |</a>";
@@ -138,6 +137,10 @@
                 var selectedTrainerId = $('#ddl-trainers').val();
                 var selectedTrainerName = $('#ddl-trainers').children("option").filter(":selected").text();
 
+
+                alert(selectedTrainerId);
+                alert(selectedTrainerName);
+
                 // prevent user from checking the is lead checkbox
                 var isLead = $('#is-lead').prop('checked');
 
@@ -149,8 +152,7 @@
 
 
                 var tr = "<tr>";
-                var tdTrainerName = "<td><input type='hidden' name='Trainers[" + index + "].Id' value='" + selectedTrainerId + "'/>";
-                tdTrainerName += "<input type='hidden' name='CourseId' value='" + courseId + "'/>";
+                var tdTrainerName = "<td><input type='hidden' name='Trainers[" + index + "].Id' value='" + selectedTrainerId + "'/>";                
                 tdTrainerName += selectedTrainerName;
                 tdTrainerName += "</td>";
 
