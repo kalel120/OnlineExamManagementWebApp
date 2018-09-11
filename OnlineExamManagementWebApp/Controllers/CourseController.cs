@@ -65,6 +65,7 @@ namespace OnlineExamManagementWebApp.Controllers {
                 Outline = course.Outline,
             };
 
+            ViewBag.Course = course;
             return View(courseEditVm);
         }
 

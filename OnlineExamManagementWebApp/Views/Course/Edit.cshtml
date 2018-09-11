@@ -42,9 +42,12 @@
     <div id="assign-trainer" class="tab-pane">
         @{
             Html.RenderPartial("_AssignTrainer");
+            Html.RenderPartial("_EditTrainer");
         }
     </div>
-    <div id="create-exams" class="tab-pane"></div>
+    <div id="create-exams" class="tab-pane">
+
+    </div>
 </div>
 
 @section scripts {
@@ -104,7 +107,7 @@
                             html += "<td><input type=hidden value='" + item.TrainerId + "'/>";
                             html += item.TrainerName + '</td>';
                             html += rbValue;
-                            html += "<td> <a href='#'> Edit |</a>";
+                            html += "<td> <a href='#' class='js-toggle-lead'> Edit |</a>";
                             html += "<a href='#' class='js-remove-trainer'> Remove </a></td>";
                             html += '</tr>';
                         });
@@ -172,7 +175,7 @@
                     rbValue = '<td><input type="radio" name="IsLead" disabled="disabled" checked/> </td>';
                 }
 
-                var tdAction = "<td> <a href='#'> Edit |</a>";
+                var tdAction = "<td> <a href='#' class='js-toggle-lead' > Edit |</a>";
                 tdAction += "<a href='#' class='js-remove-trainer' '> Remove </a>";
                 tdAction += "</td>";
 
@@ -200,7 +203,7 @@
                     return;
                 }
 
-                if (!confirm('Are you sure you want to add?')) {
+                if (!confirm('Are you sure you want to assign?')) {
                     return;
                 }
 
@@ -213,7 +216,7 @@
                     success: function () {                        
                         trainers.length = 0;
                         loadTrainersById(courseId);
-                        alert("Assigned Trainer Successfully");
+                        alert("Assigned Trainers Successfully");
                     },
                     error: function (message) {
                         alert(message.responseText);
@@ -248,7 +251,15 @@
                 }
             });
 
-        // jQuery function ends here //
+            $(document).on('click', '.js-toggle-lead',function(event) {                
+                $("#js-toggle-lead-modal").modal("toggle");
+                var editLink = $(event.target).closest("tr");
+                
+                $("#js-p-trainerName").text(editLink.find("td:eq(0)").text());
+
+            });
+
+            // jQuery function ends here //
         });
     </script>
 }
