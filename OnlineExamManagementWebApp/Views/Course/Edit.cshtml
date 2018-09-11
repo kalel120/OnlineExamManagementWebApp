@@ -51,13 +51,17 @@
     <script src="~/Scripts/select2.js"></script>
 
     <script type="text/javascript">
-        function deleteAlert(trainerName) {
-            var ans = confirm("Are you sure you want to delete " + trainerName + " Record?");
-            alert(ans);
-        }
-
         $(function () {
             var organizationId = $('#OrganizationId').val();
+            var courseId = $('#Id').val();
+
+            // This empty array will contain list of new trainers to be added in html table
+            var trainers = new Array();
+
+            function clearCheckBox() {
+                $('#is-lead').prop('checked', false);
+            }
+
 
             $('#js-ddl-trainers').select2({
                 placeholder: "--Select Trainer--",
@@ -79,8 +83,7 @@
                 }
             });
 
-            // Load assigned trainer from database in assigned trainer tab
-            var courseId = $('#Id').val();
+            // Load assigned trainer from database in assigned trainer tab            
             loadTrainersById(courseId);
 
             function loadTrainersById(courseId) {
@@ -102,7 +105,7 @@
                             html += item.TrainerName + '</td>';
                             html += rbValue;
                             html += "<td> <a href='#'> Edit |</a>";
-                            html += "<a href='#' onclick='deleteAlert(\"" + item.TrainerName + "\")'> Remove </a></td>";
+                            html += "<a href='#' class='js-remove-trainer'> Remove </a></td>";
                             html += '</tr>';
                         });
 
@@ -114,15 +117,6 @@
                     }
                 });
             }
-
-
-            function clearCheckBox() {
-                $('#is-lead').prop('checked', false);
-            }
-
-            // add to table with with add button click
-            var index = 0;
-            var trainers = new Array();
 
             function isTrainerAlreadyExists(selectedTrainerId) {
                 var isDuplicatedTrainer = false;
@@ -153,6 +147,10 @@
                 var selectedTrainerId = $('#js-ddl-trainers').val();
                 var selectedTrainerName = $('#js-ddl-trainers').children("option").filter(":selected").text();
 
+                if (selectedTrainerId == null) {
+                    alert("Select a trainer to assign");
+                    return false;
+                }
 
                 if (isTrainerAlreadyExists(selectedTrainerId)) {
                     return false;
@@ -175,7 +173,7 @@
                 }
 
                 var tdAction = "<td> <a href='#'> Edit |</a>";
-                tdAction += "<a href='#' onclick='deleteAlert(\"" + selectedTrainerName + "\")'> Remove </a>";
+                tdAction += "<a href='#' class='js-remove-trainer' '> Remove </a>";
                 tdAction += "</td>";
 
                 tr += tdTrainerName + rbValue + tdAction + "</tr>";
@@ -192,14 +190,11 @@
                 trainers.push(assignVm);
 
                 clearCheckBox();
-                index++;
             });
 
 
             // Save to database functionality
             $('#js-save-trainers').click(function () {
-                //var leadTrainerId = $('input[name="IsLead"]:checked').closest('tr').find('input[type=hidden]').val();
-
                 if (!trainers || trainers.length === 0) {
                     alert('alredy exists');
                     return;
@@ -211,14 +206,14 @@
 
                 $.ajax({
                     url: "/Course/AssignTrainer",
-                    data: JSON.stringify(trainers),
                     type: "POST",
                     contentType: 'application/json',
                     dataType: 'json',
-                    success: function (result) {
-                        alert("Assigned Trainer Successfully");
+                    data: JSON.stringify(trainers),                    
+                    success: function () {                        
                         trainers.length = 0;
                         loadTrainersById(courseId);
+                        alert("Assigned Trainer Successfully");
                     },
                     error: function (message) {
                         alert(message.responseText);
@@ -226,6 +221,34 @@
                 });
             });
 
+            // Remove trainer from html table
+            $(document).on('click', '.js-remove-trainer', function () {
+                var closestRow = $(this).closest("tr");
+                var trainerId = closestRow.find("input[type='hidden']").val();
+                var trainerName = closestRow.find('td:eq(0)').text();
+
+                if (confirm("Are you sure you want to delete?")) {
+                    $.ajax({
+                        url: '/Course/UnassignTrainer',
+                        type: "POST",
+                        contentType: 'application/json',
+                        dataType: "json",                        
+                        data: JSON.stringify({
+                            CourseId: courseId,
+                            TrainerId: trainerId
+                        }),
+                        success: function () {
+                            closestRow.remove();
+                            alert(trainerName + " is unassigned");
+                        },
+                        error: function (message) {
+                            console.log(message.responseText);
+                        }
+                    });
+                }
+            });
+
+        // jQuery function ends here //
         });
     </script>
 }

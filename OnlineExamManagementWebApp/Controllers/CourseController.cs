@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using OnlineExamManagementWebApp.BLL;
+using OnlineExamManagementWebApp.DTOs;
 using OnlineExamManagementWebApp.Models;
 using OnlineExamManagementWebApp.ViewModels;
 
@@ -67,6 +68,10 @@ namespace OnlineExamManagementWebApp.Controllers {
             return View(courseEditVm);
         }
 
+        public ActionResult Error() {
+            return View("Error");
+        }
+
         // Get all trainers using select2 ajax call
         public JsonResult GetTrainers(string searchTerm,int orgId) {
             var trainerList = _trainerManager.GetAllTrainers(orgId);
@@ -95,11 +100,7 @@ namespace OnlineExamManagementWebApp.Controllers {
 
             return Json(assignTrainerVmList, JsonRequestBehavior.AllowGet);
         }
-
-        public ActionResult Error() {
-            return View("Error");
-        }
-
+       
         public JsonResult AssignTrainer(List<AssignTrainerViewModel> assignTrainer) {
             var courseTrainerList = new List<CourseTrainer>();
             foreach (var item in assignTrainer) {
@@ -114,6 +115,16 @@ namespace OnlineExamManagementWebApp.Controllers {
 
             var result = _courseTrainerManager.AssignTrainerOfACourse(courseTrainerList);
 
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UnassignTrainer(CourseTrainerDto dto) {
+            var removableTrainer = new CourseTrainer {
+                CourseId = dto.CourseId,
+                TrainerId = dto.TrainerId
+            };
+
+            var result = _courseTrainerManager.RemoveTrainerAssignment(removableTrainer);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
     }

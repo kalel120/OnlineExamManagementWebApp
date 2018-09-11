@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OnlineExamManagementWebApp.DatabaseContext;
 using OnlineExamManagementWebApp.Models;
 
@@ -24,6 +21,18 @@ namespace OnlineExamManagementWebApp.Repository {
 
         public bool AssignTrainerOfACourse(List<CourseTrainer> courseTrainers) {
             _dbContext.CourseTrainers.AddRange(courseTrainers);
+            return _dbContext.SaveChanges() > 0;
+        }
+
+        public bool RemoveTrainerAssignment(CourseTrainer removableTrainer) {
+            var courseTrainerAssignment = _dbContext.CourseTrainers
+                .SingleOrDefault(ct=>ct.CourseId ==removableTrainer.CourseId && ct.TrainerId==removableTrainer.TrainerId);
+
+            if (courseTrainerAssignment ==null) {
+                return false;
+            }
+
+            _dbContext.CourseTrainers.Remove(courseTrainerAssignment);
             return _dbContext.SaveChanges() > 0;
         }
     }

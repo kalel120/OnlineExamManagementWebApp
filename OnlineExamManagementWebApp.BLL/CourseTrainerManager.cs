@@ -17,5 +17,9 @@ namespace OnlineExamManagementWebApp.BLL {
         public bool AssignTrainerOfACourse(List<CourseTrainer> courseTrainers) {
             return _unitOfWork.CourseTrainerRepository.AssignTrainerOfACourse(courseTrainers);
         }
+
+        public bool RemoveTrainerAssignment(CourseTrainer removableTrainer) {
+            return _unitOfWork.CourseTrainerRepository.RemoveTrainerAssignment(removableTrainer);
+        }
     }
 }
