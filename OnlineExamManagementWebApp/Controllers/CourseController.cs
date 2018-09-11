@@ -86,24 +86,25 @@ namespace OnlineExamManagementWebApp.Controllers {
         // Get trainers associated with course
         public JsonResult GetTrainersByCourse(int id) {            
             var courseTrainerList = _courseTrainerManager.GetCourseTrainersByCourseId(id);
-            var assignTrainerVmList = new List<AssignTrainerViewModel>();
+            var trainers = new List<CourseTrainerDto>();
 
             foreach (var courseTrainer in courseTrainerList) {
-                var assignTrainerVm = new AssignTrainerViewModel {
+                var assignTrainerVm = new CourseTrainerDto {
                     CourseId = courseTrainer.CourseId,
                     TrainerName = courseTrainer.Trainer.Name,
                     TrainerId = courseTrainer.TrainerId,
                     IsLead = courseTrainer.IsLead
                 };
-                assignTrainerVmList.Add(assignTrainerVm);
+                trainers.Add(assignTrainerVm);
             }
 
-            return Json(assignTrainerVmList, JsonRequestBehavior.AllowGet);
+            return Json(trainers, JsonRequestBehavior.AllowGet);
         }
        
-        public JsonResult AssignTrainer(List<AssignTrainerViewModel> assignTrainer) {
+        public JsonResult AssignTrainer(List<CourseTrainerDto> dtos) {
             var courseTrainerList = new List<CourseTrainer>();
-            foreach (var item in assignTrainer) {
+
+            foreach (var item in dtos) {
                 courseTrainerList.Add(                
                     new CourseTrainer {
                         CourseId = item.CourseId,
