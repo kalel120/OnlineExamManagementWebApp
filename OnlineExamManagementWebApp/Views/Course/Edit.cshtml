@@ -86,7 +86,7 @@
                 }
             });
 
-            // Load assigned trainer from database in assigned trainer tab            
+            // Load assigned trainer from database in assigned trainer tab
             loadTrainersById(courseId);
 
             function loadTrainersById(courseId) {
@@ -100,7 +100,7 @@
                         $.each(result, function (key, item) {
                             var rbValue = '<td><input type="radio" name="IsLead" disabled="disabled"/> </td>';
                             if (item.IsLead) {
-                                rbValue = '<td><input type="radio" name="IsLead" disabled="disabled" checked/> </td>';
+                                rbValue = '<td><input type="radio" name="IsLead" disabled="disabled" checked="checked"/> </td>';
                             }
 
                             html += '<tr>';
@@ -136,19 +136,17 @@
                 return isDuplicatedTrainer;
             }
 
-            function isLeadTrainerExists(isLeadCheckBoxChecked) {
-                if (($("input[name='IsLead']:checked").val()) && isLeadCheckBoxChecked) {
-                    alert('Lead already defined');
-                    clearCheckBox();
+            function isLeadTrainerExists() {
+                if ($("input[name='IsLead']:checked").val()) {
                     return true;
                 }
-
                 return false;
             }
 
-            $('#js-insert-table').click(function () {
+            $('#js-insert-table').on('click', function () {
                 var selectedTrainerId = $('#js-ddl-trainers').val();
                 var selectedTrainerName = $('#js-ddl-trainers').children("option").filter(":selected").text();
+                var isLeadCheckBoxChecked = $('#is-lead').prop('checked');
 
                 if (selectedTrainerId == null) {
                     alert("Select a trainer to assign");
@@ -159,8 +157,9 @@
                     return false;
                 }
 
-                var isLeadCheckBoxChecked = $('#is-lead').prop('checked');
-                if (isLeadTrainerExists(isLeadCheckBoxChecked)) {
+                if (isLeadTrainerExists() && isLeadCheckBoxChecked) {
+                    alert('Lead already defined');
+                    clearCheckBox();
                     return false;
                 }
 
@@ -172,7 +171,7 @@
 
                 var rbValue = '<td><input type="radio" name="IsLead" disabled="disabled"/> </td>';
                 if (isLeadCheckBoxChecked) {
-                    rbValue = '<td><input type="radio" name="IsLead" disabled="disabled" checked/> </td>';
+                    rbValue = '<td><input type="radio" name="IsLead" disabled="disabled" checked="checked"/> </td>';
                 }
 
                 var tdAction = "<td> <a href='#' class='js-toggle-lead' > Edit |</a>";
@@ -212,8 +211,8 @@
                     type: "POST",
                     contentType: 'application/json',
                     dataType: 'json',
-                    data: JSON.stringify(trainers),                    
-                    success: function () {                        
+                    data: JSON.stringify(trainers),
+                    success: function () {
                         trainers.length = 0;
                         loadTrainersById(courseId);
                         alert("Assigned Trainers Successfully");
@@ -235,7 +234,7 @@
                         url: '/Course/UnassignTrainer',
                         type: "POST",
                         contentType: 'application/json',
-                        dataType: "json",                        
+                        dataType: "json",
                         data: JSON.stringify({
                             CourseId: courseId,
                             TrainerId: trainerId
@@ -251,14 +250,52 @@
                 }
             });
 
-            $(document).on('click', '.js-toggle-lead',function(event) {                
+            $(document).on('click', '.js-toggle-lead', function (event) {
                 $("#js-toggle-lead-modal").modal("toggle");
-                var editLink = $(event.target).closest("tr");
-                
-                $("#js-p-trainerName").text(editLink.find("td:eq(0)").text());
-
+                loadTrainerLeadStatusToggleModal(event);
             });
 
+            function loadTrainerLeadStatusToggleModal(e) {
+                var editLink = $(e.target).closest("tr");
+
+                $("#js-editing-trainerId").val(editLink.find("input[type='hidden']").val());
+                $("#js-p-trainerName").text(editLink.find("td:eq(0)").text());
+                $("#js-modal-editTrainer-leadStatus").prop("checked", editLink.find("input[name = 'IsLead']").prop("checked"));
+            }
+
+            $("#js-modal-editTrainer-updateStatus").on('click', function () {
+                if (isLeadTrainerExists()) {
+                    alert("Lead trainer is already defined.");
+                    return;
+                }
+
+                var updatableCourseTrainer = {
+                    CourseId: courseId,
+                    TrainerId: $("#js-editing-trainerId").val(),
+                    IsLead: $("#js-modal-editTrainer-leadStatus").prop("checked")
+                };
+
+                updateLeadTrainerStatus(updatableCourseTrainer);
+            });
+
+            function updateLeadTrainerStatus(jsonObject) {
+                $.ajax({
+                    url: '/Course/UpdateLeadTrainer',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    dataType: "json",
+                    data: JSON.stringify(jsonObject),
+
+                    success: function(result) {
+                        alert(jsonObject.TrainerId + " Lead trainer successfully");
+                        $("#js-toggle-lead-modal").modal("hide");
+                        loadTrainersById(courseId);
+                    },
+                    error: function(message) {
+                        console.log(message.responseText);
+                    }
+                });
+            }
             // jQuery function ends here //
         });
     </script>

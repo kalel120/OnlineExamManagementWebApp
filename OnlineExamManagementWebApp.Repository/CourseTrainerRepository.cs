@@ -25,14 +25,28 @@ namespace OnlineExamManagementWebApp.Repository {
         }
 
         public bool RemoveTrainerAssignment(CourseTrainer removableTrainer) {
-            var courseTrainerAssignment = _dbContext.CourseTrainers
+            var courseTrainer = _dbContext.CourseTrainers
                 .SingleOrDefault(ct=>ct.CourseId ==removableTrainer.CourseId && ct.TrainerId==removableTrainer.TrainerId);
 
-            if (courseTrainerAssignment ==null) {
+            if (courseTrainer ==null) {
                 return false;
             }
 
-            _dbContext.CourseTrainers.Remove(courseTrainerAssignment);
+            _dbContext.CourseTrainers.Remove(courseTrainer);
+            return _dbContext.SaveChanges() > 0;
+        }
+
+        public bool UpdateLeadTrainerStatus(CourseTrainer updatable) {
+            var courseTrainer = _dbContext.CourseTrainers
+                .Where(ct => ct.CourseId == updatable.CourseId && ct.TrainerId == updatable.TrainerId).SingleOrDefault();
+
+            if (courseTrainer == null) {
+                return false;
+            }
+
+            courseTrainer.IsLead = updatable.IsLead;
+
+            _dbContext.Entry(courseTrainer).State = EntityState.Modified;
             return _dbContext.SaveChanges() > 0;
         }
     }

@@ -4,22 +4,28 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button class="close" data-dismiss="modal">&times;</button>
-                <h3 class="modal-title">Add/Remove as Lead?</h3>
+                <h3 class="modal-title">Add/Remove as Lead?</h3> 
             </div>
             
             <div class="modal-body">
+                @Html.Hidden("js-editing-trainerId")
                 <div class="form-group">
-                    @Html.Label("Course Name ")<br/>
+                    @Html.Label("Course Name")<br/>
                     @ViewBag.Course.Name
                 </div>
-                
+
                 <div class="form-group">
-                    @Html.Label("Trainer Name ") <p id="js-p-trainerName"></p>                    
+                    @Html.Label("Trainer Name")
+                    <p id="js-p-trainerName"></p>
+                </div>
+
+                <div class="form-group">
+                    Lead Status @Html.CheckBox("Lead Status", false, new {@class = "checkbox", id = "js-modal-editTrainer-leadStatus"})
                 </div>
             </div>
             
             <div class="modal-footer">
-                <input type="button" class="btn btn-danger" value="UPDATE" />
+                <input type="button" class="btn btn-danger" value="UPDATE" id="js-modal-editTrainer-updateStatus" />
                 <input type="button" class="btn btn-default" value="Close" data-dismiss="modal" />
             </div>
         </div>

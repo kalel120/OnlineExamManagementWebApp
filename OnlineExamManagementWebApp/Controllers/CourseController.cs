@@ -129,5 +129,16 @@ namespace OnlineExamManagementWebApp.Controllers {
             var result = _courseTrainerManager.RemoveTrainerAssignment(removableTrainer);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult UpdateLeadTrainer(CourseTrainerDto dto) {
+            var updatable = new CourseTrainer {
+                CourseId = dto.CourseId,
+                TrainerId = dto.TrainerId,
+                IsLead = dto.IsLead
+            };
+
+            bool result = _courseTrainerManager.UpdateLeadTrainerStatus(updatable);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 }

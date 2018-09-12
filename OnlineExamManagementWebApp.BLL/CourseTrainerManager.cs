@@ -21,5 +21,9 @@ namespace OnlineExamManagementWebApp.BLL {
         public bool RemoveTrainerAssignment(CourseTrainer removableTrainer) {
             return _unitOfWork.CourseTrainerRepository.RemoveTrainerAssignment(removableTrainer);
         }
+
+        public bool UpdateLeadTrainerStatus(CourseTrainer updatable) {
+            return _unitOfWork.CourseTrainerRepository.UpdateLeadTrainerStatus(updatable);
+        }
     }
 }
