@@ -9,7 +9,7 @@
 </ul>
 
 <div class="tab-content">
-    <div id="basic-tab" class="tab-pane active">
+    <div id="basic-tab" class="tab-pane">
         <br />
         @Html.HiddenFor(m => m.Id)
         @Html.HiddenFor(m => m.OrganizationId)
@@ -39,7 +39,7 @@
         </div>
     </div>
 
-    <div id="assign-trainer" class="tab-pane">
+    <div id="assign-trainer" class="tab-pane active">
         @{
             Html.RenderPartial("_AssignTrainer");
             Html.RenderPartial("_EditTrainer");
@@ -250,8 +250,10 @@
                 }
             });
 
+            var editTrainerModal = $("#js-toggle-lead-modal");
+
             $(document).on('click', '.js-toggle-lead', function (event) {
-                $("#js-toggle-lead-modal").modal("toggle");
+                editTrainerModal.modal("toggle");
                 loadTrainerLeadStatusToggleModal(event);
             });
 
@@ -264,19 +266,35 @@
             }
 
             $("#js-modal-editTrainer-updateStatus").on('click', function () {
-                if (isLeadTrainerExists()) {
-                    alert("Lead trainer is already defined.");
-                    return;
-                }
-
                 var updatableCourseTrainer = {
                     CourseId: courseId,
                     TrainerId: $("#js-editing-trainerId").val(),
                     IsLead: $("#js-modal-editTrainer-leadStatus").prop("checked")
                 };
 
+                if (!isAlreadyLead(updatableCourseTrainer.TrainerId) && isLeadTrainerExists()) {
+                    alert("Lead trainer is already defined. Duplicate Lead is not permissible");
+                    editTrainerModal.modal('hide');
+                    return;
+                }
+                
                 updateLeadTrainerStatus(updatableCourseTrainer);
             });
+
+            function isAlreadyLead(trainerId) {
+                var result = false;
+                $("#table-body").find("tr").each(function () {
+                    var td = $(this).find("td");
+                    var checkableId = td.find("input[type='hidden']").val();
+                    if (checkableId==trainerId) {
+                        if (td.find("input[type='radio']").prop("checked")) {
+                            result = true;
+                        }
+                    }
+                });
+
+                return result;
+            }
 
             function updateLeadTrainerStatus(jsonObject) {
                 $.ajax({
@@ -288,7 +306,7 @@
 
                     success: function(result) {
                         alert(jsonObject.TrainerId + " Lead trainer successfully");
-                        $("#js-toggle-lead-modal").modal("hide");
+                        editTrainerModal.modal("hide");
                         loadTrainersById(courseId);
                     },
                     error: function(message) {
