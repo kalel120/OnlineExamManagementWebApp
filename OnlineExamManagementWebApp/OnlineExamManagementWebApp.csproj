@@ -329,6 +329,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\CustomScripts\assign-trainer.js" />
+    <Content Include="Scripts\CustomScripts\create-exams.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap4.js" />
@@ -495,6 +496,7 @@
     <Content Include="Views\Course\Edit.cshtml" />
     <Content Include="Views\Course\_AssignTrainer.cshtml" />
     <Content Include="Views\Course\_EditTrainer.cshtml" />
+    <Content Include="Views\Course\_CreateExams.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

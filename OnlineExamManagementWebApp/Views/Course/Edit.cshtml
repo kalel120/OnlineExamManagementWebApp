@@ -3,13 +3,13 @@
 
 <br />
 <ul class="nav nav-tabs">
-    <li role="presentation" class="active"><a href="#basic-tab" data-toggle="tab">Basic Info</a></li>
-    <li role="presentation"><a href="#assign-trainer" data-toggle="tab">Assign Trainer</a></li>
-    <li role="presentation"><a href="#create-exams" data-toggle="tab">Create Exams</a></li>
+    <li role="presentation" ><a href="#basic-tab" data-toggle="tab">Basic Info</a></li>
+    <li role="presentation"><a href="#assign-trainer-tab" data-toggle="tab">Assign Trainer</a></li>
+    <li role="presentation" class="active"><a href="#create-exams-tab" data-toggle="tab">Create Exams</a></li>
 </ul>
 
 <div class="tab-content">
-    <div id="basic-tab" class="tab-pane active">
+    <div id="basic-tab" class="tab-pane">
         <br />
         @Html.HiddenFor(m => m.Id)
         @Html.HiddenFor(m => m.OrganizationId)
@@ -39,18 +39,22 @@
         </div>
     </div>
 
-    <div id="assign-trainer" class="tab-pane">
+    <div id="assign-trainer-tab" class="tab-pane">
         @{
             Html.RenderPartial("_AssignTrainer");
             Html.RenderPartial("_EditTrainer");
         }
     </div>
-    <div id="create-exams" class="tab-pane">
-
+    <div id="create-exams-tab" class="tab-pane active">
+        @{
+            Html.RenderPartial("_CreateExams");
+        }
     </div>
 </div>
 
 @section scripts {
     <script src="~/Scripts/select2.js"></script>
     <script src="~/Scripts/CustomScripts/assign-trainer.js"></script>
+    <script src="~/Scripts/CustomScripts/create-exams.js"></script>
+
 }

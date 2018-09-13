@@ -1,0 +1,95 @@
+﻿<br />
+<link href="~/Content/css/select2.css" rel="stylesheet" />
+
+@{
+    List<SelectListItem> examTypes = new List<SelectListItem> {
+        new SelectListItem {
+            Value = "0",
+            Text = @"--Select Exam Type--"
+        },
+        new SelectListItem {
+            Value = "1",
+            Text = @"Class Test"
+        },
+        new SelectListItem {
+            Value = "1",
+            Text = @"Lab Test"
+        }
+    };
+}
+<div class="form-horizontal">
+    <div class="form-group">
+        @Html.Label("Organization", new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-10">
+            @Html.TextBox("js-organization", null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Course", new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-10">
+            @Html.TextBox("js-course", null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Exam Types", new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-10">
+            @Html.DropDownList("js-examTypes", examTypes, new { @class = "form-control", style = "width: 280px" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Code", new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-10">
+            @Html.TextBox("js-exam-code", null, new { @class = "form-control",placeholder="Exam Code" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Topic", new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-10">
+            @Html.TextBox("exam-topic", null, new { @class = "form-control", placeholder = "Exam Topic" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Full Marks", new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-10">
+            @Html.TextBox("exam-full-marks", null, new { @class = "form-control", placeholder = "Exam Topic" })
+        </div>
+    </div>
+
+    <div class="form-inline">
+        @Html.Label("Duration", new { @class = "col-sm-2 control-label" })
+        <div class="input-group">
+            @Html.TextBox("exam-duration-hour", null, new { @class = "form-control", placeholder = "hh" })
+            <span class="input-group-addon">:</span>
+            @Html.TextBox("exam-duration-min", null, new { @class = "form-control", placeholder = "mm" })
+        </div>        
+    </div>
+    <br/>
+    <div class="form-group">
+        @Html.Label("Serial", new { @class = "col-sm-2 control-label" })
+        <div class="col-sm-10">
+            @Html.TextBox("exam-serial", null, new { @class = "form-control" })            
+        </div>
+    </div>
+    
+    
+    <div class="form-group">
+        <div class="col-sm-10">
+            <input type="button" class="btn btn-primary" id="js-btn-addExam" value="Add">
+        </div>
+    </div>    
+</div>
+
+<table class="table table-bordered table-hover table-responsive">
+    <tr>
+        <th>Type</th>
+        <th>Topic</th>
+        <th>Code</th>
+        <th>Duration</th>
+        <th>Full Marks</th>
+        <th>Action</th>
+    </tr>
+    <tbody class="table-body"></tbody>
+</table>
