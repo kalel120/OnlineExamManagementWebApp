@@ -7,14 +7,18 @@ $(function () {
     var trainers = new Array();
 
     function clearCheckBox() {
-        $('#is-lead').prop('checked', false);
+        $("#is-lead").prop('checked', false);
+    }
+
+    function clearTrainersDdl() {
+        $("#js-ddl-trainers").empty();
     }
 
 
     $('#js-ddl-trainers').select2({
         placeholder: "--Select Trainer--",
         ajax: {
-            url: "/Course/GetTrainers",
+            url: "/Course/GetTrainersByOrganization",
             dataType: "json",
             data: function (params) {
                 var query = {
@@ -35,6 +39,9 @@ $(function () {
     loadTrainersById(courseId);
 
     function loadTrainersById(courseId) {
+        clearCheckBox();
+        clearTrainersDdl();
+
         $.ajax({
             url: "/Course/GetTrainersByCourse/" + courseId,
             type: "GET",
@@ -89,16 +96,20 @@ $(function () {
 
     $('#js-insert-table').on('click', function () {
         var selectedTrainerId = $('#js-ddl-trainers').val();
-        var selectedTrainerName = $('#js-ddl-trainers').children("option").filter(":selected").text();
-        var isLeadCheckBoxChecked = $('#is-lead').prop('checked');
 
-        if (selectedTrainerId === null) {
+        if (selectedTrainerId === null || selectedTrainerId === "0") {
             alert("Select a trainer to assign");
+            clearTrainersDdl();
             return false;
         }
 
+        var selectedTrainerName = $('#js-ddl-trainers').children("option").filter(":selected").text();
+        var isLeadCheckBoxChecked = $('#is-lead').prop('checked');
+        
         if (isTrainerAlreadyExists(selectedTrainerId)) {
-            alert("already exists");
+            alert("Already exists");
+            clearCheckBox();
+            clearTrainersDdl();
             return false;
         }
 
@@ -125,7 +136,7 @@ $(function () {
 
         tr += tdTrainerName + rbValue + tdAction + "</tr>";
 
-        $('#table-body').append(tr);
+        $("#table-body").append(tr);
 
         var assignVm = {
             CourseId: courseId,
@@ -140,13 +151,13 @@ $(function () {
 
 
     // Save to database functionality
-    $('#js-save-trainers').click(function () {
+    $("#js-save-trainers").click(function () {
         if (!trainers || trainers.length === 0) {
-            alert('alredy exists');
+            alert("Something went wrong.\nAdd Proper trainer from list");
             return;
         }
 
-        if (!confirm('Are you sure you want to assign?')) {
+        if (!confirm("Are you sure you want to assign?")) {
             return;
         }
 
@@ -206,7 +217,6 @@ $(function () {
     function removeFromUnsavedList(removable) {
         trainers = trainers.filter(t =>  t.TrainerId !== removable.TrainerId);
     }
-
 
 
     // JS related to edit modal  popup//

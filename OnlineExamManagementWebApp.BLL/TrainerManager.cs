@@ -6,8 +6,8 @@ namespace OnlineExamManagementWebApp.BLL {
     public class TrainerManager {
         private readonly UnitOfWork _unitOfWork = new UnitOfWork();
 
-        public List<Trainer> GetAllTrainers(int orgId) {
-            return _unitOfWork.TrainerRepository.GetAllTrainers(orgId);
+        public List<Trainer> GetTrainersByOrgId(int orgId) {
+            return _unitOfWork.TrainerRepository.GetTrainersByOrgId(orgId);
         }        
     }
 }

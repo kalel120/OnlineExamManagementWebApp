@@ -72,31 +72,31 @@ namespace OnlineExamManagementWebApp.Controllers {
         public ActionResult Error() {
             return View("Error");
         }
-
-        // Get all trainers using select2 ajax call
-        public JsonResult GetTrainers(string searchTerm,int orgId) {
-            var trainerList = _trainerManager.GetAllTrainers(orgId);
+        
+        public JsonResult GetTrainersByOrganization(string searchTerm,int orgId) {
+            var trainerList = _trainerManager.GetTrainersByOrgId(orgId);
             if (searchTerm != null) {
                 trainerList = trainerList.Where(t => t.Name.Contains(searchTerm)).ToList();
             }
-            var modifiedList = trainerList.Select(x => new { id = x.Id, text = x.Name });
+
+            var modifiedList = trainerList.Select(x => new { id = x.Id, text = x.Name }).ToList();            
+            modifiedList.Insert(0,new{id=0, text= "--Select Trainer--" });
 
             return Json(modifiedList, JsonRequestBehavior.AllowGet);
         }
-
-        // Get trainers associated with course
+        
         public JsonResult GetTrainersByCourse(int id) {            
             var courseTrainerList = _courseTrainerManager.GetCourseTrainersByCourseId(id);
             var trainers = new List<CourseTrainerDto>();
 
-            foreach (var courseTrainer in courseTrainerList) {
-                var assignTrainerVm = new CourseTrainerDto {
-                    CourseId = courseTrainer.CourseId,
-                    TrainerName = courseTrainer.Trainer.Name,
-                    TrainerId = courseTrainer.TrainerId,
-                    IsLead = courseTrainer.IsLead
+            foreach (var item in courseTrainerList) {
+                var courseTrainerDto = new CourseTrainerDto {
+                    CourseId = item.CourseId,
+                    TrainerName = item.Trainer.Name,
+                    TrainerId = item.TrainerId,
+                    IsLead = item.IsLead
                 };
-                trainers.Add(assignTrainerVm);
+                trainers.Add(courseTrainerDto);
             }
 
             return Json(trainers, JsonRequestBehavior.AllowGet);
@@ -137,7 +137,7 @@ namespace OnlineExamManagementWebApp.Controllers {
                 IsLead = dto.IsLead
             };
 
-            bool result = _courseTrainerManager.UpdateLeadTrainerStatus(updatable);
+            var result = _courseTrainerManager.UpdateLeadTrainerStatus(updatable);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
