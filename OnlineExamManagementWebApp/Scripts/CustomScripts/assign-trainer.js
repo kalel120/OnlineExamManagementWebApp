@@ -173,28 +173,40 @@ $(function () {
         var trainerId = closestRow.find("input[type='hidden']").val();
         var trainerName = closestRow.find('td:eq(0)').text();
 
-        if (confirm("Are you sure you want to delete?")) {
-            closestRow.remove();
+        var removableTrainer = {
+            CourseId: courseId,
+            TrainerId: trainerId
+        };
 
-            $.ajax({
-                url: '/Course/UnassignTrainer',
-                type: "POST",
-                contentType: 'application/json',
-                dataType: "json",
-                data: JSON.stringify({
-                    CourseId: courseId,
-                    TrainerId: trainerId
-                }),
-                success: function () {
-
-                    alert(trainerName + " is unassigned");
-                },
-                error: function (message) {
-                    console.log(message.responseText);
-                }
-            });
+        if (confirm("Are you sure you want to delete?")) {                        
+            removeFromUnsavedList(removableTrainer);
+            closestRow.remove();            
+            removeTrainerFromDb(removableTrainer, trainerName);
         }
     });
+
+
+    function removeTrainerFromDb(removable,trainerName) {
+        $.ajax({
+            url: '/Course/UnassignTrainer',
+            type: "POST",
+            contentType: 'application/json',
+            dataType: "json",
+            data: JSON.stringify(removable),
+            success: function (result) {
+                alert(trainerName+" is removed");
+            },
+            error: function (message) {
+                console.log(message.responseText);
+            }
+        });
+
+    }
+
+    function removeFromUnsavedList(removable) {
+        trainers = trainers.filter(t =>  t.TrainerId !== removable.TrainerId);
+    }
+
 
 
     // JS related to edit modal  popup//

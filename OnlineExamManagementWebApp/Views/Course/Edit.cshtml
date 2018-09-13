@@ -9,7 +9,7 @@
 </ul>
 
 <div class="tab-content">
-    <div id="basic-tab" class="tab-pane">
+    <div id="basic-tab" class="tab-pane active">
         <br />
         @Html.HiddenFor(m => m.Id)
         @Html.HiddenFor(m => m.OrganizationId)
@@ -39,7 +39,7 @@
         </div>
     </div>
 
-    <div id="assign-trainer" class="tab-pane active">
+    <div id="assign-trainer" class="tab-pane">
         @{
             Html.RenderPartial("_AssignTrainer");
             Html.RenderPartial("_EditTrainer");
