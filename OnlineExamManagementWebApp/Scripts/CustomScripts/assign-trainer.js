@@ -47,7 +47,7 @@ $(function () {
             type: "GET",
             contentType: 'application/json',
             success: function (result) {
-                var html = '';
+                let html = "";
 
                 $.each(result, function (key, item) {
                     var rbValue = '<td><input type="radio" name="IsLead" disabled="disabled"/> </td>';
@@ -55,13 +55,13 @@ $(function () {
                         rbValue = '<td><input type="radio" name="IsLead" disabled="disabled" checked="checked"/> </td>';
                     }
 
-                    html += '<tr>';
-                    html += "<td><input type=hidden value='" + item.TrainerId + "'/>";
-                    html += item.TrainerName + '</td>';
-                    html += rbValue;
-                    html += "<td> <a href='#' class='js-toggle-lead'> Edit |</a>";
-                    html += "<a href='#' class='js-remove-trainer'> Remove </a></td>";
-                    html += '</tr>';
+                    html += `"<tr>
+                     <td><input type=hidden value='${item.TrainerId}'/> ${item.TrainerName} </td>
+                     ${rbValue}
+                     <td> 
+                        <a href='#' class='js-toggle-lead'> Edit |</a>
+                        <a href='#' class='js-remove-trainer'> Remove </a></td>";
+                    </tr>"`;
                 });
 
                 $('#table-body').html(html);
@@ -120,23 +120,21 @@ $(function () {
         }
 
         // Building htmlTable;
-        var tr = "<tr>";
-        var tdTrainerName = "<td><input type='hidden' value='" + selectedTrainerId + "'/>";
-        tdTrainerName += selectedTrainerName;
-        tdTrainerName += "</td>";
-
-        var rbValue = '<td><input type="radio" name="IsLead" disabled="disabled"/> </td>';
+        let rbValue = '<td><input type="radio" name="IsLead" disabled="disabled"/> </td>';
         if (isLeadCheckBoxChecked) {
             rbValue = '<td><input type="radio" name="IsLead" disabled="disabled" checked="checked"/> </td>';
         }
 
-        var tdAction = "<td> <a href='#' class='js-toggle-lead' > Edit |</a>";
-        tdAction += "<a href='#' class='js-remove-trainer' '> Remove </a>";
-        tdAction += "</td>";
+        let html = `"<tr>
+                       <td><input type='hidden' value='${selectedTrainerId}'/> ${selectedTrainerName} </td>
+                       ${rbValue}
+                       <td>
+                           <a href='#' class='js-toggle-lead'> Edit |</a>
+                           <a href='#' class='js-remove-trainer'> Remove </a>
+                       </td>
+                      </tr>"`;
 
-        tr += tdTrainerName + rbValue + tdAction + "</tr>";
-
-        $("#table-body").append(tr);
+        $("#table-body").append(html);
 
         var assignVm = {
             CourseId: courseId,
@@ -146,7 +144,7 @@ $(function () {
         }
         trainers.push(assignVm);
 
-        clearCheckBox();
+        clearCheckBox();        
     });
 
 
