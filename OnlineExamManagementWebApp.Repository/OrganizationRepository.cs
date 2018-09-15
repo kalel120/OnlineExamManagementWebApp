@@ -17,7 +17,7 @@ namespace OnlineExamManagementWebApp.Repository {
         }
 
         public List<SelectListItem> GetAllOrganizations() {
-            return _dbContext.Organizations.Select(c => new SelectListItem() { Value = c.Id.ToString(), Text = c.Code })
+            return _dbContext.Organizations.Select(c => new SelectListItem() { Value = c.Id.ToString(), Text = c.Name })
                 .ToList();
         }
     }

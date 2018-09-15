@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using AutoMapper;
 using OnlineExamManagementWebApp.BLL;
 using OnlineExamManagementWebApp.DTOs;
 using OnlineExamManagementWebApp.Models;
@@ -26,17 +27,11 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         [HttpPost]
-        public ActionResult Entry(CourseEntryViewModel viewModel) {
+        public ActionResult Entry(CourseEntryViewModel courseEntryVm) {
             if (ModelState.IsValid) {
-                var course = new Course {
-                    OrganizationId = viewModel.OrganizationId,
-                    Name = viewModel.Name,
-                    Code = viewModel.Code,
-                    Duration = viewModel.Duration,
-                    Credit = viewModel.Credit,
-                    Outline = viewModel.Outline,
-                    Tags = _courseManager.GetReleventTags(viewModel.SelectedTags)
-                };
+                var course = Mapper.Map<Course>(courseEntryVm);
+                course.Tags = _courseManager.GetReleventTags(courseEntryVm.SelectedTags);
+                
                 if (!_courseManager.IsCourseSaved(course))
                     return RedirectToAction("Error");
 
@@ -53,23 +48,15 @@ namespace OnlineExamManagementWebApp.Controllers {
 
             var course = _courseManager.GetCourseById(id);
             course.Organization = _courseManager.GetOrganizationById(course.OrganizationId);
-            
+
             var createExamVm = new CreateExamViewModel {
                 Course = course,
                 OrganizationName = course.Organization.Name
             };
+           
+            var courseEditVm = Mapper.Map<CourseEditViewModel>(course);
 
-            var courseEditVm = new CourseEditViewModel {
-                Id = course.Id,
-                OrganizationId = course.OrganizationId,
-                OrganizationCode = course.Organization.Code,
-                Name = course.Name,
-                Code = course.Code,
-                Duration = course.Duration,
-                Credit = course.Credit,
-                Outline = course.Outline,
-                CreateExamVm = createExamVm
-            };
+            courseEditVm.CreateExamVm = createExamVm;
 
             ViewBag.Course = course;
             return View(courseEditVm);
@@ -96,13 +83,8 @@ namespace OnlineExamManagementWebApp.Controllers {
             var trainers = new List<CourseTrainerDto>();
 
             foreach (var item in courseTrainerList) {
-                var courseTrainerDto = new CourseTrainerDto {
-                    CourseId = item.CourseId,
-                    TrainerName = item.Trainer.Name,
-                    TrainerId = item.TrainerId,
-                    IsLead = item.IsLead
-                };
-                trainers.Add(courseTrainerDto);
+                var dto = Mapper.Map<CourseTrainerDto>(item);               
+                trainers.Add(dto);
             }
 
             return Json(trainers, JsonRequestBehavior.AllowGet);
@@ -112,13 +94,7 @@ namespace OnlineExamManagementWebApp.Controllers {
             var courseTrainerList = new List<CourseTrainer>();
 
             foreach (var item in dtos) {
-                courseTrainerList.Add(                
-                    new CourseTrainer {
-                        CourseId = item.CourseId,
-                        TrainerId = item.TrainerId,
-                        IsLead = item.IsLead
-                    }
-                );
+                courseTrainerList.Add(Mapper.Map<CourseTrainer>(item));               
             }
 
             var result = _courseTrainerManager.AssignTrainerOfACourse(courseTrainerList);
@@ -126,24 +102,13 @@ namespace OnlineExamManagementWebApp.Controllers {
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult UnassignTrainer(CourseTrainerDto dto) {
-            var removableTrainer = new CourseTrainer {
-                CourseId = dto.CourseId,
-                TrainerId = dto.TrainerId
-            };
-
-            var result = _courseTrainerManager.RemoveTrainerAssignment(removableTrainer);
+        public JsonResult UnassignTrainer(CourseTrainerDto dto) {            
+            var result = _courseTrainerManager.RemoveTrainerAssignment(Mapper.Map<CourseTrainer>(dto));
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult UpdateLeadTrainer(CourseTrainerDto dto) {
-            var updatable = new CourseTrainer {
-                CourseId = dto.CourseId,
-                TrainerId = dto.TrainerId,
-                IsLead = dto.IsLead
-            };
-
-            var result = _courseTrainerManager.UpdateLeadTrainerStatus(updatable);
+        public JsonResult UpdateLeadTrainer(CourseTrainerDto dto) {            
+            var result = _courseTrainerManager.UpdateLeadTrainerStatus(Mapper.Map<CourseTrainer>(dto));
             return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
