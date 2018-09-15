@@ -53,6 +53,11 @@ namespace OnlineExamManagementWebApp.Controllers {
 
             var course = _courseManager.GetCourseById(id);
             course.Organization = _courseManager.GetOrganizationById(course.OrganizationId);
+            
+            var createExamVm = new CreateExamViewModel {
+                Course = course,
+                OrganizationName = course.Organization.Name
+            };
 
             var courseEditVm = new CourseEditViewModel {
                 Id = course.Id,
@@ -63,6 +68,7 @@ namespace OnlineExamManagementWebApp.Controllers {
                 Duration = course.Duration,
                 Credit = course.Credit,
                 Outline = course.Outline,
+                CreateExamVm = createExamVm
             };
 
             ViewBag.Course = course;

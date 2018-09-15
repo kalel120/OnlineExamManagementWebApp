@@ -20,6 +20,7 @@ namespace OnlineExamManagementWebApp.ViewModels {
 
         [AllowHtml]
         public string Outline { get; set; }
-        
+
+        public CreateExamViewModel CreateExamVm { get; set; }
     }
 }
