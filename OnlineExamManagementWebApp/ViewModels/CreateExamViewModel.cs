@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using OnlineExamManagementWebApp.Models;
+﻿using OnlineExamManagementWebApp.Models;
 
 namespace OnlineExamManagementWebApp.ViewModels {
     public class CreateExamViewModel {
@@ -16,11 +12,11 @@ namespace OnlineExamManagementWebApp.ViewModels {
 
         public string Topic { get; set; }
 
-        public double FullMarks { get; set; }
+        public double? FullMarks { get; set; }
 
-        public int DurationHour { get; set; }
+        public int? DurationHour { get; set; }
 
-        public int DurationMin { get; set; }
+        public int? DurationMin { get; set; }
 
         public string Serial { get; set; }
     }
