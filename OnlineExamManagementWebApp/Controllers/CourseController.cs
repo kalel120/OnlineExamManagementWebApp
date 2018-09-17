@@ -14,6 +14,7 @@ namespace OnlineExamManagementWebApp.Controllers {
         private readonly TrainerManager _trainerManager = new TrainerManager();
         private readonly CourseTrainerManager _courseTrainerManager = new CourseTrainerManager();
 
+        #region Course Entry Page
         public ActionResult Entry() {
             return View(GetCourseEntryViewModel());
         }
@@ -31,7 +32,7 @@ namespace OnlineExamManagementWebApp.Controllers {
             if (ModelState.IsValid) {
                 var course = Mapper.Map<Course>(courseEntryVm);
                 course.Tags = _courseManager.GetReleventTags(courseEntryVm.SelectedTags);
-                
+
                 if (!_courseManager.IsCourseSaved(course))
                     return RedirectToAction("Error");
 
@@ -41,6 +42,12 @@ namespace OnlineExamManagementWebApp.Controllers {
             return RedirectToAction("Error");
         }
 
+        public ActionResult Error() {
+            return View("Error");
+        }
+        #endregion
+
+        #region AssignTrainer tab page              
         public ActionResult Edit(int? id) {
             if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -52,8 +59,9 @@ namespace OnlineExamManagementWebApp.Controllers {
             var createExamVm = new CreateExamViewModel {
                 Course = course,
                 OrganizationName = course.Organization.Name
+
             };
-           
+
             var courseEditVm = Mapper.Map<CourseEditViewModel>(course);
 
             courseEditVm.CreateExamVm = createExamVm;
@@ -62,39 +70,37 @@ namespace OnlineExamManagementWebApp.Controllers {
             return View(courseEditVm);
         }
 
-        public ActionResult Error() {
-            return View("Error");
-        }
-        
-        public JsonResult GetTrainersByOrganization(string searchTerm,int orgId) {
+
+
+        public JsonResult GetTrainersByOrganization(string searchTerm, int orgId) {
             var trainerList = _trainerManager.GetTrainersByOrgId(orgId);
             if (searchTerm != null) {
                 trainerList = trainerList.Where(t => t.Name.Contains(searchTerm)).ToList();
             }
 
-            var modifiedList = trainerList.Select(x => new { id = x.Id, text = x.Name }).ToList();            
-            modifiedList.Insert(0,new{id=0, text= "--Select Trainer--" });
+            var modifiedList = trainerList.Select(x => new { id = x.Id, text = x.Name }).ToList();
+            modifiedList.Insert(0, new { id = 0, text = "--Select Trainer--" });
 
             return Json(modifiedList, JsonRequestBehavior.AllowGet);
         }
-        
-        public JsonResult GetTrainersByCourse(int id) {            
+
+        public JsonResult GetTrainersByCourse(int id) {
             var courseTrainerList = _courseTrainerManager.GetCourseTrainersByCourseId(id);
             var trainers = new List<CourseTrainerDto>();
 
             foreach (var item in courseTrainerList) {
-                var dto = Mapper.Map<CourseTrainerDto>(item);               
+                var dto = Mapper.Map<CourseTrainerDto>(item);
                 trainers.Add(dto);
             }
 
             return Json(trainers, JsonRequestBehavior.AllowGet);
         }
-       
+
         public JsonResult AssignTrainer(List<CourseTrainerDto> dtos) {
             var courseTrainerList = new List<CourseTrainer>();
 
             foreach (var item in dtos) {
-                courseTrainerList.Add(Mapper.Map<CourseTrainer>(item));               
+                courseTrainerList.Add(Mapper.Map<CourseTrainer>(item));
             }
 
             var result = _courseTrainerManager.AssignTrainerOfACourse(courseTrainerList);
@@ -102,14 +108,24 @@ namespace OnlineExamManagementWebApp.Controllers {
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult UnassignTrainer(CourseTrainerDto dto) {            
+        public JsonResult UnassignTrainer(CourseTrainerDto dto) {
             var result = _courseTrainerManager.RemoveTrainerAssignment(Mapper.Map<CourseTrainer>(dto));
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult UpdateLeadTrainer(CourseTrainerDto dto) {            
+        public JsonResult UpdateLeadTrainer(CourseTrainerDto dto) {
             var result = _courseTrainerManager.UpdateLeadTrainerStatus(Mapper.Map<CourseTrainer>(dto));
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
+
+        #region Create Exam tab 
+        public JsonResult SaveAllExams(List<CreateExamViewModel> createExamsVm) {
+
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

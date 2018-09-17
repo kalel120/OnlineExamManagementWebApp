@@ -4,6 +4,8 @@ namespace OnlineExamManagementWebApp.ViewModels {
     public class CreateExamViewModel {
         public string OrganizationName { get; set; }
 
+        public int CourseId { get; set; }
+
         public Course Course { get; set; }
 
         public string ExamType { get; set; }
@@ -18,6 +20,8 @@ namespace OnlineExamManagementWebApp.ViewModels {
 
         public int? DurationMin { get; set; }
 
-        public string Serial { get; set; }
+        public int SerialNo { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }
