@@ -68,6 +68,10 @@
     <Compile Include="Migrations\201809090453400_changed courseTrainer rel from m2m to 1tom.Designer.cs">
       <DependentUpon>201809090453400_changed courseTrainer rel from m2m to 1tom.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809171759506_Modified_Exam__AddedColumn_SerialNo_IsDeleted.cs" />
+    <Compile Include="Migrations\201809171759506_Modified_Exam__AddedColumn_SerialNo_IsDeleted.Designer.cs">
+      <DependentUpon>201809171759506_Modified_Exam__AddedColumn_SerialNo_IsDeleted.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -96,6 +100,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809090453400_changed courseTrainer rel from m2m to 1tom.resx">
       <DependentUpon>201809090453400_changed courseTrainer rel from m2m to 1tom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809171759506_Modified_Exam__AddedColumn_SerialNo_IsDeleted.resx">
+      <DependentUpon>201809171759506_Modified_Exam__AddedColumn_SerialNo_IsDeleted.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

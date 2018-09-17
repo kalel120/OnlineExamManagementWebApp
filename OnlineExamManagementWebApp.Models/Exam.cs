@@ -23,5 +23,9 @@ namespace OnlineExamManagementWebApp.Models {
         public Course Course { get; set; }
 
         public int CourseId { get; set; }
+
+        public int? SerialNo { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }
