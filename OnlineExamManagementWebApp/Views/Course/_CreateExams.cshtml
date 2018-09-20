@@ -118,13 +118,16 @@
                 </tr>
                 <tbody id="create-exam-tableBody">                    
                     @foreach (var exam in Model.Course.Exams) {
-                        <tr>
-                            @*<td><input type="hidden" name="rowIndex" id='index"+@exam.+"'/></td>*@
-                            <td>@exam.SerialNo</td>
+                        <tr>                           
+                            <td>
+                                <input type="hidden" name="CourseId" value="@exam.CourseId" />
+                                @exam.SerialNo
+                            </td>
                             <td>@exam.Type</td>
                             <td>@exam.Topic</td>
                             <td>@exam.Code</td>
                             <td>
+                                <input type="hidden" name="Duration" value="@exam.Duration" />
                                 @(exam.Duration / 60) hh : @(exam.Duration % 60) mm
                             </td>
                             <td>@exam.FullMarks</td>
