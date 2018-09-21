@@ -6,23 +6,22 @@ $(function () {
         selectOnClose: true
     });
 
-    // Initialization
+    /** Initialization **/
     const courseId = $("#Id").val();
     let examList = new Array();
 
-    getTableContents();
+    getTableCellsToObjects();
     console.log(examList);
 
     autoSuggestSerial();
+   /** Initialization END**/
 
-    // Initialization end
-    
     function autoSuggestSerial() {
         let number = parseInt($("#create-exam-tableBody tr").length);
         $("#js-exam-serial").val(number + 1);
     }
 
-    function getTableContents() {
+    function getTableCellsToObjects() {
         $("#create-exam-tableBody").find("tr").each(function () {
             let rowObject = {
                 CourseId: courseId,
@@ -34,16 +33,16 @@ $(function () {
                 FullMarks: $(this).find("td:eq(5)").text(),
                 IsDeleted: false
             }
-            rowObject.DurationHour = parseInt(rowObject.Duration / 60) ;
+            rowObject.DurationHour = parseInt(rowObject.Duration / 60);
             rowObject.DurationMin = parseInt(rowObject.Duration % 60);
             examList.push(rowObject);
         });
     }
 
-    function getTextBoxContents() {        
+    function getTextBoxContentsToObject() {
         let durationHour = parseInt($("#js-exam-duration-hour").val());
         let durationMin = parseInt($("#js-exam-duration-min").val());
-        let duration = durationHour* 60 + durationMin;
+        let duration = durationHour * 60 + durationMin;
 
         return {
             CourseId: courseId,
@@ -58,7 +57,7 @@ $(function () {
             IsDeleted: false
         };
     }
-    
+
     function isNeedResequancing(serialNo) {
         let result = false;
         for (let index = 0; index < examList.length; index++) {
@@ -68,25 +67,14 @@ $(function () {
         return result;
     }
 
-    function reSequanceSerialNo(newSerial) {
-        let arrayLength = parseInt($("#create-exam-tableBody tr").length) + 1;
-        let arrayIndex = newSerial - 1;
-        let loopCount = arrayLength - newSerial;
-
-        for (let i = 0; i < loopCount; i++) {
-            examList[arrayIndex].SerialNo += 1;
-            arrayIndex++;
-        }
-    }
-
-    function reSequanceSerialNoAfterRemoving() {
+    function reSequanceSerialNo() {
         for (let index = 0; index < examList.length; index++) {
             examList[index].SerialNo = index + 1;
         }
     }
 
     function getCreateExamTableRow(addable) {
-        let tableBody = `"
+        return `"
             <tr>
                 <td>${addable.SerialNo}</td>
                 <td>${addable.ExamType}</td>
@@ -103,12 +91,11 @@ $(function () {
                     <a href='#' class='js-createExam-RemoveExam'>Remove</a>
                 </td>
             "`;
-        return tableBody;
     }
 
     function reBuildCreateExamTable() {
         let tableHtml = "";
-        for (let i = 0; i < examList.length; i++) {            
+        for (let i = 0; i < examList.length; i++) {
             tableHtml += getCreateExamTableRow(examList[i]);
         }
         $("#create-exam-tableBody").html(tableHtml);
@@ -137,7 +124,8 @@ $(function () {
         }
     });
 
-    $(document).on("click", ".js-createExam-RemoveExam" , function () {
+    // Remove cell item functionality
+    $(document).on("click", ".js-createExam-RemoveExam", function () {
         if (!confirm("Are you sure you want to Remove")) {
             return;
         }
@@ -145,28 +133,26 @@ $(function () {
         let rowSerial = parseInt(closestRow.find("td:eq(0)").text());
 
         examList = examList.filter(s => s.SerialNo !== rowSerial);
-        reSequanceSerialNoAfterRemoving();
+        reSequanceSerialNo();
         reBuildCreateExamTable();
     });
 
     // Add button functionality
     $("#js-btn-addExam").on("click", function () {
-        let addable = getTextBoxContents();
-               
+        let addable = getTextBoxContentsToObject();
+
         if (isNeedResequancing(addable.SerialNo)) {
-            alert("Need resequancing");
-            reSequanceSerialNo(addable.SerialNo);
+            alert("Exam serial number will be changed");
+            examList.splice((addable.SerialNo - 1), 0, addable);
+            reSequanceSerialNo();
         }
-        
-        examList.splice((addable.SerialNo - 1), 0, addable);
-        
-        reBuildCreateExamTable();        
+
+        examList.push(addable);
+        reBuildCreateExamTable();
     });
 
-
-    // Finally save to database functionality
+    // Save all to database functionality
     $("#js-btn-SaveAllExam").on("click", function () {
-
         $.ajax({
             url: "/Course/SaveAllExams",
             type: "POST",
