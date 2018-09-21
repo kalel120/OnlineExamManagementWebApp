@@ -6,12 +6,16 @@ $(function () {
         selectOnClose: true
     });
 
+    // Initialization
     const courseId = $("#Id").val();
     let examList = new Array();
 
     getTableContents();
+    console.log(examList);
 
     autoSuggestSerial();
+
+    // Initialization end
     
     function autoSuggestSerial() {
         let number = parseInt($("#create-exam-tableBody tr").length);
@@ -75,6 +79,12 @@ $(function () {
         }
     }
 
+    function reSequanceSerialNoAfterRemoving() {
+        for (let index = 0; index < examList.length; index++) {
+            examList[index].SerialNo = index + 1;
+        }
+    }
+
     function getCreateExamTableRow(addable) {
         let tableBody = `"
             <tr>
@@ -84,7 +94,7 @@ $(function () {
                 <td>${addable.Code}</td>
                 <td>
                     <input type='hidden' name='Duration' value='${addable.Duration}' />
-                    ${addable.DurationHour} : ${addable.DurationMin}
+                    ${addable.DurationHour} hh : ${addable.DurationMin} mm
                  </td>
                 <td>${addable.FullMarks}</td>
                 <td>
@@ -102,6 +112,7 @@ $(function () {
             tableHtml += getCreateExamTableRow(examList[i]);
         }
         $("#create-exam-tableBody").html(tableHtml);
+        autoSuggestSerial();
     }
 
     // Check Serial number textbox validity
@@ -126,6 +137,18 @@ $(function () {
         }
     });
 
+    $(document).on("click", ".js-createExam-RemoveExam" , function () {
+        if (!confirm("Are you sure you want to Remove")) {
+            return;
+        }
+        let closestRow = $(this).closest("tr");
+        let rowSerial = parseInt(closestRow.find("td:eq(0)").text());
+
+        examList = examList.filter(s => s.SerialNo !== rowSerial);
+        reSequanceSerialNoAfterRemoving();
+        reBuildCreateExamTable();
+    });
+
     // Add button functionality
     $("#js-btn-addExam").on("click", function () {
         let addable = getTextBoxContents();
@@ -137,10 +160,7 @@ $(function () {
         
         examList.splice((addable.SerialNo - 1), 0, addable);
         
-        reBuildCreateExamTable();
-        autoSuggestSerial();
-
-        console.log(examList);
+        reBuildCreateExamTable();        
     });
 
 
