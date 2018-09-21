@@ -47,13 +47,13 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
         #endregion
 
-        #region AssignTrainer tab page              
+                     
         public ActionResult Edit(int? id) {
             if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var course = _courseManager.GetCourseById(id);
+            var course = _courseManager.GetCourseWithActiveExamsById(id);
             course.Organization = _courseManager.GetOrganizationById(course.OrganizationId);
 
             var createExamVm = new CreateExamViewModel {
@@ -70,8 +70,7 @@ namespace OnlineExamManagementWebApp.Controllers {
             return View(courseEditVm);
         }
 
-
-
+        #region AssignTrainer tab page 
         public JsonResult GetTrainersByOrganization(string searchTerm, int orgId) {
             var trainerList = _trainerManager.GetTrainersByOrgId(orgId);
             if (searchTerm != null) {

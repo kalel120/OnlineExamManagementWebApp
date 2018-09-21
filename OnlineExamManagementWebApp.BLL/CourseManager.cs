@@ -65,5 +65,9 @@ namespace OnlineExamManagementWebApp.BLL {
         public Course GetCourseById(int? id) {
             return _unitOfWork._courseRepository.GetCourseById(id);
         }
+
+        public Course GetCourseWithActiveExamsById(int? id) {
+            return _unitOfWork._courseRepository.GetCourseWithActiveExams(id);
+        }
     }
 }
