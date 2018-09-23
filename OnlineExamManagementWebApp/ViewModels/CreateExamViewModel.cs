@@ -1,4 +1,5 @@
-﻿using OnlineExamManagementWebApp.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using OnlineExamManagementWebApp.Models;
 
 namespace OnlineExamManagementWebApp.ViewModels {
     public class CreateExamViewModel {
@@ -8,6 +9,7 @@ namespace OnlineExamManagementWebApp.ViewModels {
 
         public Course Course { get; set; }
 
+        [Required]
         public string Type { get; set; }
 
         public string Code { get; set; }

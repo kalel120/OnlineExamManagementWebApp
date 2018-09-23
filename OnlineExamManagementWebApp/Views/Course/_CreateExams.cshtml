@@ -7,14 +7,14 @@
     List<SelectListItem> examTypes = new List<SelectListItem> {
 new SelectListItem {
     Value = "0",
-    Text = @"--Select Exam Type--"
+    Text = @"--SELECT EXAM TYPE--"
 },
 new SelectListItem {
     Value = "1",
     Text = @"Class Test"
 },
 new SelectListItem {
-    Value = "1",
+    Value = "2",
     Text = @"Lab Test"
 }
 };
@@ -44,7 +44,7 @@ new SelectListItem {
                 <div class="form-group">
                     @Html.Label("Exam Types", new { @class = "col-sm-2 control-label" })
                     <div class="col-sm-10">
-                        @Html.DropDownList("js-examTypes", examTypes, new { @class = "form-control", style = "width: 280px" })
+                        @Html.DropDownList("js-examTypes", examTypes, new { @class = "form-control", style = "width: 280px" })                        
                     </div>
                 </div>
 

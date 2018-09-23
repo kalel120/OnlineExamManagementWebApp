@@ -1,20 +1,20 @@
 ﻿
 $(function () {
     $("#js-examTypes").select2({
-        placeholder: "Select a option",
+        placeholder: "--SELECT EXAM TYPE--",
         theme: "classic",
         selectOnClose: true
     });
 
     /** Initialization **/
+
     const courseId = $("#Id").val();
     let examList = new Array();
 
     getTableCellsToObjects();
-    console.log(examList);
-
     autoSuggestSerial();
-    /** Initialization END**/
+
+    /** Initialization END**/    
 
     function autoSuggestSerial() {
         let number = parseInt($("#create-exam-tableBody tr").length);
@@ -124,11 +124,26 @@ $(function () {
         });
     }
 
-    function removeExamFromDb(examCode, courseId) {        
+    function removeExamFromDb(examCode, courseId) {
         $.post("/Course/RemoveExamByCode", { Code: examCode, CourseId: courseId })
             .done(function () {
                 alert(`${examCode} is removed`);
             });
+    }
+
+    function isDuplicateExamCode(examCode) {
+        var isDuplicate = false;
+
+        $("#create-exam-tableBody").find("tr").each(function () {
+            let tdText = $(this).find("td:eq(3)").text().trim();
+            if (tdText === examCode) {
+                isDuplicate = true;
+            }
+            if (isDuplicate) {
+                return;
+            }
+        });
+        return isDuplicate;
     }
 
     // Check Serial number textbox validity
@@ -171,7 +186,17 @@ $(function () {
 
     // Add button functionality
     $("#js-btn-addExam").on("click", function () {
+        if ($("#js-examTypes").val() === "0") {
+            alert("Select a type");
+            return;
+        }
+
         let addable = getTextBoxContentsToObject();
+
+        if (isDuplicateExamCode(addable.Code)) {
+            alert("Exam Code already exists");
+            return;
+        }
 
         if (isNeedResequancing(addable.SerialNo)) {
             alert("Exam serial number will be changed");
@@ -182,7 +207,6 @@ $(function () {
         }
 
         reBuildCreateExamTable();
-
     });
 
     // Save all to database functionality

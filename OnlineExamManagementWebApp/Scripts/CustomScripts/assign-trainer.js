@@ -74,17 +74,17 @@ $(function () {
     }
 
     function isTrainerAlreadyExists(selectedTrainerId) {
-        var isDuplicatedTrainer = false;
+        var isDuplicate = false;
         $("#table-body").find('tr').each(function () {
             var td = $(this).find('input[type="hidden"]').val();
             if (td === selectedTrainerId) {
-                isDuplicatedTrainer = true;
+                isDuplicate = true;
             }
-            if (isDuplicatedTrainer) {
+            if (isDuplicate) {
                 return;
             }
         });
-        return isDuplicatedTrainer;
+        return isDuplicate;
     }
 
     function isLeadTrainerExists() {
