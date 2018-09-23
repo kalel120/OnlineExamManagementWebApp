@@ -145,6 +145,11 @@ namespace OnlineExamManagementWebApp.Controllers {
             return Json(examDtoList, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult RemoveExamByCode(ExamDto dto) {
+            bool result = _examManager.RemoveExamByCode(dto.Code,dto.CourseId);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
     }
 }

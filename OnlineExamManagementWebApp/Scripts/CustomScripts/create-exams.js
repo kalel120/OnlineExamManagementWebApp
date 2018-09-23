@@ -109,10 +109,10 @@ $(function () {
             url: "/Course/GetActiveExamByCoureId?courseId=" + courseId,
             type: "GET",
             contentType: "application/json",
-            success: function(result) {
+            success: function (result) {
                 let tableHtml = "";
-                
-                $.each(result, function (key, item) {                
+
+                $.each(result, function (key, item) {
                     tableHtml += getCreateExamTableRow(item);
                 });
 
@@ -122,6 +122,13 @@ $(function () {
                 console.log(message.responseText);
             }
         });
+    }
+
+    function removeExamFromDb(examCode, courseId) {        
+        $.post("/Course/RemoveExamByCode", { Code: examCode, CourseId: courseId })
+            .done(function () {
+                alert(`${examCode} is removed`);
+            });
     }
 
     // Check Serial number textbox validity
@@ -152,9 +159,12 @@ $(function () {
             return;
         }
         let closestRow = $(this).closest("tr");
+        let examCode = closestRow.find("td:eq(3)").text().trim();
         let rowSerial = parseInt(closestRow.find("td:eq(0)").text());
 
+
         examList = examList.filter(s => s.SerialNo !== rowSerial);
+        removeExamFromDb(examCode, courseId);
         reSequanceSerialNo();
         reBuildCreateExamTable();
     });
@@ -168,7 +178,7 @@ $(function () {
             examList.splice((addable.SerialNo - 1), 0, addable);
             reSequanceSerialNo();
         } else {
-            examList.push(addable);            
+            examList.push(addable);
         }
 
         reBuildCreateExamTable();
@@ -187,13 +197,14 @@ $(function () {
             success: function (result) {
                 if (result) {
                     alert("Saved");
-                    reLoadCreateExamTableFromDb();
                 }
             },
 
             error: function (message) {
                 console.log(message.responseText);
             }
+        }).done(function () {
+            reLoadCreateExamTableFromDb();
         });
     });
 

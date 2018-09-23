@@ -46,5 +46,9 @@ namespace OnlineExamManagementWebApp.BLL {
         public List<Exam> GetActiveExamsByCourseId(int courseId) {
             return _unitOfWork.ExamRepository.GetActiveExamsByCourseId(courseId);
         }
+
+        public bool RemoveExamByCode(string examCode, int courseId) {
+            return _unitOfWork.ExamRepository.RemoveExamByCode(examCode, courseId);
+        }
     }
 }
