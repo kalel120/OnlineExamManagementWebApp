@@ -14,7 +14,7 @@ $(function () {
     console.log(examList);
 
     autoSuggestSerial();
-   /** Initialization END**/
+    /** Initialization END**/
 
     function autoSuggestSerial() {
         let number = parseInt($("#create-exam-tableBody tr").length);
@@ -26,7 +26,7 @@ $(function () {
             let rowObject = {
                 CourseId: courseId,
                 SerialNo: parseInt($(this).find("td:eq(0)").text()),
-                ExamType: $(this).find("td:eq(1)").text(),
+                Type: $(this).find("td:eq(1)").text(),
                 Topic: $(this).find("td:eq(2)").text(),
                 Code: $(this).find("td:eq(3)").text(),
                 Duration: parseInt($(this).find("input[name='Duration']").val()),
@@ -47,7 +47,7 @@ $(function () {
         return {
             CourseId: courseId,
             SerialNo: parseInt($("#js-exam-serial").val()),
-            ExamType: $("#js-examTypes").children("option").filter(":selected").text(),
+            Type: $("#js-examTypes").children("option").filter(":selected").text(),
             Topic: $("#js-exam-topic").val(),
             Code: $("#js-exam-code").val(),
             DurationHour: durationHour,
@@ -77,7 +77,7 @@ $(function () {
         return `"
             <tr>
                 <td>${addable.SerialNo}</td>
-                <td>${addable.ExamType}</td>
+                <td>${addable.Type}</td>
                 <td>${addable.Topic}</td>
                 <td>${addable.Code}</td>
                 <td>
@@ -100,6 +100,28 @@ $(function () {
         }
         $("#create-exam-tableBody").html(tableHtml);
         autoSuggestSerial();
+    }
+
+    function reLoadCreateExamTableFromDb() {
+        $("#create-exam-tableBody").html("");
+
+        $.ajax({
+            url: "/Course/GetActiveExamByCoureId?courseId=" + courseId,
+            type: "GET",
+            contentType: "application/json",
+            success: function(result) {
+                let tableHtml = "";
+                
+                $.each(result, function (key, item) {                
+                    tableHtml += getCreateExamTableRow(item);
+                });
+
+                $("#create-exam-tableBody").html(tableHtml);
+            },
+            error: function (message) {
+                console.log(message.responseText);
+            }
+        });
     }
 
     // Check Serial number textbox validity
@@ -145,10 +167,12 @@ $(function () {
             alert("Exam serial number will be changed");
             examList.splice((addable.SerialNo - 1), 0, addable);
             reSequanceSerialNo();
+        } else {
+            examList.push(addable);            
         }
 
-        examList.push(addable);
         reBuildCreateExamTable();
+
     });
 
     // Save all to database functionality
@@ -163,6 +187,7 @@ $(function () {
             success: function (result) {
                 if (result) {
                     alert("Saved");
+                    reLoadCreateExamTableFromDb();
                 }
             },
 

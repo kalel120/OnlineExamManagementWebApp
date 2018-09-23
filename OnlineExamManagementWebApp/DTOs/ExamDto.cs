@@ -1,16 +1,8 @@
-﻿using OnlineExamManagementWebApp.Models;
-
-namespace OnlineExamManagementWebApp.ViewModels {
-    public class CreateExamViewModel {
-        public string OrganizationName { get; set; }
-
-        public int CourseId { get; set; }
-
-        public Course Course { get; set; }
+﻿namespace OnlineExamManagementWebApp.DTOs {
+    public class ExamDto {
+        public string Code { get; set; }
 
         public string Type { get; set; }
-
-        public string Code { get; set; }
 
         public string Topic { get; set; }
 
@@ -23,6 +15,8 @@ namespace OnlineExamManagementWebApp.ViewModels {
         public int? DurationMin { get; set; }
 
         public int SerialNo { get; set; }
+
+        public int CourseId { get; set; }
 
         public bool IsDeleted { get; set; }
     }

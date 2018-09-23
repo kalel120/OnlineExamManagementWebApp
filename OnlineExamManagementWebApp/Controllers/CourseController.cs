@@ -13,6 +13,7 @@ namespace OnlineExamManagementWebApp.Controllers {
         private readonly CourseManager _courseManager = new CourseManager();
         private readonly TrainerManager _trainerManager = new TrainerManager();
         private readonly CourseTrainerManager _courseTrainerManager = new CourseTrainerManager();
+        private readonly ExamManager _examManager = new ExamManager();
 
         #region Course Entry Page
         public ActionResult Entry() {
@@ -63,7 +64,6 @@ namespace OnlineExamManagementWebApp.Controllers {
             };
 
             var courseEditVm = Mapper.Map<CourseEditViewModel>(course);
-
             courseEditVm.CreateExamVm = createExamVm;
 
             ViewBag.Course = course;
@@ -120,11 +120,31 @@ namespace OnlineExamManagementWebApp.Controllers {
         #endregion
 
         #region Create Exam tab 
-        public JsonResult SaveAllExams(List<CreateExamViewModel> createExamsVm) {
+        public JsonResult SaveAllExams(List<CreateExamViewModel> createExamsVmList) {
+            var exams = new List<Exam>();
 
+            foreach (var item in createExamsVmList) {
+                exams.Add( Mapper.Map<Exam>(item));
+            }
 
-            return Json(true, JsonRequestBehavior.AllowGet);
+            var result = _examManager.SaveExams(exams);
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult GetActiveExamByCoureId(int courseId) {
+            var exams = _examManager.GetActiveExamsByCourseId(courseId);
+            var examDtoList = new List<ExamDto>();
+
+            foreach (var examItem in exams) {
+                var viewModel = Mapper.Map<ExamDto>(examItem);
+                viewModel.DurationHour = viewModel.Duration / 60;
+                viewModel.DurationMin = viewModel.Duration % 60;
+               examDtoList.Add(viewModel);
+            }
+
+            return Json(examDtoList, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
     }
 }

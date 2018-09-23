@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using OnlineExamManagementWebApp.Models;
 using OnlineExamManagementWebApp.Repository;
@@ -37,6 +38,7 @@ namespace OnlineExamManagementWebApp.BLL {
 
         public List<Tag> GetNewTags(List<string> tags) {
             var newTags = new List<Tag>();
+
             foreach (var item in tags) {
                 var tag = GetTagByName(item);
                 if (tag == null) {
@@ -61,13 +63,12 @@ namespace OnlineExamManagementWebApp.BLL {
         public Organization GetOrganizationById(int organizationId) {
             return _unitOfWork._orgRepository.GetOrganizationById(organizationId);
         }
-
-        public Course GetCourseById(int? id) {
-            return _unitOfWork._courseRepository.GetCourseById(id);
-        }
-
-        public Course GetCourseWithActiveExamsById(int? id) {
-            return _unitOfWork._courseRepository.GetCourseWithActiveExams(id);
+       
+        public Course GetCourseWithActiveExamsById(int? id) {       
+            var course = _unitOfWork._courseRepository.GetCourseById(id);
+            var activeExams = _unitOfWork.ExamRepository.GetActiveExamsByCourseId(course.Id);
+            course.Exams = activeExams;
+            return course;
         }
     }
 }

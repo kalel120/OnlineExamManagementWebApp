@@ -21,19 +21,8 @@ namespace OnlineExamManagementWebApp.Repository {
         }
 
         public Course GetCourseById(int? id) {
-            var course = _dbContext.Courses.Where(c => c.Id == id)
-                .Include(c => c.Exams)
-                .FirstOrDefault();            
+            var course = _dbContext.Courses.FirstOrDefault(c => c.Id == id);
             return course;
-        }
-
-        public Course GetCourseWithActiveExams(int? id) {
-            var course = GetCourseById(id);
-            if (course == null) {
-                return null;
-            }
-            course.Exams.RemoveAll(c => c.IsDeleted);
-            return course;
-        }
+        }       
     }
 }
