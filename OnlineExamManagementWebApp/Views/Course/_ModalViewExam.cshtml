@@ -1,0 +1,89 @@
+﻿
+<div id="js-modal-viewExam" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Exam Details</h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.Label("Organization", new { @class = "col-sm-2 control-label" })
+
+                        <div class="col-sm-8 ">
+                            @Html.TextBox("js-modal-viewExam-OrgName", null, new { @class = "form-control", @readonly = "true" })
+                        </div>
+
+
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Course", new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-10">
+                            @Html.TextBox("js-modal-viewExam-CourseName", null, new { @class = "form-control", @readonly = "true" })
+                        </div>
+
+
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Type", new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-10">
+                            @Html.TextBox("js-modal-viewExam-Type", null, new { @class = "form-control", @readonly = "true" })
+                        </div>
+
+
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Code", new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-10">
+                            @Html.TextBox("js-modal-viewExam-Code", null, new { @class = "form-control", @readonly = "true" })
+                        </div>
+
+
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Topic", new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-10">
+                            @Html.TextBox("js-modal-viewExam-Topic", null, new { @class = "form-control", @readonly = "true" })
+                        </div>
+
+
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Full Marks", new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-10">
+                            @Html.TextBox("js-modal-viewExam-FullMarks", null, new { @class = "form-control", @readonly = "true" })
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Duration", new { @class = "col-sm-2 control-label" })
+                        <div class="col-xs-2">
+                            @Html.TextBox("js-modal-viewExam-DurationHour", null, new { @class = "form-control", @readonly = "true" })
+                        </div>
+
+                        <div class="col-xs-2">
+                            @Html.TextBox("js-modal-viewExam-DurationMin", null, new { @class = "form-control", @readonly = "true" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Serial", new { @class = "col-sm-2 control-label" })
+                        <div class="col-sm-2">
+                            @Html.TextBox("js-modal-viewExam-Serial", null, new { @class = "form-control", @readonly = "true" })
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-offset-2">
+                    <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Close</button>
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>

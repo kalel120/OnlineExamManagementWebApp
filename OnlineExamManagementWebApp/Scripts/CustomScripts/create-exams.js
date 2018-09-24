@@ -14,7 +14,7 @@ $(function () {
     getTableCellsToObjects();
     autoSuggestSerial();
 
-    /** Initialization END**/    
+    /** Initialization END**/
 
     function autoSuggestSerial() {
         let number = parseInt($("#create-exam-tableBody tr").length);
@@ -232,6 +232,30 @@ $(function () {
         });
     });
 
+
+    /************* View Exam Modal Popup functionality *******************/
+    let viewExamModal = $("#js-modal-viewExam");
+
+    $(document).on("click", ".js-createExam-ViewExam", function (event) {
+        viewExamModal.modal("toggle");
+        let tableRow = $(event.target).closest("tr");
+
+        let duration = parseInt(tableRow.find("input[name='Duration']").val());
+
+        $("#js-modal-viewExam-OrgName").val($("#js-organization").val());
+        $("#js-modal-viewExam-CourseName").val($("#js-course-code").val());
+
+        $("#js-modal-viewExam-Serial").val(tableRow.find("td:eq(0)").text().trim());
+        $("#js-modal-viewExam-Type").val(tableRow.find("td:eq(1)").text().trim());
+        $("#js-modal-viewExam-Topic").val(tableRow.find("td:eq(2)").text().trim());
+        $("#js-modal-viewExam-Code").val(tableRow.find("td:eq(3)").text().trim());
+        $("#js-modal-viewExam-DurationHour").val(parseInt(duration / 60));
+        $("#js-modal-viewExam-DurationMin").val(parseInt(duration % 60));
+        $("#js-modal-viewExam-FullMarks").val(tableRow.find("td:eq(5)").text().trim());
+    });
+
+
+    /************* END *******************/
 
     // jquery ready function ends here;
 });

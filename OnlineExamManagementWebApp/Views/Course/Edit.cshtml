@@ -42,12 +42,13 @@
     <div id="assign-trainer-tab" class="tab-pane">
         @{
             Html.RenderPartial("_AssignTrainer");
-            Html.RenderPartial("_EditTrainer");
+            Html.RenderPartial("_ModalEditTrainer");
         }
     </div>
     <div id="create-exams-tab" class="tab-pane active">
         @{
             Html.RenderPartial("_CreateExams", Model.CreateExamVm);
+            Html.RenderPartial("_ModalViewExam");
         }
     </div>
 </div>
