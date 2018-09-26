@@ -507,6 +507,7 @@
     <Content Include="Views\Course\_ModalEditTrainer.cshtml" />
     <Content Include="Views\Course\_CreateExams.cshtml" />
     <Content Include="Views\Course\_ModalViewExam.cshtml" />
+    <Content Include="Views\Course\_ModalEditExam.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -7,13 +7,11 @@ $(function () {
     });
 
     /** Initialization **/
-
     const courseId = $("#Id").val();
     let examList = new Array();
 
-    getTableCellsToObjects();
+    getTableCellsToObjects();    
     autoSuggestSerial();
-
     /** Initialization END**/
 
     function autoSuggestSerial() {
@@ -21,21 +19,26 @@ $(function () {
         $("#js-exam-serial").val(number + 1);
     }
 
+     function getTableRowToObject(tableRow) {       
+        let rowObject = {
+            CourseId: courseId,
+            SerialNo: parseInt(tableRow.find("td:eq(0)").text()),
+            Type: tableRow.find("td:eq(1)").text(),
+            Topic: tableRow.find("td:eq(2)").text(),
+            Code: tableRow.find("td:eq(3)").text(),
+            Duration: parseInt(tableRow.find("input[name='Duration']").val()),
+            FullMarks: tableRow.find("td:eq(5)").text(),
+            IsDeleted: false
+        }
+        rowObject.DurationHour = parseInt(rowObject.Duration / 60);
+        rowObject.DurationMin = parseInt(rowObject.Duration % 60);
+
+        return rowObject;
+    };
+
     function getTableCellsToObjects() {
-        $("#create-exam-tableBody").find("tr").each(function () {
-            let rowObject = {
-                CourseId: courseId,
-                SerialNo: parseInt($(this).find("td:eq(0)").text()),
-                Type: $(this).find("td:eq(1)").text(),
-                Topic: $(this).find("td:eq(2)").text(),
-                Code: $(this).find("td:eq(3)").text(),
-                Duration: parseInt($(this).find("input[name='Duration']").val()),
-                FullMarks: $(this).find("td:eq(5)").text(),
-                IsDeleted: false
-            }
-            rowObject.DurationHour = parseInt(rowObject.Duration / 60);
-            rowObject.DurationMin = parseInt(rowObject.Duration % 60);
-            examList.push(rowObject);
+        $("#create-exam-tableBody").find("tr").each(function () {           
+            examList.push(getTableRowToObject($(this)));
         });
     }
 
@@ -86,9 +89,9 @@ $(function () {
                  </td>
                 <td>${addable.FullMarks}</td>
                 <td>
-                    <a href='#' class='js-createExam-ViewExam'>View | </a>
-                    <a href='#' class='js-createExam-EditExam'>Edit | </a>
-                    <a href='#' class='js-createExam-RemoveExam'>Remove</a>
+                     <a href='#' class='js-createExam-ViewExamLink'>View | </a>
+                     <a href='#' class='js-createExam-EditExamLink'>Edit | </a>
+                     <a href='#' class='js-createExam-RemoveExamLink'>Remove</a>
                 </td>
             "`;
     }
@@ -169,7 +172,7 @@ $(function () {
     });
 
     // Remove cell item functionality
-    $(document).on("click", ".js-createExam-RemoveExam", function () {
+    $(document).on("click", ".js-createExam-RemoveExamLink", function () {
         if (!confirm("Are you sure you want to Remove")) {
             return;
         }
@@ -233,25 +236,60 @@ $(function () {
     });
 
 
-    /************* View Exam Modal Popup functionality *******************/
+    /************* View Exam Modal Popup functionality *******************/    
     let viewExamModal = $("#js-modal-viewExam");
 
-    $(document).on("click", ".js-createExam-ViewExam", function (event) {
-        viewExamModal.modal("toggle");
-        let tableRow = $(event.target).closest("tr");
-
-        let duration = parseInt(tableRow.find("input[name='Duration']").val());
-
+    let bindDataToViewExamModal = function bindDataToViewExamModal(data) {
         $("#js-modal-viewExam-OrgName").val($("#js-organization").val());
         $("#js-modal-viewExam-CourseName").val($("#js-course-code").val());
+        $("#js-modal-viewExam-Serial").val(data.SerialNo);
 
-        $("#js-modal-viewExam-Serial").val(tableRow.find("td:eq(0)").text().trim());
-        $("#js-modal-viewExam-Type").val(tableRow.find("td:eq(1)").text().trim());
-        $("#js-modal-viewExam-Topic").val(tableRow.find("td:eq(2)").text().trim());
-        $("#js-modal-viewExam-Code").val(tableRow.find("td:eq(3)").text().trim());
-        $("#js-modal-viewExam-DurationHour").val(parseInt(duration / 60));
-        $("#js-modal-viewExam-DurationMin").val(parseInt(duration % 60));
-        $("#js-modal-viewExam-FullMarks").val(tableRow.find("td:eq(5)").text().trim());
+        $("#js-modal-viewExam-Type option").map(function () {
+            if ($(this).text() === data.Type) {
+                return this;
+            }
+        }).attr("selected", true);
+
+        $("#js-modal-viewExam-Topic").val(data.Topic);
+        $("#js-modal-viewExam-Code").val(data.Code);
+        $("#js-modal-viewExam-DurationHour").val(data.DurationHour);
+        $("#js-modal-viewExam-DurationMin").val(data.DurationMin);
+        $("#js-modal-viewExam-FullMarks").val(data.FullMarks);
+    };
+
+    $(document).on("click", ".js-createExam-ViewExamLink", function (event) {
+        viewExamModal.modal("toggle");        
+        let dataForPopup = getTableRowToObject($(event.target).closest("tr"));
+        bindDataToViewExamModal(dataForPopup);
+    });
+
+    /************* END *******************/
+
+    /************* Edit Exam Modal Popup functionality *******************/
+    let editExamModal = $("#js-modal-editExam");
+    
+    let bindDataToEditExamPopup = function bindDataToEditExamPopup(data) {
+        $("#js-modal-updateExam-OrgName").val($("#js-organization").val());
+        $("#js-modal-updateExam-CourseName").val($("#js-course-code").val());
+
+        $("#js-modal-updateExam-Serial").val(data.SerialNo);
+        $("#js-modal-updateExam-Type option").map(function() {
+            if ($(this).text() === data.Type) {
+                return this;
+            }
+        }).attr("selected",true);
+       
+        $("#js-modal-updateExam-Topic").val(data.Topic);
+        $("#js-modal-updateExam-Code").val(data.Code);
+        $("#js-modal-updateExam-DurationHour").val(data.DurationHour);
+        $("#js-modal-updateExam-DurationMin").val(data.DurationMin);
+        $("#js-modal-updateExam-FullMarks").val(data.FullMarks);
+    };
+
+    $(document).on("click", ".js-createExam-EditExamLink", function (event) {
+        editExamModal.modal("toggle");
+        let dataForPopup = getTableRowToObject($(event.target).closest("tr"));        
+        bindDataToEditExamPopup(dataForPopup);
     });
 
 
