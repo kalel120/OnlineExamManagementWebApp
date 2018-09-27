@@ -27,6 +27,7 @@ namespace OnlineExamManagementWebApp {
 
                 cfg.CreateMap<CreateExamViewModel, Exam>();
                 cfg.CreateMap<Exam, ExamDto>();
+                cfg.CreateMap<ExamDto, Exam>();
             });
         }
     }

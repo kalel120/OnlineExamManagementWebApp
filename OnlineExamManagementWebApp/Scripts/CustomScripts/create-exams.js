@@ -10,7 +10,7 @@ $(function () {
     const courseId = $("#Id").val();
     let examList = new Array();
 
-    getTableCellsToObjects();    
+    getTableCellsToObjects();
     autoSuggestSerial();
     /** Initialization END**/
 
@@ -19,7 +19,7 @@ $(function () {
         $("#js-exam-serial").val(number + 1);
     }
 
-     function getTableRowToObject(tableRow) {       
+    function getTableRowToObject(tableRow) {
         let rowObject = {
             CourseId: courseId,
             SerialNo: parseInt(tableRow.find("td:eq(0)").text()),
@@ -37,7 +37,7 @@ $(function () {
     };
 
     function getTableCellsToObjects() {
-        $("#create-exam-tableBody").find("tr").each(function () {           
+        $("#create-exam-tableBody").find("tr").each(function () {
             examList.push(getTableRowToObject($(this)));
         });
     }
@@ -131,6 +131,9 @@ $(function () {
         $.post("/Course/RemoveExamByCode", { Code: examCode, CourseId: courseId })
             .done(function () {
                 alert(`${examCode} is removed`);
+                reSequanceSerialNo();
+                saveAllExams(examList);
+                reBuildCreateExamTable();
             });
     }
 
@@ -183,8 +186,6 @@ $(function () {
 
         examList = examList.filter(s => s.SerialNo !== rowSerial);
         removeExamFromDb(examCode, courseId);
-        reSequanceSerialNo();
-        reBuildCreateExamTable();
     });
 
     // Add button functionality
@@ -212,14 +213,14 @@ $(function () {
         reBuildCreateExamTable();
     });
 
-    // Save all to database functionality
-    $("#js-btn-SaveAllExam").on("click", function () {
+    function saveAllExams(exams) {
+       
         $.ajax({
             url: "/Course/SaveAllExams",
             type: "POST",
             contentType: "application/json",
             dataType: "json",
-            data: JSON.stringify(examList),
+            data: JSON.stringify(exams),
 
             success: function (result) {
                 if (result) {
@@ -230,13 +231,17 @@ $(function () {
             error: function (message) {
                 console.log(message.responseText);
             }
-        }).done(function () {
-            reLoadCreateExamTableFromDb();
         });
+    }
+
+    // Save all to database functionality
+    $("#js-btn-SaveAllExam").on("click", function () {
+        saveAllExams(examList);
+        reLoadCreateExamTableFromDb();
     });
 
 
-    /************* View Exam Modal Popup functionality *******************/    
+    /************* View Exam Modal Popup functionality *******************/
     let viewExamModal = $("#js-modal-viewExam");
 
     let bindDataToViewExamModal = function bindDataToViewExamModal(data) {
@@ -258,7 +263,7 @@ $(function () {
     };
 
     $(document).on("click", ".js-createExam-ViewExamLink", function (event) {
-        viewExamModal.modal("toggle");        
+        viewExamModal.modal("toggle");
         let dataForPopup = getTableRowToObject($(event.target).closest("tr"));
         bindDataToViewExamModal(dataForPopup);
     });
@@ -267,31 +272,57 @@ $(function () {
 
     /************* Edit Exam Modal Popup functionality *******************/
     let editExamModal = $("#js-modal-editExam");
-    
-    let bindDataToEditExamPopup = function bindDataToEditExamPopup(data) {
-        $("#js-modal-updateExam-OrgName").val($("#js-organization").val());
-        $("#js-modal-updateExam-CourseName").val($("#js-course-code").val());
 
-        $("#js-modal-updateExam-Serial").val(data.SerialNo);
-        $("#js-modal-updateExam-Type option").map(function() {
+    let bindDataToEditExamPopup = function bindDataToEditExamPopup(data) {
+        $("#js-modal-editExam-OrgName").val($("#js-organization").val());
+        $("#js-modal-editExam-CourseName").val($("#js-course-code").val());
+
+        $("#js-modal-editExam-Serial").val(data.SerialNo);
+        $("#js-modal-editExam-Type option").map(function () {
             if ($(this).text() === data.Type) {
                 return this;
             }
-        }).attr("selected",true);
-       
-        $("#js-modal-updateExam-Topic").val(data.Topic);
-        $("#js-modal-updateExam-Code").val(data.Code);
-        $("#js-modal-updateExam-DurationHour").val(data.DurationHour);
-        $("#js-modal-updateExam-DurationMin").val(data.DurationMin);
-        $("#js-modal-updateExam-FullMarks").val(data.FullMarks);
+        }).attr("selected", true);
+
+        $("#js-modal-editExam-Topic").val(data.Topic);
+        $("#js-modal-editExam-Code").val(data.Code);
+        $("#js-modal-editExam-DurationHour").val(data.DurationHour);
+        $("#js-modal-editExam-DurationMin").val(data.DurationMin);
+        $("#js-modal-editExam-FullMarks").val(data.FullMarks);
+    };
+
+    let getEditExamModalContents = function getEditExamModalContents() {
+        let durationHour = parseInt($("#js-modal-editExam-DurationHour").val());
+        let durationMin = parseInt($("#js-modal-editExam-DurationMin").val());
+        let duration = durationHour * 60 + durationMin;
+
+        return {
+            CourseId: courseId,
+            SerialNo: parseInt($("#js-modal-editExam-Serial").val()),
+            Type: $("#js-modal-editExam-Type").children("option").filter(":selected").text(),
+            Topic: $("#js-modal-editExam-Topic").val(),
+            Code: $("#js-modal-editExam-Code").val(),
+            DurationHour: durationHour,
+            DurationMin: durationMin,
+            Duration: duration,
+            FullMarks: $("#js-modal-editExam-FullMarks").val(),
+            IsDeleted: false
+        };
+    };
+
+    let updateExamByCourse = function updateExamByCourse(updatable) {
+
     };
 
     $(document).on("click", ".js-createExam-EditExamLink", function (event) {
         editExamModal.modal("toggle");
-        let dataForPopup = getTableRowToObject($(event.target).closest("tr"));        
+        let dataForPopup = getTableRowToObject($(event.target).closest("tr"));
         bindDataToEditExamPopup(dataForPopup);
     });
 
+    $("#js-modal-btn-updateExam").on("click", function () {
+        let editable = getEditExamModalContents();
+    });
 
     /************* END *******************/
 

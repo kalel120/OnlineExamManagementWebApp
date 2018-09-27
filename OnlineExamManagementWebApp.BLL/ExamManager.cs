@@ -5,7 +5,7 @@ using OnlineExamManagementWebApp.Repository;
 
 namespace OnlineExamManagementWebApp.BLL {
     public class ExamManager {
-        private UnitOfWork _unitOfWork = new UnitOfWork();
+        private readonly UnitOfWork _unitOfWork = new UnitOfWork();
 
         public bool SaveExams(List<Exam> examsFromView) {
             var courseId = examsFromView[0].CourseId;
@@ -17,38 +17,61 @@ namespace OnlineExamManagementWebApp.BLL {
                     examsToBeSaved.Add(exam);
                 }
             }
+            
+            if (examsToBeSaved.Count != 0) {
+                _unitOfWork.ExamRepository.SaveAll(examsToBeSaved);
+            }
 
-            bool isSavedAll = _unitOfWork.ExamRepository.SaveAll(examsToBeSaved);
+            if (IsNeedResequancing(examsFromView, existingExams)) {
+                foreach (var exam in existingExams) {
+                    var index = examsFromView.FindIndex(e => e.Code == exam.Code);
+                    exam.SerialNo = examsFromView[index].SerialNo;
+                }                               
+            }
+            
+            return _unitOfWork.Complete();
+        }
 
-            var newExistingExams = _unitOfWork.ExamRepository.GetActiveExamsByCourseId(courseId);
-
-
+        private bool IsNeedResequancing(List<Exam> examsFromView, List<Exam> existingExams) {
             bool isNeedResequancing = false;
-            for (var index = 0; index < newExistingExams.Count; index++) {
-                if (!(newExistingExams[index].Code == examsFromView[index].Code
-                      && newExistingExams[index].SerialNo == examsFromView[index].SerialNo)) {
+            for (var index = 0; index < existingExams.Count; index++) {
+                if (!(existingExams[index].Code == examsFromView[index].Code
+                      && existingExams[index].SerialNo == examsFromView[index].SerialNo)) {
                     isNeedResequancing = true;
                     break;
                 }
             }
 
-            if (isNeedResequancing) {
-                foreach (var exam in newExistingExams) {
-                    var index = examsFromView.FindIndex(e => e.Code == exam.Code);
-                    exam.SerialNo = examsFromView[index].SerialNo;
-                }
-                return _unitOfWork.ExamRepository.UpdateSerialNo();
-            }
-
-            return isSavedAll;
+            return isNeedResequancing;
         }
 
         public List<Exam> GetActiveExamsByCourseId(int courseId) {
             return _unitOfWork.ExamRepository.GetActiveExamsByCourseId(courseId);
         }
 
-        public bool RemoveExamByCode(string examCode, int courseId) {
-            return _unitOfWork.ExamRepository.RemoveExamByCode(examCode, courseId);
+        public bool RemoveExamByCode(string examCode, int courseId) {            
+            var removable = _unitOfWork.ExamRepository.GetCourseSpeceficActiveExamByCode(courseId, examCode);
+            
+            removable.IsDeleted = true;
+            _unitOfWork.ExamRepository.Update(removable);
+            return _unitOfWork.Complete();
+        }
+
+        public bool UpdateExam(Exam exam) {
+            var updatable = _unitOfWork.ExamRepository.GetCourseSpeceficActiveExamByCode(exam.CourseId, exam.Code);
+            if (updatable == null) {
+                return false;
+            }
+
+            updatable.Code = exam.Code;
+            updatable.Type = exam.Type;
+            updatable.Topic = exam.Topic;
+            updatable.FullMarks = exam.FullMarks;
+            updatable.Duration = exam.Duration;
+            updatable.SerialNo = exam.SerialNo;
+
+             _unitOfWork.ExamRepository.Update(updatable);
+            return _unitOfWork.Complete();
         }
     }
 }
