@@ -8,10 +8,9 @@ $(function () {
 
     /** Initialization **/
     const courseId = $("#Id").val();
-    let examList = new Array();
+    let examList = [];
 
     getTableCellsToObjects();
-    console.log(examList);
     autoSuggestSerial();
     /** Initialization END**/
 
@@ -106,37 +105,6 @@ $(function () {
         autoSuggestSerial();
     }
 
-    function reLoadCreateExamTableFromDb() {
-        $("#create-exam-tableBody").html("");
-
-        $.ajax({
-            url: "/Course/GetActiveExamByCoureId?courseId=" + courseId,
-            type: "GET",
-            contentType: "application/json",
-            success: function (result) {
-                let tableHtml = "";
-
-                $.each(result, function (key, item) {
-                    tableHtml += getCreateExamTableRow(item);
-                });
-
-                $("#create-exam-tableBody").html(tableHtml);
-            },
-            error: function (message) {
-                console.log(message.responseText);
-            }
-        });
-    }
-
-    function removeExamFromDb(examCode, courseId) {
-        $.post("/Course/RemoveExamByCode", { Code: examCode, CourseId: courseId })
-            .done(function () {
-                alert(`${examCode} is removed`);
-                reSequanceSerialNo();
-                saveAllExams(examList);                
-            });
-    }
-
     function isDuplicateExamCode(examCode) {
         var isDuplicate = false;
 
@@ -150,6 +118,20 @@ $(function () {
             }
         });
         return isDuplicate;
+    }
+
+    function removeExamFromDb(examCode, courseId, position) {
+        if (position) {
+            $.post("/Course/RemoveExamByCode", { Code: examCode, CourseId: courseId })
+                .done(function () {
+                    saveAllExams(examList);
+                });
+        } else {
+            $.post("/Course/RemoveExamByCode", { Code: examCode, CourseId: courseId })
+                .done(function () {
+                    alert(`${examCode} is removed`);
+                });
+        }
     }
 
     // Check Serial number textbox validity
@@ -176,18 +158,43 @@ $(function () {
 
     // Remove cell item functionality
     $(document).on("click", ".js-createExam-RemoveExamLink", function () {
-        if (!confirm("Are you sure you want to Remove")) {
-            return;
-        }
         let closestRow = $(this).closest("tr");
         let examCode = closestRow.find("td:eq(3)").text().trim();
         let rowSerial = parseInt(closestRow.find("td:eq(0)").text());
 
-
-        examList = examList.filter(s => s.SerialNo !== rowSerial);
-        removeExamFromDb(examCode, courseId);
-        reBuildCreateExamTable();
+        if (rowSerial === examList.length && confirm("Are you sure?")) {
+            examList = examList.filter(s => s.SerialNo !== rowSerial);
+            reBuildCreateExamTable();
+            removeExamFromDb(examCode, courseId);
+        }
+        else if (confirm("serial number will be resequanced.\nAre you Sure?")) {
+            examList = examList.filter(s => s.SerialNo !== rowSerial);
+            reSequanceSerialNo();
+            reBuildCreateExamTable();
+            
+            removeExamFromDb(examCode, courseId, rowSerial);
+        }
     });
+
+    function saveAllExams(exams) {
+        $.ajax({
+            url: "/Course/SaveAllExams",
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(exams),
+
+            success: function (result) {
+                if (result) {
+                    alert("Saved");
+                }
+            },
+
+            error: function (message) {
+                console.log(message.responseText);
+            }
+        });
+    }
 
     // Add button functionality
     $("#js-btn-addExam").on("click", function () {
@@ -214,36 +221,13 @@ $(function () {
         reBuildCreateExamTable();
     });
 
-    function saveAllExams(exams) {
-        $.ajax({
-            url: "/Course/SaveAllExams",
-            type: "POST",
-            contentType: "application/json",
-            dataType: "json",
-            data: JSON.stringify(exams),
-
-            success: function (result) {
-                if (result) {
-                    alert("Saved");
-                }
-            },
-
-            error: function (message) {
-                console.log(message.responseText);
-            }
-        });
-    }
-
     // Save all to database functionality
     $("#js-btn-SaveAllExam").on("click", function () {
         saveAllExams(examList);
-        reLoadCreateExamTableFromDb();
     });
-
 
     /************* View Exam Modal Popup functionality *******************/
     let viewExamModal = $("#js-modal-viewExam");
-
     let bindDataToViewExamModal = function bindDataToViewExamModal(data) {
         $("#js-modal-viewExam-OrgName").val($("#js-organization").val());
         $("#js-modal-viewExam-CourseName").val($("#js-course-code").val());
@@ -267,7 +251,6 @@ $(function () {
         let dataForPopup = getTableRowToObject($(event.target).closest("tr"));
         bindDataToViewExamModal(dataForPopup);
     });
-
     /************* END *******************/
 
     /************* Edit Exam Modal Popup functionality *******************/

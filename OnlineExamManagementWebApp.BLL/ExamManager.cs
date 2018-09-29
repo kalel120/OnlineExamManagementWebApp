@@ -19,7 +19,7 @@ namespace OnlineExamManagementWebApp.BLL {
             }
 
             if (examsToBeSaved.Count != 0) {
-                _unitOfWork.ExamRepository.SaveAll(examsToBeSaved);
+                _unitOfWork.ExamRepository.SaveAll(examsToBeSaved);             
             }
 
             if (IsNeedResequancing(examsFromView, existingExams)) {
@@ -28,9 +28,9 @@ namespace OnlineExamManagementWebApp.BLL {
                     exam.SerialNo = examsFromView[index].SerialNo;
                 }
             }
-
             return _unitOfWork.Complete();
         }
+      
 
         private bool IsNeedResequancing(List<Exam> examsFromView, List<Exam> existingExams) {
             bool isNeedResequancing = false;

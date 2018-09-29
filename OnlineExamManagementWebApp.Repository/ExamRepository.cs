@@ -11,7 +11,6 @@ namespace OnlineExamManagementWebApp.Repository {
         public ExamRepository(ApplicationDbContext dbContext) {
             _dbContext = dbContext;
         }
-
         
         public void SaveAll(List<Exam> examsToBeSaved) {
             _dbContext.Exams.AddRange(examsToBeSaved);            
@@ -23,9 +22,9 @@ namespace OnlineExamManagementWebApp.Repository {
                 .ToList();
         }
 
-        public Exam GetCourseSpeceficActiveExamByCode(int examCourseId, string examCode) {
-            return _dbContext.Exams.Where(e => e.CourseId == examCourseId && e.IsDeleted == false)
-                .SingleOrDefault(e => e.Code == examCode);
+        public Exam GetCourseSpeceficActiveExamByCode(int courseId, string code) {
+            var activeExams = GetActiveExamsByCourseId(courseId);
+            return activeExams.SingleOrDefault(e => e.Code == code);
         }
 
         public void Update(Exam updatable) {
