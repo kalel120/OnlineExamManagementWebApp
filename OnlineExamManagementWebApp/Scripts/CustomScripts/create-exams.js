@@ -11,6 +11,7 @@ $(function () {
     let examList = new Array();
 
     getTableCellsToObjects();
+    console.log(examList);
     autoSuggestSerial();
     /** Initialization END**/
 
@@ -53,11 +54,11 @@ $(function () {
             Type: $("#js-examTypes").children("option").filter(":selected").text(),
             Topic: $("#js-exam-topic").val(),
             Code: $("#js-exam-code").val(),
-            DurationHour: durationHour,
-            DurationMin: durationMin,
             Duration: duration,
             FullMarks: $("#js-exam-full-marks").val(),
-            IsDeleted: false
+            IsDeleted: false,
+            DurationHour: durationHour,
+            DurationMin: durationMin
         };
     }
 
@@ -132,8 +133,7 @@ $(function () {
             .done(function () {
                 alert(`${examCode} is removed`);
                 reSequanceSerialNo();
-                saveAllExams(examList);
-                reBuildCreateExamTable();
+                saveAllExams(examList);                
             });
     }
 
@@ -186,6 +186,7 @@ $(function () {
 
         examList = examList.filter(s => s.SerialNo !== rowSerial);
         removeExamFromDb(examCode, courseId);
+        reBuildCreateExamTable();
     });
 
     // Add button functionality
@@ -214,7 +215,6 @@ $(function () {
     });
 
     function saveAllExams(exams) {
-       
         $.ajax({
             url: "/Course/SaveAllExams",
             type: "POST",
@@ -272,29 +272,23 @@ $(function () {
 
     /************* Edit Exam Modal Popup functionality *******************/
     let editExamModal = $("#js-modal-editExam");
+    let isExamEditable = function isExamEditable(editable) {
+        if (editable.SerialNo < 0 || editable.SerialNo >= parseInt($("#js-exam-serial").val())) {
+            return false;
+        }
 
-    let bindDataToEditExamPopup = function bindDataToEditExamPopup(data) {
-        $("#js-modal-editExam-OrgName").val($("#js-organization").val());
-        $("#js-modal-editExam-CourseName").val($("#js-course-code").val());
-
-        $("#js-modal-editExam-Serial").val(data.SerialNo);
-        $("#js-modal-editExam-Type option").map(function () {
-            if ($(this).text() === data.Type) {
-                return this;
+        for (let i = 0; i < examList.length; i++) {
+            if (JSON.stringify(examList[i]) === JSON.stringify(editable)) {
+                return false;
             }
-        }).attr("selected", true);
-
-        $("#js-modal-editExam-Topic").val(data.Topic);
-        $("#js-modal-editExam-Code").val(data.Code);
-        $("#js-modal-editExam-DurationHour").val(data.DurationHour);
-        $("#js-modal-editExam-DurationMin").val(data.DurationMin);
-        $("#js-modal-editExam-FullMarks").val(data.FullMarks);
+        }
+        return true;
     };
 
     let getEditExamModalContents = function getEditExamModalContents() {
-        let durationHour = parseInt($("#js-modal-editExam-DurationHour").val());
-        let durationMin = parseInt($("#js-modal-editExam-DurationMin").val());
-        let duration = durationHour * 60 + durationMin;
+        const durationHour = parseInt($("#js-modal-editExam-DurationHour").val());
+        const durationMin = parseInt($("#js-modal-editExam-DurationMin").val());
+        const duration = durationHour * 60 + durationMin;
 
         return {
             CourseId: courseId,
@@ -302,16 +296,42 @@ $(function () {
             Type: $("#js-modal-editExam-Type").children("option").filter(":selected").text(),
             Topic: $("#js-modal-editExam-Topic").val(),
             Code: $("#js-modal-editExam-Code").val(),
-            DurationHour: durationHour,
-            DurationMin: durationMin,
             Duration: duration,
             FullMarks: $("#js-modal-editExam-FullMarks").val(),
-            IsDeleted: false
+            IsDeleted: false,
+            DurationHour: durationHour,
+            DurationMin: durationMin
         };
     };
 
-    let updateExamByCourse = function updateExamByCourse(updatable) {
+    let bindDataToEditExamPopup = function bindDataToEditExamPopup(data) {
+        $("#js-modal-editExam-Index").val(data.SerialNo - 1);
+        $("#js-modal-editExam-OrgName").val($("#js-organization").val());
+        $("#js-modal-editExam-CourseName").val($("#js-course-code").val());
 
+        $("#js-modal-editExam-Serial").val(data.SerialNo);
+        $("#js-modal-editExam-Type option").each(function () {
+            if ($(this).text() === data.Type) {
+                $(this).prop("selected", true);
+            }
+        });
+        $("#js-modal-editExam-Topic").val(data.Topic);
+        $("#js-modal-editExam-Code").val(data.Code);
+        $("#js-modal-editExam-Duration").val(data.Duration);
+        $("#js-modal-editExam-DurationHour").val(data.DurationHour);
+        $("#js-modal-editExam-DurationMin").val(data.DurationMin);
+        $("#js-modal-editExam-FullMarks").val(data.FullMarks);
+    };
+
+    let editExamFromModal = function editExamFromModal(editable) {
+        let arrayIndex = $("#js-modal-editExam-Index").val();
+        let existingCode = examList[arrayIndex].Code;
+        examList.splice(arrayIndex, 1, editable);
+
+        $.post("/Course/UpdateExamByCode", { existingCode: existingCode, dto: editable })
+            .done(function () {
+                reBuildCreateExamTable();
+            });
     };
 
     $(document).on("click", ".js-createExam-EditExamLink", function (event) {
@@ -322,8 +342,14 @@ $(function () {
 
     $("#js-modal-btn-updateExam").on("click", function () {
         let editable = getEditExamModalContents();
+        if (isExamEditable(editable)) {
+            editExamFromModal(editable);
+            alert("updated");
+            editExamModal.modal("toggle");
+        } else {
+            alert("update failed");
+        }
     });
-
     /************* END *******************/
 
     // jquery ready function ends here;

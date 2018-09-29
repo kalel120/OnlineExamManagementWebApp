@@ -17,7 +17,7 @@ namespace OnlineExamManagementWebApp.BLL {
                     examsToBeSaved.Add(exam);
                 }
             }
-            
+
             if (examsToBeSaved.Count != 0) {
                 _unitOfWork.ExamRepository.SaveAll(examsToBeSaved);
             }
@@ -26,9 +26,9 @@ namespace OnlineExamManagementWebApp.BLL {
                 foreach (var exam in existingExams) {
                     var index = examsFromView.FindIndex(e => e.Code == exam.Code);
                     exam.SerialNo = examsFromView[index].SerialNo;
-                }                               
+                }
             }
-            
+
             return _unitOfWork.Complete();
         }
 
@@ -49,28 +49,27 @@ namespace OnlineExamManagementWebApp.BLL {
             return _unitOfWork.ExamRepository.GetActiveExamsByCourseId(courseId);
         }
 
-        public bool RemoveExamByCode(string examCode, int courseId) {            
+        public bool RemoveExamByCode(string examCode, int courseId) {
             var removable = _unitOfWork.ExamRepository.GetCourseSpeceficActiveExamByCode(courseId, examCode);
-            
+            if (removable == null) {
+                return false;
+            }
+
             removable.IsDeleted = true;
             _unitOfWork.ExamRepository.Update(removable);
             return _unitOfWork.Complete();
         }
 
-        public bool UpdateExam(Exam exam) {
-            var updatable = _unitOfWork.ExamRepository.GetCourseSpeceficActiveExamByCode(exam.CourseId, exam.Code);
-            if (updatable == null) {
-                return false;
-            }
+        public bool UpdateExamByCode(string existingCode, Exam exam) {
+            var updatable = _unitOfWork.ExamRepository.GetCourseSpeceficActiveExamByCode(exam.CourseId, existingCode);
 
             updatable.Code = exam.Code;
             updatable.Type = exam.Type;
             updatable.Topic = exam.Topic;
             updatable.FullMarks = exam.FullMarks;
             updatable.Duration = exam.Duration;
-            updatable.SerialNo = exam.SerialNo;
 
-             _unitOfWork.ExamRepository.Update(updatable);
+            _unitOfWork.ExamRepository.Update(updatable);
             return _unitOfWork.Complete();
         }
     }

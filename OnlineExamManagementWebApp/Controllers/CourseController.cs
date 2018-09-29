@@ -150,10 +150,10 @@ namespace OnlineExamManagementWebApp.Controllers {
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult UpdateExam(ExamDto dto) {
+        public JsonResult UpdateExamByCode(string existingCode, ExamDto dto) {
             var exam = Mapper.Map<Exam>(dto);
 
-            bool result = _examManager.UpdateExam(exam);
+            bool result = _examManager.UpdateExamByCode(existingCode,exam);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         #endregion

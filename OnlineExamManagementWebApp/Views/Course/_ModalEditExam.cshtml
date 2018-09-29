@@ -28,9 +28,10 @@ Text = @"Lab Test"
                 <form id="_form-modal-editExam">
                     <div class="form-horizontal">
                         <div class="form-group">
-                            @Html.Label("Organization", new { @class = "col-sm-2 control-label" })
+                            @Html.Hidden("js-modal-editExam-Index")
+                            @Html.Label("Organization", new {@class = "col-sm-2 control-label"})
                             <div class="col-sm-8 ">
-                                @Html.TextBox("js-modal-editExam-OrgName", null, new { @class = "form-control", @readonly = "true" })
+                                @Html.TextBox("js-modal-editExam-OrgName", null, new {@class = "form-control", @readonly = "true"})
                             </div>
                         </div>
 
@@ -71,6 +72,7 @@ Text = @"Lab Test"
 
                         <div class="form-group">
                             @Html.Label("Duration", new { @class = "col-sm-2 control-label" })
+                            @Html.Hidden("js-modal-editExam-Duration")
                             <div class="col-xs-2">
                                 @Html.TextBox("js-modal-editExam-DurationHour", null, new { @class = "form-control" })
                             </div>
@@ -83,7 +85,7 @@ Text = @"Lab Test"
                         <div class="form-group">
                             @Html.Label("Serial", new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-2">
-                                @Html.TextBox("js-modal-editExam-Serial", null, new { @class = "form-control" })
+                                @Html.TextBox("js-modal-editExam-Serial", null, new { @class = "form-control",@readonly="true" })
                             </div>
                         </div>
                     </div>
