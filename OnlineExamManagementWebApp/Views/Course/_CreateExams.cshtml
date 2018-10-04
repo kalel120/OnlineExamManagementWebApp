@@ -4,18 +4,15 @@
 <link href="~/Content/css/select2.css" rel="stylesheet" />
 
 @{
-    List<SelectListItem> examTypes = new List<SelectListItem> {
+    var examTypes = new List<SelectListItem> {
+
 new SelectListItem {
-    Value = "0",
-    Text = @"--SELECT EXAM TYPE--"
+Value = "1",
+Text = @"Class Test"
 },
 new SelectListItem {
-    Value = "1",
-    Text = @"Class Test"
-},
-new SelectListItem {
-    Value = "2",
-    Text = @"Lab Test"
+Value = "2",
+Text = @"Lab Test"
 }
 };
 }
@@ -28,75 +25,84 @@ new SelectListItem {
         </div>
 
         <div class="panel-body">
-            <div class="form-horizontal">
+
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal", id = "form-createExam" })) {
+
+                HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
+
                 <div class="form-group">
-                    @Html.Label("Organization", new { @class = "col-sm-2 control-label" })
+                    @Html.LabelFor(m=>m.OrganizationName, new { @class = "col-sm-2 control-label" })
                     <div class="col-sm-10">
                         @Html.TextBoxFor(m => m.OrganizationName, new { @class = "form-control", id = "js-organization", @readonly = "true" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.Label("Course", new { @class = "col-sm-2 control-label" })
+                    @Html.LabelFor(m=>m.Course, new { @class = "col-sm-2 control-label" })
                     <div class="col-sm-10">
                         @Html.TextBoxFor(m => m.Course.Code, new { @class = "form-control", id = "js-course-code", @readonly = "true" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.Label("Exam Types", new { @class = "col-sm-2 control-label" })
+                    @Html.Label("Exam Type", new { @class = "col-sm-2 control-label" })
                     <div class="col-sm-10">
-                        @Html.DropDownList("js-examTypes", examTypes, new { @class = "form-control", style = "width: 280px" })                        
+                        @Html.DropDownList("js-examTypes", examTypes, "--Select Type--", new { @class = "form-control" })
+                        @Html.ValidationMessage("js-examTypes", "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.Label("Code", new { @class = "col-sm-2 control-label" })
+                    @Html.LabelFor(m => m.Code, new { @class = "col-sm-2 control-label" })
                     <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.Code, "", new { @class = "form-control", placeholder = "Exam Code", id = "js-exam-code" })
+                        @Html.TextBoxFor(m => m.Code, new { @class = "form-control", placeholder = "Exam Code", id = "js-exam-code" })
+                        @Html.ValidationMessageFor(m => m.Code, "", new { @class = "text-danger " })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.Label("Topic", new { @class = "col-sm-2 control-label" })
+                    @Html.LabelFor(m => m.Topic, new { @class = "col-sm-2 control-label" })
                     <div class="col-sm-10">
                         @Html.TextBoxFor(m => m.Topic, new { @class = "form-control", placeholder = "Exam Topic", id = "js-exam-topic" })
+                        @Html.ValidationMessageFor(m => m.Topic, "", new { @class = "text-danger " })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.Label("Full Marks", new { @class = "col-sm-2 control-label" })
+                    @Html.LabelFor(m => m.FullMarks, new { @class = "col-sm-2 control-label" })
                     <div class="col-sm-10">
                         @Html.TextBoxFor(m => m.FullMarks, new { @class = "form-control", placeholder = "Full Marks", id = "js-exam-full-marks" })
+                        @Html.ValidationMessageFor(m => m.FullMarks, "", new { @class = "text-danger " })
                     </div>
                 </div>
 
-                <div class="form-inline">
-                    @Html.Label("Duration", new { @class = "col-sm-2 control-label" })
-                    <div class="input-group">
-                        @Html.TextBoxFor(m => m.DurationHour, null, new { @class = "form-control", placeholder = "hh", id = "js-exam-duration-hour" })
-                        <span class="input-group-addon">:</span>
-                        @Html.TextBoxFor(m => m.DurationMin, new { @class = "form-control", placeholder = "mm", id = "js-exam-duration-min" })
-                    </div>
-                </div>
-
-                <br />
                 <div class="form-group">
-                    @Html.Label("Serial", new { @class = "col-sm-2 control-label" })
+                    @Html.LabelFor(m => m.Duration, new { @class = "col-sm-2 control-label" })
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(m => m.DurationHour, null, new { @class = "form-control", placeholder = "hh", id = "js-exam-duration-hour" })
+                        @Html.ValidationMessageFor(m => m.DurationHour, "", new { @class = "text-danger " })
+                    </div>
+                    <div class="col-md-2">
+                        @Html.TextBoxFor(m => m.DurationMin, new { @class = "form-control", placeholder = "mm", id = "js-exam-duration-min" })
+                        @Html.ValidationMessageFor(m => m.DurationMin, "", new { @class = "text-danger " })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SerialNo, new { @class = "col-sm-2 control-label" })
                     <div class="col-sm-10">
                         @Html.TextBoxFor(m => m.SerialNo, new { @class = "form-control", id = "js-exam-serial" })
+                        @Html.ValidationMessageFor(m => m.SerialNo, "", new { @class = "text-danger " })
                     </div>
                 </div>
-
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-sm-10">
                         <input type="button" class="btn btn-success" id="js-btn-addExam" value="Add">
                     </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
 </div>
-
 
 
 <div class="panel-group">

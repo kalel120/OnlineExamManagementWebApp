@@ -31,7 +31,6 @@ namespace OnlineExamManagementWebApp.BLL {
             return _unitOfWork.Complete();
         }
       
-
         private bool IsNeedResequancing(List<Exam> examsFromView, List<Exam> existingExams) {
             bool isNeedResequancing = false;
             for (var index = 0; index < existingExams.Count; index++) {

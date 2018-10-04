@@ -1,22 +1,4 @@
-﻿@{
-    List<SelectListItem> examTypes = new List<SelectListItem> {
-        new SelectListItem {
-            Value = "0",
-            Text = @"--SELECT EXAM TYPE--"
-        },
-        new SelectListItem {
-            Value = "1",
-            Text = @"Class Test"
-        },
-        new SelectListItem {
-            Value = "2",
-            Text = @"Lab Test"
-        }
-    };
-}
-
-
-<div id="js-modal-viewExam" class="modal fade" tabindex="-1">
+﻿<div id="js-modal-viewExam" class="modal fade" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -33,7 +15,6 @@
                             @Html.TextBox("js-modal-viewExam-OrgName", null, new { @class = "form-control", @readonly = "true" })
                         </div>
 
-
                     </div>
                     <div class="form-group">
                         @Html.Label("Course", new { @class = "col-sm-2 control-label" })
@@ -46,7 +27,7 @@
                     <div class="form-group">
                         @Html.Label("Type", new { @class = "col-sm-2 control-label" })
                         <div class="col-sm-10">
-                            @Html.DropDownList("js-modal-viewExam-Type", examTypes, new { @class = "form-control", @readonly="true" ,style = "width: 280px" })
+                            @Html.TextBox("js-modal-viewExam-Type", null, new { @class = "form-control", @readonly = "true" })
                         </div>
 
 
@@ -95,12 +76,7 @@
 
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <div class="col-md-offset-2">
-                    <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Close</button>
-                </div>                
-            </div>
+            </div>            
         </div>
     </div>
 </div>

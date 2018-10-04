@@ -1,18 +1,118 @@
 ﻿
 $(function () {
-    $("#js-examTypes").select2({
-        placeholder: "--SELECT EXAM TYPE--",
-        theme: "classic",
-        selectOnClose: true
-    });
-
     /** Initialization **/
+    $("#js-examTypes").select2();
+
     const courseId = $("#Id").val();
     let examList = [];
 
     getTableCellsToObjects();
     autoSuggestSerial();
     /** Initialization END**/
+
+    const jQuerValidation = () => {
+        $.validator.addMethod("validSerial", (value) => {
+            if (value > 0 && value < ($("#create-exam-tableBody tr").length + 2)) {
+                return true;
+            }
+            return false;
+        }, "Must be greater than 0 next incremntal serial number  ");
+
+        $.validator.addMethod("uniqueExamCode", (value) => {
+            var isUnique = true;
+
+            $("#create-exam-tableBody").find("tr").each(function () {
+                let tdText = $(this).find("td:eq(3)").text().trim();
+                if (tdText === value) {
+                    isUnique = false;
+                    return;
+                }
+            });
+            return isUnique;
+        },
+            "Exam code already exists");
+
+        $("#form-createExam").validate({
+            errorClass: "text-danger",
+            errorElement: "div",
+
+            errorPlacement: function (error, element) {
+                if (element.parent(".input-group > div").length) {
+                    element.parent(".input-group > div").append(error);
+                }
+                element.parent(".form-group > div").append(error);
+            },
+
+            highlight: function (element) {
+                $(element).closest(".form-group").removeClass("has-success has-error")
+                    .addClass("has-error");
+            },
+            success: function (element) {
+                element.closest(".form-group").removeClass("has-success has-error");
+            },
+
+            rules: {
+                "Code": {
+                    required: true,
+                    uniqueExamCode: true
+                },
+                "js-examTypes": {
+                    required: true
+                },
+                "Topic": {
+                    required: true
+                },
+                "FullMarks": {
+                    required: true,
+                    digits: true
+                },
+                "DurationHour": {
+                    required: true,
+                    digits: true
+                },
+                "DurationMin": {
+                    required: true,
+                    digits: true
+                },
+                "SerialNo": {
+                    required: true,
+                    digits: true,
+                    validSerial: true
+                }
+            },
+            messages: {
+                "Code": {
+                    required: "Exam Code is required",
+                    uniqueExamCode: "Exam code already exists"
+                },
+                "js-examTypes": {
+                    required: "Select type"
+                },
+                "Topic": {
+                    required: "Topic required"
+                },
+                "FullMarks": {
+                    required: "Marks required"
+                },
+                "DurationHour": {
+                    required: "Hour required"
+                },
+                "DurationMin": {
+                    required: "Min required"
+                },
+                "SerialNo": {
+                    required: "This is required",
+                    digits: "Only integer and greater than 0 is allowed"
+                }
+            }
+        }).form();
+
+        $("#js-examTypes").on("change", function () {
+            $(this).valid();
+        });
+
+        return $("#form-createExam").valid();
+    }
 
     function autoSuggestSerial() {
         let number = parseInt($("#create-exam-tableBody tr").length);
@@ -61,7 +161,7 @@ $(function () {
         };
     }
 
-    function isNeedResequancing(serialNo) {
+    function isNeedReSequancingAfterAdd(serialNo) {
         let result = false;
         for (let index = 0; index < examList.length; index++) {
             if (serialNo === examList[index].SerialNo)
@@ -105,21 +205,6 @@ $(function () {
         autoSuggestSerial();
     }
 
-    function isDuplicateExamCode(examCode) {
-        var isDuplicate = false;
-
-        $("#create-exam-tableBody").find("tr").each(function () {
-            let tdText = $(this).find("td:eq(3)").text().trim();
-            if (tdText === examCode) {
-                isDuplicate = true;
-            }
-            if (isDuplicate) {
-                return;
-            }
-        });
-        return isDuplicate;
-    }
-
     function removeExamFromDb(examCode, courseId, position) {
         if (position) {
             $.post("/Course/RemoveExamByCode", { Code: examCode, CourseId: courseId })
@@ -133,48 +218,6 @@ $(function () {
                 });
         }
     }
-
-    // Check Serial number textbox validity
-    $("#js-exam-serial").on("change", function () {
-        let textBox = $("#js-exam-serial");
-        if (!$.isNumeric(textBox.val())) {
-            alert("Invalid serial");
-            autoSuggestSerial();
-        }
-
-        let serialNo = parseInt(textBox.val());
-        if (serialNo <= 0) {
-            alert("Invalid serial");
-            autoSuggestSerial();
-        }
-
-        let tableLength = parseInt($("#create-exam-tableBody tr").length);
-
-        if (serialNo > (tableLength + 1)) {
-            alert("Invalid serial");
-            autoSuggestSerial();
-        }
-    });
-
-    // Remove cell item functionality
-    $(document).on("click", ".js-createExam-RemoveExamLink", function () {
-        let closestRow = $(this).closest("tr");
-        let examCode = closestRow.find("td:eq(3)").text().trim();
-        let rowSerial = parseInt(closestRow.find("td:eq(0)").text());
-
-        if (rowSerial === examList.length && confirm("Are you sure?")) {
-            examList = examList.filter(s => s.SerialNo !== rowSerial);
-            reBuildCreateExamTable();
-            removeExamFromDb(examCode, courseId);
-        }
-        else if (confirm("serial number will be resequanced.\nAre you Sure?")) {
-            examList = examList.filter(s => s.SerialNo !== rowSerial);
-            reSequanceSerialNo();
-            reBuildCreateExamTable();
-            
-            removeExamFromDb(examCode, courseId, rowSerial);
-        }
-    });
 
     function saveAllExams(exams) {
         $.ajax({
@@ -196,21 +239,14 @@ $(function () {
         });
     }
 
-    // Add button functionality
+    // Add cell item functionality
     $("#js-btn-addExam").on("click", function () {
-        if ($("#js-examTypes").val() === "0") {
-            alert("Select a type");
+        if (!jQuerValidation()) {
             return;
         }
+        const addable = getTextBoxContentsToObject();
 
-        let addable = getTextBoxContentsToObject();
-
-        if (isDuplicateExamCode(addable.Code)) {
-            alert("Exam Code already exists");
-            return;
-        }
-
-        if (isNeedResequancing(addable.SerialNo)) {
+        if (isNeedReSequancingAfterAdd(addable.SerialNo)) {
             alert("Exam serial number will be changed");
             examList.splice((addable.SerialNo - 1), 0, addable);
             reSequanceSerialNo();
@@ -226,19 +262,33 @@ $(function () {
         saveAllExams(examList);
     });
 
+    // Remove cell item functionality
+    $(document).on("click", ".js-createExam-RemoveExamLink", function () {
+        let closestRow = $(this).closest("tr");
+        let examCode = closestRow.find("td:eq(3)").text().trim();
+        let rowSerial = parseInt(closestRow.find("td:eq(0)").text());
+
+        if (rowSerial === examList.length && confirm("Are you sure?")) {
+            examList = examList.filter(s => s.SerialNo !== rowSerial);
+            reBuildCreateExamTable();
+            removeExamFromDb(examCode, courseId);
+        }
+        else if (confirm("serial number will be resequanced.\nAre you Sure?")) {
+            examList = examList.filter(s => s.SerialNo !== rowSerial);
+            reSequanceSerialNo();
+            reBuildCreateExamTable();
+
+            removeExamFromDb(examCode, courseId, rowSerial);
+        }
+    });
+
     /************* View Exam Modal Popup functionality *******************/
     let viewExamModal = $("#js-modal-viewExam");
     let bindDataToViewExamModal = function bindDataToViewExamModal(data) {
         $("#js-modal-viewExam-OrgName").val($("#js-organization").val());
         $("#js-modal-viewExam-CourseName").val($("#js-course-code").val());
         $("#js-modal-viewExam-Serial").val(data.SerialNo);
-
-        $("#js-modal-viewExam-Type option").map(function () {
-            if ($(this).text() === data.Type) {
-                return this;
-            }
-        }).attr("selected", true);
-
+        $("#js-modal-viewExam-Type").val(data.Type);
         $("#js-modal-viewExam-Topic").val(data.Topic);
         $("#js-modal-viewExam-Code").val(data.Code);
         $("#js-modal-viewExam-DurationHour").val(data.DurationHour);
@@ -256,10 +306,6 @@ $(function () {
     /************* Edit Exam Modal Popup functionality *******************/
     let editExamModal = $("#js-modal-editExam");
     let isExamEditable = function isExamEditable(editable) {
-        if (editable.SerialNo < 0 || editable.SerialNo >= parseInt($("#js-exam-serial").val())) {
-            return false;
-        }
-
         for (let i = 0; i < examList.length; i++) {
             if (JSON.stringify(examList[i]) === JSON.stringify(editable)) {
                 return false;
@@ -307,19 +353,22 @@ $(function () {
     };
 
     let editExamFromModal = function editExamFromModal(editable) {
-        let arrayIndex = $("#js-modal-editExam-Index").val();
-        let existingCode = examList[arrayIndex].Code;
+        const arrayIndex = $("#js-modal-editExam-Index").val();
+        const existingCode = examList[arrayIndex].Code;
         examList.splice(arrayIndex, 1, editable);
 
         $.post("/Course/UpdateExamByCode", { existingCode: existingCode, dto: editable })
             .done(function () {
-                reBuildCreateExamTable();
+                alert("Updated");
+            })
+            .fail(function () {
+                alert("update failed");
             });
     };
 
     $(document).on("click", ".js-createExam-EditExamLink", function (event) {
         editExamModal.modal("toggle");
-        let dataForPopup = getTableRowToObject($(event.target).closest("tr"));
+        const dataForPopup = getTableRowToObject($(event.target).closest("tr"));
         bindDataToEditExamPopup(dataForPopup);
     });
 
@@ -327,8 +376,9 @@ $(function () {
         let editable = getEditExamModalContents();
         if (isExamEditable(editable)) {
             editExamFromModal(editable);
-            alert("updated");
             editExamModal.modal("toggle");
+            reBuildCreateExamTable();
+
         } else {
             alert("update failed");
         }

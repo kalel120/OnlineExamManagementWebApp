@@ -60,7 +60,6 @@ namespace OnlineExamManagementWebApp.Controllers {
             var createExamVm = new CreateExamViewModel {
                 Course = course,
                 OrganizationName = course.Organization.Name
-
             };
 
             var courseEditVm = Mapper.Map<CourseEditViewModel>(course);
