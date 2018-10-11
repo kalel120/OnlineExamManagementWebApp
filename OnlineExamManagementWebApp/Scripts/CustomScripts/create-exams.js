@@ -6,9 +6,8 @@ $(function () {
     const courseId = $("#Id").val();
     let examList = [];
 
-    getTableCellsToObjects();
+    getTableCellAsToObjects();
     autoSuggestSerial();
-
     /** Initialization END**/
 
     const createExamValidation = () => {
@@ -225,7 +224,7 @@ $(function () {
         return rowObject;
     };
 
-    function getTableCellsToObjects() {
+    function getTableCellAsToObjects() {
         $("#create-exam-tableBody").find("tr").each(function () {
             examList.push(getTableRowAsObject($(this)));
         });

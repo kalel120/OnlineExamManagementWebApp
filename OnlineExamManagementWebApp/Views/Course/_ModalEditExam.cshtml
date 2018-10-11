@@ -12,7 +12,7 @@ Text = @"Lab Test"
 }
 
 
-<div id="js-modal-editExam" class="modal fade" tabindex="-1" data-backdrop="static">
+<div id="js-modal-editExam" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -27,8 +27,7 @@ Text = @"Lab Test"
                             @Html.Hidden("js-modal-editExam-Index")
                             @Html.Label("Organization", new {@class = "col-sm-2 control-label"})
                             <div class="col-sm-8 ">
-                                @Html.TextBox("js-modal-editExam-OrgName", null, new {@class = "form-control", @readonly = "true"})
-                                
+                                @Html.TextBox("js-modal-editExam-OrgName", null, new {@class = "form-control", @readonly = "true"})                                
                             </div>
                         </div>
 
@@ -74,12 +73,12 @@ Text = @"Lab Test"
                         <div class="form-group">
                             @Html.Label("Duration", new { @class = "col-sm-2 control-label" })
                             @Html.Hidden("js-modal-editExam-Duration")
-                            <div class="col-sm-5">
+                            <div class="col-sm-2">
                                 @Html.TextBox("js-modal-editExam-DurationHour", null, new { @class = "form-control" })
                                 @Html.ValidationMessage("js-modal-editExam-DurationHour", "", new { @class = "text-danger" })
                             </div>
 
-                            <div class="col-sm-5">
+                            <div class="col-sm-2">
                                 @Html.TextBox("js-modal-editExam-DurationMin", null, new { @class = "form-control" })
                                 @Html.ValidationMessage("js-modal-editExam-DurationMin", "", new { @class = "text-danger" })
                             </div>

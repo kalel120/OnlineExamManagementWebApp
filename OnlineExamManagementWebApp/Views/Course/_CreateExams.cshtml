@@ -76,11 +76,11 @@ Text = @"Lab Test"
 
                 <div class="form-group">
                     @Html.LabelFor(m => m.Duration, new { @class = "col-sm-2 control-label" })
-                    <div class="col-md-2">
+                    <div class="col-sm-2">
                         @Html.TextBoxFor(m => m.DurationHour, null, new { @class = "form-control", placeholder = "hh", id = "js-exam-duration-hour" })
                         @Html.ValidationMessageFor(m => m.DurationHour, "", new { @class = "text-danger " })
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-sm-2">
                         @Html.TextBoxFor(m => m.DurationMin, new { @class = "form-control", placeholder = "mm", id = "js-exam-duration-min" })
                         @Html.ValidationMessageFor(m => m.DurationMin, "", new { @class = "text-danger " })
                     </div>
