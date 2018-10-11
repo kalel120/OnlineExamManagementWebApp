@@ -8,7 +8,11 @@ using OnlineExamManagementWebApp.Repository;
 
 namespace OnlineExamManagementWebApp.BLL {
     public class CourseTrainerManager {
-        private readonly UnitOfWork _unitOfWork = new UnitOfWork();
+        private readonly UnitOfWork _unitOfWork;
+
+        public CourseTrainerManager() {
+            _unitOfWork = new UnitOfWork();
+        }
 
         public List<CourseTrainer> GetCourseTrainersByCourseId(int id) {
             return _unitOfWork.CourseTrainers.GetCourseTrainersByCourseId(id);

@@ -5,7 +5,11 @@ using OnlineExamManagementWebApp.Repository;
 
 namespace OnlineExamManagementWebApp.BLL {
     public class ExamManager {
-        private readonly UnitOfWork _unitOfWork = new UnitOfWork();
+        private readonly UnitOfWork _unitOfWork;
+
+        public ExamManager() {
+            _unitOfWork = new UnitOfWork();
+        }
 
         public bool SaveExams(List<Exam> examsFromView) {
             var courseId = examsFromView[0].CourseId;
@@ -19,7 +23,7 @@ namespace OnlineExamManagementWebApp.BLL {
             }
 
             if (examsToBeSaved.Count != 0) {
-                _unitOfWork.Exams.SaveAll(examsToBeSaved);             
+                _unitOfWork.Exams.SaveAll(examsToBeSaved);
             }
 
             if (IsNeedResequancing(examsFromView, existingExams)) {
@@ -30,7 +34,7 @@ namespace OnlineExamManagementWebApp.BLL {
             }
             return _unitOfWork.Complete();
         }
-      
+
         private bool IsNeedResequancing(List<Exam> examsFromView, List<Exam> existingExams) {
             bool isNeedResequancing = false;
             for (var index = 0; index < existingExams.Count; index++) {
@@ -42,10 +46,6 @@ namespace OnlineExamManagementWebApp.BLL {
             }
 
             return isNeedResequancing;
-        }
-
-        public List<Exam> GetActiveExamsByCourseId(int courseId) {
-            return _unitOfWork.Exams.GetActiveExamsByCourseId(courseId);
         }
 
         public bool RemoveExamByCode(string examCode, int courseId) {
