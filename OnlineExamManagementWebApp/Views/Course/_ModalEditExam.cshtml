@@ -1,10 +1,6 @@
 ﻿@{
     List<SelectListItem> examTypes = new List<SelectListItem> {
 new SelectListItem {
-Value = "0",
-Text = @"--SELECT EXAM TYPE--"
-},
-new SelectListItem {
 Value = "1",
 Text = @"Class Test"
 },
@@ -16,7 +12,7 @@ Text = @"Lab Test"
 }
 
 
-<div id="js-modal-editExam" class="modal fade" tabindex="-1">
+<div id="js-modal-editExam" class="modal fade" tabindex="-1" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -32,6 +28,7 @@ Text = @"Lab Test"
                             @Html.Label("Organization", new {@class = "col-sm-2 control-label"})
                             <div class="col-sm-8 ">
                                 @Html.TextBox("js-modal-editExam-OrgName", null, new {@class = "form-control", @readonly = "true"})
+                                
                             </div>
                         </div>
 
@@ -45,7 +42,8 @@ Text = @"Lab Test"
                         <div class="form-group">
                             @Html.Label("Type", new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-10">
-                                @Html.DropDownList("js-modal-editExam-Type", examTypes, new { @class = "form-control", style = "width: 280px" })
+                                @Html.DropDownList("js-modal-editExam-Type", examTypes, "--Select Type--", new { @class = "form-control", style = "width: 280px" })
+                                @Html.ValidationMessage("js-modal-editExam-Type", "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -53,6 +51,7 @@ Text = @"Lab Test"
                             @Html.Label("Code", new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-10">
                                 @Html.TextBox("js-modal-editExam-Code", null, new { @class = "form-control" })
+                                @Html.ValidationMessage("js-modal-editExam-Code","", new{@class="text-danger"})
                             </div>
                         </div>
 
@@ -60,6 +59,7 @@ Text = @"Lab Test"
                             @Html.Label("Topic", new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-10">
                                 @Html.TextBox("js-modal-editExam-Topic", null, new { @class = "form-control" })
+                                @Html.ValidationMessage("js-modal-editExam-Topic", "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -67,18 +67,21 @@ Text = @"Lab Test"
                             @Html.Label("Full Marks", new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-10">
                                 @Html.TextBox("js-modal-editExam-FullMarks", null, new { @class = "form-control" })
+                                @Html.ValidationMessage("js-modal-editExam-FullMarks", "",new {@class="text-danger"})
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Duration", new { @class = "col-sm-2 control-label" })
                             @Html.Hidden("js-modal-editExam-Duration")
-                            <div class="col-xs-2">
+                            <div class="col-sm-5">
                                 @Html.TextBox("js-modal-editExam-DurationHour", null, new { @class = "form-control" })
+                                @Html.ValidationMessage("js-modal-editExam-DurationHour", "", new { @class = "text-danger" })
                             </div>
 
-                            <div class="col-xs-2">
+                            <div class="col-sm-5">
                                 @Html.TextBox("js-modal-editExam-DurationMin", null, new { @class = "form-control" })
+                                @Html.ValidationMessage("js-modal-editExam-DurationMin", "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -96,7 +99,7 @@ Text = @"Lab Test"
             <div class="modal-footer">
                 <div class="col-md-offset-2">
                     <button type="button" class="btn btn-danger" id="js-modal-btn-updateExam">Update</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="js-modal-close-updateExam" data-dismiss="modal">Close</button>
                 </div>
             </div>
 

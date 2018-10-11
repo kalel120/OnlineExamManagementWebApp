@@ -129,19 +129,10 @@ namespace OnlineExamManagementWebApp.Controllers {
             var result = _examManager.SaveExams(exams);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
-        public JsonResult GetActiveExamByCoureId(int courseId) {
-            var exams = _examManager.GetActiveExamsByCourseId(courseId);
-            var examDtoList = new List<ExamDto>();
-
-            foreach (var examItem in exams) {
-                var viewModel = Mapper.Map<ExamDto>(examItem);
-                viewModel.DurationHour = viewModel.Duration / 60;
-                viewModel.DurationMin = viewModel.Duration % 60;
-               examDtoList.Add(viewModel);
-            }
-
-            return Json(examDtoList, JsonRequestBehavior.AllowGet);
+        
+        public JsonResult IsExamExists(int courseId, string examCode) {
+            bool result = _examManager.IsExamExists(courseId, examCode);
+            return Json(result);
         }
 
         public JsonResult RemoveExamByCode(ExamDto dto) {

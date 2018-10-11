@@ -71,5 +71,10 @@ namespace OnlineExamManagementWebApp.BLL {
             _unitOfWork.ExamRepository.Update(updatable);
             return _unitOfWork.Complete();
         }
+
+        public bool IsExamExists(int courseId, string examCode) {
+            var result = _unitOfWork.ExamRepository.GetCourseSpeceficActiveExamByCode(courseId, examCode);
+            return result == null ? false : true;
+        }
     }
 }

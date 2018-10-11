@@ -8,15 +8,16 @@ $(function () {
 
     getTableCellsToObjects();
     autoSuggestSerial();
+
     /** Initialization END**/
 
-    const jQuerValidation = () => {
+    const createExamValidation = () => {
         $.validator.addMethod("validSerial", (value) => {
             if (value > 0 && value < ($("#create-exam-tableBody tr").length + 2)) {
                 return true;
             }
             return false;
-        }, "Must be greater than 0 next incremntal serial number  ");
+        }, "Must be greater than 0 next incremntal serial number");
 
         $.validator.addMethod("uniqueExamCode", (value) => {
             var isUnique = true;
@@ -32,7 +33,7 @@ $(function () {
         },
             "Exam code already exists");
 
-        $("#form-createExam").validate({
+       const validator = $("#form-createExam").validate({
             errorClass: "text-danger",
             errorElement: "div",
 
@@ -68,11 +69,13 @@ $(function () {
                 },
                 "DurationHour": {
                     required: true,
-                    digits: true
+                    digits: true,
+                    range: [0, 24]
                 },
                 "DurationMin": {
                     required: true,
-                    digits: true
+                    digits: true,
+                    range: [0,59]
                 },
                 "SerialNo": {
                     required: true,
@@ -92,13 +95,18 @@ $(function () {
                     required: "Topic required"
                 },
                 "FullMarks": {
-                    required: "Marks required"
+                    required: "Marks required",
+                    digits: "Only numbers are allowed"
                 },
                 "DurationHour": {
-                    required: "Hour required"
+                    required: "Hour required",
+                    digits: "Only numbers are allowed",
+                    range: "Hours must be between 0 to 24"
                 },
                 "DurationMin": {
-                    required: "Min required"
+                    required: "Min required",
+                    digits: "Only numbers  are allowed",
+                    range: "Minutes must be between 0 to 59"
                 },
                 "SerialNo": {
                     required: "This is required",
@@ -111,7 +119,88 @@ $(function () {
             $(this).valid();
         });
 
-        return $("#form-createExam").valid();
+        return validator;
+    }
+
+    const editExamValiation = () => {
+        const modalForm = $("#_form-modal-editExam");
+
+        return modalForm.validate({
+            errorClass: "text-danger",
+            errorElement: "div",
+
+            errorPlacement: function (error, element) {
+                if (element.parent(".input-group > div").length) {
+                    element.parent(".input-group > div").append(error);
+                }
+                element.parent(".form-group > div").append(error);
+            },
+
+            highlight: function (element) {
+                $(element).closest(".form-group").removeClass("has-success has-error")
+                    .addClass("has-error");
+            },
+
+            unhighlight: function (element) {
+                $(element).closest(".form-group").removeClass("has-error");
+            },
+
+            success: function (element) {
+                element.closest(".form-group").removeClass("has-success has-error");
+            },
+
+            rules: {
+                "js-modal-editExam-Code": {
+                    required: true
+                },
+                "js-modal-editExam-Type": {
+                    required: true
+                },
+                "js-modal-editExam-Topic": {
+                    required: true
+                },
+                "js-modal-editExam-FullMarks": {
+                    required: true,
+                    digits: true
+                },
+                "js-modal-editExam-DurationHour": {
+                    required: true,
+                    digits: true,
+                    range: [0, 24]
+                },
+                "js-modal-editExam-DurationMin": {
+                    required: true,
+                    digits: true,
+                    range: [0, 59]
+                }
+            },
+
+            messages: {
+                "js-modal-editExam-Code": {
+                    required: "Exam Code is required"
+                },
+                "js-modal-editExam-Type": {
+                    required: "Select exam"
+                },
+                "js-modal-editExam-Topic": {
+                    required: "This is required"
+                },
+                "js-modal-editExam-FullMarks": {
+                    required: "This is required",
+                    digits: "Only numbers  are allowed"
+                },
+                "js-modal-editExam-DurationHour": {
+                    required: "This is required",
+                    digits: "Only numbers  are allowed",
+                    range: "Min must be between 0 to 24"
+                },
+                "js-modal-editExam-DurationMin": {
+                    required: "This is required",
+                    digits: "Only numbers  are allowed",
+                    range: "Min must be between 0 to 59"
+                }
+            }
+        }).form();
     }
 
     function autoSuggestSerial() {
@@ -119,7 +208,7 @@ $(function () {
         $("#js-exam-serial").val(number + 1);
     }
 
-    function getTableRowToObject(tableRow) {
+    function getTableRowAsObject(tableRow) {
         let rowObject = {
             CourseId: courseId,
             SerialNo: parseInt(tableRow.find("td:eq(0)").text()),
@@ -138,11 +227,11 @@ $(function () {
 
     function getTableCellsToObjects() {
         $("#create-exam-tableBody").find("tr").each(function () {
-            examList.push(getTableRowToObject($(this)));
+            examList.push(getTableRowAsObject($(this)));
         });
     }
 
-    function getTextBoxContentsToObject() {
+    function getTextBoxContentsAsObject() {
         let durationHour = parseInt($("#js-exam-duration-hour").val());
         let durationMin = parseInt($("#js-exam-duration-min").val());
         let duration = durationHour * 60 + durationMin;
@@ -241,10 +330,10 @@ $(function () {
 
     // Add cell item functionality
     $("#js-btn-addExam").on("click", function () {
-        if (!jQuerValidation()) {
+        if (!createExamValidation()) {
             return;
         }
-        const addable = getTextBoxContentsToObject();
+        const addable = getTextBoxContentsAsObject();
 
         if (isNeedReSequancingAfterAdd(addable.SerialNo)) {
             alert("Exam serial number will be changed");
@@ -283,8 +372,7 @@ $(function () {
     });
 
     /************* View Exam Modal Popup functionality *******************/
-    let viewExamModal = $("#js-modal-viewExam");
-    let bindDataToViewExamModal = function bindDataToViewExamModal(data) {
+    const bindDataToViewExamModal = (data)=> {
         $("#js-modal-viewExam-OrgName").val($("#js-organization").val());
         $("#js-modal-viewExam-CourseName").val($("#js-course-code").val());
         $("#js-modal-viewExam-Serial").val(data.SerialNo);
@@ -297,24 +385,16 @@ $(function () {
     };
 
     $(document).on("click", ".js-createExam-ViewExamLink", function (event) {
-        viewExamModal.modal("toggle");
-        let dataForPopup = getTableRowToObject($(event.target).closest("tr"));
+        $("#js-modal-viewExam").modal("toggle");
+        let dataForPopup = getTableRowAsObject($(event.target).closest("tr"));
         bindDataToViewExamModal(dataForPopup);
     });
     /************* END *******************/
 
     /************* Edit Exam Modal Popup functionality *******************/
-    let editExamModal = $("#js-modal-editExam");
-    let isExamEditable = function isExamEditable(editable) {
-        for (let i = 0; i < examList.length; i++) {
-            if (JSON.stringify(examList[i]) === JSON.stringify(editable)) {
-                return false;
-            }
-        }
-        return true;
-    };
-
-    let getEditExamModalContents = function getEditExamModalContents() {
+    const editExamModal = $("#js-modal-editExam");
+   
+    const getEditExamModalContents = ()=> {
         const durationHour = parseInt($("#js-modal-editExam-DurationHour").val());
         const durationMin = parseInt($("#js-modal-editExam-DurationMin").val());
         const duration = durationHour * 60 + durationMin;
@@ -333,7 +413,7 @@ $(function () {
         };
     };
 
-    let bindDataToEditExamPopup = function bindDataToEditExamPopup(data) {
+    const bindDataToEditExamPopup =(data)=> {
         $("#js-modal-editExam-Index").val(data.SerialNo - 1);
         $("#js-modal-editExam-OrgName").val($("#js-organization").val());
         $("#js-modal-editExam-CourseName").val($("#js-course-code").val());
@@ -352,38 +432,75 @@ $(function () {
         $("#js-modal-editExam-FullMarks").val(data.FullMarks);
     };
 
-    let editExamFromModal = function editExamFromModal(editable) {
+    $(document).on("click", ".js-createExam-EditExamLink", function (event) {
+        editExamModal.modal("toggle");
+        const dataForPopup = getTableRowAsObject($(event.target).closest("tr"));
+        bindDataToEditExamPopup(dataForPopup);
+    });
+
+    const editExam = (editable) => {
         const arrayIndex = $("#js-modal-editExam-Index").val();
         const existingCode = examList[arrayIndex].Code;
         examList.splice(arrayIndex, 1, editable);
 
         $.post("/Course/UpdateExamByCode", { existingCode: existingCode, dto: editable })
-            .done(function () {
-                alert("Updated");
-            })
-            .fail(function () {
-                alert("update failed");
-            });
+            .done(() => alert("Updated"))
+            .fail(() => alert("Something went wrong"));
     };
 
-    $(document).on("click", ".js-createExam-EditExamLink", function (event) {
-        editExamModal.modal("toggle");
-        const dataForPopup = getTableRowToObject($(event.target).closest("tr"));
-        bindDataToEditExamPopup(dataForPopup);
-    });
+    const isExamEditable = (editable) => {
+        let examCodes = [];
+
+        $("#create-exam-tableBody").find("tr").each(function () {
+            if (editable.SerialNo != $(this).find("td:eq(0)").text()) {
+                examCodes.push($(this).find("td:eq(3)").text().trim().toLowerCase());
+            }
+        });
+
+        if (examCodes.includes(editable.Code.toLowerCase())) {
+            return false;
+        }
+        return true;
+    };
+
+    const isExamExists = (examCode) => {
+        return new Promise((resolve, reject) => {
+            $.post("/Course/IsExamExists", { courseId: courseId, examCode: examCode })
+                .done((data) => resolve(data));
+        });
+    };
 
     $("#js-modal-btn-updateExam").on("click", function () {
-        let editable = getEditExamModalContents();
-        if (isExamEditable(editable)) {
-            editExamFromModal(editable);
-            editExamModal.modal("toggle");
-            reBuildCreateExamTable();
-
-        } else {
-            alert("update failed");
+        if (!editExamValiation()) {
+            return false;
         }
+        
+        let editable = getEditExamModalContents();
+
+        if (!isExamEditable(editable)) {
+            alert("Code already exists");
+            return false;
+        }
+
+        isExamExists(editable.Code).then((result) => {
+            if (result) {
+                editExam(editable);
+                reBuildCreateExamTable();
+            } else {
+                examList.splice($("#js-modal-editExam-Index").val(), 1, editable);
+                reBuildCreateExamTable();
+                alert("Updated. Still need to save to db");
+            }
+        });
+
+        editExamModal.modal("toggle");
+        return true;
+    });
+
+    $("#js-modal-close-updateExam").on("click", function() {
+        $("#_form-modal-editExam").validate().resetForm();
     });
     /************* END *******************/
 
-    // jquery ready function ends here;
+    // jQuery ready function ends here;
 });
