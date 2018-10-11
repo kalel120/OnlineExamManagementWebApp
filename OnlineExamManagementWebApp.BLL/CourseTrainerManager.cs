@@ -11,19 +11,19 @@ namespace OnlineExamManagementWebApp.BLL {
         private readonly UnitOfWork _unitOfWork = new UnitOfWork();
 
         public List<CourseTrainer> GetCourseTrainersByCourseId(int id) {
-            return _unitOfWork.CourseTrainerRepository.GetCourseTrainersByCourseId(id);
+            return _unitOfWork.CourseTrainers.GetCourseTrainersByCourseId(id);
         }
 
         public bool AssignTrainerOfACourse(List<CourseTrainer> courseTrainers) {
-            return _unitOfWork.CourseTrainerRepository.AssignTrainerOfACourse(courseTrainers);
+            return _unitOfWork.CourseTrainers.AssignTrainerOfACourse(courseTrainers);
         }
 
         public bool RemoveTrainerAssignment(CourseTrainer removableTrainer) {
-            return _unitOfWork.CourseTrainerRepository.RemoveTrainerAssignment(removableTrainer);
+            return _unitOfWork.CourseTrainers.RemoveTrainerAssignment(removableTrainer);
         }
 
         public bool UpdateLeadTrainerStatus(CourseTrainer updatable) {
-            return _unitOfWork.CourseTrainerRepository.UpdateLeadTrainerStatus(updatable);
+            return _unitOfWork.CourseTrainers.UpdateLeadTrainerStatus(updatable);
         }
     }
 }

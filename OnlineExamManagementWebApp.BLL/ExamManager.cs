@@ -9,7 +9,7 @@ namespace OnlineExamManagementWebApp.BLL {
 
         public bool SaveExams(List<Exam> examsFromView) {
             var courseId = examsFromView[0].CourseId;
-            var existingExams = _unitOfWork.ExamRepository.GetActiveExamsByCourseId(courseId);
+            var existingExams = _unitOfWork.Exams.GetActiveExamsByCourseId(courseId);
 
             var examsToBeSaved = new List<Exam>();
             foreach (var exam in examsFromView) {
@@ -19,7 +19,7 @@ namespace OnlineExamManagementWebApp.BLL {
             }
 
             if (examsToBeSaved.Count != 0) {
-                _unitOfWork.ExamRepository.SaveAll(examsToBeSaved);             
+                _unitOfWork.Exams.SaveAll(examsToBeSaved);             
             }
 
             if (IsNeedResequancing(examsFromView, existingExams)) {
@@ -45,22 +45,22 @@ namespace OnlineExamManagementWebApp.BLL {
         }
 
         public List<Exam> GetActiveExamsByCourseId(int courseId) {
-            return _unitOfWork.ExamRepository.GetActiveExamsByCourseId(courseId);
+            return _unitOfWork.Exams.GetActiveExamsByCourseId(courseId);
         }
 
         public bool RemoveExamByCode(string examCode, int courseId) {
-            var removable = _unitOfWork.ExamRepository.GetCourseSpeceficActiveExamByCode(courseId, examCode);
+            var removable = _unitOfWork.Exams.GetCourseSpeceficActiveExamByCode(courseId, examCode);
             if (removable == null) {
                 return false;
             }
 
             removable.IsDeleted = true;
-            _unitOfWork.ExamRepository.Update(removable);
+            _unitOfWork.Exams.Update(removable);
             return _unitOfWork.Complete();
         }
 
         public bool UpdateExamByCode(string existingCode, Exam exam) {
-            var updatable = _unitOfWork.ExamRepository.GetCourseSpeceficActiveExamByCode(exam.CourseId, existingCode);
+            var updatable = _unitOfWork.Exams.GetCourseSpeceficActiveExamByCode(exam.CourseId, existingCode);
 
             updatable.Code = exam.Code;
             updatable.Type = exam.Type;
@@ -68,12 +68,12 @@ namespace OnlineExamManagementWebApp.BLL {
             updatable.FullMarks = exam.FullMarks;
             updatable.Duration = exam.Duration;
 
-            _unitOfWork.ExamRepository.Update(updatable);
+            _unitOfWork.Exams.Update(updatable);
             return _unitOfWork.Complete();
         }
 
         public bool IsExamExists(int courseId, string examCode) {
-            var result = _unitOfWork.ExamRepository.GetCourseSpeceficActiveExamByCode(courseId, examCode);
+            var result = _unitOfWork.Exams.GetCourseSpeceficActiveExamByCode(courseId, examCode);
             return result == null ? false : true;
         }
     }

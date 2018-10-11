@@ -8,22 +8,26 @@ using OnlineExamManagementWebApp.Repository;
 namespace OnlineExamManagementWebApp.BLL {
 
     public class CourseManager {
-        private UnitOfWork _unitOfWork = new UnitOfWork();
+        private readonly UnitOfWork _unitOfWork;
+
+        public CourseManager() {
+            _unitOfWork = new UnitOfWork();
+        }
 
         public List<SelectListItem> GetAllOrganizations() {
-            var organizations = _unitOfWork._orgRepository.GetAllOrganizations();
+            var organizations = _unitOfWork.Organizations.GetAllOrganizations();
             organizations.Insert(0, new SelectListItem() { Value = "", Text = "--Select Organization--" });
             return organizations;
         }
 
         public IEnumerable GetAllTags() {
-            return _unitOfWork._tagRepository.GetAllTagNames();
+            return _unitOfWork.Tags.GetAllTagNames();
         }
 
         public List<Tag> GetReleventTags(List<string> tagList) {
             var newTags = GetNewTags(tagList);
             if (newTags.Count > 0) {
-                _unitOfWork._tagRepository.AddNewTags(newTags);
+                _unitOfWork.Tags.AddNewTags(newTags);
             }
 
             var courseTags = new List<Tag>();
@@ -49,24 +53,24 @@ namespace OnlineExamManagementWebApp.BLL {
         }
 
         private Tag GetTagByName(string searchTerm) {
-            return _unitOfWork._tagRepository.GetTagByName(searchTerm);
+            return _unitOfWork.Tags.GetTagByName(searchTerm);
         }
 
         public bool IsCourseSaved(Course course) {
-            var isDuplicateCode = _unitOfWork._courseRepository.IsDuplicateCode(course.Code,course.OrganizationId);
+            var isDuplicateCode = _unitOfWork.Courses.IsDuplicateCode(course.Code,course.OrganizationId);
             if (isDuplicateCode) {
                 return false;
             }
-            return _unitOfWork._courseRepository.AddCourse(course);
+            return _unitOfWork.Courses.AddCourse(course);
         }
 
         public Organization GetOrganizationById(int organizationId) {
-            return _unitOfWork._orgRepository.GetOrganizationById(organizationId);
+            return _unitOfWork.Organizations.GetOrganizationById(organizationId);
         }
        
         public Course GetCourseWithActiveExamsById(int? id) {       
-            var course = _unitOfWork._courseRepository.GetCourseById(id);
-            var activeExams = _unitOfWork.ExamRepository.GetActiveExamsByCourseId(course.Id);
+            var course = _unitOfWork.Courses.GetCourseById(id);
+            var activeExams = _unitOfWork.Exams.GetActiveExamsByCourseId(course.Id);
             course.Exams = activeExams;
             return course;
         }
