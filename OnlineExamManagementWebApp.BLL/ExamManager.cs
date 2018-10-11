@@ -21,10 +21,12 @@ namespace OnlineExamManagementWebApp.BLL {
                     examsToBeSaved.Add(exam);
                 }
             }
-
-            if (examsToBeSaved.Count != 0) {
-                _unitOfWork.Exams.SaveAll(examsToBeSaved);
+ 
+            if (examsToBeSaved.Count == 0) {
+                return false;
             }
+
+            _unitOfWork.Exams.SaveAll(examsToBeSaved);
 
             if (IsNeedResequancing(examsFromView, existingExams)) {
                 foreach (var exam in existingExams) {
@@ -49,7 +51,7 @@ namespace OnlineExamManagementWebApp.BLL {
         }
 
         public bool RemoveExamByCode(string examCode, int courseId) {
-            var removable = _unitOfWork.Exams.GetCourseSpeceficActiveExamByCode(courseId, examCode);
+            var removable = _unitOfWork.Exams.GetActiveExamByCode(courseId, examCode);
             if (removable == null) {
                 return false;
             }
@@ -60,7 +62,7 @@ namespace OnlineExamManagementWebApp.BLL {
         }
 
         public bool UpdateExamByCode(string existingCode, Exam exam) {
-            var updatable = _unitOfWork.Exams.GetCourseSpeceficActiveExamByCode(exam.CourseId, existingCode);
+            var updatable = _unitOfWork.Exams.GetActiveExamByCode(exam.CourseId, existingCode);
 
             updatable.Code = exam.Code;
             updatable.Type = exam.Type;
@@ -73,8 +75,19 @@ namespace OnlineExamManagementWebApp.BLL {
         }
 
         public bool IsExamExists(int courseId, string examCode) {
-            var result = _unitOfWork.Exams.GetCourseSpeceficActiveExamByCode(courseId, examCode);
+            var result = _unitOfWork.Exams.GetActiveExamByCode(courseId, examCode);
             return result == null ? false : true;
+        }
+
+        public bool ReSequanceSerial(List<Exam> examsFromView) {
+            var courseId = examsFromView[0].CourseId;
+            var existingExams = _unitOfWork.Exams.GetActiveExamsByCourseId(courseId);
+
+            foreach (var exam in existingExams) {
+                var index = examsFromView.FindIndex(e => e.Code == exam.Code);
+                exam.SerialNo = examsFromView[index].SerialNo;
+            }
+            return _unitOfWork.Complete();
         }
     }
 }

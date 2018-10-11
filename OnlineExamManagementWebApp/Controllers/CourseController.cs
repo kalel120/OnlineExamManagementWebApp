@@ -129,7 +129,18 @@ namespace OnlineExamManagementWebApp.Controllers {
             var result = _examManager.SaveExams(exams);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        
+
+        public JsonResult ReSequanceSerial(List<ExamDto> examDtos) {
+            var exams = new List<Exam>();
+
+            foreach (var item in examDtos) {
+                exams.Add(Mapper.Map<Exam>(item));
+            }
+
+            var result = _examManager.ReSequanceSerial(exams);
+            return Json(result);
+        }
+
         public JsonResult IsExamExists(int courseId, string examCode) {
             bool result = _examManager.IsExamExists(courseId, examCode);
             return Json(result);

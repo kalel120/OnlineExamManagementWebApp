@@ -11,9 +11,9 @@ namespace OnlineExamManagementWebApp.Repository {
         public ExamRepository(ApplicationDbContext dbContext) {
             _dbContext = dbContext;
         }
-        
+
         public void SaveAll(List<Exam> examsToBeSaved) {
-            _dbContext.Exams.AddRange(examsToBeSaved);            
+            _dbContext.Exams.AddRange(examsToBeSaved);
         }
 
         public List<Exam> GetActiveExamsByCourseId(int courseId) {
@@ -22,13 +22,13 @@ namespace OnlineExamManagementWebApp.Repository {
                 .ToList();
         }
 
-        public Exam GetCourseSpeceficActiveExamByCode(int courseId, string code) {
-            var activeExams = GetActiveExamsByCourseId(courseId);
-            return activeExams.SingleOrDefault(e => e.Code == code);
+        public Exam GetActiveExamByCode(int courseId, string code) {
+            var exam = _dbContext.Exams.SingleOrDefault(e => e.CourseId == courseId && e.IsDeleted == false && e.Code == code);
+            return exam;
         }
 
         public void Update(Exam updatable) {
-            _dbContext.Entry(updatable).State = EntityState.Modified;            
-        }        
+            _dbContext.Entry(updatable).State = EntityState.Modified;
+        }
     }
 }

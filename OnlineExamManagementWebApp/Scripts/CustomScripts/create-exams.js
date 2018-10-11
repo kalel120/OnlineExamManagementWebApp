@@ -9,7 +9,7 @@ $(function () {
     getTableCellAsObjects();
     autoSuggestSerial();
     const btnSaveAllExam = $("#js-btn-SaveAllExam");
-    btnSaveAllExam.prop("disabled", true);
+    //btnSaveAllExam.prop("disabled", true);
     /** Initialization END**/
 
     const createExamValidation = () => {
@@ -298,8 +298,9 @@ $(function () {
     function removeExamFromDb(examCode, courseId, position) {
         if (position) {
             $.post("/Course/RemoveExamByCode", { Code: examCode, CourseId: courseId })
-                .done(function () {
-                    saveAllExams(examList);
+                .done(() => {
+                    $.post("/Course/ReSequanceSerial", { examDtos: examList })
+                        .done(() => alert(`${examCode} is removed and resequanced`));
                 });
         } else {
             $.post("/Course/RemoveExamByCode", { Code: examCode, CourseId: courseId })
@@ -310,22 +311,9 @@ $(function () {
     }
 
     function saveAllExams(exams) {
-        $.ajax({
-            url: "/Course/SaveAllExams",
-            type: "POST",
-            contentType: "application/json",
-            dataType: "json",
-            data: JSON.stringify(exams),
-
-            success: function (result) {
-                if (result) {
-                    alert("Saved");
-                }
-            },
-
-            error: function (message) {
-                console.log(message.responseText);
-            }
+        return new Promise((resolve, reject) => {
+            $.post("/Course/SaveAllExams", { createExamsVmList: exams })
+                .done((data) => resolve(data));
         });
     }
 
@@ -345,12 +333,19 @@ $(function () {
         }
 
         reBuildCreateExamTable();
-        btnSaveAllExam.prop("disabled", true);
+        btnSaveAllExam.prop("disabled", false);
     });
 
     // Save all to database functionality
     btnSaveAllExam.on("click", function () {
-        saveAllExams(examList);
+        saveAllExams(examList)
+            .then((result) => {
+                if (result) {
+                    alert("Saved Successfully");
+                } else {
+                    alert("Nothing to save");
+                }
+            });
     });
 
     // Remove cell item functionality
