@@ -299,8 +299,11 @@ $(function () {
         if (position) {
             $.post("/Course/RemoveExamByCode", { Code: examCode, CourseId: courseId })
                 .done(() => {
-                    $.post("/Course/ReSequanceSerial", { examDtos: examList })
-                        .done(() => alert(`${examCode} is removed and resequanced`));
+                    reSequanceSerialInDb().then((result) => {
+                        if (result) {
+                            alert(`${examCode} is removed and resequanced`);
+                        }
+                    });
                 });
         } else {
             $.post("/Course/RemoveExamByCode", { Code: examCode, CourseId: courseId })
@@ -309,14 +312,7 @@ $(function () {
                 });
         }
     }
-
-    function saveAllExams(exams) {
-        return new Promise((resolve, reject) => {
-            $.post("/Course/SaveAllExams", { createExamsVmList: exams })
-                .done((data) => resolve(data));
-        });
-    }
-
+   
     // Add cell item functionality
     $("#js-btn-addExam").on("click", function () {
         if (!createExamValidation()) {
@@ -336,12 +332,46 @@ $(function () {
         btnSaveAllExam.prop("disabled", false);
     });
 
+    function saveAllExams(exams) {
+        return new Promise((resolve, reject) => {
+            $.post("/Course/SaveAllExams", { examDtos: exams })
+                .done((data) => resolve(data));
+        });
+    }
+
+    function isNeedReSequancingInDb() {
+        return new Promise((resolve, reject) => {
+            $.post("/Course/IsNeedReSequancing", { examDtos: examList })
+                .done((data) => resolve(data));
+        });
+    }
+
+    function reSequanceSerialInDb() {
+        return new Promise((resolve, reject) => {
+            $.post("/Course/ReSequanceSerial", { examDtos: examList })
+                .done((data) => resolve(data));
+        });
+    }
+
     // Save all to database functionality
     btnSaveAllExam.on("click", function () {
         saveAllExams(examList)
             .then((result) => {
                 if (result) {
                     alert("Saved Successfully");
+                    isNeedReSequancingInDb().then((result) => {
+                        if (result) {
+                            reSequanceSerialInDb().then((result) => {
+                                if (result) {
+                                    alert(`Serial No. Are Resequanced`);
+                                    window.location.reload(false);
+                                }
+                            });
+                        } else {
+                            window.location.reload(false);
+                        }
+                    });
+
                 } else {
                     alert("Nothing to save");
                 }
@@ -350,21 +380,27 @@ $(function () {
 
     // Remove cell item functionality
     $(document).on("click", ".js-createExam-RemoveExamLink", function () {
+        if (!confirm("Are you sure?")) {
+            return;
+        }
         let closestRow = $(this).closest("tr");
         let examCode = closestRow.find("td:eq(3)").text().trim();
         let rowSerial = parseInt(closestRow.find("td:eq(0)").text());
 
-        if (rowSerial === examList.length && confirm("Are you sure?")) {
+        if (rowSerial === examList.length) {
             examList = examList.filter(s => s.SerialNo !== rowSerial);
             reBuildCreateExamTable();
             removeExamFromDb(examCode, courseId);
+            return;
         }
-        else if (confirm("serial number will be resequanced.\nAre you Sure?")) {
+
+        if (confirm("serial number will be resequanced.\nAre you Sure?")) {
             examList = examList.filter(s => s.SerialNo !== rowSerial);
             reSequanceSerialNo();
             reBuildCreateExamTable();
 
             removeExamFromDb(examCode, courseId, rowSerial);
+            return;
         }
     });
 

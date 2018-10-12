@@ -10,10 +10,17 @@ using OnlineExamManagementWebApp.ViewModels;
 
 namespace OnlineExamManagementWebApp.Controllers {
     public class CourseController : Controller {
-        private readonly CourseManager _courseManager = new CourseManager();
-        private readonly TrainerManager _trainerManager = new TrainerManager();
-        private readonly CourseTrainerManager _courseTrainerManager = new CourseTrainerManager();
-        private readonly ExamManager _examManager = new ExamManager();
+        private readonly CourseManager _courseManager;
+        private readonly TrainerManager _trainerManager;
+        private readonly CourseTrainerManager _courseTrainerManager;
+        private readonly ExamManager _examManager;
+
+        public CourseController() {
+            _courseManager = new CourseManager();
+            _trainerManager = new TrainerManager();
+            _courseTrainerManager = new CourseTrainerManager();
+            _examManager = new ExamManager();
+        }
 
         #region Course Entry Page
         public ActionResult Entry() {
@@ -48,7 +55,7 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
         #endregion
 
-                     
+
         public ActionResult Edit(int? id) {
             if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -118,25 +125,31 @@ namespace OnlineExamManagementWebApp.Controllers {
 
         #endregion
 
-        #region Create Exam tab 
-        public JsonResult SaveAllExams(List<CreateExamViewModel> createExamsVmList) {
-            var exams = new List<Exam>();
-
-            foreach (var item in createExamsVmList) {
-                exams.Add( Mapper.Map<Exam>(item));
-            }
-
-            var result = _examManager.SaveExams(exams);
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult ReSequanceSerial(List<ExamDto> examDtos) {
+        #region Create Exam tab
+        private List<Exam> GetExamsUsingMapper(List<ExamDto> examDtos) {
             var exams = new List<Exam>();
 
             foreach (var item in examDtos) {
                 exams.Add(Mapper.Map<Exam>(item));
             }
 
+            return exams;
+        }
+
+        public JsonResult SaveAllExams(List<ExamDto> examDtos) {
+            var exams = GetExamsUsingMapper(examDtos);
+            var result = _examManager.SaveExams(exams);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult IsNeedReSequancing(List<ExamDto> examDtos) {
+            var exams = GetExamsUsingMapper(examDtos);
+            bool result = _examManager.IsNeedReSequancing(exams);
+            return Json(result);
+        }
+
+        public JsonResult ReSequanceSerial(List<ExamDto> examDtos) {
+            var exams = GetExamsUsingMapper(examDtos);
             var result = _examManager.ReSequanceSerial(exams);
             return Json(result);
         }
@@ -147,14 +160,13 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         public JsonResult RemoveExamByCode(ExamDto dto) {
-            bool result = _examManager.RemoveExamByCode(dto.Code,dto.CourseId);
+            bool result = _examManager.RemoveExamByCode(dto.Code, dto.CourseId);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult UpdateExamByCode(string existingCode, ExamDto dto) {
             var exam = Mapper.Map<Exam>(dto);
-
-            bool result = _examManager.UpdateExamByCode(existingCode,exam);
+            bool result = _examManager.UpdateExamByCode(existingCode, exam);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         #endregion

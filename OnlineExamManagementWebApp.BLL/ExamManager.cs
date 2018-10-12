@@ -21,33 +21,13 @@ namespace OnlineExamManagementWebApp.BLL {
                     examsToBeSaved.Add(exam);
                 }
             }
- 
+
             if (examsToBeSaved.Count == 0) {
                 return false;
             }
 
             _unitOfWork.Exams.SaveAll(examsToBeSaved);
-
-            if (IsNeedResequancing(examsFromView, existingExams)) {
-                foreach (var exam in existingExams) {
-                    var index = examsFromView.FindIndex(e => e.Code == exam.Code);
-                    exam.SerialNo = examsFromView[index].SerialNo;
-                }
-            }
             return _unitOfWork.Complete();
-        }
-
-        private bool IsNeedResequancing(List<Exam> examsFromView, List<Exam> existingExams) {
-            bool isNeedResequancing = false;
-            for (var index = 0; index < existingExams.Count; index++) {
-                if (!(existingExams[index].Code == examsFromView[index].Code
-                      && existingExams[index].SerialNo == examsFromView[index].SerialNo)) {
-                    isNeedResequancing = true;
-                    break;
-                }
-            }
-
-            return isNeedResequancing;
         }
 
         public bool RemoveExamByCode(string examCode, int courseId) {
@@ -80,14 +60,34 @@ namespace OnlineExamManagementWebApp.BLL {
         }
 
         public bool ReSequanceSerial(List<Exam> examsFromView) {
-            var courseId = examsFromView[0].CourseId;
-            var existingExams = _unitOfWork.Exams.GetActiveExamsByCourseId(courseId);
+            var existingExams = GetExistingExams(examsFromView);
 
             foreach (var exam in existingExams) {
                 var index = examsFromView.FindIndex(e => e.Code == exam.Code);
                 exam.SerialNo = examsFromView[index].SerialNo;
             }
             return _unitOfWork.Complete();
+        }
+
+        public bool IsNeedReSequancing(List<Exam> examsFromView) {
+            var existingExams = GetExistingExams(examsFromView);
+
+            var isNeedResequancing = false;
+            for (var index = 0; index < existingExams.Count; index++) {
+                if (!(existingExams[index].Code == examsFromView[index].Code
+                      && existingExams[index].SerialNo == examsFromView[index].SerialNo)) {
+                    isNeedResequancing = true;
+                    break;
+                }
+            }
+
+            return isNeedResequancing;
+        }
+
+        private List<Exam> GetExistingExams(List<Exam> examsFromView) {
+            var courseId = examsFromView[0].CourseId;
+            var existingExams = _unitOfWork.Exams.GetActiveExamsByCourseId(courseId);
+            return existingExams;
         }
     }
 }
