@@ -28,9 +28,7 @@ namespace OnlineExamManagementWebApp.Models {
         public string PostalCode { get; set; }
 
         [Required]
-        public string Country { get; set; }
-        
-        //public List<CourseTrainer> CourseTrainers { get; set; }
+        public string Country { get; set; }                
 
         public byte[] Image { get; set; }
 

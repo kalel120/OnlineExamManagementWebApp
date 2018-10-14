@@ -40,7 +40,7 @@ namespace OnlineExamManagementWebApp.BLL {
             return courseTags;
         }
 
-        public List<Tag> GetNewTags(List<string> tags) {
+        private List<Tag> GetNewTags(List<string> tags) {
             var newTags = new List<Tag>();
 
             foreach (var item in tags) {

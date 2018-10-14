@@ -26,9 +26,9 @@ namespace OnlineExamManagementWebApp.Repository {
 
         public bool RemoveTrainerAssignment(CourseTrainer removableTrainer) {
             var courseTrainer = _dbContext.CourseTrainers
-                .SingleOrDefault(ct=>ct.CourseId ==removableTrainer.CourseId && ct.TrainerId==removableTrainer.TrainerId);
+                .SingleOrDefault(ct => ct.CourseId == removableTrainer.CourseId && ct.TrainerId == removableTrainer.TrainerId);
 
-            if (courseTrainer ==null) {
+            if (courseTrainer == null) {
                 return false;
             }
 
@@ -38,7 +38,7 @@ namespace OnlineExamManagementWebApp.Repository {
 
         public bool UpdateLeadTrainerStatus(CourseTrainer updatable) {
             var courseTrainer = _dbContext.CourseTrainers
-                .Where(ct => ct.CourseId == updatable.CourseId && ct.TrainerId == updatable.TrainerId).SingleOrDefault();
+                .SingleOrDefault(ct => ct.CourseId == updatable.CourseId && ct.TrainerId == updatable.TrainerId);
 
             if (courseTrainer == null) {
                 return false;

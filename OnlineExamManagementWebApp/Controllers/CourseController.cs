@@ -144,7 +144,7 @@ namespace OnlineExamManagementWebApp.Controllers {
 
         public JsonResult IsNeedReSequancing(List<ExamDto> examDtos) {
             var exams = GetExamsUsingMapper(examDtos);
-            bool result = _examManager.IsNeedReSequancing(exams);
+            var result = _examManager.IsNeedReSequancing(exams);
             return Json(result);
         }
 
@@ -155,18 +155,18 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         public JsonResult IsExamExists(int courseId, string examCode) {
-            bool result = _examManager.IsExamExists(courseId, examCode);
+            var result = _examManager.IsExamExists(courseId, examCode);
             return Json(result);
         }
 
         public JsonResult RemoveExamByCode(ExamDto dto) {
-            bool result = _examManager.RemoveExamByCode(dto.Code, dto.CourseId);
+            var result = _examManager.RemoveExamByCode(dto.Code, dto.CourseId);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult UpdateExamByCode(string existingCode, ExamDto dto) {
             var exam = Mapper.Map<Exam>(dto);
-            bool result = _examManager.UpdateExamByCode(existingCode, exam);
+            var result = _examManager.UpdateExamByCode(existingCode, exam);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
         #endregion

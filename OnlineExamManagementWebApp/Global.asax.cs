@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using AutoMapper;
@@ -24,8 +20,7 @@ namespace OnlineExamManagementWebApp {
 
                 cfg.CreateMap<CourseTrainer, CourseTrainerDto>();
                 cfg.CreateMap<CourseTrainerDto, CourseTrainer>();
-
-                cfg.CreateMap<CreateExamViewModel, Exam>();
+                
                 cfg.CreateMap<Exam, ExamDto>();
                 cfg.CreateMap<ExamDto, Exam>();
             });

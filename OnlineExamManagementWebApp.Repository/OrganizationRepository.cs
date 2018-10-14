@@ -13,7 +13,7 @@ namespace OnlineExamManagementWebApp.Repository {
         }
 
         public Organization GetOrganizationById(int organizationId) {
-            return _dbContext.Organizations.Where(o => o.Id == organizationId).SingleOrDefault();
+            return _dbContext.Organizations.SingleOrDefault(o => o.Id == organizationId);
         }
 
         public List<SelectListItem> GetAllOrganizations() {

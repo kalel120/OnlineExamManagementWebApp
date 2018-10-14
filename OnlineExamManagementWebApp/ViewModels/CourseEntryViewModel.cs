@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace OnlineExamManagementWebApp.ViewModels {
-    public class CourseEntryViewModel {
-        [Display(Name = "Organization")]
+    public class CourseEntryViewModel {        
         [Required]
+        [Display(Name = "Organization")]
         public int OrganizationId { get; set; }
 
         public List<SelectListItem> Organizations { get; set; }
