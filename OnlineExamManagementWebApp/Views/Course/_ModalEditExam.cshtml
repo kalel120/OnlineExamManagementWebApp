@@ -16,7 +16,6 @@ Text = @"Lab Test"
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button class="close" data-dismiss="modal">&times;</button>
                 <h3 class="modal-title">Update Exam</h3>
             </div>
 
@@ -25,9 +24,9 @@ Text = @"Lab Test"
                     <div class="form-horizontal">
                         <div class="form-group">
                             @Html.Hidden("js-modal-editExam-Index")
-                            @Html.Label("Organization", new {@class = "col-sm-2 control-label"})
+                            @Html.Label("Organization", new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-8 ">
-                                @Html.TextBox("js-modal-editExam-OrgName", null, new {@class = "form-control", @readonly = "true"})                                
+                                @Html.TextBox("js-modal-editExam-OrgName", null, new { @class = "form-control", @readonly = "true" })
                             </div>
                         </div>
 
@@ -50,7 +49,7 @@ Text = @"Lab Test"
                             @Html.Label("Code", new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-10">
                                 @Html.TextBox("js-modal-editExam-Code", null, new { @class = "form-control" })
-                                @Html.ValidationMessage("js-modal-editExam-Code","", new{@class="text-danger"})
+                                @Html.ValidationMessage("js-modal-editExam-Code", "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -66,7 +65,7 @@ Text = @"Lab Test"
                             @Html.Label("Full Marks", new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-10">
                                 @Html.TextBox("js-modal-editExam-FullMarks", null, new { @class = "form-control" })
-                                @Html.ValidationMessage("js-modal-editExam-FullMarks", "",new {@class="text-danger"})
+                                @Html.ValidationMessage("js-modal-editExam-FullMarks", "", new { @class = "text-danger" })
                             </div>
                         </div>
 
@@ -87,7 +86,7 @@ Text = @"Lab Test"
                         <div class="form-group">
                             @Html.Label("Serial", new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-2">
-                                @Html.TextBox("js-modal-editExam-Serial", null, new { @class = "form-control",@readonly="true" })
+                                @Html.TextBox("js-modal-editExam-Serial", null, new { @class = "form-control", @readonly = "true" })
                             </div>
                         </div>
                     </div>

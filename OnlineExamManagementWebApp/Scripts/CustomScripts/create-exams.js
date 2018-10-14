@@ -9,7 +9,7 @@ $(function () {
     getTableCellAsObjects();
     autoSuggestSerial();
     const btnSaveAllExam = $("#js-btn-SaveAllExam");
-    //btnSaveAllExam.prop("disabled", true);
+    btnSaveAllExam.prop("disabled", true);
     /** Initialization END**/
 
     const createExamValidation = () => {
@@ -299,11 +299,12 @@ $(function () {
         if (position) {
             $.post("/Course/RemoveExamByCode", { Code: examCode, CourseId: courseId })
                 .done(() => {
-                    reSequanceSerialInDb().then((result) => {
-                        if (result) {
-                            alert(`${examCode} is removed and resequanced`);
-                        }
-                    });
+                    reSequanceSerialInDb()
+                        .then((result) => {
+                            if (result) {
+                                alert(`${examCode} is removed and resequanced`);
+                            }
+                        });
                 });
         } else {
             $.post("/Course/RemoveExamByCode", { Code: examCode, CourseId: courseId })
@@ -312,7 +313,7 @@ $(function () {
                 });
         }
     }
-   
+
     // Add cell item functionality
     $("#js-btn-addExam").on("click", function () {
         if (!createExamValidation()) {
@@ -359,18 +360,20 @@ $(function () {
             .then((result) => {
                 if (result) {
                     alert("Saved Successfully");
-                    isNeedReSequancingInDb().then((result) => {
-                        if (result) {
-                            reSequanceSerialInDb().then((result) => {
-                                if (result) {
-                                    alert(`Serial No. Are Resequanced`);
-                                    window.location.reload(false);
-                                }
-                            });
-                        } else {
-                            window.location.reload(false);
-                        }
-                    });
+                    isNeedReSequancingInDb()
+                        .then((result) => {
+                            if (result) {
+                                reSequanceSerialInDb()
+                                    .then((result) => {
+                                        if (result) {
+                                            alert(`Serial No. Are Resequanced`);
+                                            window.location.reload(false);
+                                        }
+                                    });
+                            } else {
+                                window.location.reload(false);
+                            }
+                        });
 
                 } else {
                     alert("Nothing to save");

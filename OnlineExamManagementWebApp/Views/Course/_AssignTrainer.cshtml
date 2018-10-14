@@ -1,44 +1,62 @@
 ﻿<link href="~/Content/css/select2.css" rel="stylesheet" />
 <br />
+<div class="panel-group">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <div class="panel-title">Assign Trainer</div>
+        </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-2">
-                <label class="control-label col-md-2">Trainer</label>
-            </div>
-            <div class="col-md-4">
-                <select class="form-control" id="js-ddl-trainers" style="width: 300px"></select>
-            </div>
-            
+        <div class="panel-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-2">
+                        <label class="control-label col-md-2">Trainer</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-control" id="js-ddl-trainers" style="width: 280px"></select>
+                    </div>
 
-            <div class="col-md-2">
-                @Html.Label("Is Lead?")
-                @Html.CheckBox("is-lead")
+                    <div class="col-md-2">
+                        @Html.Label("Is Lead?")
+                        @Html.CheckBox("is-lead")
+                    </div>
+
+                    <div class="col-md-2">
+                        <input type="button" value="Add" class="btn btn-success" id="js-insert-table" />
+                    </div>
+                </div>
             </div>
 
-            <div class="col-md-2">
-                <input type="button" value="Add" class="btn btn-success" id="js-insert-table" />
-            </div>
         </div>
     </div>
+</div>
 
 
-<br />
-<br />
-<table class="table table-bordered table-hover" id="table-course2trainer">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Lead Trainer?</th>
-            <th>Action</th>
-        </tr>
+<div class="panel-group">
+    <div class="panel panel-success">
+        <div class="panel-heading">
+            <div class="panel-title">Trainer Assignment Table</div>
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered table-hover" id="table-course2trainer">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Lead Trainer?</th>
+                        <th>Action</th>
+                    </tr>
 
-    </thead>
-    <tbody id="table-body"></tbody>
-</table>
+                </thead>
+                <tbody id="table-body"></tbody>
+            </table>
 
-<div class="row">
-    <div class="col-md-2">
-        <input type="button" value="Save" class="btn btn-primary" id="js-save-trainers" />
+
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="button" value="Save" class="btn btn-primary" id="js-save-trainers" />
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
