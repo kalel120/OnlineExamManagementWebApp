@@ -2,64 +2,112 @@
 
 
 <br />
-<ul class="nav nav-tabs">
-    <li role="presentation" class="active"><a href="#basic-tab" data-toggle="tab">Basic Info</a></li>
-    <li role="presentation"><a href="#assign-trainer-tab" data-toggle="tab">Assign Trainer</a></li>
-    <li role="presentation"><a href="#create-exams-tab" data-toggle="tab">Create Exams</a></li>
-</ul>
+<div class="x_panel">
+    <div class="x_title">
+        <h2>Course Edit</h2>
+        <ul class="nav navbar-right panel_toolbox">
+            <li>
+                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a href="#">Settings 1</a>
+                    </li>
+                    <li>
+                        <a href="#">Settings 2</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="close-link"><i class="fa fa-close"></i></a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
 
-<div class="tab-content">
-    <div id="basic-tab" class="tab-pane active">
-        <br />
-        <div class="panel-group">
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <div class="panel-title">Course Information</div>
+        <div class="" role="tabpanel" data-example-id="togglable-tabs">
+            <ul class="nav nav-tabs bar_tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#basic-tab" role="tab" data-toggle="tab" aria-expanded="true">Basic Info</a>
+                </li>
+                <li role="presentation" class="">
+                    <a href="#assign-trainer-tab" role="tab" data-toggle="tab" aria-expanded="false">Assign Trainer</a>
+                </li>
+                <li role="presentation" class="">
+                    <a href="#create-exams-tab" role="tab" data-toggle="tab" aria-expanded="false">Create Exams</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade active in" id="basic-tab">
+                    <br />
+                    <form class="form-horizontal form-label-left" novalidate>
+                        <span class="section">Basic Information About The Course</span>
+                        @Html.HiddenFor(m => m.Id)
+                        @Html.HiddenFor(m => m.OrganizationId)
+                        <div class="item form-group">
+                            @Html.LabelFor(m => m.OrganizationCode, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(m => m.OrganizationCode, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
+                            </div>
+                        </div>
+                        <div class="item form-group">
+                            @Html.LabelFor(m => m.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            @Html.LabelFor(m => m.Code, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(m => m.Code, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            @Html.LabelFor(m => m.Duration, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(m => m.Duration, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            @Html.LabelFor(m => m.Credit, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(m => m.Credit, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
+                            </div>
+                        </div>
+
+                        <div class="item form-group">
+                            @Html.LabelFor(m => m.Outline, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                @Html.TextBoxFor(m => m.Outline, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
+                            </div>
+                        </div>
+
+                        <div class="ln_solid"></div>
+                    </form>
                 </div>
-                <div class="panel-body">
-                    @Html.HiddenFor(m => m.Id)
-                    @Html.HiddenFor(m => m.OrganizationId)
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.OrganizationCode)
-                        @Html.TextBoxFor(m => m.OrganizationCode, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Name)
-                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Code)
-                        @Html.TextBoxFor(m => m.Code, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Duration)
-                        @Html.TextBoxFor(m => m.Duration, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Credit)
-                        @Html.TextBoxFor(m => m.Credit, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Outline)
-                        @Html.TextBoxFor(m => m.Outline, new { @class = "form-control" })
-                    </div>
+
+                <div role="tabpanel" class="tab-pane fade" id="assign-trainer-tab">
+                    @{
+                        Html.RenderPartial("_AssignTrainer");
+                        Html.RenderPartial("_ModalEditTrainer");
+                    }
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="create-exams-tab">
+                    @{
+                        Html.RenderPartial("_CreateExams", Model.CreateExamVm);
+                        Html.RenderPartial("_ModalViewExam");
+                        Html.RenderPartial("_ModalEditExam");
+                    }
                 </div>
             </div>
         </div>
-    </div>
-
-    <div id="assign-trainer-tab" class="tab-pane">
-        @{
-            Html.RenderPartial("_AssignTrainer");
-            Html.RenderPartial("_ModalEditTrainer");
-        }
-    </div>
-    <div id="create-exams-tab" class="tab-pane">
-        @{
-            Html.RenderPartial("_CreateExams", Model.CreateExamVm);
-            Html.RenderPartial("_ModalViewExam");
-            Html.RenderPartial("_ModalEditExam");
-        }
     </div>
 </div>
 
