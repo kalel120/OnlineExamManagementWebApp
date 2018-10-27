@@ -44,7 +44,7 @@
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade active in" id="basic-tab">
                     <br />
-                    <form class="form-horizontal form-label-left" novalidate>
+                    <form class="form-horizontal">
                         <span class="section">Basic Information About The Course</span>
                         @Html.HiddenFor(m => m.Id)
                         @Html.HiddenFor(m => m.OrganizationId)
@@ -115,4 +115,6 @@
     <script src="~/Scripts/select2.js"></script>
     <script src="~/Scripts/CustomScripts/assign-trainer.js"></script>
     <script src="~/Scripts/CustomScripts/create-exams.js"></script>
+    <!-- Switchery -->
+    <script src="~/Theme/vendors/switchery/dist/switchery.min.js"></script>
 }

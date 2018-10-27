@@ -1,62 +1,69 @@
 ﻿<link href="~/Content/css/select2.css" rel="stylesheet" />
+<!-- Switchery -->
+<link href="~/Theme/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
 <br />
-<div class="panel-group">
-    <div class="panel panel-success">
-        <div class="panel-heading">
-            <div class="panel-title">Assign Trainer</div>
-        </div>
 
-        <div class="panel-body">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-2">
-                        <label class="control-label col-md-2">Trainer</label>
-                    </div>
-                    <div class="col-md-4">
-                        <select class="form-control" id="js-ddl-trainers" style="width: 280px"></select>
-                    </div>
-
-                    <div class="col-md-2">
-                        @Html.Label("Is Lead?")
-                        @Html.CheckBox("is-lead")
-                    </div>
-
-                    <div class="col-md-2">
-                        <input type="button" value="Add" class="btn btn-success" id="js-insert-table" />
-                    </div>
-                </div>
+@*<div class="container">
+        <div class="row">
+            <div class="col-sm-2">
+                <label class="control-label col-md-2">Trainer</label>
+            </div>
+            <div class="col-md-4">
+                <select class="form-control" id="js-ddl-trainers" style="width: 280px"></select>
             </div>
 
+            <div class="col-md-2">
+                @Html.Label("Is Lead?")
+                @Html.CheckBox("is-lead")
+            </div>
+
+            <div class="col-md-2">
+                <input type="button" value="Add" class="btn btn-success" id="js-insert-table" />
+            </div>
+        </div>
+    </div>*@
+
+<form class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Trainer</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <select class="form-control" id="js-ddl-trainers" style="width: 25%">></select>
         </div>
     </div>
-</div>
 
-
-<div class="panel-group">
-    <div class="panel panel-success">
-        <div class="panel-heading">
-            <div class="panel-title">Trainer Assignment Table</div>
+    <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">Is Lead?</label>
+        <div class="col-md-9 col-sm-9 col-xs-12">
+            <label>
+                <input id="is-lead" type="checkbox" class="js-switch" />
+            </label>
         </div>
-        <div class="panel-body">
-            <table class="table table-bordered table-hover" id="table-course2trainer">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Lead Trainer?</th>
-                        <th>Action</th>
-                    </tr>
+    </div>
 
-                </thead>
-                <tbody id="table-body"></tbody>
-            </table>
-
-
-            <div class="row">
-                <div class="col-md-2">
-                    <input type="button" value="Save" class="btn btn-primary" id="js-save-trainers" />
-                </div>
-            </div>
-
+    <div class="ln_solid"></div>
+    <div class="form-group">
+        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+            <input type="button" value="Add" class="btn btn-success" id="js-insert-table" />
         </div>
+    </div>
+</form>
+
+<br />
+<table class="table table-bordered table-hover" id="table-course2trainer">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Lead Trainer?</th>
+            <th>Action</th>
+        </tr>
+
+    </thead>
+    <tbody id="table-body"></tbody>
+</table>
+
+
+<div class="row">
+    <div class="col-md-2">
+        <input type="button" value="Save" class="btn btn-primary" id="js-save-trainers" />
     </div>
 </div>
