@@ -283,9 +283,19 @@
     <Content Include="Theme\vendors\animate.css\animate-config.json" />
     <Content Include="Theme\vendors\animate.css\animate.css" />
     <Content Include="Theme\vendors\animate.css\animate.min.css" />
+    <Content Include="Theme\vendors\fastclick\lib\fastclick.js" />
     <Content Include="Theme\vendors\font-awesome\css\font-awesome.css" />
     <Content Include="Theme\vendors\font-awesome\css\font-awesome.min.css" />
     <Content Include="Theme\vendors\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Theme\vendors\malihu-custom-scrollbar-plugin\jquery.mCustomScrollbar.concat.min.js" />
+    <Content Include="Theme\vendors\malihu-custom-scrollbar-plugin\jquery.mCustomScrollbar.css" />
+    <Content Include="Theme\vendors\malihu-custom-scrollbar-plugin\jquery.mCustomScrollbar.js" />
+    <Content Include="Theme\vendors\malihu-custom-scrollbar-plugin\jquery.mCustomScrollbar.min.css" />
+    <Content Include="Theme\vendors\malihu-custom-scrollbar-plugin\mCSB_buttons.png" />
+    <Content Include="Theme\vendors\switchery\dist\switchery.css" />
+    <Content Include="Theme\vendors\switchery\dist\switchery.js" />
+    <Content Include="Theme\vendors\switchery\dist\switchery.min.css" />
+    <Content Include="Theme\vendors\switchery\dist\switchery.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
