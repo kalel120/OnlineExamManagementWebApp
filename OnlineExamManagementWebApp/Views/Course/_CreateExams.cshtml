@@ -18,100 +18,139 @@ Text = @"Lab Test"
 }
 
 
-<div class="panel-group">
-    <div class="panel panel-success">
-        <div class="panel-heading">
-            <div class="panel-title">Exam Entry</div>
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2><small>Create Exam Form</small></h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="#">Settings 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Settings 2</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
         </div>
-
-        <div class="panel-body">
-
+        <div class="x_content">
             @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal", id = "form-createExam" })) {
 
                 HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
 
-                <div class="form-group">
-                    @Html.LabelFor(m=>m.OrganizationName, new { @class = "col-sm-2 control-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.OrganizationName, new { @class = "form-control", id = "js-organization", @readonly = "true" })
+                <div class="item form-group">
+                    @Html.LabelFor(m => m.OrganizationName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        @Html.TextBoxFor(m => m.OrganizationName, new { @class = "form-control col-md-7 col-xs-12", id = "js-organization", @readonly = "true" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m=>m.Course, new { @class = "col-sm-2 control-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.Course.Code, new { @class = "form-control", id = "js-course-code", @readonly = "true" })
+                    @Html.LabelFor(m => m.Course, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        @Html.TextBoxFor(m => m.Course.Code, new { @class = "form-control col-md-7 col-xs-12", id = "js-course-code", @readonly = "true" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.Label("Exam Type", new { @class = "col-sm-2 control-label" })
-                    <div class="col-sm-10">
-                        @Html.DropDownList("js-examTypes", examTypes, "--Select Type--", new { @class = "form-control" })
+                    @Html.Label("Exam Type", new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        @Html.DropDownList("js-examTypes", examTypes, "--Select Type--", new { @class = "form-control col-md-7 col-xs-12" })
                         @Html.ValidationMessage("js-examTypes", "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Code, new { @class = "col-sm-2 control-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.Code, new { @class = "form-control", placeholder = "Exam Code", id = "js-exam-code" })
+                    @Html.LabelFor(m => m.Code, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        @Html.TextBoxFor(m => m.Code, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Exam Code", id = "js-exam-code" })
                         @Html.ValidationMessageFor(m => m.Code, "", new { @class = "text-danger " })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Topic, new { @class = "col-sm-2 control-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.Topic, new { @class = "form-control", placeholder = "Exam Topic", id = "js-exam-topic" })
+                    @Html.LabelFor(m => m.Topic, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        @Html.TextBoxFor(m => m.Topic, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Exam Topic", id = "js-exam-topic" })
                         @Html.ValidationMessageFor(m => m.Topic, "", new { @class = "text-danger " })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.FullMarks, new { @class = "col-sm-2 control-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.FullMarks, new { @class = "form-control", placeholder = "Full Marks", id = "js-exam-full-marks" })
+                    @Html.LabelFor(m => m.FullMarks, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        @Html.TextBoxFor(m => m.FullMarks, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Full Marks", id = "js-exam-full-marks" })
                         @Html.ValidationMessageFor(m => m.FullMarks, "", new { @class = "text-danger " })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Duration, new { @class = "col-sm-2 control-label" })
-                    <div class="col-sm-2">
-                        @Html.TextBoxFor(m => m.DurationHour, null, new { @class = "form-control", placeholder = "hh", id = "js-exam-duration-hour" })
+                    @Html.LabelFor(m => m.Duration, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-sm-1">
+                        @Html.TextBoxFor(m => m.DurationHour, null, new { @class = "form-control col-md-7 col-xs-12", placeholder = "hh", id = "js-exam-duration-hour" })
                         @Html.ValidationMessageFor(m => m.DurationHour, "", new { @class = "text-danger " })
                     </div>
-                    <div class="col-sm-2">
-                        @Html.TextBoxFor(m => m.DurationMin, new { @class = "form-control", placeholder = "mm", id = "js-exam-duration-min" })
+                    <div class="col-sm-1">
+                        @Html.TextBoxFor(m => m.DurationMin, new { @class = "form-control col-md-7 col-xs-12", placeholder = "mm", id = "js-exam-duration-min" })
                         @Html.ValidationMessageFor(m => m.DurationMin, "", new { @class = "text-danger " })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(m => m.SerialNo, new { @class = "col-sm-2 control-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.SerialNo, new { @class = "form-control", id = "js-exam-serial" })
+                    @Html.LabelFor(m => m.SerialNo, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        @Html.TextBoxFor(m => m.SerialNo, new { @class = "form-control col-md-7 col-xs-12", id = "js-exam-serial" })
                         @Html.ValidationMessageFor(m => m.SerialNo, "", new { @class = "text-danger " })
                     </div>
                 </div>
 
+                <div class="ln_solid"></div>
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-sm-10">
+                    <div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3">
                         <input type="button" class="btn btn-success" id="js-btn-addExam" value="Add">
                     </div>
-                </div>
+                </div>                
             }
         </div>
     </div>
 </div>
 
+<div class="clearfix"></div>
 
-<div class="panel-group">
-    <div class="panel panel-success">
-        <div class="panel-heading">
-            <div class="panel-title">Exam Table</div>
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2><small>Exam List</small></h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="#">Settings 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Settings 2</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
         </div>
-
-        <div class="panel-body">
+        <div class="x_content">
             <table class="table table-bordered table-hover table-responsive">
                 <tr>
                     <th>SL No.</th>
@@ -149,6 +188,7 @@ Text = @"Lab Test"
                 </tbody>
             </table>
 
+            <div class="ln_solid"></div>
             <div class="form-group">
                 <div class="pull-left">
                     <input type="button" class="btn btn-primary" id="js-btn-SaveAllExam" value="Save">
