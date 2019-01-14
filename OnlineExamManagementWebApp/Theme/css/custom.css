@@ -1067,7 +1067,7 @@ h2 {
     border: 1px solid #E6E9ED;
     -webkit-column-break-inside: avoid;
     -moz-column-break-inside: avoid;
-    column-break-inside: avoid;
+    -webkit-column-break-inside: avoid;
     opacity: 1;
     transition: all .2s ease
 }

@@ -323,6 +323,7 @@
     <Content Include="Theme\vendors\font-awesome\fonts\fontawesome-webfont.woff" />
     <Content Include="Theme\vendors\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Theme\vendors\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Views\Course\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

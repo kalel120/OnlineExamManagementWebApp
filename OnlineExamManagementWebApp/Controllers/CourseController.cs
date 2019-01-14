@@ -22,7 +22,7 @@ namespace OnlineExamManagementWebApp.Controllers {
             _examManager = new ExamManager();
         }
 
-        #region Course Entry Page
+        #region course entry page
         public ActionResult Entry() {
             return View(GetCourseEntryViewModel());
         }
@@ -55,7 +55,7 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
         #endregion
 
-
+        #region course edit page
         public ActionResult Edit(int? id) {
             if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -75,8 +75,9 @@ namespace OnlineExamManagementWebApp.Controllers {
             ViewBag.Course = course;
             return View(courseEditVm);
         }
+        #endregion
 
-        #region AssignTrainer tab page 
+        #region assignTrainer tab 
         public JsonResult GetTrainersByOrganization(string searchTerm, int orgId) {
             var trainerList = _trainerManager.GetTrainersByOrgId(orgId);
             if (searchTerm != null) {
@@ -125,7 +126,7 @@ namespace OnlineExamManagementWebApp.Controllers {
 
         #endregion
 
-        #region Create Exam tab
+        #region create Exam tab
         private List<Exam> GetExamsUsingMapper(List<ExamDto> examDtos) {
             var exams = new List<Exam>();
 
@@ -168,6 +169,13 @@ namespace OnlineExamManagementWebApp.Controllers {
             var exam = Mapper.Map<Exam>(dto);
             var result = _examManager.UpdateExamByCode(existingCode, exam);
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+        #region course search page
+
+        public ActionResult Search() {
+            return View();
         }
         #endregion
     }
