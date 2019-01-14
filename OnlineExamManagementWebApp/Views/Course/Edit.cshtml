@@ -40,54 +40,70 @@
 
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane fade active in" id="basic-tab">
-                    <br />
-                    <form class="form-horizontal">
-                        <span class="section">Basic Information About The Course</span>
-                        @Html.HiddenFor(m => m.Id)
-                        @Html.HiddenFor(m => m.OrganizationId)
-                        <div class="item form-group">
-                            @Html.LabelFor(m => m.OrganizationCode, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(m => m.OrganizationCode, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2><small>Basic Information About The Course</small></h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li>
+                                        <a class="close-link"><i class="fa fa-close"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
                             </div>
-                        </div>
-                        <div class="item form-group">
-                            @Html.LabelFor(m => m.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(m => m.Name, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
-                            </div>
-                        </div>
+                            <div class="x_content">
+                                <form class="form-horizontal">
+                                    @Html.HiddenFor(m => m.Id)
+                                    @Html.HiddenFor(m => m.OrganizationId)
+                                    <div class="item form-group">
+                                        @Html.LabelFor(m => m.OrganizationCode, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            @Html.TextBoxFor(m => m.OrganizationCode, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        @Html.LabelFor(m => m.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
+                                        </div>
+                                    </div>
 
-                        <div class="item form-group">
-                            @Html.LabelFor(m => m.Code, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(m => m.Code, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
+                                    <div class="item form-group">
+                                        @Html.LabelFor(m => m.Code, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            @Html.TextBoxFor(m => m.Code, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
+                                        </div>
+                                    </div>
+
+                                    <div class="item form-group">
+                                        @Html.LabelFor(m => m.Duration, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            @Html.TextBoxFor(m => m.Duration, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
+                                        </div>
+                                    </div>
+
+                                    <div class="item form-group">
+                                        @Html.LabelFor(m => m.Credit, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            @Html.TextBoxFor(m => m.Credit, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
+                                        </div>
+                                    </div>
+
+                                    <div class="item form-group">
+                                        @Html.LabelFor(m => m.Outline, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            @Html.TextBoxFor(m => m.Outline, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
+                                        </div>
+                                    </div>
+
+                                    <div class="ln_solid"></div>
+                                </form>
                             </div>
                         </div>
-
-                        <div class="item form-group">
-                            @Html.LabelFor(m => m.Duration, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(m => m.Duration, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
-                            </div>
-                        </div>
-
-                        <div class="item form-group">
-                            @Html.LabelFor(m => m.Credit, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(m => m.Credit, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
-                            </div>
-                        </div>
-
-                        <div class="item form-group">
-                            @Html.LabelFor(m => m.Outline, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                @Html.TextBoxFor(m => m.Outline, new { @class = "form-control col-md-7 col-xs-12", @readonly = "true" })
-                            </div>
-                        </div>
-
-                        <div class="ln_solid"></div>
-                    </form>
+                    </div>
                 </div>
 
                 <div role="tabpanel" class="tab-pane fade" id="assign-trainer-tab">
