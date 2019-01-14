@@ -1,43 +1,93 @@
 ﻿<link href="~/Content/css/select2.css" rel="stylesheet" />
-<br />
-<div class="panel-group">
-    <div class="panel panel-success">
-        <div class="panel-heading">
-            <div class="panel-title">Assign Trainer</div>
+<!-- Switchery -->
+<link href="~/Theme/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+
+@*<div class="container">
+        <div class="row">
+            <div class="col-sm-2">
+                <label class="control-label col-md-2">Trainer</label>
+            </div>
+            <div class="col-md-4">
+                <select class="form-control" id="js-ddl-trainers" style="width: 280px"></select>
+            </div>
+
+            <div class="col-md-2">
+                @Html.Label("Is Lead?")
+                @Html.CheckBox("is-lead")
+            </div>
+
+            <div class="col-md-2">
+                <input type="button" value="Add" class="btn btn-success" id="js-insert-table" />
+            </div>
         </div>
+    </div>*@
 
-        <div class="panel-body">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-2">
-                        <label class="control-label col-md-2">Trainer</label>
-                    </div>
-                    <div class="col-md-4">
-                        <select class="form-control" id="js-ddl-trainers" style="width: 280px"></select>
-                    </div>
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2><small>Trainer Assignment</small></h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
 
-                    <div class="col-md-2">
-                        @Html.Label("Is Lead?")
-                        @Html.CheckBox("is-lead")
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Trainer</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select class="form-control" id="js-ddl-trainers" style="width: 25%">></select>
                     </div>
+                </div>
 
-                    <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Is Lead?</label>
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <label>
+                            <input id="is-lead" type="checkbox" class="js-switch" />
+                        </label>
+                    </div>
+                </div>
+
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
                         <input type="button" value="Add" class="btn btn-success" id="js-insert-table" />
                     </div>
                 </div>
-            </div>
+            </form>
 
         </div>
     </div>
 </div>
 
+<div class="clearfix"></div>
 
-<div class="panel-group">
-    <div class="panel panel-success">
-        <div class="panel-heading">
-            <div class="panel-title">Trainer Assignment Table</div>
+
+<br />
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <h2><small>Assigned Trainers</small></h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li>
+                    <a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
         </div>
-        <div class="panel-body">
+        <div class="x_content">
+            <div class="clearfix"></div>
             <table class="table table-bordered table-hover" id="table-course2trainer">
                 <thead>
                     <tr>
@@ -56,7 +106,6 @@
                     <input type="button" value="Save" class="btn btn-primary" id="js-save-trainers" />
                 </div>
             </div>
-
         </div>
     </div>
 </div>
