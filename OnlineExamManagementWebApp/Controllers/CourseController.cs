@@ -28,11 +28,11 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         private CourseEntryViewModel GetCourseEntryViewModel() {
-            var courseEntryViewModel = new CourseEntryViewModel {
+            var entryViewModel = new CourseEntryViewModel {
                 Organizations = _courseManager.GetAllOrganizations(),
                 Tags = new SelectList(_courseManager.GetAllTags())
             };
-            return courseEntryViewModel;
+            return entryViewModel;
         }
 
         [HttpPost]
@@ -175,8 +175,14 @@ namespace OnlineExamManagementWebApp.Controllers {
         #region course search page
 
         public ActionResult Search() {
-            return View();
+            var searchViewModel = new CourseSearchViewModel {
+                Organizations = _courseManager.GetAllOrganizations()
+            };
+
+            return View(searchViewModel);
         }
+
+
         #endregion
     }
 }

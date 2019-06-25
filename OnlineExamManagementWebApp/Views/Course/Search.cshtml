@@ -1,4 +1,4 @@
-﻿@model dynamic
+﻿@model OnlineExamManagementWebApp.ViewModels.CourseSearchViewModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -51,43 +51,45 @@
 
                         <div class="form-horizontal">
                             <div class="item form-group">
-                                Organization dropdownlist
-                                @*@Html.LabelFor(model => model.OrganizationId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        @Html.DropDownListFor(model => model.OrganizationId, Model.Organizations, new { @class = "form-control col-md-7 col-xs-12", id = "org-list" })
-                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                                    </div>*@
+                                @Html.LabelFor(model => model.OrganizationId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.DropDownListFor(model => model.OrganizationId, Model.Organizations, new { @class = "form-control col-md-7 col-xs-12" })
+                                </div>
                             </div>
 
                             <div class="item form-group">
-                                Name
-                                @*@Html.LabelFor(model => model.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control col-md-7 col-xs-12" })
-                                    </div>*@
+                                @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control col-md-7 col-xs-12" })
+                                </div>
                             </div>
                             <div class="item form-group">
-                                Code
-                                @*@Html.LabelFor(model => model.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control col-md-7 col-xs-12" })
-                                    </div>*@
+                                @Html.LabelFor(model => model.Code, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @Html.TextBoxFor(model => model.Code, new { @class = "form-control col-md-7 col-xs-12" })
+                                </div>
                             </div>
                             <div class="item form-group">
-                                Trainer
-                                @*@Html.LabelFor(model => model.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control col-md-7 col-xs-12" })
-                                    </div>*@
+                                @Html.LabelFor(model => model.TrainerId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <select class="form-control col-md-7 col-xs-12"></select>
+                                </div>
                             </div>
                             <div class="item form-group">
-                                Duration
-                                @*@Html.LabelFor(model => model.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control col-md-7 col-xs-12" })
-                                    </div>*@
+                              
+                                <div class="form-group row">
+                                    @Html.LabelFor(model => model.DurationFrom, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                                    <div class="col-md-3 col-sm-3 col-xs-6">
+                                        @Html.TextBoxFor(model => model.DurationFrom, new { @class = "form-control col-md-7 col-xs-12" })
+                                    </div>
+                                    
+                                    @Html.LabelFor(model => model.DurationTo, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
+                                    <div class="col-md-3 col-sm-3 col-xs-6">
+                                        @Html.TextBoxFor(model => model.DurationTo, new { @class = "form-control col-md-7 col-xs-12" })
+                                    </div>
+                                </div>
+                               
                             </div>
-
                         </div>
 
                         <div class="ln_solid"></div>

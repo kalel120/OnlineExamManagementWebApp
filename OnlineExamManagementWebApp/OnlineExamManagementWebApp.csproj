@@ -156,6 +156,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\CourseEditViewModel.cs" />
     <Compile Include="ViewModels\CourseEntryViewModel.cs" />
+    <Compile Include="ViewModels\CourseSearchViewModel.cs" />
     <Compile Include="ViewModels\CreateExamViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
