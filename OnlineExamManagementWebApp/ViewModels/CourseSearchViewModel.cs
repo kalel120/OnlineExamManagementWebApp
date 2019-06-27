@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using OnlineExamManagementWebApp.Models;
 
 namespace OnlineExamManagementWebApp.ViewModels {
     public class CourseSearchViewModel {
@@ -21,5 +22,7 @@ namespace OnlineExamManagementWebApp.ViewModels {
 
         [Display(Name = "Trainers")]
         public int TrainerId { get; set; }
+
+        public List<Course> Courses { get; set; }
     }
 }

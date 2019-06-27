@@ -173,7 +173,6 @@ namespace OnlineExamManagementWebApp.Controllers {
         #endregion
 
         #region course search page
-
         public ActionResult Search() {
             var searchViewModel = new CourseSearchViewModel {
                 Organizations = _courseManager.GetAllOrganizations()
@@ -182,6 +181,15 @@ namespace OnlineExamManagementWebApp.Controllers {
             return View(searchViewModel);
         }
 
+        [HttpPost]
+        public ActionResult Search(CourseSearchViewModel viewModel) {
+            var courses = _courseManager.GetCourseByOrganizationId(viewModel.OrganizationId);
+            var viewModelToRedirect = new CourseSearchViewModel {
+                Courses = courses,
+                Organizations = _courseManager.GetAllOrganizations()
+            };
+            return View(viewModelToRedirect);
+        }
 
         #endregion
     }

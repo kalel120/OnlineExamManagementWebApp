@@ -74,5 +74,9 @@ namespace OnlineExamManagementWebApp.BLL {
             course.Exams = activeExams;
             return course;
         }
+
+        public List<Course> GetCourseByOrganizationId(int organizationId) {
+            return _unitOfWork.Courses.GetListOfCourseByOrganizationId(organizationId);
+        }
     }
 }

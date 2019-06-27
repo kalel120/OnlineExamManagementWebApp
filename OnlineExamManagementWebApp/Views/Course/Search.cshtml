@@ -47,7 +47,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    @using (Html.BeginForm()) {
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "form-horizontal", id = "form-searchCourse" })) {
 
                         <div class="form-horizontal">
                             <div class="item form-group">
@@ -76,26 +76,26 @@
                                 </div>
                             </div>
                             <div class="item form-group">
-                              
+
                                 <div class="form-group row">
                                     @Html.LabelFor(model => model.DurationFrom, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                                     <div class="col-md-3 col-sm-3 col-xs-6">
                                         @Html.TextBoxFor(model => model.DurationFrom, new { @class = "form-control col-md-7 col-xs-12" })
                                     </div>
-                                    
+
                                     @Html.LabelFor(model => model.DurationTo, new { @class = "control-label col-md-1 col-sm-1 col-xs-12" })
                                     <div class="col-md-3 col-sm-3 col-xs-6">
                                         @Html.TextBoxFor(model => model.DurationTo, new { @class = "form-control col-md-7 col-xs-12" })
                                     </div>
                                 </div>
-                               
+
                             </div>
                         </div>
 
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                <input type="button" value="Search" class="btn btn-success" id="" />
+                                <input type="submit" value="Search" class="btn btn-success" id="btn-searchCourse" />
                             </div>
                         </div>
                     }
@@ -133,7 +133,24 @@
                             <th>Action</th>
                         </tr>
 
-                        <tbody></tbody>
+                        <tbody>
+                            @if (Model.Courses != null) {
+                                foreach (var course in Model.Courses) {
+                                    <tr>
+                                        <td>@course.Id</td>
+                                        <td>@course.Name</td>
+                                        <td>@course.Duration</td>
+                                        <td>Fees</td>
+                                        <td>Participants</td>
+                                        <td>Trainers</td>
+                                        <td>
+                                            <input type="button" class="btn btn-warning" value="Edit"/>
+                                            <input type="button" class="btn btn-danger" value="Delete" />
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
                     </table>
                 </div>
             </div>
