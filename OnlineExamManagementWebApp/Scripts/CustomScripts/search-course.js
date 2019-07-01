@@ -3,6 +3,8 @@
 ($(function () {
     $('#tbl-courseSearchResult').DataTable();
 
+    const jsTrainerList = $('#js-trainersList');
+
     $(document.body).on("change", "#OrganizationId",
         function () {
             const orgId = $(this).val();
@@ -17,16 +19,20 @@
                     dataType: "json",
                     data: JSON.stringify(json),
                     success: function (data) {
-                        $('#js-trainersList').empty();
-                        $.each(data, function (key, value) {
-                                $('#js-trainersList').append(`"<option value="${value.Id}"> ${value.Name} </option>"`);
+                        jsTrainerList.empty();
+
+                        $.each(data,
+                            function (key, value) {
+                                jsTrainerList.append(`"<option value="${value.Id}"> ${value.Name} </option>"`);
                             });
                     },
-                    error: function() {
+                    error: function () {
                         alert("Something is wrong");
                     }
-            
+
                 });
+            } else {
+                jsTrainerList.empty();
             }
         });
 }))();
