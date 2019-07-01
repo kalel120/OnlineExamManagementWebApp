@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jq-3.3.1/dt-1.10.18/r-2.2.2/datatables.min.css" />
 
 <div class="x_panel">
     <div class="x_title">
@@ -72,7 +73,7 @@
                             <div class="item form-group">
                                 @Html.LabelFor(model => model.TrainerId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <select class="form-control col-md-7 col-xs-12"></select>
+                                    <select class="form-control col-md-7 col-xs-12" id="js-trainersList"></select>
                                 </div>
                             </div>
                             <div class="item form-group">
@@ -122,16 +123,18 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <table class="table table-bordered table-hover table-responsive">
-                        <tr>
-                            <th>SL</th>
-                            <th>Name</th>
-                            <th>Duration</th>
-                            <th>Fees</th>
-                            <th>Participants</th>
-                            <th>Trainers</th>
-                            <th>Action</th>
-                        </tr>
+                    <table class="table table-bordered table-hover table-responsive" id="tbl-courseSearchResult">
+                        <thead>
+                            <tr>
+                                <th>SL</th>
+                                <th>Name</th>
+                                <th>Duration</th>
+                                <th>Fees</th>
+                                <th>Participants</th>
+                                <th>Trainers</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
 
                         <tbody>
                             @if (Model.Courses != null) {
@@ -144,7 +147,7 @@
                                         <td>Participants</td>
                                         <td>Trainers</td>
                                         <td>
-                                            <input type="button" class="btn btn-warning" value="Edit"/>
+                                            <input type="button" class="btn btn-warning" value="Edit" />
                                             <input type="button" class="btn btn-danger" value="Delete" />
                                         </td>
                                     </tr>
@@ -159,3 +162,9 @@
         <div class="clearfix"></div>
     </div>
 </div>
+
+@section scripts{
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/jq-3.3.1/dt-1.10.18/r-2.2.2/datatables.min.js"></script>
+    <script src="~/Scripts/CustomScripts/search-course.js"></script>
+}

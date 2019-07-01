@@ -191,6 +191,11 @@ namespace OnlineExamManagementWebApp.Controllers {
             return View(viewModelToRedirect);
         }
 
+        [HttpPost]
+        public JsonResult GetTrainersByOrganization(int id) {
+            var trainers = _trainerManager.GetTrainersByOrgId(id);
+            return Json(trainers, JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }
