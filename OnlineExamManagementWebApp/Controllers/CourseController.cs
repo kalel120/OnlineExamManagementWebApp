@@ -77,9 +77,9 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
         #endregion
 
-        #region assignTrainer tab 
-        public JsonResult GetTrainersByOrganization(string searchTerm, int orgId) {
-            var trainerList = _trainerManager.GetTrainersByOrgId(orgId);
+        #region assignTrainer tab
+        public JsonResult GetModifiedListOfTrainers(string searchTerm, int id) {
+            var trainerList = _trainerManager.GetTrainersByOrgId(id);
             if (searchTerm != null) {
                 trainerList = trainerList.Where(t => t.Name.Contains(searchTerm)).ToList();
             }
@@ -123,7 +123,6 @@ namespace OnlineExamManagementWebApp.Controllers {
             var result = _courseTrainerManager.UpdateLeadTrainerStatus(Mapper.Map<CourseTrainer>(dto));
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
         #endregion
 
         #region create Exam tab
@@ -191,7 +190,6 @@ namespace OnlineExamManagementWebApp.Controllers {
             return View(viewModelToRedirect);
         }
 
-        [HttpPost]
         public JsonResult GetTrainersByOrganization(int id) {
             var trainers = _trainerManager.GetTrainersByOrgId(id);
             return Json(trainers, JsonRequestBehavior.AllowGet);

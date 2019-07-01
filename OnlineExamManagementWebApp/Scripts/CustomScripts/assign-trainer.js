@@ -18,12 +18,12 @@ $(function () {
     $('#js-ddl-trainers').select2({
         placeholder: "--Select Trainer--",
         ajax: {
-            url: "/Course/GetTrainersByOrganization",
+            url: "/Course/GetModifiedListOfTrainers",
             dataType: "json",
             data: function (params) {
                 var query = {
                     searchTerm: params.term,
-                    orgId: organizationId
+                    id: organizationId
                 }
                 return query;
             },
