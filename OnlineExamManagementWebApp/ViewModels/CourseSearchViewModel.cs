@@ -20,8 +20,9 @@ namespace OnlineExamManagementWebApp.ViewModels {
         [Display(Name = "To")]
         public int DurationTo { get; set; }
 
-        [Display(Name = "Trainers")]
         public int TrainerId { get; set; }
+
+        public List<SelectListItem> Trainers { get; set; }
 
         public List<Course> Courses { get; set; }
     }

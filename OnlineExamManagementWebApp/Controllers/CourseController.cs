@@ -172,21 +172,34 @@ namespace OnlineExamManagementWebApp.Controllers {
         #endregion
 
         #region course search page
-        public ActionResult Search() {
+        private CourseSearchViewModel GetInitialCourseSearchVm() {
             var searchViewModel = new CourseSearchViewModel {
-                Organizations = _courseManager.GetAllOrganizations()
+                Organizations = _courseManager.GetAllOrganizations(),
+                Trainers = new List<SelectListItem> {
+                    new SelectListItem {
+                        Value = "0",
+                        Text = @"--SELECT TRAINER--"
+                    }
+                }
             };
+            return searchViewModel;
+        }
 
+        public ActionResult Search() {
+            var searchViewModel = GetInitialCourseSearchVm();
             return View(searchViewModel);
         }
 
         [HttpPost]
         public ActionResult Search(CourseSearchViewModel viewModel) {
-            var courses = _courseManager.GetCourseByOrganizationId(viewModel.OrganizationId);
-            var viewModelToRedirect = new CourseSearchViewModel {
-                Courses = courses,
-                Organizations = _courseManager.GetAllOrganizations()
-            };
+            var coursesByOrganizationId = _courseManager.GetCoursesByOrganizationId(viewModel.OrganizationId);
+            ICollection<Course> coursesByName = _courseManager.GetCoursesByName(viewModel.Name);
+            ICollection<Course> coursesByCode = _courseManager.GetCoursesByCode(viewModel.Code);
+
+
+            var viewModelToRedirect = GetInitialCourseSearchVm();
+            viewModelToRedirect.Courses = coursesByOrganizationId;
+
             return View(viewModelToRedirect);
         }
 

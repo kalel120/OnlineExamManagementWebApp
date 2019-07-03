@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using OnlineExamManagementWebApp.DatabaseContext;
 using OnlineExamManagementWebApp.Models;
@@ -28,6 +27,14 @@ namespace OnlineExamManagementWebApp.Repository {
 
         public List<Course> GetListOfCourseByOrganizationId(int organizationId) {
             return _dbContext.Courses.Where(c => c.OrganizationId == organizationId).ToList();
+        }
+
+        public ICollection<Course> GetCoursesByName(string name) {
+            return _dbContext.Courses.Where(c => c.Name == name).ToList();
+        }
+
+        public ICollection<Course> GetCoursesByCode(string code) {
+            return _dbContext.Courses.Where(c => c.Code == code).ToList();
         }
     }
 }
