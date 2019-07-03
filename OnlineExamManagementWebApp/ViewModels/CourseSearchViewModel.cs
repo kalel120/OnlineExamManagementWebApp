@@ -6,6 +6,7 @@ using OnlineExamManagementWebApp.Models;
 namespace OnlineExamManagementWebApp.ViewModels {
     public class CourseSearchViewModel {
         [Display(Name = "Organization")]
+        [Required]
         public int OrganizationId { get; set; }
 
         public List<SelectListItem> Organizations { get; set; }

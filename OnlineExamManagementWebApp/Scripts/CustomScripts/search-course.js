@@ -1,39 +1,42 @@
 ﻿// I used IIFE around the jQuery code to avoid conflict with other js libraries
 
-($(function () {
-    $("#tbl-courseSearchResult").DataTable();
+(function ($) {
+    $(function () {
+        $("#tbl-courseSearchResult").DataTable();
 
-    const jsTrainerList = $('#TrainerId');
+        const jsTrainerList = $("#TrainerId");
 
-    $(document.body).on("change", "#OrganizationId",
-        function () {
-            const orgId = $(this).val();
-        
-            jsTrainerList.empty();
-            jsTrainerList.append(`<option value="0">--SELECT TRAINER--</option>`);
+        $(document.body).on("change", "#OrganizationId",
+            function () {
+                const orgId = $(this).val();
 
-            if (orgId != undefined && orgId !== "") {
-                const json = { id: orgId };
+                jsTrainerList.empty();
+                jsTrainerList.append(`<option value="0">--SELECT TRAINER--</option>`);
 
-                $.ajax({
-                    type: "POST",
-                    url: `/Course/GetTrainersByOrganization/${orgId}`,
-                    contentType: "application/json",
-                    dataType: "json",
-                    data: JSON.stringify(json),
+                if (orgId != undefined && orgId !== "") {
+                    const json = { id: orgId };
 
-                    success: function (data) {
-                        $.each(data,
-                            function (key, value) {
-                                jsTrainerList.append(`<option value="${value.Id}"> ${value.Name} </option>`);
-                            });
-                    },
+                    $.ajax({
+                        type: "POST",
+                        url: `/Course/GetTrainersByOrganization/${orgId}`,
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify(json),
 
-                    error: function () {
-                        alert("Something is wrong");
-                    }
+                        success: function (data) {
+                            $.each(data,
+                                function (key, value) {
+                                    jsTrainerList.append(`<option value="${value.Id}"> ${value.Name} </option>`);
+                                });
+                        },
 
-                });
-            }
-        });
-}))();
+                        error: function () {
+                            alert("Something is wrong");
+                        }
+
+                    });
+                }
+            });
+
+    });
+})(jQuery);

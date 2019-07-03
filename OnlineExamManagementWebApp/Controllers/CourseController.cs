@@ -177,7 +177,7 @@ namespace OnlineExamManagementWebApp.Controllers {
                 Organizations = _courseManager.GetAllOrganizations(),
                 Trainers = new List<SelectListItem> {
                     new SelectListItem {
-                        Value = "0",
+                        Value = "",
                         Text = @"--SELECT TRAINER--"
                     }
                 }
