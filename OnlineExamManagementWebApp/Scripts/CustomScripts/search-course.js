@@ -1,7 +1,7 @@
 ﻿// I used IIFE around the jQuery code to avoid conflict with other js libraries
 
-(function ($) {
-    $(function () {
+(($) => {
+    $(() => {
         $("#tbl-courseSearchResult").DataTable();
 
         const jsTrainerList = $("#TrainerId");
@@ -23,17 +23,13 @@
                         dataType: "json",
                         data: JSON.stringify(json),
 
-                        success: function (data) {
-                            $.each(data,
-                                function (key, value) {
-                                    jsTrainerList.append(`<option value="${value.Id}"> ${value.Name} </option>`);
-                                });
+                        success: (data) => {
+                            $.each(data, (key, value) => {
+                                jsTrainerList.append(`<option value="${value.Id}"> ${value.Name} </option>`);
+                            });
                         },
 
-                        error: function () {
-                            alert("Something is wrong");
-                        }
-
+                        error: () => alert("Something is wrong")
                     });
                 }
             });
