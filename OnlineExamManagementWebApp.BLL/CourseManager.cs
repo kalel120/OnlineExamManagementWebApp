@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
+using OnlineExamManagementWebApp.DTOs;
 using OnlineExamManagementWebApp.Models;
 using OnlineExamManagementWebApp.Repository;
 
@@ -82,16 +84,23 @@ namespace OnlineExamManagementWebApp.BLL {
             return course;
         }
 
-        public List<Course> GetCoursesByOrganizationId(int organizationId) {
-            return _unitOfWork.Courses.GetListOfCourseByOrganizationId(organizationId);
-        }
+        public ICollection<Course> GetCoursesBySearchParams(SearchCourseDto dto) {
+            var coursesByOrganizationId = _unitOfWork.Courses.GetListOfCourseByOrganizationId(dto.OrganizationId);
 
-        public ICollection<Course> GetCoursesByName(string name) {
-            return _unitOfWork.Courses.GetCoursesByName(name);
-        }
+            if (dto.Name != null) {
+                ICollection<Course> coursesByName = _unitOfWork.Courses.GetCoursesLikeName(dto.Name);
+                coursesByOrganizationId =
+                    coursesByOrganizationId.Where(o => coursesByName.Any(n => n.Id.Equals(o.Id))).ToList();
 
-        public ICollection<Course> GetCoursesByCode(string code) {
-            return _unitOfWork.Courses.GetCoursesByCode(code);
+            }
+
+            if (dto.Code != null) {
+                ICollection<Course> coursesByCode = _unitOfWork.Courses.GetCoursesLikeCode(dto.Code);
+                coursesByOrganizationId =
+                    coursesByOrganizationId.Where(o => coursesByCode.Any(n => n.Id.Equals(o.Id))).ToList();
+            }
+
+            return coursesByOrganizationId;
         }
     }
 }

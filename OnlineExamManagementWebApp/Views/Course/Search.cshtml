@@ -1,4 +1,4 @@
-﻿@model OnlineExamManagementWebApp.ViewModels.CourseSearchViewModel
+﻿@model OnlineExamManagementWebApp.ViewModels.SearchCourseViewModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -54,6 +54,7 @@
                             <div class="item form-group">
                                 @Html.LabelFor(model => model.OrganizationId, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                                 <div class="col-md-6 col-sm-6 col-xs-12">
+                                    @{ Html.EnableClientValidation(false); }
                                     @Html.DropDownListFor(model => model.OrganizationId, Model.Organizations, new { @class = "form-control col-md-7 col-xs-12" })
                                     @Html.ValidationMessageFor(model => model.OrganizationId, "", new { @class = "text-danger" })
                                 </div>
@@ -167,5 +168,5 @@
 
 @section scripts{
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs/jq-3.3.1/dt-1.10.18/r-2.2.2/datatables.min.js"></script>
-    <script src="~/Scripts/CustomScripts/search-course.js"></script>
+    <script type="text/javascript" src="~/Scripts/CustomScripts/search-course.js"></script>
 }

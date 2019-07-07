@@ -25,7 +25,7 @@ namespace OnlineExamManagementWebApp.Repository {
             return course;
         }
 
-        public List<Course> GetListOfCourseByOrganizationId(int organizationId) {
+        public ICollection<Course> GetListOfCourseByOrganizationId(int organizationId) {
             return _dbContext.Courses.Where(c => c.OrganizationId == organizationId).ToList();
         }
 
@@ -35,6 +35,14 @@ namespace OnlineExamManagementWebApp.Repository {
 
         public ICollection<Course> GetCoursesByCode(string code) {
             return _dbContext.Courses.Where(c => c.Code == code).ToList();
+        }
+
+        public ICollection<Course> GetCoursesLikeName(string name) {
+            return _dbContext.Courses.Where(c => c.Name.Contains(name)).ToList();
+        }
+
+        public ICollection<Course> GetCoursesLikeCode(string code) {
+            return _dbContext.Courses.Where(c => c.Code.Contains(code)).ToList();
         }
     }
 }

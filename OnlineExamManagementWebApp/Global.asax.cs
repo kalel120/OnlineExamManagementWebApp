@@ -20,9 +20,12 @@ namespace OnlineExamManagementWebApp {
 
                 cfg.CreateMap<CourseTrainer, CourseTrainerDto>();
                 cfg.CreateMap<CourseTrainerDto, CourseTrainer>();
-                
+
                 cfg.CreateMap<Exam, ExamDto>();
                 cfg.CreateMap<ExamDto, Exam>();
+
+                cfg.CreateMap<SearchCourseViewModel, SearchCourseDto>();
+                //cfg.CreateMap<SearchCourseDto, SearchCourseViewModel>();
             });
         }
     }

@@ -172,8 +172,8 @@ namespace OnlineExamManagementWebApp.Controllers {
         #endregion
 
         #region course search page
-        private CourseSearchViewModel GetInitialCourseSearchVm() {
-            var searchViewModel = new CourseSearchViewModel {
+        private SearchCourseViewModel GetInitialCourseSearchVm() {
+            var searchViewModel = new SearchCourseViewModel {
                 Organizations = _courseManager.GetAllOrganizations(),
                 Trainers = new List<SelectListItem> {
                     new SelectListItem {
@@ -191,14 +191,11 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         [HttpPost]
-        public ActionResult Search(CourseSearchViewModel viewModel) {
-            var coursesByOrganizationId = _courseManager.GetCoursesByOrganizationId(viewModel.OrganizationId);
-            ICollection<Course> coursesByName = _courseManager.GetCoursesByName(viewModel.Name);
-            ICollection<Course> coursesByCode = _courseManager.GetCoursesByCode(viewModel.Code);
-
+        public ActionResult Search(SearchCourseViewModel viewModel) {
+            SearchCourseDto searchParams = Mapper.Map<SearchCourseDto>(viewModel);
 
             var viewModelToRedirect = GetInitialCourseSearchVm();
-            viewModelToRedirect.Courses = coursesByOrganizationId;
+            viewModelToRedirect.Courses = _courseManager.GetCoursesBySearchParams(searchParams).ToList();
 
             return View(viewModelToRedirect);
         }
