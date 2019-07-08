@@ -18,15 +18,7 @@ namespace OnlineExamManagementWebApp.BLL {
         }
 
         #region OrganizationManager
-        public List<SelectListItem> GetAllOrganizations() {
-            var organizations = _unitOfWork.Organizations.GetAllOrganizations();
-            organizations.Insert(0, new SelectListItem { Value = "", Text = "--SELECT ORGANIZATION--" });
-            return organizations;
-        }
-
-        public Organization GetOrganizationById(int organizationId) {
-            return _unitOfWork.Organizations.GetOrganizationById(organizationId);
-        }
+        
         #endregion
 
         #region TagManager

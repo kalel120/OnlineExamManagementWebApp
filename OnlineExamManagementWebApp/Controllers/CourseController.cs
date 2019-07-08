@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -15,12 +14,14 @@ namespace OnlineExamManagementWebApp.Controllers {
         private readonly TrainerManager _trainerManager;
         private readonly CourseTrainerManager _courseTrainerManager;
         private readonly ExamManager _examManager;
+        private readonly OrganizationManager _orgManager;
 
         public CourseController() {
             _courseManager = new CourseManager();
             _trainerManager = new TrainerManager();
             _courseTrainerManager = new CourseTrainerManager();
             _examManager = new ExamManager();
+            _orgManager = new OrganizationManager();
         }
 
         #region course entry page
@@ -30,7 +31,7 @@ namespace OnlineExamManagementWebApp.Controllers {
 
         private CourseEntryViewModel GetCourseEntryViewModel() {
             var entryViewModel = new CourseEntryViewModel {
-                Organizations = _courseManager.GetAllOrganizations(),
+                Organizations = _orgManager.GetAllOrganizations(),
                 Tags = new SelectList(_courseManager.GetAllTags())
             };
             return entryViewModel;
@@ -63,7 +64,7 @@ namespace OnlineExamManagementWebApp.Controllers {
             }
 
             var course = _courseManager.GetCourseWithActiveExamsById(id);
-            course.Organization = _courseManager.GetOrganizationById(course.OrganizationId);
+            course.Organization = _orgManager.GetOrganizationById(course.OrganizationId);
 
             var createExamVm = new CreateExamViewModel {
                 Course = course,
@@ -184,7 +185,7 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         private List<SelectListItem> GetAllSelectListOrganization(string selectedOrgId) {
-            return new SelectList(_courseManager.GetAllOrganizations(), "Value", "Text", selectedOrgId).ToList();
+            return new SelectList(_orgManager.GetAllOrganizations(), "Value", "Text", selectedOrgId).ToList();
         }
 
         public ActionResult Search() {

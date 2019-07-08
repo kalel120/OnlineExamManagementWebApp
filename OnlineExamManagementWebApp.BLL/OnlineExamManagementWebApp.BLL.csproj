@@ -64,6 +64,7 @@
     <Compile Include="CourseManager.cs" />
     <Compile Include="CourseTrainerManager.cs" />
     <Compile Include="ExamManager.cs" />
+    <Compile Include="OrganizationManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrainerManager.cs" />
   </ItemGroup>
