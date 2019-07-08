@@ -199,16 +199,26 @@ namespace OnlineExamManagementWebApp.Controllers {
             var selectedOrgId = Request.Form["OrganizationId"];
             var selectedTrainerId = Request.Form["TrainerId"];
 
-            if (selectedOrgId == "") {
+            if (selectedOrgId == "" && selectedTrainerId == ""
+                && string.IsNullOrEmpty(searchParams.Name)
+                && string.IsNullOrEmpty(searchParams.Code)
+                && searchParams.DurationTo.Equals(0)
+                && searchParams.DurationFrom.Equals(0)) {
+
                 viewModel = GetInitialCourseSearchVm(selectedOrgId, selectedTrainerId);
 
-                viewModel.Courses = _courseManager.SearchCourseIfNoOrgIdSelected(searchParams).ToList();
+                viewModel.Courses = _courseManager.SearchCoursesByParams(searchParams).ToList();
+            }
+            else if (selectedOrgId == "" || selectedTrainerId == "") {
+                viewModel = GetInitialCourseSearchVm(selectedOrgId, selectedTrainerId);
+                viewModel.Courses = _courseManager.SearchCoursesByParams(searchParams).ToList();
+
             }
             else {
                 viewModel.Organizations = GetAllSelectListOrganizations(selectedOrgId);
                 viewModel.Trainers = new SelectList(_trainerManager.GetSelectListTrainersByOrgId(selectedOrgId), "Value", "Text", selectedTrainerId).ToList();
 
-                viewModel.Courses = _courseManager.SearchCoursesIfOrgIdSelected(searchParams).ToList();
+                viewModel.Courses = _courseManager.SearchCoursesByParams(searchParams).ToList();
             }
 
             return View(viewModel);

@@ -72,55 +72,28 @@ namespace OnlineExamManagementWebApp.BLL {
             return course;
         }
 
-        public ICollection<Course> SearchCoursesIfOrgIdSelected(SearchCourseDto dto) {
-            var coursesByOrganizationId = _unitOfWork.Courses.GetListOfCourseByOrganizationId(dto.OrganizationId);
+        public ICollection<Course> SearchCoursesByParams(SearchCourseDto dto) {
+            ICollection<Course> courses;
+
+            if (!dto.OrganizationId.Equals(0)) {
+                courses = _unitOfWork.Courses.GetListOfCourseByOrganizationId(dto.OrganizationId);
+            }
+            else {
+                courses = _unitOfWork.Courses.GetAllCourses();
+            }
 
             if (dto.Name != null) {
                 ICollection<Course> coursesByName = _unitOfWork.Courses.GetCoursesLikeName(dto.Name);
-                coursesByOrganizationId =
-                    coursesByOrganizationId.Where(o => coursesByName.Any(n => n.Id.Equals(o.Id))).ToList();
+                courses = courses.Where(o => coursesByName.Any(n => n.Id.Equals(o.Id))).ToList();
 
             }
 
             if (dto.Code != null) {
                 ICollection<Course> coursesByCode = _unitOfWork.Courses.GetCoursesLikeCode(dto.Code);
-                coursesByOrganizationId =
-                    coursesByOrganizationId.Where(o => coursesByCode.Any(n => n.Id.Equals(o.Id))).ToList();
-            }
-
-            return coursesByOrganizationId;
-        }
-
-        public ICollection<Course> SearchCourseIfNoOrgIdSelected(SearchCourseDto dto) {
-            List<Course> courses = new List<Course>();
-
-            if (IsAllPropertiesNullOrEmptyOrZero(dto)) {
-                courses = _unitOfWork.Courses.GetAllCourses().ToList();
+                courses = courses.Where(o => coursesByCode.Any(n => n.Id.Equals(o.Id))).ToList();
             }
 
             return courses;
         }
-
-        // Using reflection to check object properties
-        private bool IsAllPropertiesNullOrEmptyOrZero(object myObject) {
-            bool flag = false;
-
-            foreach (PropertyInfo pi in myObject.GetType().GetProperties()) {
-                if (pi.PropertyType == typeof(string)) {
-                    string value = (string)pi.GetValue(myObject);
-                    if (string.IsNullOrEmpty(value)) {
-                        flag = true;
-                    }
-                }
-                else if (pi.PropertyType == typeof(int)) {
-                    int value = (int)pi.GetValue(myObject);
-                    if (value == 0) {
-                        flag = true;
-                    }
-                }
-            }
-            return flag;
-        }
-
     }
 }
