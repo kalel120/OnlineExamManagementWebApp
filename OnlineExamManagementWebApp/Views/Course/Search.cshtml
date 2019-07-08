@@ -126,9 +126,9 @@
                 <div class="x_content">
                     <table class="table table-bordered table-hover table-responsive" id="tbl-courseSearchResult">
                         <thead>
-                            <tr>
-                                <th>SL</th>
+                            <tr>                                
                                 <th>Name</th>
+                                <th>Code</th>
                                 <th>Duration</th>
                                 <th>Fees</th>
                                 <th>Participants</th>
@@ -140,9 +140,9 @@
                         <tbody>
                             @if (Model.Courses != null) {
                                 foreach (var course in Model.Courses) {
-                                    <tr>
-                                        <td>@course.Id</td>
+                                    <tr>                                        
                                         <td>@course.Name</td>
+                                        <td>@course.Code</td>
                                         <td>@course.Duration</td>
                                         <td>Fees</td>
                                         <td>Participants</td>

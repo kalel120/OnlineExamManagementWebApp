@@ -177,14 +177,14 @@ namespace OnlineExamManagementWebApp.Controllers {
 
         private SearchCourseViewModel GetInitialCourseSearchVm(string selectedOrgId, string selectedTrainerId) {
             var searchViewModel = new SearchCourseViewModel {
-                Organizations = GetAllSelectListOrganization(selectedOrgId),
+                Organizations = GetAllSelectListOrganizations(selectedOrgId),
                 Trainers = new SelectList(_trainerManager.GetEmptySelectList(), "Value", "Text", selectedTrainerId).ToList()
             };
 
             return searchViewModel;
         }
 
-        private List<SelectListItem> GetAllSelectListOrganization(string selectedOrgId) {
+        private List<SelectListItem> GetAllSelectListOrganizations(string selectedOrgId) {
             return new SelectList(_orgManager.GetAllOrganizations(), "Value", "Text", selectedOrgId).ToList();
         }
 
@@ -205,17 +205,14 @@ namespace OnlineExamManagementWebApp.Controllers {
                 viewModel.Courses = _courseManager.SearchCourseIfNoOrgIdSelected(searchParams).ToList();
             }
             else {
-                viewModel.Organizations = GetAllSelectListOrganization(selectedOrgId);
+                viewModel.Organizations = GetAllSelectListOrganizations(selectedOrgId);
                 viewModel.Trainers = new SelectList(_trainerManager.GetSelectListTrainersByOrgId(selectedOrgId), "Value", "Text", selectedTrainerId).ToList();
 
                 viewModel.Courses = _courseManager.SearchCoursesIfOrgIdSelected(searchParams).ToList();
             }
 
             return View(viewModel);
-
         }
-
-
 
         public JsonResult GetTrainersByOrganization(int id) {
             var trainers = _trainerManager.GetTrainersByOrgId(id);

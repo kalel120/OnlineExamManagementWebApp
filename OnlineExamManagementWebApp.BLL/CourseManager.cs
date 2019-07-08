@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Web.Mvc;
 using OnlineExamManagementWebApp.DTOs;
 using OnlineExamManagementWebApp.Models;
 using OnlineExamManagementWebApp.Repository;
@@ -16,10 +14,6 @@ namespace OnlineExamManagementWebApp.BLL {
         public CourseManager() {
             _unitOfWork = new UnitOfWork();
         }
-
-        #region OrganizationManager
-        
-        #endregion
 
         #region TagManager
         public IEnumerable GetAllTags() {
