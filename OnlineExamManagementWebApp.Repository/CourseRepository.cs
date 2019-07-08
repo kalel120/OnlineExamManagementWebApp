@@ -44,5 +44,9 @@ namespace OnlineExamManagementWebApp.Repository {
         public ICollection<Course> GetCoursesLikeCode(string code) {
             return _dbContext.Courses.Where(c => c.Code.Contains(code)).ToList();
         }
+
+        public ICollection<Course> GetAllCourses() {
+            return _dbContext.Courses.ToList();
+        }
     }
 }

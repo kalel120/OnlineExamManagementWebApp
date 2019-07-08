@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -193,12 +194,29 @@ namespace OnlineExamManagementWebApp.Controllers {
         [HttpPost]
         public ActionResult Search(SearchCourseViewModel viewModel) {
             SearchCourseDto searchParams = Mapper.Map<SearchCourseDto>(viewModel);
+            var selectedOrgId = Request.Form["OrganizationId"];
+            var selectedTrainerId = Request.Form["TrainerId"];
 
-            var viewModelToRedirect = GetInitialCourseSearchVm();
-            viewModelToRedirect.Courses = _courseManager.GetCoursesBySearchParams(searchParams).ToList();
+            if (selectedOrgId == "") {
+                viewModel.Organizations =
+                    new SelectList(_courseManager.GetAllOrganizations(), "Value", "Text", selectedOrgId).ToList();
+                viewModel.Trainers = new SelectList(_trainerManager.GetEmptySelectList(), "Value", "Text", selectedTrainerId).ToList();
 
-            return View(viewModelToRedirect);
+                viewModel.Courses = _courseManager.SearchCourseIfNoOrgIdSelected(searchParams).ToList();
+            }
+            else {
+                viewModel.Organizations =
+                    new SelectList(_courseManager.GetAllOrganizations(), "Value", "Text", selectedOrgId).ToList();
+                viewModel.Trainers = new SelectList(_trainerManager.GetSelectListTrainersByOrgId(selectedOrgId), "Value", "Text", selectedTrainerId).ToList();
+
+                viewModel.Courses = _courseManager.SearchCoursesIfOrgIdSelected(searchParams).ToList();
+            }
+
+            return View(viewModel);
+
         }
+
+
 
         public JsonResult GetTrainersByOrganization(int id) {
             var trainers = _trainerManager.GetTrainersByOrgId(id);

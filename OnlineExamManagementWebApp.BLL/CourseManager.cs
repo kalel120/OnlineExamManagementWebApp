@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web.Mvc;
 using OnlineExamManagementWebApp.DTOs;
 using OnlineExamManagementWebApp.Models;
@@ -84,7 +86,7 @@ namespace OnlineExamManagementWebApp.BLL {
             return course;
         }
 
-        public ICollection<Course> GetCoursesBySearchParams(SearchCourseDto dto) {
+        public ICollection<Course> SearchCoursesIfOrgIdSelected(SearchCourseDto dto) {
             var coursesByOrganizationId = _unitOfWork.Courses.GetListOfCourseByOrganizationId(dto.OrganizationId);
 
             if (dto.Name != null) {
@@ -102,5 +104,37 @@ namespace OnlineExamManagementWebApp.BLL {
 
             return coursesByOrganizationId;
         }
+
+        public ICollection<Course> SearchCourseIfNoOrgIdSelected(SearchCourseDto dto) {
+            List<Course> courses = new List<Course>();
+
+            if (IsAllPropertiesNullOrEmptyOrZero(dto)) {
+                courses = _unitOfWork.Courses.GetAllCourses().ToList();
+            }
+
+            return courses;
+        }
+
+        // Using reflection to check object properties
+        private bool IsAllPropertiesNullOrEmptyOrZero(object myObject) {
+            bool flag = false;
+
+            foreach (PropertyInfo pi in myObject.GetType().GetProperties()) {
+                if (pi.PropertyType == typeof(string)) {
+                    string value = (string)pi.GetValue(myObject);
+                    if (string.IsNullOrEmpty(value)) {
+                        flag = true;
+                    }
+                }
+                else if (pi.PropertyType == typeof(int)) {
+                    int value = (int)pi.GetValue(myObject);
+                    if (value == 0) {
+                        flag = true;
+                    }
+                }
+            }
+            return flag;
+        }
+
     }
 }
