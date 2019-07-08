@@ -173,21 +173,22 @@ namespace OnlineExamManagementWebApp.Controllers {
         #endregion
 
         #region course search page
-        private SearchCourseViewModel GetInitialCourseSearchVm() {
+
+        private SearchCourseViewModel GetInitialCourseSearchVm(string selectedOrgId, string selectedTrainerId) {
             var searchViewModel = new SearchCourseViewModel {
-                Organizations = _courseManager.GetAllOrganizations(),
-                Trainers = new List<SelectListItem> {
-                    new SelectListItem {
-                        Value = "",
-                        Text = @"--SELECT TRAINER--"
-                    }
-                }
+                Organizations = GetAllSelectListOrganization(selectedOrgId),
+                Trainers = new SelectList(_trainerManager.GetEmptySelectList(), "Value", "Text", selectedTrainerId).ToList()
             };
+
             return searchViewModel;
         }
 
+        private List<SelectListItem> GetAllSelectListOrganization(string selectedOrgId) {
+            return new SelectList(_courseManager.GetAllOrganizations(), "Value", "Text", selectedOrgId).ToList();
+        }
+
         public ActionResult Search() {
-            var searchViewModel = GetInitialCourseSearchVm();
+            var searchViewModel = GetInitialCourseSearchVm("", "");
             return View(searchViewModel);
         }
 
@@ -198,15 +199,12 @@ namespace OnlineExamManagementWebApp.Controllers {
             var selectedTrainerId = Request.Form["TrainerId"];
 
             if (selectedOrgId == "") {
-                viewModel.Organizations =
-                    new SelectList(_courseManager.GetAllOrganizations(), "Value", "Text", selectedOrgId).ToList();
-                viewModel.Trainers = new SelectList(_trainerManager.GetEmptySelectList(), "Value", "Text", selectedTrainerId).ToList();
+                viewModel = GetInitialCourseSearchVm(selectedOrgId, selectedTrainerId);
 
                 viewModel.Courses = _courseManager.SearchCourseIfNoOrgIdSelected(searchParams).ToList();
             }
             else {
-                viewModel.Organizations =
-                    new SelectList(_courseManager.GetAllOrganizations(), "Value", "Text", selectedOrgId).ToList();
+                viewModel.Organizations = GetAllSelectListOrganization(selectedOrgId);
                 viewModel.Trainers = new SelectList(_trainerManager.GetSelectListTrainersByOrgId(selectedOrgId), "Value", "Text", selectedTrainerId).ToList();
 
                 viewModel.Courses = _courseManager.SearchCoursesIfOrgIdSelected(searchParams).ToList();
