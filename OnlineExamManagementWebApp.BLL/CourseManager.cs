@@ -15,36 +15,32 @@ namespace OnlineExamManagementWebApp.BLL {
         }
 
         #region TagManager
-        public IEnumerable GetAllTags() {
-            return _unitOfWork.Tags.GetAllTagNames();
+        public IEnumerable GetEveryTagName() {
+            return _unitOfWork.Tags.GetEveryTagName();
         }
 
-        public List<Tag> GetReleventTags(List<string> tagList) {
-            var newTags = GetNewTags(tagList);
-            if (newTags.Count > 0) {
-                _unitOfWork.Tags.AddNewTags(newTags);
-            }
-
-            var courseTags = new List<Tag>();
-            foreach (var item in tagList) {
-                var tag = GetTagByName(item);
-                if (tag != null) {
-                    courseTags.Add(tag);
-                }
-            }
-            return courseTags;
+        public ICollection<Tag> GetSelectedTags(List<string> listOfString) {
+            return CheckAndInsertAsNewTag(listOfString);
         }
 
-        private List<Tag> GetNewTags(List<string> tags) {
-            var newTags = new List<Tag>();
+        private ICollection<Tag> CheckAndInsertAsNewTag(List<string> listOfString) {
+            var tags = new List<Tag>();
 
-            foreach (var item in tags) {
-                var tag = GetTagByName(item);
+            foreach (var searchTerm in listOfString) {
+                var tag = GetTagByName(searchTerm);
                 if (tag == null) {
-                    newTags.Add(new Tag { Name = item });
+                    var newTag = new Tag { Name = searchTerm };
+                    if (_unitOfWork.Tags.AddNewTag(newTag)) {
+                        tags.Add(newTag);
+                    }
+                    tags.Add(newTag);
+                }
+                else {
+                    tags.Add(tag);
                 }
             }
-            return newTags;
+
+            return tags;
         }
 
         private Tag GetTagByName(string searchTerm) {

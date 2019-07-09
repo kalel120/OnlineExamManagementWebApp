@@ -32,7 +32,7 @@ namespace OnlineExamManagementWebApp.Controllers {
         private CourseEntryViewModel GetCourseEntryViewModel() {
             var entryViewModel = new CourseEntryViewModel {
                 Organizations = _orgManager.GetAllSelectListOrganizations(""),
-                Tags = new SelectList(_courseManager.GetAllTags())
+                Tags = new SelectList(_courseManager.GetEveryTagName())
             };
             return entryViewModel;
         }
@@ -41,7 +41,7 @@ namespace OnlineExamManagementWebApp.Controllers {
         public ActionResult Entry(CourseEntryViewModel courseEntryVm) {
             if (ModelState.IsValid) {
                 var course = Mapper.Map<Course>(courseEntryVm);
-                course.Tags = _courseManager.GetReleventTags(courseEntryVm.SelectedTags);
+                course.Tags = _courseManager.GetSelectedTags(courseEntryVm.SelectedTags).ToList();
 
                 if (!_courseManager.IsCourseSaved(course))
                     return RedirectToAction("Error");

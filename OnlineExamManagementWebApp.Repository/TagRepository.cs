@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using OnlineExamManagementWebApp.DatabaseContext;
 using OnlineExamManagementWebApp.Models;
@@ -12,17 +11,17 @@ namespace OnlineExamManagementWebApp.Repository {
             _dbContext = dbContext;
         }
 
-        public IEnumerable GetAllTagNames() {
+        public IEnumerable GetEveryTagName() {
             return _dbContext.Tags.Select(x => x.Name);
-        }
-
-        public void AddNewTags(List<Tag> newTags) {
-            _dbContext.Tags.AddRange(newTags);
-            _dbContext.SaveChanges();
         }
 
         public Tag GetTagByName(string searchTerm) {
             return _dbContext.Tags.FirstOrDefault(t => t.Name == searchTerm);
+        }
+
+        public bool AddNewTag(Tag tag) {
+            _dbContext.Tags.Add(tag);
+            return _dbContext.SaveChanges() > 0;
         }
     }
 }
