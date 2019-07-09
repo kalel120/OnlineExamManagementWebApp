@@ -31,7 +31,7 @@ namespace OnlineExamManagementWebApp.Controllers {
 
         private CourseEntryViewModel GetCourseEntryViewModel() {
             var entryViewModel = new CourseEntryViewModel {
-                Organizations = _orgManager.GetAllOrganizations(),
+                Organizations = _orgManager.GetAllSelectListOrganizations(""),
                 Tags = new SelectList(_courseManager.GetAllTags())
             };
             return entryViewModel;
@@ -177,15 +177,11 @@ namespace OnlineExamManagementWebApp.Controllers {
 
         private SearchCourseViewModel GetInitialCourseSearchVm(string selectedOrgId, string selectedTrainerId) {
             var searchViewModel = new SearchCourseViewModel {
-                Organizations = GetAllSelectListOrganizations(selectedOrgId),
+                Organizations = _orgManager.GetAllSelectListOrganizations(selectedOrgId),
                 Trainers = new SelectList(_trainerManager.GetEmptySelectList(), "Value", "Text", selectedTrainerId).ToList()
             };
 
             return searchViewModel;
-        }
-
-        private List<SelectListItem> GetAllSelectListOrganizations(string selectedOrgId) {
-            return new SelectList(_orgManager.GetAllOrganizations(), "Value", "Text", selectedOrgId).ToList();
         }
 
         public ActionResult Search() {
@@ -215,7 +211,7 @@ namespace OnlineExamManagementWebApp.Controllers {
 
             }
             else {
-                viewModel.Organizations = GetAllSelectListOrganizations(selectedOrgId);
+                viewModel.Organizations = _orgManager.GetAllSelectListOrganizations(selectedOrgId);
                 viewModel.Trainers = new SelectList(_trainerManager.GetSelectListTrainersByOrgId(selectedOrgId), "Value", "Text", selectedTrainerId).ToList();
 
                 viewModel.Courses = _courseManager.SearchCoursesByParams(searchParams).ToList();
