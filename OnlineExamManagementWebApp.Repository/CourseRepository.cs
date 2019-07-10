@@ -11,6 +11,10 @@ namespace OnlineExamManagementWebApp.Repository {
             _dbContext = dbContext;
         }
 
+        private IQueryable<Course> EgarLoadCoursesWithTrainerObject() {
+            return _dbContext.Courses.Include(c => c.CourseTrainers.Select(t => t.Trainer));
+        }
+
         public bool AddCourse(Course course) {
             _dbContext.Courses.Add(course);
             return _dbContext.SaveChanges() > 0;
@@ -25,27 +29,32 @@ namespace OnlineExamManagementWebApp.Repository {
             return course;
         }
 
-        public ICollection<Course> GetListOfCourseByOrganizationId(int organizationId) {
+        public ICollection<Course> GetListOfCourseByOrganizationId(int organizationId, bool isNeedTrainer) {
+            if (isNeedTrainer) {
+                return EgarLoadCoursesWithTrainerObject().Where(o => o.OrganizationId == organizationId).ToList();
+            }
             return _dbContext.Courses.Where(c => c.OrganizationId == organizationId).ToList();
         }
 
-        //public ICollection<Course> GetCoursesByName(string name) {
-        //    return _dbContext.Courses.Where(c => c.Name == name).ToList();
-        //}
 
-        //public ICollection<Course> GetCoursesByCode(string code) {
-        //    return _dbContext.Courses.Where(c => c.Code == code).ToList();
-        //}
-
-        public ICollection<Course> GetCoursesLikeName(string name) {
+        public ICollection<Course> GetCoursesLikeName(string name, bool isNeedTrainer) {
+            if (isNeedTrainer) {
+                return EgarLoadCoursesWithTrainerObject().Where(c => c.Name.Contains(name)).ToList();
+            }
             return _dbContext.Courses.Where(c => c.Name.Contains(name)).ToList();
         }
 
-        public ICollection<Course> GetCoursesLikeCode(string code) {
+        public ICollection<Course> GetCoursesLikeCode(string code, bool isNeedTrainer) {
+            if (isNeedTrainer) {
+                return EgarLoadCoursesWithTrainerObject().Where(c => c.Code.Contains(code)).ToList();
+            }
             return _dbContext.Courses.Where(c => c.Code.Contains(code)).ToList();
         }
 
-        public ICollection<Course> GetAllCourses() {
+        public ICollection<Course> GetAllCourses(bool isNeedTrainer) {
+            if (isNeedTrainer) {
+                return EgarLoadCoursesWithTrainerObject().ToList();
+            }
             return _dbContext.Courses.ToList();
         }
     }

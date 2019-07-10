@@ -70,20 +70,20 @@ namespace OnlineExamManagementWebApp.BLL {
             ICollection<Course> courses;
 
             if (!dto.OrganizationId.Equals(0)) {
-                courses = _unitOfWork.Courses.GetListOfCourseByOrganizationId(dto.OrganizationId);
+                courses = _unitOfWork.Courses.GetListOfCourseByOrganizationId(dto.OrganizationId, true);
             }
             else {
-                courses = _unitOfWork.Courses.GetAllCourses();
+                courses = _unitOfWork.Courses.GetAllCourses(true);
             }
 
             if (dto.Name != null) {
-                ICollection<Course> coursesByName = _unitOfWork.Courses.GetCoursesLikeName(dto.Name);
+                ICollection<Course> coursesByName = _unitOfWork.Courses.GetCoursesLikeName(dto.Name, true);
                 courses = courses.Where(o => coursesByName.Any(n => n.Id.Equals(o.Id))).ToList();
 
             }
 
             if (dto.Code != null) {
-                ICollection<Course> coursesByCode = _unitOfWork.Courses.GetCoursesLikeCode(dto.Code);
+                ICollection<Course> coursesByCode = _unitOfWork.Courses.GetCoursesLikeCode(dto.Code, true);
                 courses = courses.Where(o => coursesByCode.Any(n => n.Id.Equals(o.Id))).ToList();
             }
 

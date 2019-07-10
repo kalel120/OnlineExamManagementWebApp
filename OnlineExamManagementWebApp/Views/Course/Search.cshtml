@@ -126,7 +126,7 @@
                 <div class="x_content">
                     <table class="table table-bordered table-hover table-responsive" id="tbl-courseSearchResult">
                         <thead>
-                            <tr>                                
+                            <tr>
                                 <th>Name</th>
                                 <th>Code</th>
                                 <th>Duration</th>
@@ -140,13 +140,28 @@
                         <tbody>
                             @if (Model.Courses != null) {
                                 foreach (var course in Model.Courses) {
-                                    <tr>                                        
+                                    <tr>
                                         <td>@course.Name</td>
                                         <td>@course.Code</td>
                                         <td>@course.Duration</td>
                                         <td>Fees</td>
                                         <td>Participants</td>
-                                        <td>Trainers</td>
+                                        <td>
+                                            @{
+                                                int index = course.CourseTrainers.Count;
+                                                int loopCounter = 1;
+                                            }
+
+                                            @foreach (var item in course.CourseTrainers) {
+                                                if (loopCounter < index) {
+                                                    @item.Trainer.Name<span>&#44;&nbsp;</span>
+                                                }
+                                                else {
+                                                    @item.Trainer.Name
+                                                }
+                                                loopCounter++;
+                                            }
+                                        </td>
                                         <td>
                                             <input type="button" class="btn btn-warning" value="Edit" />
                                             <input type="button" class="btn btn-danger" value="Delete" />
