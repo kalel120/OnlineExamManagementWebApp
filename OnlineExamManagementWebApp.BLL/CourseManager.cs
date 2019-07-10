@@ -59,7 +59,6 @@ namespace OnlineExamManagementWebApp.BLL {
             return _unitOfWork.Courses.AddCourse(course);
         }
 
-
         public Course GetCourseWithActiveExamsById(int? id) {
             var course = _unitOfWork.Courses.GetCourseById(id);
             var activeExams = _unitOfWork.Exams.GetActiveExamsByCourseId(course.Id);

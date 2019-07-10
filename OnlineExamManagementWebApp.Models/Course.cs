@@ -21,9 +21,9 @@ namespace OnlineExamManagementWebApp.Models {
 
         [Required]
         public string Outline { get; set; }
-        
+
         public List<Tag> Tags { get; set; }
-        
+
         public List<Exam> Exams { get; set; }
 
         public Organization Organization { get; set; }
