@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineExamManagementWebApp.Models {
     public class Trainer {
@@ -28,12 +29,15 @@ namespace OnlineExamManagementWebApp.Models {
         public string PostalCode { get; set; }
 
         [Required]
-        public string Country { get; set; }                
+        public string Country { get; set; }
 
         public byte[] Image { get; set; }
 
         public Organization Organization { get; set; }
 
         public int OrganizationId { get; set; }
+
+
+        public ICollection<CourseTrainer> CourseTrainers { get; set; }
     }
 }

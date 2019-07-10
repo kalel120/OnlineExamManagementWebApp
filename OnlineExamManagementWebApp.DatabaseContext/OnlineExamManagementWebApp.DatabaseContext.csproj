@@ -72,6 +72,10 @@
     <Compile Include="Migrations\201809171759506_Modified_Exam__AddedColumn_SerialNo_IsDeleted.Designer.cs">
       <DependentUpon>201809171759506_Modified_Exam__AddedColumn_SerialNo_IsDeleted.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907101043465_FixCourseTrainerRelationship.cs" />
+    <Compile Include="Migrations\201907101043465_FixCourseTrainerRelationship.Designer.cs">
+      <DependentUpon>201907101043465_FixCourseTrainerRelationship.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -103,6 +107,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809171759506_Modified_Exam__AddedColumn_SerialNo_IsDeleted.resx">
       <DependentUpon>201809171759506_Modified_Exam__AddedColumn_SerialNo_IsDeleted.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907101043465_FixCourseTrainerRelationship.resx">
+      <DependentUpon>201907101043465_FixCourseTrainerRelationship.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
