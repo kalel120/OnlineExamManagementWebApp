@@ -87,6 +87,11 @@ namespace OnlineExamManagementWebApp.BLL {
                 courses = courses.Where(o => coursesByCode.Any(n => n.Id.Equals(o.Id))).ToList();
             }
 
+            if (dto.DurationFrom != null || dto.DurationTo != null) {
+                ICollection<Course> courseByDuration = _unitOfWork.Courses.GetCourseByRangedDuration(dto.DurationFrom, dto.DurationTo, true);
+                courses = courses.Where(o => courseByDuration.Any(n => n.Id.Equals(o.Id))).ToList();
+            }
+
             return courses;
         }
     }

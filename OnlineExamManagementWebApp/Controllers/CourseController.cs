@@ -198,8 +198,8 @@ namespace OnlineExamManagementWebApp.Controllers {
             if (selectedOrgId == "" && selectedTrainerId == ""
                 && string.IsNullOrEmpty(searchParams.Name)
                 && string.IsNullOrEmpty(searchParams.Code)
-                && searchParams.DurationTo.Equals(0)
-                && searchParams.DurationFrom.Equals(0)) {
+                && searchParams.DurationFrom == null
+                && searchParams.DurationTo == null) {
 
                 viewModel = GetInitialCourseSearchVm(selectedOrgId, selectedTrainerId);
 

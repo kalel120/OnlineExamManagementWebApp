@@ -15,10 +15,10 @@ namespace OnlineExamManagementWebApp.ViewModels {
         public string Code { get; set; }
 
         [Display(Name = "Duration From")]
-        public int DurationFrom { get; set; }
+        public int? DurationFrom { get; set; }
 
         [Display(Name = "To")]
-        public int DurationTo { get; set; }
+        public int? DurationTo { get; set; }
 
         [Display(Name = "Trainer")]
         public int TrainerId { get; set; }

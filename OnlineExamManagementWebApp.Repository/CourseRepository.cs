@@ -57,5 +57,26 @@ namespace OnlineExamManagementWebApp.Repository {
             }
             return _dbContext.Courses.ToList();
         }
+
+        public ICollection<Course> GetCourseByRangedDuration(int? durationFrom, int? durationTo, bool isNeedTrainer) {
+            if (isNeedTrainer) {
+                if (durationFrom == null) {
+                    return EgarLoadCoursesWithTrainerObject()
+                        .Where(d => d.Duration <= durationTo)
+                        .ToList();
+                }
+                if (durationTo == null) {
+                    return EgarLoadCoursesWithTrainerObject()
+                        .Where(d => d.Duration >= durationFrom)
+                        .ToList();
+                }
+                return EgarLoadCoursesWithTrainerObject()
+                    .Where(d => d.Duration >= durationFrom && d.Duration <= durationTo)
+                    .ToList();
+
+            }
+            return _dbContext.Courses.Where(d => d.Duration >= durationFrom && d.Duration <= durationTo)
+                .ToList();
+        }
     }
 }

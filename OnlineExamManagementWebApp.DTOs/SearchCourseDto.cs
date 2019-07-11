@@ -6,9 +6,9 @@
 
         public string Code { get; set; }
 
-        public int DurationFrom { get; set; }
+        public int? DurationFrom { get; set; }
 
-        public int DurationTo { get; set; }
+        public int? DurationTo { get; set; }
 
         public int TrainerId { get; set; }
     }
