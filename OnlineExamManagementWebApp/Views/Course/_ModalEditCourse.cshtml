@@ -1,0 +1,68 @@
+﻿@Html.AntiForgeryToken()
+
+<div id="js-modal-editCourse" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Edit Course</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-body">
+        <form>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.Hidden("modal-editCourse-Index")
+                    @Html.Label("Name", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-8 ">
+                        @Html.TextBox("modal-editCourse-Name", null, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Code", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-8 ">
+                        @Html.TextBox("modal-editCourse-Code", null, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Duration", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-8 ">
+                        @Html.TextBox("modal-editCourse-Duration", null, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Credit", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-8 ">
+                        @Html.TextBox("modal-editCourse-Credit", null, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Outline", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-8 ">
+                        @Html.TextBox("modal-editCourse-Outline", null, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Lead Trainer", new { @class = "col-sm-2 control-label" })
+                    <div class="col-sm-10">
+                        @Html.DropDownList("modal-editCourse-LeadTrainer", null, "--Select Type--", new { @class = "form-control", style = "width: 280px" })
+                        @Html.ValidationMessage("modal-editCourse-LeadTrainer", "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <div class="col-md-offset-2">
+            <input type="button" id="js-modal-btn-updateCourse" class="btn btn-warning" value="Update" />
+            <input type="button" id="js-modal-btn-close" class="btn btn-danger" data-dismiss="modal" value="Close" />
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
