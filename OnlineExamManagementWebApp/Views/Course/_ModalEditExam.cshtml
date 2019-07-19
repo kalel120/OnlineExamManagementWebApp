@@ -25,7 +25,7 @@ Text = @"Lab Test"
                         <div class="form-group">
                             @Html.Hidden("js-modal-editExam-Index")
                             @Html.Label("Organization", new { @class = "col-sm-2 control-label" })
-                            <div class="col-sm-8 ">
+                            <div class="col-sm-10 ">
                                 @Html.TextBox("js-modal-editExam-OrgName", null, new { @class = "form-control", @readonly = "true" })
                             </div>
                         </div>
@@ -40,7 +40,7 @@ Text = @"Lab Test"
                         <div class="form-group">
                             @Html.Label("Type", new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-10">
-                                @Html.DropDownList("js-modal-editExam-Type", examTypes, "--Select Type--", new { @class = "form-control", style = "width: 280px" })
+                                @Html.DropDownList("js-modal-editExam-Type", examTypes, "--Select Type--", new { @class = "form-control"})
                                 @Html.ValidationMessage("js-modal-editExam-Type", "", new { @class = "text-danger" })
                             </div>
                         </div>

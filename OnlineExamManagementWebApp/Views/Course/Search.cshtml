@@ -4,7 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jq-3.3.1/dt-1.10.18/r-2.2.2/datatables.min.css" />
+<link rel="stylesheet" href="http://cdn.datatables.net1.10.19/css/jquery.dataTables.min.css" media="all" />
+
 
 <div class="x_panel">
     <div class="x_title">
@@ -124,7 +125,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <table class="table table-bordered table-hover table-responsive" id="tbl-courseSearchResult">
+                    <table class="table table-striped table-bordered nowrap" id="tbl-courseSearchResult" style="width: 100%">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -163,8 +164,8 @@
                                             }
                                         </td>
                                         <td>
-                                            <input type="button" class="btn btn-warning" value="Edit" />
-                                            <input type="button" class="btn btn-danger" value="Delete" />
+                                            <input type="button" class="btn btn-warning js-editCourseModalPopup" value="Edit" />
+                                            <input type="button" class="btn btn-danger js-deleteCourseModalPopup" value="Delete" />
                                         </td>
                                     </tr>
                                 }
@@ -184,6 +185,6 @@
 }
 
 @section scripts{
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/jq-3.3.1/dt-1.10.18/r-2.2.2/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Scripts/CustomScripts/search-course.js"></script>
 }

@@ -33,7 +33,17 @@
             }
         });
 
-    
-    // jQuery Code Ends Here
+        /**
+         *  Edit Course Modal PopUp
+         */
+        const editCourseModal = $("#js-modal-editCourse");
+
+        $(document).on("click", ".js-editCourseModalPopup", (event) => {
+            editCourseModal.modal("toggle");
+        });
+
+        /** End**/
+
+        // jQuery Code Ends Here
     });
 })(jQuery);
