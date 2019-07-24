@@ -136,6 +136,7 @@
                             <th>Credit</th>
                             <th>Outline</th>
                             <th>Trainers</th>
+                            <th>Lead Trainer</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -170,6 +171,13 @@
                                                 }
                                                 loopCounter++;
                                             }
+                                        </td>
+                                        <td>
+                                           @foreach (var item in course.CourseTrainers) {
+                                               if (item.IsLead) {
+                                                   @item.Trainer.Name
+                                               }
+                                           }
                                         </td>
                                         <td>
                                             <input type="button" class="btn btn-warning js-editCourseModalPopup" value="Edit"/>
