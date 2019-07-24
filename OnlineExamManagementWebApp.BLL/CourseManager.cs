@@ -70,25 +70,25 @@ namespace OnlineExamManagementWebApp.BLL {
             ICollection<Course> courses;
 
             if (!dto.OrganizationId.Equals(0)) {
-                courses = _unitOfWork.Courses.GetListOfCourseByOrganizationId(dto.OrganizationId, true);
+                courses = _unitOfWork.Courses.GetListOfCourseByOrganizationId(dto.OrganizationId);
             }
             else {
-                courses = _unitOfWork.Courses.GetAllCourses(true);
+                courses = _unitOfWork.Courses.GetAllCourses();
             }
 
             if (dto.Name != null) {
-                ICollection<Course> coursesByName = _unitOfWork.Courses.GetCoursesLikeName(dto.Name, true);
+                ICollection<Course> coursesByName = _unitOfWork.Courses.GetCoursesLikeName(dto.Name);
                 courses = courses.Where(o => coursesByName.Any(n => n.Id.Equals(o.Id))).ToList();
 
             }
 
             if (dto.Code != null) {
-                ICollection<Course> coursesByCode = _unitOfWork.Courses.GetCoursesLikeCode(dto.Code, true);
+                ICollection<Course> coursesByCode = _unitOfWork.Courses.GetCoursesLikeCode(dto.Code);
                 courses = courses.Where(o => coursesByCode.Any(n => n.Id.Equals(o.Id))).ToList();
             }
 
             if (dto.DurationFrom != null || dto.DurationTo != null) {
-                ICollection<Course> courseByDuration = _unitOfWork.Courses.GetCourseByRangedDuration(dto.DurationFrom, dto.DurationTo, true);
+                ICollection<Course> courseByDuration = _unitOfWork.Courses.GetCourseByRangedDuration(dto.DurationFrom, dto.DurationTo);
                 courses = courses.Where(o => courseByDuration.Any(n => n.Id.Equals(o.Id))).ToList();
             }
 

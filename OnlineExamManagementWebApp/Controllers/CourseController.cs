@@ -208,7 +208,6 @@ namespace OnlineExamManagementWebApp.Controllers {
             else if (selectedOrgId == "" || selectedTrainerId == "") {
                 viewModel = GetInitialCourseSearchVm(selectedOrgId, selectedTrainerId);
                 viewModel.Courses = _courseManager.SearchCoursesByParams(searchParams).ToList();
-
             }
             else {
                 viewModel.Organizations = _orgManager.GetAllSelectListOrganizations(selectedOrgId);

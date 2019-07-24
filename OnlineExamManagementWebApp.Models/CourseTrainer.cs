@@ -10,8 +10,8 @@ namespace OnlineExamManagementWebApp.Models {
         public int TrainerId { get; set; }
 
         // Navigation Property
-        public Course Course { get; set; }
-        public Trainer Trainer { get; set; }
+        public virtual Course Course { get; set; }
+        public virtual Trainer Trainer { get; set; }
 
 
         // Custom Attributes
