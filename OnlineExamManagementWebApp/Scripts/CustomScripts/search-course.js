@@ -38,30 +38,31 @@
          */
         const editCourseModal = $("#js-modal-editCourse");
 
-        const fetchTrainers = (courseId) => {
-            let trainers = [];
-
-            const promiseCourseTrainer = new Promise((resolve, reject) => {
+        const promiseCourseTrainer = (courseId) => {
+            return new Promise((resolve, reject) => {
                 $.get(`/Course/GetTrainersByCourse/${courseId}`)
                     .done((data) => {
                         resolve(data);
                     });
             });
+        };
 
-            promiseCourseTrainer.then((result) => {
+        const fetchTrainers = (courseId) => {
+            let trainers=[];
+            promiseCourseTrainer(courseId).then((result) => {
                 $.each(result, (key, value) => {
                     let jsonData = {};
-                    let columnName = value.TrainerId;
-                    jsonData[columnName] = value.TrainerName;
+                    jsonData["TrainerId"] = value.TrainerId;
+                    jsonData["TrainerName"] = value.TrainerName;
                     trainers.push(jsonData);
-                });
+                });              
             });
             return trainers;
         };
 
         const getTableRowAsObject = (tableRow) => {
             const courseId = parseInt(tableRow.find("td:eq(0)").text());
-            row = {
+            let row = {
                 Id: courseId,
                 Name: tableRow.find("td:eq(1)").text(),
                 Code: tableRow.find("td:eq(2)").text(),
@@ -69,6 +70,7 @@
                 Credit: tableRow.find("td:eq(5)").text(),
                 Outline: tableRow.find("td:eq(6)").text()
             }
+
             row["Trainers"] = fetchTrainers(courseId);
             return row;
         }
@@ -78,11 +80,20 @@
             $("#modal-editCourse-Duration").val(data.Duration);
             $("#modal-editCourse-Credit").val(data.Credit);
             $("#modal-editCourse-Outline").val(data.Outline);
+
+            $.each(data.Trainers, (key, value) => {
+                //console.log(value);
+                $("#modal-editCourse-LeadTrainer").append(`<option value=${value.TrainerId}>${value.TrainerName}</option>`);
+            });
         };
 
         $(document).on("click", ".js-editCourseModalPopup", (event) => {
             editCourseModal.modal("toggle");
-            bindDataToEditCoursePopup(getTableRowAsObject($(event.target).closest("tr")));
+            const rowData = getTableRowAsObject($(event.target).closest("tr"));
+          
+            setTimeout(() => {
+                bindDataToEditCoursePopup(rowData);
+            }, 100); // 
         });
 
         /** End**/
