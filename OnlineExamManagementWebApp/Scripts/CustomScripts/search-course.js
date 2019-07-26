@@ -37,28 +37,30 @@
          *  Edit Course Modal PopUp
          */
         const editCourseModal = $("#js-modal-editCourse");
+        const modalLeadTrainerSelect = $("#modal-editCourse-LeadTrainer");
 
-        const promiseCourseTrainer = (courseId) => {
+        const getTrainersPromise = (courseId) => {
             return new Promise((resolve, reject) => {
                 $.get(`/Course/GetTrainersByCourse/${courseId}`)
                     .done((data) => {
                         resolve(data);
                     });
             });
-        };
+        }
 
         const fetchTrainers = (courseId) => {
-            let trainers=[];
-            promiseCourseTrainer(courseId).then((result) => {
+            let trainers = [];
+            getTrainersPromise(courseId).then((result) => {
                 $.each(result, (key, value) => {
-                    let jsonData = {};
-                    jsonData["TrainerId"] = value.TrainerId;
-                    jsonData["TrainerName"] = value.TrainerName;
-                    trainers.push(jsonData);
-                });              
+                    let jsonObject = {};
+                    jsonObject["TrainerId"] = value.TrainerId;
+                    jsonObject["TrainerName"] = value.TrainerName;
+                    jsonObject["IsLead"] = value.IsLead;
+                    trainers.push(jsonObject);
+                });
             });
             return trainers;
-        };
+        }
 
         const getTableRowAsObject = (tableRow) => {
             const courseId = parseInt(tableRow.find("td:eq(0)").text());
@@ -74,6 +76,14 @@
             row["Trainers"] = fetchTrainers(courseId);
             return row;
         }
+
+        const clearEditCourseModal = () => {
+            modalLeadTrainerSelect.find("option")
+                .remove()
+                .end()
+                .append(`<option value="">--SELECT TRAINER--</option>`);
+        }
+
         const bindDataToEditCoursePopup = (data) => {
             $("#modal-editCourse-Name").val(data.Name);
             $("#modal-editCourse-Code").val(data.Code);
@@ -81,19 +91,24 @@
             $("#modal-editCourse-Credit").val(data.Credit);
             $("#modal-editCourse-Outline").val(data.Outline);
 
+            clearEditCourseModal();
             $.each(data.Trainers, (key, value) => {
-                //console.log(value);
-                $("#modal-editCourse-LeadTrainer").append(`<option value=${value.TrainerId}>${value.TrainerName}</option>`);
+                let appendString = `<option value=${value.TrainerId}>${value.TrainerName}</option>`;
+                if (value.IsLead) {
+                    modalLeadTrainerSelect.append(appendString).val(value.TrainerId);
+                } else {
+                    modalLeadTrainerSelect.append(appendString);
+                }
             });
-        };
+        }
 
         $(document).on("click", ".js-editCourseModalPopup", (event) => {
             editCourseModal.modal("toggle");
             const rowData = getTableRowAsObject($(event.target).closest("tr"));
-          
+
             setTimeout(() => {
                 bindDataToEditCoursePopup(rowData);
-            }, 100); // 
+            }, 250);
         });
 
         /** End**/

@@ -4,7 +4,7 @@
     List<SelectListItem> trainers = new List<SelectListItem> {
 new SelectListItem {
     Value = "",
-    Text = @"-Select Trainer--"
+    Text = @"-SELECT TRAINER--"
 }
 };
 }
@@ -58,7 +58,7 @@ new SelectListItem {
                         <div class="form-group">
                             @Html.Label("Lead Trainer", new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-10">
-                                @Html.DropDownList("modal-editCourse-LeadTrainer", trainers, "--SELECT LEAD TRAINER--", new { @class = "form-control" })
+                                @Html.DropDownList("modal-editCourse-LeadTrainer", trainers, new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
