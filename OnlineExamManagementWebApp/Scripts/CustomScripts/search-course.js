@@ -116,10 +116,28 @@
                 Outline: $("#modal-editCourse-Outline").val(),
                 LeadTrainerId: $("#modal-editCourse-LeadTrainer").children("option").filter(":selected").val()
             }
-            console.log(content);
+            return content;
         }
         btnModalUpdateCourse.on("click", () => {
-            getEditCourseModalContent();
+            let modalContent = getEditCourseModalContent();
+
+            const updatePromise = new Promise((resolve, reject) => {
+                $.post("Course/UpdateCourse/", { modalContent: courseDto })
+                    .done((data) => {
+                        resolve(data);
+                    })
+                    .fail((jqXHR, textStatus) => {
+                        reject(textStatus);
+                    });
+            });
+
+            updatePromise.then((result) => {
+                alert("Updated");
+            }).catch((reason) => {
+                alert("Error >>" + reason);
+            });
+
+            location.reload(true);
         });
 
         /** END **/
