@@ -102,11 +102,32 @@
             });
         }
 
+        /**
+         * Modal Update button functions
+         */
+        const btnModalUpdateCourse = $("#js-modal-btn-updateCourse");
+
+        const getEditCourseModalContent = () => {
+            let content = {
+                Name: $("#modal-editCourse-Name").val(),
+                Code: $("#modal-editCourse-Code").val(),
+                Duration: $("#modal-editCourse-Duration").val(),
+                Credit: $("#modal-editCourse-Credit").val(),
+                Outline: $("#modal-editCourse-Outline").val(),
+                LeadTrainerId: $("#modal-editCourse-LeadTrainer").children("option").filter(":selected").val()
+            }
+            console.log(content);
+        }
+        btnModalUpdateCourse.on("click", () => {
+            getEditCourseModalContent();
+        });
+
+        /** END **/
         $(document).on("click", ".js-editCourseModalPopup", (event) => {
-            editCourseModal.modal("toggle");
             const rowData = getTableRowAsObject($(event.target).closest("tr"));
 
             setTimeout(() => {
+                editCourseModal.modal("toggle");
                 bindDataToEditCoursePopup(rowData);
             }, 250);
         });
