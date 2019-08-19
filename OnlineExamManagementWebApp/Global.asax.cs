@@ -16,6 +16,7 @@ namespace OnlineExamManagementWebApp {
 
             Mapper.Initialize(cfg => {
                 cfg.CreateMap<Course, CourseEditViewModel>();
+                cfg.CreateMap<CourseEditViewModel, Course>();
                 cfg.CreateMap<CourseEntryViewModel, Course>();
 
                 cfg.CreateMap<CourseTrainer, CourseTrainerDto>();
@@ -25,7 +26,6 @@ namespace OnlineExamManagementWebApp {
                 cfg.CreateMap<ExamDto, Exam>();
 
                 cfg.CreateMap<SearchCourseViewModel, SearchCourseDto>();
-                //cfg.CreateMap<SearchCourseDto, SearchCourseViewModel>();
             });
         }
     }

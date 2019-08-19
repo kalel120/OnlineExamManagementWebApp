@@ -22,5 +22,8 @@ namespace OnlineExamManagementWebApp.ViewModels {
         public string Outline { get; set; }
 
         public CreateExamViewModel CreateExamVm { get; set; }
+
+        // For _ModalEditCourse
+        public int LeadTrainerId { get; set; }
     }
 }

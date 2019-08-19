@@ -85,6 +85,7 @@
         }
 
         const bindDataToEditCoursePopup = (data) => {
+            $("#modal-editCourse-Id").val(data.Id);
             $("#modal-editCourse-Name").val(data.Name);
             $("#modal-editCourse-Code").val(data.Code);
             $("#modal-editCourse-Duration").val(data.Duration);
@@ -109,6 +110,7 @@
 
         const getEditCourseModalContent = () => {
             let content = {
+                Id: $("#modal-editCourse-Id").val(),
                 Name: $("#modal-editCourse-Name").val(),
                 Code: $("#modal-editCourse-Code").val(),
                 Duration: $("#modal-editCourse-Duration").val(),
@@ -119,10 +121,10 @@
             return content;
         }
         btnModalUpdateCourse.on("click", () => {
-            let modalContent = getEditCourseModalContent();
+            const modalContent = getEditCourseModalContent();
 
             const updatePromise = new Promise((resolve, reject) => {
-                $.post("Course/UpdateCourse/", { modalContent: courseDto })
+                $.post("/Course/UpdateCourse/", { editInfo : modalContent })
                     .done((data) => {
                         resolve(data);
                     })
@@ -133,11 +135,10 @@
 
             updatePromise.then((result) => {
                 alert("Updated");
+                location.reload(true);
             }).catch((reason) => {
                 alert("Error >>" + reason);
             });
-
-            location.reload(true);
         });
 
         /** END **/

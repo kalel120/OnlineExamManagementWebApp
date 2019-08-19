@@ -94,5 +94,9 @@ namespace OnlineExamManagementWebApp.BLL {
 
             return courses;
         }
+
+        public bool IsCourseUpdated(Course course) {
+            return _unitOfWork.Courses.IsCourseUpdated(course);
+        }
     }
 }

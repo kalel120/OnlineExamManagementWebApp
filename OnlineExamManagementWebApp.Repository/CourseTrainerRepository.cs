@@ -36,15 +36,15 @@ namespace OnlineExamManagementWebApp.Repository {
             return _dbContext.SaveChanges() > 0;
         }
 
-        public bool UpdateLeadTrainerStatus(CourseTrainer updatable) {
+        public bool UpdateLeadTrainerStatus(CourseTrainer updateable) {
             var courseTrainer = _dbContext.CourseTrainers
-                .SingleOrDefault(ct => ct.CourseId == updatable.CourseId && ct.TrainerId == updatable.TrainerId);
+                .SingleOrDefault(ct => ct.CourseId == updateable.CourseId && ct.TrainerId == updateable.TrainerId);
 
             if (courseTrainer == null) {
                 return false;
             }
 
-            courseTrainer.IsLead = updatable.IsLead;
+            courseTrainer.IsLead = updateable.IsLead;
 
             _dbContext.Entry(courseTrainer).State = EntityState.Modified;
             return _dbContext.SaveChanges() > 0;

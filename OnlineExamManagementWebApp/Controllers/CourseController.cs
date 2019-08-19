@@ -224,7 +224,13 @@ namespace OnlineExamManagementWebApp.Controllers {
             return Json(trainers, JsonRequestBehavior.AllowGet);
         }
 
-        //public JsonResult UpdateCourse()
+        public JsonResult UpdateCourse(CourseEditViewModel editInfo) {
+            var updateableCourse = Mapper.Map<Course>(editInfo);
+            bool isCourseUpdated = _courseManager.IsCourseUpdated(updateableCourse);
+            bool isCourseTrainerUpdated = _courseTrainerManager.IsLeadTrainerStatusUpdatedById(editInfo.LeadTrainerId, editInfo.Id);
+
+            return Json(isCourseUpdated && isCourseTrainerUpdated, JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }

@@ -67,5 +67,21 @@ namespace OnlineExamManagementWebApp.Repository {
                 .Where(d => d.Duration >= durationFrom && d.Duration <= durationTo)
                 .ToList();
         }
+
+        public bool IsCourseUpdated(Course course) {
+            var updateableCourse = _dbContext.Courses.FirstOrDefault(c => c.Id == course.Id);
+            if (updateableCourse == null) {
+                return false;
+            }
+
+            updateableCourse.Name = course.Name;
+            updateableCourse.Code = course.Code;
+            updateableCourse.Credit = course.Credit;
+            updateableCourse.Duration = course.Duration;
+            updateableCourse.Outline = course.Outline;
+
+            _dbContext.Entry(updateableCourse).State = EntityState.Modified;
+            return _dbContext.SaveChanges() > 0;
+        }
     }
 }
