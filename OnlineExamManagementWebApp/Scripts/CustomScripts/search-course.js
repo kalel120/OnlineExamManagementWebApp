@@ -223,6 +223,7 @@
 
         /** END **/
 
+        // Edit Course with modal popup functionality
         $(document).on("click", ".js-editCourseModalPopup", (event) => {
             const rowData = getTableRowAsObject($(event.target).closest("tr"));
 
@@ -231,7 +232,11 @@
                 bindDataToEditCoursePopup(rowData);
             }, 250);
         });
+        // End
 
+        // Delete course with modal popup functionality
+
+        // End
         /** End**/
 
         // jQuery Code Ends Here
