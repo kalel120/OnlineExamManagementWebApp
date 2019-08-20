@@ -24,6 +24,7 @@ new SelectListItem {
                             @Html.Label("Name", new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-10 ">
                                 @Html.TextBox("modal-editCourse-Name", null, new { @class = "form-control" })
+                                @Html.ValidationMessage("modal-editCourse-Name","",new{@class="text-danger"})
                             </div>
                         </div>
 
@@ -31,6 +32,7 @@ new SelectListItem {
                             @Html.Label("Code", new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-10">
                                 @Html.TextBox("modal-editCourse-Code", null, new { @class = "form-control" })
+                                @Html.ValidationMessage("modal-editCourse-Code","",new{@class="text-danger"})
                             </div>
                         </div> 
 
@@ -38,6 +40,7 @@ new SelectListItem {
                             @Html.Label("Duration", new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-10">
                                 @Html.TextBox("modal-editCourse-Duration", null, new { @class = "form-control" })
+                                @Html.ValidationMessage("modal-editCourse-Duration","",new{@class="text-danger"})
                             </div>
                         </div>
 
@@ -45,6 +48,7 @@ new SelectListItem {
                             @Html.Label("Credit", new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-10">
                                 @Html.TextBox("modal-editCourse-Credit", null, new { @class = "form-control" })
+                                @Html.ValidationMessage("modal-editCourse-Credit","",new{@class="text-danger"})
                             </div>
                         </div>
 
@@ -52,6 +56,7 @@ new SelectListItem {
                             @Html.Label("Outline", new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-10">
                                 @Html.TextBox("modal-editCourse-Outline", null, new { @class = "form-control" })
+                                @Html.ValidationMessage("modal-editCourse-Outline","",new{@class="text-danger"})
                             </div>
                         </div>
 
@@ -59,6 +64,7 @@ new SelectListItem {
                             @Html.Label("Lead Trainer", new { @class = "col-sm-2 control-label" })
                             <div class="col-sm-10">
                                 @Html.DropDownList("modal-editCourse-LeadTrainer", trainers, new { @class = "form-control" })
+                                @Html.ValidationMessage("modal-editCourse-LeadTrainer","",new{@class="text-danger"})
                             </div>
                         </div>
                     </div>

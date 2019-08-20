@@ -123,7 +123,7 @@ $(function () {
         return validator;
     }
 
-    const editExamValiation = () => {
+    const editExamValidation = () => {
         const modalForm = $("#_form-modal-editExam");
 
         return modalForm.validate({
@@ -251,7 +251,7 @@ $(function () {
         };
     }
 
-    function isNeedReSequancingAfterAdd(serialNo) {
+    function isNeedReSequencingAfterAdd(serialNo) {
         let result = false;
         for (let index = 0; index < examList.length; index++) {
             if (serialNo === examList[index].SerialNo)
@@ -260,7 +260,7 @@ $(function () {
         return result;
     }
 
-    function reSequanceSerialNo() {
+    function reSequenceSerialNo() {
         for (let index = 0; index < examList.length; index++) {
             examList[index].SerialNo = index + 1;
         }
@@ -321,10 +321,10 @@ $(function () {
         }
         const addable = getTextBoxContentsAsObject();
 
-        if (isNeedReSequancingAfterAdd(addable.SerialNo)) {
+        if (isNeedReSequencingAfterAdd(addable.SerialNo)) {
             alert("Exam serial number will be changed");
             examList.splice((addable.SerialNo - 1), 0, addable);
-            reSequanceSerialNo();
+            reSequenceSerialNo();
         } else {
             examList.push(addable);
         }
@@ -399,7 +399,7 @@ $(function () {
 
         if (confirm("serial number will be resequanced.\nAre you Sure?")) {
             examList = examList.filter(s => s.SerialNo !== rowSerial);
-            reSequanceSerialNo();
+            reSequenceSerialNo();
             reBuildCreateExamTable();
 
             removeExamFromDb(examCode, courseId, rowSerial);
@@ -511,7 +511,7 @@ $(function () {
     });
 
     btnModalUpdateExam.on("click", function () {
-        if (!editExamValiation()) {
+        if (!editExamValidation()) {
             return false;
         }
 

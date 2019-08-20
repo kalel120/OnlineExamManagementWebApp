@@ -106,6 +106,82 @@
         /**
          * Modal Update button functions
          */
+
+        //validation code
+        const updateCourseValidation = () => {
+            const modalForm = $("#_form-modal-editCourse");
+
+            return modalForm.validate({
+                errorClass: "text-danger",
+                errorElement: "div",
+
+                rules: {
+                    "modal-editCourse-Name": {
+                        required: true
+                    },
+                    "modal-editCourse-Code": {
+                        required: true
+                    },
+                    "modal-editCourse-Duration": {
+                        required: true,
+                        digits: true
+                    },
+                    "modal-editCourse-Credit": {
+                        required: true,
+                        number: true
+                    },
+                    "modal-editCourse-Outline": {
+                        required: true
+                    },
+                    "modal-editCourse-LeadTrainer": {
+                        required: true
+                    }
+                },
+                messages: {
+                    "modal-editCourse-Name": {
+                        required: "Name required"
+                    },
+                    "modal-editCourse-Code": {
+                        required: "Proper Code required"
+                    },
+                    "modal-editCourse-Duration": {
+                        required: "Duration required",
+                        digits: "Only digits are allowed"
+                    },
+                    "modal-editCourse-Credit": {
+                        required: "Credit required",
+                        number: "Only digits are allowed"
+                    },
+                    "modal-editCourse-Outline": {
+                        required: "Outline required"
+                    },
+                    "modal-editCourse-LeadTrainer": {
+                        required: "Selection required"
+                    }
+                },
+                errorPlacement: function (error, element) {
+                    if (element.parent(".input-group > div").length) {
+                        element.parent(".input-group > div").append(error);
+                    }
+                    element.parent(".form-group > div").append(error);
+                },
+
+                highlight: function (element) {
+                    $(element).closest(".form-group").removeClass("has-success has-error")
+                        .addClass("has-error");
+                },
+
+                unhighlight: function (element) {
+                    $(element).closest(".form-group").removeClass("has-error");
+                },
+
+                success: function (element) {
+                    element.closest(".form-group").removeClass("has-success has-error");
+                }
+            }).form();
+        }
+        // validation end
+
         const btnModalUpdateCourse = $("#js-modal-btn-updateCourse");
 
         const getEditCourseModalContent = () => {
@@ -120,9 +196,13 @@
             }
             return content;
         }
-        btnModalUpdateCourse.on("click", () => {
-            const modalContent = getEditCourseModalContent();
 
+        btnModalUpdateCourse.on("click", () => {
+            if (!updateCourseValidation()) {
+                return false;
+            }
+                
+            const modalContent = getEditCourseModalContent();
             const updatePromise = new Promise((resolve, reject) => {
                 $.post("/Course/UpdateCourse/", { editInfo : modalContent })
                     .done((data) => {
@@ -142,6 +222,7 @@
         });
 
         /** END **/
+
         $(document).on("click", ".js-editCourseModalPopup", (event) => {
             const rowData = getTableRowAsObject($(event.target).closest("tr"));
 
