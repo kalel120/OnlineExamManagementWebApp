@@ -84,5 +84,16 @@ namespace OnlineExamManagementWebApp.Repository {
             _dbContext.Entry(updateableCourse).State = EntityState.Modified;
             return _dbContext.SaveChanges() > 0;
         }
+
+        public bool IsCourseDeleted(int courseId) {
+            var deletableCourse = _dbContext.Courses.FirstOrDefault(c => c.Id == courseId && c.IsDeleted == false);
+            if (deletableCourse != null) {
+                deletableCourse.IsDeleted = true;
+
+                _dbContext.Entry(deletableCourse).State = EntityState.Modified;
+            }
+
+            return _dbContext.SaveChanges() > 0;
+        }
     }
 }

@@ -231,6 +231,11 @@ namespace OnlineExamManagementWebApp.Controllers {
 
             return Json(isCourseUpdated && isCourseTrainerUpdated, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult DeleteCourse(int courseId) {
+            bool isCourseDeleted = _courseManager.IsCourseDeleted(courseId);
+            return Json(isCourseDeleted, JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }

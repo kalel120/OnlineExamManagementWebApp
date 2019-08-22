@@ -63,7 +63,7 @@
         }
 
         const getTableRowAsObject = (tableRow) => {
-            const courseId = parseInt(tableRow.find("td:eq(0)").text());
+            const courseId = tableRow.find('input[type="hidden"]').val();
             let row = {
                 Id: courseId,
                 Name: tableRow.find("td:eq(1)").text(),
@@ -201,10 +201,10 @@
             if (!updateCourseValidation()) {
                 return false;
             }
-                
+
             const modalContent = getEditCourseModalContent();
             const updatePromise = new Promise((resolve, reject) => {
-                $.post("/Course/UpdateCourse/", { editInfo : modalContent })
+                $.post("/Course/UpdateCourse/", { editInfo: modalContent })
                     .done((data) => {
                         resolve(data);
                     })
@@ -223,6 +223,24 @@
 
         /** END **/
 
+
+        /**
+         *  Soft Delete Course functionality
+         */
+        const deleteCourseById = (courseId) => {
+            $.post("/Course/DeleteCourse/", { courseId: courseId })
+                .done((data) => {
+                    alert("Deleted Successfully!");
+                    location.reload(true);
+                })
+                .fail((jqXHR, textStatus) => {
+                    alert("Error >>! "+textStatus);
+            });
+        }
+        /**
+         * END
+         */
+
         // Edit Course with modal popup functionality
         $(document).on("click", ".js-editCourseModalPopup", (event) => {
             const rowData = getTableRowAsObject($(event.target).closest("tr"));
@@ -235,7 +253,35 @@
         // End
 
         // Delete course with modal popup functionality
+        $(document).on("click", ".js-deleteCoursePopup", (event) => {
+            const rowData = getTableRowAsObject($(event.target).closest("tr"));
 
+            $("#dialog-confirm").dialog({
+                resizable: false,
+                height: "auto",
+                width: 400,
+                modal: true,
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "Fade",
+                    duration: 1000
+                },
+                buttons: {
+                    "Delete?": function () {
+                        // function to delete
+                        deleteCourseById(rowData.Id);
+                        $(this).dialog("close");
+                    },
+                    Cancel: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+
+        });
         // End
         /** End**/
 

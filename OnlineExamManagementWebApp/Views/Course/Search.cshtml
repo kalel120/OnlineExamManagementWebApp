@@ -5,6 +5,7 @@
 }
 
 <link rel="stylesheet" href="http://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" media="all" />
+<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
 
 
 <div class="x_panel">
@@ -181,7 +182,7 @@
                                         </td>
                                         <td>
                                             <input type="button" class="btn btn-warning js-editCourseModalPopup" value="Edit"/>
-                                            <input type="button" class="btn btn-danger js-deleteCourseModalPopup" value="Delete"/>
+                                            <input type="button" class="btn btn-danger js-deleteCoursePopup" value="Delete"/>
                                         </td>
                                     </tr>
                                     counter++;
@@ -192,7 +193,13 @@
                 </div>
             </div>
         </div>
-
+        
+        <div id="dialog-confirm" title="Delete Course?">
+            <p>
+                <span class="ui-icon ui-icon-alert" style="float: left; margin: 12px 12px 20px 0;"></span>
+                This Course will be permanently deleted and cannot be recovered. Are you sure?
+            </p>
+        </div>
         <div class="clearfix"></div>
     </div>
 </div>
@@ -204,5 +211,6 @@
 @section scripts{
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-ui-1.12.1.js"></script>
     <script type="text/javascript" src="~/Scripts/CustomScripts/search-course.js"></script>
 }

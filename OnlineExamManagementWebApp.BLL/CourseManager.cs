@@ -98,5 +98,9 @@ namespace OnlineExamManagementWebApp.BLL {
         public bool IsCourseUpdated(Course course) {
             return _unitOfWork.Courses.IsCourseUpdated(course);
         }
+
+        public bool IsCourseDeleted(int courseId) {
+            return _unitOfWork.Courses.IsCourseDeleted(courseId);
+        }
     }
 }
