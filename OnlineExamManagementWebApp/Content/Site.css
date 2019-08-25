@@ -22,3 +22,27 @@ select,
 textarea {
     max-width: 280px;
 }*/
+
+/*
+    jQuery UI dialog box 
+*/
+.ui-icon-alert {
+    float: left;
+    margin: 12px 12px 20px 0;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset .cancelClass {
+    font-size: 15px;
+    color: #ffffff;
+    background: #f86379;
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset .confirmClass {
+    color: #ffffff;
+    background: #90c93e;
+}
+
+.ui-dialog .ui-dialog-title {
+    font-size: 15px;
+}
+/* END */

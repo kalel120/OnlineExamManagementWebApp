@@ -227,6 +227,9 @@
         /**
          *  Soft Delete Course functionality
          */
+        const deleteCourseDialog = $("#js-deleteCourse-dialog");
+        deleteCourseDialog.hide(); // For hiding jQuery UI dialog div
+
         const deleteCourseById = (courseId) => {
             $.post("/Course/DeleteCourse/", { courseId: courseId })
                 .done((data) => {
@@ -234,14 +237,14 @@
                     location.reload(true);
                 })
                 .fail((jqXHR, textStatus) => {
-                    alert("Error >>! "+textStatus);
-            });
+                    alert("Error >>! " + textStatus);
+                });
         }
         /**
          * END
          */
 
-        // Edit Course with modal popup functionality
+            // Edit Course with modal popup functionality
         $(document).on("click", ".js-editCourseModalPopup", (event) => {
             const rowData = getTableRowAsObject($(event.target).closest("tr"));
 
@@ -250,39 +253,49 @@
                 bindDataToEditCoursePopup(rowData);
             }, 250);
         });
-        // End
+            // End
 
-        // Delete course with modal popup functionality
+            // Delete course with modal popup functionality
         $(document).on("click", ".js-deleteCoursePopup", (event) => {
             const rowData = getTableRowAsObject($(event.target).closest("tr"));
 
-            $("#dialog-confirm").dialog({
+            deleteCourseDialog.dialog({
                 resizable: false,
                 height: "auto",
                 width: 400,
                 modal: true,
                 show: {
-                    effect: "blind",
+                    effect: "puff",
                     duration: 1000
                 },
                 hide: {
-                    effect: "Fade",
+                    effect: "explode",
                     duration: 1000
                 },
-                buttons: {
-                    "Delete?": function () {
-                        // function to delete
-                        deleteCourseById(rowData.Id);
-                        $(this).dialog("close");
-                    },
-                    Cancel: function () {
-                        $(this).dialog("close");
+                buttons: [
+                    {
+                        text: "Delete?",
+                        open: function() {
+                            $(this).addClass("cancelClass");
+                        },
+                        click: function () {
+                            deleteCourseById(rowData.Id);
+                            $(this).dialog("close");
+                        }
+                    }, {
+                        text: "Cancel",
+                        open: function() {
+                            $(this).addClass("confirmClass");
+                        },
+                        click: function () {
+                            $(this).dialog("close");
+                        }
                     }
-                }
+                ]
             });
 
         });
-        // End
+            // End
         /** End**/
 
         // jQuery Code Ends Here
