@@ -73,7 +73,7 @@ namespace OnlineExamManagementWebApp.BLL {
                 courses = _unitOfWork.Courses.GetListOfCourseByOrganizationId(dto.OrganizationId);
             }
             else {
-                courses = _unitOfWork.Courses.GetAllCourses();
+                courses = _unitOfWork.Courses.GetAllActiveCourses();
             }
 
             if (dto.Name != null) {
@@ -101,6 +101,10 @@ namespace OnlineExamManagementWebApp.BLL {
 
         public bool IsCourseDeleted(int courseId) {
             return _unitOfWork.Courses.IsCourseDeleted(courseId);
+        }
+
+        public ICollection<Course> GetAllActiveCourses() {
+            return _unitOfWork.Courses.GetAllActiveCourses();
         }
     }
 }

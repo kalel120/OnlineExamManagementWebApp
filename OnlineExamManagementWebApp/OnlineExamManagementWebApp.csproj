@@ -374,6 +374,7 @@
     <Content Include="Theme\vendors\font-awesome\fonts\FontAwesome.otf" />
     <Content Include="Views\Course\Search.cshtml" />
     <Content Include="Views\Course\_ModalEditCourse.cshtml" />
+    <Content Include="Views\Course\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

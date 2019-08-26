@@ -43,7 +43,7 @@ namespace OnlineExamManagementWebApp.Repository {
                 .Where(c => c.Code.Contains(code) && c.IsDeleted == false).ToList();
         }
 
-        public ICollection<Course> GetAllCourses() {
+        public ICollection<Course> GetAllActiveCourses() {
             return _dbContext.Courses
                 .Include(c => c.CourseTrainers)
                 .Where(c => c.IsDeleted == false)
