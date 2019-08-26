@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CourseTrainerDto.cs" />
+    <Compile Include="CourseWithOrgNameDto.cs" />
     <Compile Include="ExamDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchCourseDto.cs" />

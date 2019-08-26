@@ -3,6 +3,8 @@ using System.Linq;
 using OnlineExamManagementWebApp.DatabaseContext;
 using OnlineExamManagementWebApp.Models;
 using System.Data.Entity;
+using OnlineExamManagementWebApp.DTOs;
+
 namespace OnlineExamManagementWebApp.Repository {
     public class CourseRepository {
         private readonly ApplicationDbContext _dbContext;
@@ -94,6 +96,21 @@ namespace OnlineExamManagementWebApp.Repository {
             }
 
             return _dbContext.SaveChanges() > 0;
+        }
+
+        public ICollection<CourseWithOrgNameDto> GetAllActiveCoursesWithOrganization() {
+            var query = _dbContext.Courses
+                .Include(c => c.Organization)
+                .Where(c => c.IsDeleted == false);
+
+            return query.Select(c => new CourseWithOrgNameDto {
+                CourseId = c.Id,
+                CourseName = c.Name,
+                CourseCode = c.Code,
+                CourseOutline = c.Outline,
+                OrganizationId = c.OrganizationId,
+                OrganizationName = c.Organization.Name
+            }).ToList();
         }
     }
 }

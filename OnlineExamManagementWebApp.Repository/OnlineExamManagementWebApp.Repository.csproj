@@ -76,6 +76,10 @@
       <Project>{bb2076c3-3e1b-45c0-bc29-3272622d81a8}</Project>
       <Name>OnlineExamManagementWebApp.DatabaseContext</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OnlineExamManagementWebApp.DTOs\OnlineExamManagementWebApp.DTOs.csproj">
+      <Project>{d3278a50-bee6-4e47-b079-474a52c23835}</Project>
+      <Name>OnlineExamManagementWebApp.DTOs</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OnlineExamManagementWebApp.Models\OnlineExamManagementWebApp.Models.csproj">
       <Project>{E6A4533C-D956-4F43-A9A5-FAB8E34EEB84}</Project>
       <Name>OnlineExamManagementWebApp.Models</Name>

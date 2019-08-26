@@ -1,11 +1,11 @@
-﻿@model IEnumerable<OnlineExamManagementWebApp.Models.Course>
+﻿@model IEnumerable<OnlineExamManagementWebApp.ViewModels.CourseListViewModel>
 
 @{
     ViewBag.Title = "List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>List</h2>
+<h2>List of Courses</h2>
 
 <p>
     @Html.ActionLink("Create New", "Entry")
@@ -13,43 +13,39 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Organization.Name)
+            @Html.DisplayNameFor(model => model.OrganizationName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.CourseName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Code)
+            @Html.DisplayNameFor(model => model.CourseCode)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Duration)
+            @Html.DisplayNameFor(model => model.CourseOutline)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Outline)
-        </th>
-        
-        <th></th>
+        <th>Action</th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Organization.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Code)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Outline)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @*@Html.ActionLink("Details", "Details", new { id=item.Id })*@
-        </td>
-    </tr>
-}
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrganizationName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseOutline)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) |
+                @*@Html.ActionLink("Details", "Details", new { id=item.Id })*@
+            </td>
+        </tr>
+    }
 
 </table>

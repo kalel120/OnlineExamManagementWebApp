@@ -26,6 +26,8 @@ namespace OnlineExamManagementWebApp {
                 cfg.CreateMap<ExamDto, Exam>();
 
                 cfg.CreateMap<SearchCourseViewModel, SearchCourseDto>();
+
+                cfg.CreateMap<CourseWithOrgNameDto, CourseListViewModel>();
             });
         }
     }

@@ -103,8 +103,8 @@ namespace OnlineExamManagementWebApp.BLL {
             return _unitOfWork.Courses.IsCourseDeleted(courseId);
         }
 
-        public ICollection<Course> GetAllActiveCourses() {
-            return _unitOfWork.Courses.GetAllActiveCourses();
+        public ICollection<CourseWithOrgNameDto> GetAllActiveCoursesWithOrganization() {
+            return _unitOfWork.Courses.GetAllActiveCoursesWithOrganization();
         }
     }
 }

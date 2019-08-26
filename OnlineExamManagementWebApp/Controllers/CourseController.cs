@@ -79,10 +79,16 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
         #endregion
 
+        #region DisplayAllCourses
         public ActionResult List() {
-            ICollection<Course> courses = _courseManager.GetAllActiveCourses();
-            return View(courses);
+            ICollection<CourseListViewModel> courseListVm = _courseManager.GetAllActiveCoursesWithOrganization()
+                .Select(dto => Mapper.Map<CourseListViewModel>(dto))
+                .ToList();
+
+            return View(courseListVm);
         }
+        #endregion
+
         #region assignTrainer tab
         public JsonResult GetModifiedListOfTrainers(string searchTerm, int id) {
             var trainerList = _trainerManager.GetTrainersByOrgId(id);
