@@ -230,6 +230,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\CustomScripts\assign-trainer.js" />
+    <Content Include="Scripts\CustomScripts\course-entry.js" />
     <Content Include="Scripts\CustomScripts\courseList.js" />
     <Content Include="Scripts\CustomScripts\create-exams.js" />
     <Content Include="Scripts\CustomScripts\search-course.js" />

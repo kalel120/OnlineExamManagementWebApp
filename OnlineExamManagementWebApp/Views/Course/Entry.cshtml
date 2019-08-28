@@ -105,19 +105,5 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/select2.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            $('#org-list').select2({
-                placeholder: "--Select Organization--"
-            });
-
-            $('#tag-list').select2({
-                tags: true,
-                tokenSeparators: [',', ' '],
-                placeholder: "Select or create tags"
-            });
-
-            $('.close').alert();
-        });
-    </script>
+    <script type="text/javascript" src="~/Scripts/CustomScripts/course-entry.js"></script>
 }
