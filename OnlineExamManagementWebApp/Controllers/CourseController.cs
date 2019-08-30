@@ -62,9 +62,10 @@ namespace OnlineExamManagementWebApp.Controllers {
                     }
                 }
 
-                // _courseManager.GetTags(existingTags, newTags);
+                course.TagIds = _courseManager.GetTags(existingTags, newTags).ToList();
+
                 // end
-                course.Tags = _courseManager.GetSelectedTags(courseEntryVm.SelectedTags).ToList();
+                //course.Tags = _courseManager.GetSelectedTags(courseEntryVm.SelectedTags).ToList();
 
                 if (!_courseManager.IsCourseSaved(course))
                     return RedirectToAction("Error");

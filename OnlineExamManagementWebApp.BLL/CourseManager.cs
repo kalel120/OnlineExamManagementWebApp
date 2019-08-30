@@ -19,9 +19,15 @@ namespace OnlineExamManagementWebApp.BLL {
             return _unitOfWork.Tags.GetAllTags();
         }
 
-        //public ICollection<Tag> GetTags(List<int> existingTags, List<string> newTags) {
-        //    return NotImplementedException();
-        //}
+        public ICollection<int> GetTags(List<int> existingTags, List<string> newTags) {
+            var existingTagIds = existingTags;
+
+            foreach (var item in newTags) {
+                existingTagIds.Add(_unitOfWork.Tags.InsertAndReturnTagId(item));
+            }
+
+            return existingTagIds;
+        }
 
         public ICollection<Tag> GetSelectedTags(List<string> listOfString) {
             return CheckAndInsertAsNewTag(listOfString);

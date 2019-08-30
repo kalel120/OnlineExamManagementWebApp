@@ -27,5 +27,15 @@ namespace OnlineExamManagementWebApp.Repository {
             _dbContext.Tags.Add(tag);
             return _dbContext.SaveChanges() > 0;
         }
+
+        public int InsertAndReturnTagId(string tagText) {
+            Tag newTag = _dbContext.Tags.Create();
+            newTag.Name = tagText;
+
+            _dbContext.Tags.Add(newTag);
+            _dbContext.SaveChanges();
+
+            return newTag.Id;
+        }
     }
 }
