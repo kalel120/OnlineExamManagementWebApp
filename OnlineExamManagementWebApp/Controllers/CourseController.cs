@@ -29,10 +29,15 @@ namespace OnlineExamManagementWebApp.Controllers {
             return View(GetCourseEntryViewModel());
         }
 
+        public JsonResult GetAllTags() {
+            var tags = _courseManager.GetAllTags();
+            var projected = tags.Select(t => new { id = t.Id, text = t.Name });
+            return Json(projected, JsonRequestBehavior.AllowGet);
+        }
+
         private CourseEntryViewModel GetCourseEntryViewModel() {
             var entryViewModel = new CourseEntryViewModel {
-                Organizations = _orgManager.GetAllSelectListOrganizations(""),
-                Tags = new SelectList(_courseManager.GetEveryTagName())
+                Organizations = _orgManager.GetAllSelectListOrganizations("")
             };
             return entryViewModel;
         }

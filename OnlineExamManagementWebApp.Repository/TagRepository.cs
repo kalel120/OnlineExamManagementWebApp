@@ -1,6 +1,7 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using System.Linq;
 using OnlineExamManagementWebApp.DatabaseContext;
+using OnlineExamManagementWebApp.DTOs;
 using OnlineExamManagementWebApp.Models;
 
 namespace OnlineExamManagementWebApp.Repository {
@@ -11,8 +12,15 @@ namespace OnlineExamManagementWebApp.Repository {
             _dbContext = dbContext;
         }
 
-        public IEnumerable GetEveryTagName() {
-            return _dbContext.Tags.Select(x => x.Name);
+        //public IEnumerable GetEveryTagName() {
+        //    return _dbContext.Tags.Select(x => x.Name);
+        //}
+
+        public ICollection<TagDto> GetAllTags() {
+            return _dbContext.Tags.Select(t => new TagDto {
+                Id = t.Id,
+                Name = t.Name
+            }).ToList();
         }
 
         public Tag GetTagByName(string searchTerm) {

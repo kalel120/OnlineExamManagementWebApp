@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace OnlineExamManagementWebApp.ViewModels {
-    public class CourseEntryViewModel {        
+    public class CourseEntryViewModel {
         [Required]
         [Display(Name = "Organization")]
         public int OrganizationId { get; set; }
@@ -25,7 +25,8 @@ namespace OnlineExamManagementWebApp.ViewModels {
         [Required]
         public string Outline { get; set; }
 
-        public IEnumerable<SelectListItem> Tags { get; set; }
+        // Not needed
+        //public IEnumerable<SelectListItem> Tags { get; set; }
 
         [Required]
         [Display(Name = "Tags")]

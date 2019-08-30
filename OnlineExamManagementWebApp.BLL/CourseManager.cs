@@ -15,8 +15,12 @@ namespace OnlineExamManagementWebApp.BLL {
         }
 
         #region TagManager
-        public IEnumerable GetEveryTagName() {
-            return _unitOfWork.Tags.GetEveryTagName();
+        //public IEnumerable GetEveryTagName() {
+        //    return _unitOfWork.Tags.GetEveryTagName();
+        //}
+
+        public ICollection<TagDto> GetAllTags() {
+            return _unitOfWork.Tags.GetAllTags();
         }
 
         public ICollection<Tag> GetSelectedTags(List<string> listOfString) {

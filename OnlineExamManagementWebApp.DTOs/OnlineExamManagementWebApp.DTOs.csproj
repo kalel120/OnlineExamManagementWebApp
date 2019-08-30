@@ -46,6 +46,7 @@
     <Compile Include="ExamDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchCourseDto.cs" />
+    <Compile Include="TagDto.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

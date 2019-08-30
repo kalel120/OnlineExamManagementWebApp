@@ -9,7 +9,8 @@
         $("#tag-list").select2({
             tags: true,
             tokenSeparators: [',', ' '],
-            placeholder: "Select or Create Tags"
+            placeholder: "--Select or Create Tags--"
+
 
         });
 
