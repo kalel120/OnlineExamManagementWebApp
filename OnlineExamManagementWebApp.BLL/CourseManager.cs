@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using OnlineExamManagementWebApp.DTOs;
 using OnlineExamManagementWebApp.Models;
@@ -15,10 +14,6 @@ namespace OnlineExamManagementWebApp.BLL {
         }
 
         #region TagManager
-        //public IEnumerable GetEveryTagName() {
-        //    return _unitOfWork.Tags.GetEveryTagName();
-        //}
-
         public ICollection<TagDto> GetAllTags() {
             return _unitOfWork.Tags.GetAllTags();
         }

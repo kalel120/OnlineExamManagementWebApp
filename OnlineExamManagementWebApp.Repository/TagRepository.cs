@@ -12,10 +12,6 @@ namespace OnlineExamManagementWebApp.Repository {
             _dbContext = dbContext;
         }
 
-        //public IEnumerable GetEveryTagName() {
-        //    return _dbContext.Tags.Select(x => x.Name);
-        //}
-
         public ICollection<TagDto> GetAllTags() {
             return _dbContext.Tags.Select(t => new TagDto {
                 Id = t.Id,

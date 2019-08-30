@@ -9,7 +9,23 @@
         $("#tag-list").select2({
             tags: true,
             tokenSeparators: [',', ' '],
-            placeholder: "--Select or Create Tags--"
+            placeholder: "--Select or Create Tags--",
+            ajax: {
+                delay: 250,
+                url: "/Course/GetAllTags",
+                data: function(params) {
+                    return {
+                        search: params.term,
+                        type: 'public'
+                    };
+                },
+                processResults: function (response) {
+                    console.log(response);
+                    return {
+                        results: response
+                    };
+                }
+            }
 
 
         });

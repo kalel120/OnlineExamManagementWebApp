@@ -30,9 +30,8 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         public JsonResult GetAllTags() {
-            var tags = _courseManager.GetAllTags();
-            var projected = tags.Select(t => new { id = t.Id, text = t.Name });
-            return Json(projected, JsonRequestBehavior.AllowGet);
+            var tags = _courseManager.GetAllTags().Select(t => new { id = t.Id, text = t.Name });
+            return Json(tags, JsonRequestBehavior.AllowGet);
         }
 
         private CourseEntryViewModel GetCourseEntryViewModel() {

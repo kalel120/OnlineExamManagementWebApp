@@ -25,9 +25,6 @@ namespace OnlineExamManagementWebApp.ViewModels {
         [Required]
         public string Outline { get; set; }
 
-        // Not needed
-        //public IEnumerable<SelectListItem> Tags { get; set; }
-
         [Required]
         [Display(Name = "Tags")]
         public List<string> SelectedTags { get; set; }
