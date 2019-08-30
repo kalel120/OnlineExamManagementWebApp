@@ -22,15 +22,18 @@ namespace OnlineExamManagementWebApp.Models {
         [Required]
         public string Outline { get; set; }
 
-        public List<Tag> Tags { get; set; }
-
-        public List<Exam> Exams { get; set; }
-
-        public Organization Organization { get; set; }
-
         public int OrganizationId { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public List<int> TagIds { get; set; }
+
+        // Navigation Properties
+        public Organization Organization { get; set; }
+
+        public List<Tag> Tags { get; set; }
+
+        public List<Exam> Exams { get; set; }
 
         public ICollection<CourseTrainer> CourseTrainers { get; set; }
     }

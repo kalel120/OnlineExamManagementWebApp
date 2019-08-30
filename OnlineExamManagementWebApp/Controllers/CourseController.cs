@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -45,6 +46,24 @@ namespace OnlineExamManagementWebApp.Controllers {
         public ActionResult Entry(CourseEntryViewModel courseEntryVm) {
             if (ModelState.IsValid) {
                 var course = Mapper.Map<Course>(courseEntryVm);
+
+                /*
+                 * tag management
+                 */
+                var existingTags = new List<int>();
+                var newTags = new List<string>();
+
+                foreach (var item in courseEntryVm.SelectedTags) {
+                    if (int.TryParse(item, out var tagId)) {
+                        existingTags.Add(tagId);
+                    }
+                    else {
+                        newTags.Add(item);
+                    }
+                }
+
+                // _courseManager.GetTags(existingTags, newTags);
+                // end
                 course.Tags = _courseManager.GetSelectedTags(courseEntryVm.SelectedTags).ToList();
 
                 if (!_courseManager.IsCourseSaved(course))

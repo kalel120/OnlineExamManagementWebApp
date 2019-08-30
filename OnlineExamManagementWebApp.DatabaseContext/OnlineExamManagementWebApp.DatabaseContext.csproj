@@ -80,6 +80,10 @@
     <Compile Include="Migrations\201908201525536_SoftDeleteCourse.Designer.cs">
       <DependentUpon>201908201525536_SoftDeleteCourse.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908301704283_Added TagIds in Course.cs" />
+    <Compile Include="Migrations\201908301704283_Added TagIds in Course.Designer.cs">
+      <DependentUpon>201908301704283_Added TagIds in Course.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -117,6 +121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908201525536_SoftDeleteCourse.resx">
       <DependentUpon>201908201525536_SoftDeleteCourse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908301704283_Added TagIds in Course.resx">
+      <DependentUpon>201908301704283_Added TagIds in Course.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

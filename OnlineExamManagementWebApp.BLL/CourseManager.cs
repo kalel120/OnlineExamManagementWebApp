@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using OnlineExamManagementWebApp.DTOs;
 using OnlineExamManagementWebApp.Models;
@@ -17,6 +18,10 @@ namespace OnlineExamManagementWebApp.BLL {
         public ICollection<TagDto> GetAllTags() {
             return _unitOfWork.Tags.GetAllTags();
         }
+
+        //public ICollection<Tag> GetTags(List<int> existingTags, List<string> newTags) {
+        //    return NotImplementedException();
+        //}
 
         public ICollection<Tag> GetSelectedTags(List<string> listOfString) {
             return CheckAndInsertAsNewTag(listOfString);
@@ -45,11 +50,9 @@ namespace OnlineExamManagementWebApp.BLL {
         private Tag GetTagByName(string searchTerm) {
             return _unitOfWork.Tags.GetTagByName(searchTerm);
         }
-
-
-
         #endregion
 
+        #region CourseManager
         public bool IsCourseSaved(Course course) {
             var isDuplicateCode = _unitOfWork.Courses.IsDuplicateCode(course.Code, course.OrganizationId);
             if (isDuplicateCode) {
@@ -105,5 +108,8 @@ namespace OnlineExamManagementWebApp.BLL {
         public ICollection<CourseWithOrgNameDto> GetAllActiveCoursesWithOrganization() {
             return _unitOfWork.Courses.GetAllActiveCoursesWithOrganization();
         }
+
+
     }
+    #endregion
 }
