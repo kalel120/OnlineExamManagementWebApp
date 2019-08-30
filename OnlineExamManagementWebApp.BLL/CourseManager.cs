@@ -29,6 +29,10 @@ namespace OnlineExamManagementWebApp.BLL {
             return existingTagIds;
         }
 
+        public List<Tag> GetTagsByIds(List<int> courseTagIds) {
+            return _unitOfWork.Tags.GetTagsByIds(courseTagIds);
+        }
+
         public ICollection<Tag> GetSelectedTags(List<string> listOfString) {
             return CheckAndInsertAsNewTag(listOfString);
         }
@@ -114,8 +118,6 @@ namespace OnlineExamManagementWebApp.BLL {
         public ICollection<CourseWithOrgNameDto> GetAllActiveCoursesWithOrganization() {
             return _unitOfWork.Courses.GetAllActiveCoursesWithOrganization();
         }
-
-
     }
     #endregion
 }

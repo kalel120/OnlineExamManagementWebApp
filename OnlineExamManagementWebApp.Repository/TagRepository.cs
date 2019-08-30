@@ -37,5 +37,10 @@ namespace OnlineExamManagementWebApp.Repository {
 
             return newTag.Id;
         }
+
+        public List<Tag> GetTagsByIds(List<int> ids) {
+            var tags = _dbContext.Tags.Where(t => ids.Contains(t.Id)).ToList();
+            return tags;
+        }
     }
 }
