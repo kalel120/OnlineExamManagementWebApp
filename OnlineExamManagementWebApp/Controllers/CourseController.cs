@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -46,25 +45,7 @@ namespace OnlineExamManagementWebApp.Controllers {
         public ActionResult Entry(CourseEntryViewModel courseEntryVm) {
             if (ModelState.IsValid) {
                 var course = Mapper.Map<Course>(courseEntryVm);
-
-                /*
-                 * tag management
-                 */
-                var existingTags = new List<int>();
-                var newTags = new List<string>();
-
-                foreach (var item in courseEntryVm.SelectedTags) {
-                    if (int.TryParse(item, out var tagId)) {
-                        existingTags.Add(tagId);
-                    }
-                    else {
-                        newTags.Add(item);
-                    }
-                }
-
-                course.TagIds = _courseManager.GetTags(existingTags, newTags).ToList();
-                course.Tags = _courseManager.GetTagsByIds(course.TagIds);
-
+                course.Tags = _courseManager.GetSelectedTags(courseEntryVm.SelectedTags);
 
                 if (!_courseManager.IsCourseSaved(course))
                     return RedirectToAction("Error");
@@ -73,10 +54,6 @@ namespace OnlineExamManagementWebApp.Controllers {
             }
 
             return RedirectToAction("Error");
-        }
-
-        public ActionResult Error() {
-            return View("Error");
         }
         #endregion
 
@@ -270,5 +247,9 @@ namespace OnlineExamManagementWebApp.Controllers {
             return Json(isCourseDeleted, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+        public ActionResult Error() {
+            return View("Error");
+        }
     }
 }

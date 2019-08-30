@@ -19,15 +19,6 @@ namespace OnlineExamManagementWebApp.Repository {
             }).ToList();
         }
 
-        public Tag GetTagByName(string searchTerm) {
-            return _dbContext.Tags.FirstOrDefault(t => t.Name == searchTerm);
-        }
-
-        public bool AddNewTag(Tag tag) {
-            _dbContext.Tags.Add(tag);
-            return _dbContext.SaveChanges() > 0;
-        }
-
         public int InsertAndReturnTagId(string tagText) {
             Tag newTag = _dbContext.Tags.Create();
             newTag.Name = tagText;

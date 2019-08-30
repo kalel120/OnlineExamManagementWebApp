@@ -26,8 +26,6 @@ namespace OnlineExamManagementWebApp.Models {
 
         public bool IsDeleted { get; set; }
 
-        public List<int> TagIds { get; set; }
-
         // Navigation Properties
         public Organization Organization { get; set; }
 

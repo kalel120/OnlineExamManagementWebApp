@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using OnlineExamManagementWebApp.DTOs;
 using OnlineExamManagementWebApp.Models;
@@ -19,46 +18,28 @@ namespace OnlineExamManagementWebApp.BLL {
             return _unitOfWork.Tags.GetAllTags();
         }
 
-        public ICollection<int> GetTags(List<int> existingTags, List<string> newTags) {
-            var existingTagIds = existingTags;
+        public List<Tag> GetSelectedTags(List<string> tagText) {
+            return _unitOfWork.Tags.GetTagsByIds(GetTagIdsByText(tagText));
+        }
+
+        private List<int> GetTagIdsByText(List<string> tagText) {
+            var existingTagIds = new List<int>();
+            var newTags = new List<string>();
+
+            foreach (var item in tagText) {
+                if (int.TryParse(item, out var tagId)) {
+                    existingTagIds.Add(tagId);
+                }
+                else {
+                    newTags.Add(item);
+                }
+            }
 
             foreach (var item in newTags) {
                 existingTagIds.Add(_unitOfWork.Tags.InsertAndReturnTagId(item));
             }
 
             return existingTagIds;
-        }
-
-        public List<Tag> GetTagsByIds(List<int> courseTagIds) {
-            return _unitOfWork.Tags.GetTagsByIds(courseTagIds);
-        }
-
-        public ICollection<Tag> GetSelectedTags(List<string> listOfString) {
-            return CheckAndInsertAsNewTag(listOfString);
-        }
-
-        private ICollection<Tag> CheckAndInsertAsNewTag(List<string> listOfString) {
-            var tags = new List<Tag>();
-
-            foreach (var searchTerm in listOfString) {
-                var tag = GetTagByName(searchTerm);
-                if (tag == null) {
-                    var newTag = new Tag { Name = searchTerm };
-                    if (_unitOfWork.Tags.AddNewTag(newTag)) {
-                        tags.Add(newTag);
-                    }
-                    tags.Add(newTag);
-                }
-                else {
-                    tags.Add(tag);
-                }
-            }
-
-            return tags;
-        }
-
-        private Tag GetTagByName(string searchTerm) {
-            return _unitOfWork.Tags.GetTagByName(searchTerm);
         }
         #endregion
 

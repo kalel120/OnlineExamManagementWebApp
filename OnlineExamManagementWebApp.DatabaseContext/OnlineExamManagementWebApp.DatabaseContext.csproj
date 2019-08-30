@@ -84,6 +84,10 @@
     <Compile Include="Migrations\201908301704283_Added TagIds in Course.Designer.cs">
       <DependentUpon>201908301704283_Added TagIds in Course.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908301953060_Removed TagIds from Course model.cs" />
+    <Compile Include="Migrations\201908301953060_Removed TagIds from Course model.Designer.cs">
+      <DependentUpon>201908301953060_Removed TagIds from Course model.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -124,6 +128,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908301704283_Added TagIds in Course.resx">
       <DependentUpon>201908301704283_Added TagIds in Course.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908301953060_Removed TagIds from Course model.resx">
+      <DependentUpon>201908301953060_Removed TagIds from Course model.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
