@@ -16,10 +16,16 @@ namespace OnlineExamManagementWebApp.Repository {
             return _dbContext.Organizations.SingleOrDefault(o => o.Id == organizationId && o.IsDeleted == false);
         }
 
-        public List<SelectListItem> GetAllOrganizations() {
+        public List<SelectListItem> GetAllSelectListOrgnizations() {
             return _dbContext.Organizations
                 .Where(o => o.IsDeleted == false)
                 .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
+                .ToList();
+        }
+
+        public ICollection<Organization> GetAllOrganizations() {
+            return _dbContext.Organizations
+                .Where(o => o.IsDeleted == false)
                 .ToList();
         }
     }

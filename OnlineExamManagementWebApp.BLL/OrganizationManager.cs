@@ -13,13 +13,17 @@ namespace OnlineExamManagementWebApp.BLL {
         }
 
         public List<SelectListItem> GetAllSelectListOrganizations(string selectedOrgId) {
-            var organizations = _unitOfWork.Organizations.GetAllOrganizations();
+            var organizations = _unitOfWork.Organizations.GetAllSelectListOrgnizations();
             organizations.Insert(0, new SelectListItem { Value = "", Text = "--SELECT ORGANIZATION--" });
             return new SelectList(organizations, "Value", "Text", selectedOrgId).ToList();
         }
 
         public Organization GetOrganizationById(int organizationId) {
             return _unitOfWork.Organizations.GetOrganizationById(organizationId);
+        }
+
+        public ICollection<Organization> GetAllOrganizations() {
+            return _unitOfWork.Organizations.GetAllOrganizations();
         }
     }
 }
