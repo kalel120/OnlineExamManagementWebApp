@@ -88,6 +88,10 @@
     <Compile Include="Migrations\201908301953060_Removed TagIds from Course model.Designer.cs">
       <DependentUpon>201908301953060_Removed TagIds from Course model.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908312044547_SoftDeleteInOrganizationEntityModel.cs" />
+    <Compile Include="Migrations\201908312044547_SoftDeleteInOrganizationEntityModel.Designer.cs">
+      <DependentUpon>201908312044547_SoftDeleteInOrganizationEntityModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -131,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908301953060_Removed TagIds from Course model.resx">
       <DependentUpon>201908301953060_Removed TagIds from Course model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908312044547_SoftDeleteInOrganizationEntityModel.resx">
+      <DependentUpon>201908312044547_SoftDeleteInOrganizationEntityModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

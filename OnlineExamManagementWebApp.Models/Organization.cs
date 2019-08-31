@@ -18,10 +18,12 @@ namespace OnlineExamManagementWebApp.Models {
         [Required]
         [MaxLength(20)]
         public string Contact { get; set; }
-        
+
         public string About { get; set; }
 
         public byte[] Logo { get; set; }
+
+        public bool IsDeleted { get; set; }
 
         public List<Course> Courses { get; set; }
 
