@@ -18,11 +18,11 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         // GET: Organization/Details/5
-        public ActionResult Details(int? id) {
-            if (id == null) {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Organization organization = db.Organizations.Find(id);
+        public ActionResult Details(int id) {
+            //if (id == null) {
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            var organization = _orgManager.GetOrganizationById(id);
             if (organization == null) {
                 return HttpNotFound();
             }

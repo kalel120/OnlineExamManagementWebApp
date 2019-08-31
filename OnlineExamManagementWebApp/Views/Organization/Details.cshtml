@@ -5,71 +5,101 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<div class="x_panel">
+    <div class="x_title">
+        <h2>Organization Details<small>Basic Info of Organization</small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+            <li>
+                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a href="#">Settings 1</a>
+                    </li>
+                    <li>
+                        <a href="#">Settings 2</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a class="close-link"><i class="fa fa-close"></i></a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
 
-<div>
-    <h4>Organization</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+    <div class="x_content">
+        <h2>Details</h2>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+        <div>
+            <h4>Organization</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Code)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Code)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Code)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Code)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Address)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Contact)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Address)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Contact)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Contact)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.About)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Contact)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.About)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.About)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Logo)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.About)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Logo)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Logo)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IsDeleted)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Logo)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.IsDeleted)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsDeleted)
+                </dt>
 
-    </dl>
+                <dd>
+                    @Html.DisplayFor(model => model.IsDeleted)
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+
