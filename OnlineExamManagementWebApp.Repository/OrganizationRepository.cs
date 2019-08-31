@@ -28,5 +28,10 @@ namespace OnlineExamManagementWebApp.Repository {
                 .Where(o => o.IsDeleted == false)
                 .ToList();
         }
+
+        public bool IsOrganizationSaved(Organization organization) {
+            _dbContext.Organizations.Add(organization);
+            return _dbContext.SaveChanges() > 0;
+        }
     }
 }

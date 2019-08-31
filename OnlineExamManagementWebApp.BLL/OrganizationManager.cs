@@ -25,5 +25,9 @@ namespace OnlineExamManagementWebApp.BLL {
         public ICollection<Organization> GetAllOrganizations() {
             return _unitOfWork.Organizations.GetAllOrganizations();
         }
+
+        public bool IsOrganizationSaved(Organization organization) {
+            return _unitOfWork.Organizations.IsOrganizationSaved(organization);
+        }
     }
 }

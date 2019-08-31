@@ -379,7 +379,7 @@
     <Content Include="Views\Course\Search.cshtml" />
     <Content Include="Views\Course\_ModalEditCourse.cshtml" />
     <Content Include="Views\Course\List.cshtml" />
-    <Content Include="Views\Organization\Create.cshtml" />
+    <Content Include="Views\Organization\Entry.cshtml" />
     <Content Include="Views\Organization\Delete.cshtml" />
     <Content Include="Views\Organization\Details.cshtml" />
     <Content Include="Views\Organization\Edit.cshtml" />
