@@ -7,7 +7,7 @@
 
 <div class="x_panel">
     <div class="x_title">
-        <h2>Lis of Organizations<small>active organization list</small></h2>
+        <h2>List of Organizations</h2>
         <ul class="nav navbar-right panel_toolbox">
             <li>
                 <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -31,8 +31,6 @@
     </div>
 
     <div class="x_content">
-        <h2>Index</h2>
-
         <p>
             @Html.ActionLink("Create New", "Entry")
         </p>
@@ -86,9 +84,9 @@
                         @Html.DisplayFor(modelItem => item.IsDeleted)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                     </td>
                 </tr>
             }

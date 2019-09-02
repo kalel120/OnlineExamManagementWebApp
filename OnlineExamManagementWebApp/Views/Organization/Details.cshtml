@@ -7,7 +7,7 @@
 
 <div class="x_panel">
     <div class="x_title">
-        <h2>Organization Details<small>Basic Info of Organization</small></h2>
+        <h2>Organization Details<small>Basic Info</small></h2>
         <ul class="nav navbar-right panel_toolbox">
             <li>
                 <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -31,10 +31,7 @@
     </div>
 
     <div class="x_content">
-        <h2>Details</h2>
-
         <div>
-            <h4>Organization</h4>
             <hr />
             <dl class="dl-horizontal">
                 <dt>
@@ -84,19 +81,10 @@
                 <dd>
                     @Html.DisplayFor(model => model.Logo)
                 </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.IsDeleted)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.IsDeleted)
-                </dd>
-
             </dl>
         </div>
         <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+            @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
             @Html.ActionLink("Back to List", "Index")
         </p>
     </div>
