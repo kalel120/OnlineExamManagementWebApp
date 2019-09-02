@@ -234,6 +234,7 @@
     <Content Include="Scripts\CustomScripts\course-entry.js" />
     <Content Include="Scripts\CustomScripts\courseList.js" />
     <Content Include="Scripts\CustomScripts\create-exams.js" />
+    <Content Include="Scripts\CustomScripts\org-index.js" />
     <Content Include="Scripts\CustomScripts\search-course.js" />
     <Content Include="Scripts\i18n\af.js" />
     <Content Include="Scripts\i18n\ar.js" />
