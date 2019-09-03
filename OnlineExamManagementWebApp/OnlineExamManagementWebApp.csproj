@@ -156,6 +156,7 @@
     <Compile Include="ViewModels\CourseEditViewModel.cs" />
     <Compile Include="ViewModels\CourseEntryViewModel.cs" />
     <Compile Include="ViewModels\CourseListViewModel.cs" />
+    <Compile Include="ViewModels\OrgEntryViewModel.cs" />
     <Compile Include="ViewModels\SearchCourseViewModel.cs" />
     <Compile Include="ViewModels\CreateExamViewModel.cs" />
   </ItemGroup>
@@ -228,6 +229,7 @@
     <Content Include="Scripts\CustomScripts\course-entry.js" />
     <Content Include="Scripts\CustomScripts\courseList.js" />
     <Content Include="Scripts\CustomScripts\create-exams.js" />
+    <Content Include="Scripts\CustomScripts\org-entry.js" />
     <Content Include="Scripts\CustomScripts\org-index.js" />
     <Content Include="Scripts\CustomScripts\search-course.js" />
     <Content Include="Scripts\i18n\af.js" />
