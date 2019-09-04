@@ -31,9 +31,8 @@ namespace OnlineExamManagementWebApp.Repository {
                 .ToList();
         }
 
-        public bool IsOrganizationSaved(Organization organization) {
+        public void Save(Organization organization) {
             _dbContext.Organizations.Add(organization);
-            return _dbContext.SaveChanges() > 0;
         }
 
         public byte[] GetLogoByOrgId(int orgId) {

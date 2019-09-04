@@ -27,7 +27,8 @@ namespace OnlineExamManagementWebApp.BLL {
         }
 
         public bool IsOrganizationSaved(Organization organization) {
-            return _unitOfWork.Organizations.IsOrganizationSaved(organization);
+            _unitOfWork.Organizations.Save(organization);
+            return _unitOfWork.Complete();
         }
 
         public byte[] GetLogoByOrgId(int orgId) {
