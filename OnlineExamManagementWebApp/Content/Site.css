@@ -67,3 +67,9 @@ textarea {
     display: block;
     margin: auto;
 }
+
+.orgLogo_details {
+    width: 55px;
+    height: 45px;
+    margin-bottom: 15px;
+}

@@ -34,6 +34,10 @@
         <div>
             <hr />
             <dl class="dl-horizontal">
+                <dd>
+                    <img src="@Url.Action("GetOrgLogo", new { orgId = Model.Id })" class="orgLogo_details" />
+                </dd>
+
                 <dt>
                     @Html.DisplayNameFor(model => model.Name)
                 </dt>
@@ -74,13 +78,7 @@
                     @Html.DisplayFor(model => model.About)
                 </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Logo)
-                </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Logo)
-                </dd>
             </dl>
         </div>
         <p>
