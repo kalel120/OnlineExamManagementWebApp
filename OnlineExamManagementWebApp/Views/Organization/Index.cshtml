@@ -92,7 +92,7 @@
                             <img src="@Url.Action("GetOrgLogo", new {orgId = item.Id})" class="orgLogo" />
                         </td>
                         <td>
-                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                            <input type="button" class="btn btn-info" value="Details" onclick="location.href = '@Url.Action("Details","Organization",new{id=item.Id})'" />
                             <input type="button" class="btn btn-danger js-deleteOrgPopup" value="Delete" />
                         </td>
                     </tr>
