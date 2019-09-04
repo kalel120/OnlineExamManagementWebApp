@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExamManagementWebApp", "OnlineExamManagementWebApp\OnlineExamManagementWebApp.csproj", "{0A97370A-F236-4D65-A4A6-CC6FD9FD103C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExamManagementWebApp.Tests", "OnlineExamManagementWebApp.Tests\OnlineExamManagementWebApp.Tests.csproj", "{9BCE57C5-AB05-4DF4-8D9A-7E24CCECB774}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExamManagementWebApp.Models", "OnlineExamManagementWebApp.Models\OnlineExamManagementWebApp.Models.csproj", "{E6A4533C-D956-4F43-A9A5-FAB8E34EEB84}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExamManagementWebApp.BLL", "OnlineExamManagementWebApp.BLL\OnlineExamManagementWebApp.BLL.csproj", "{452ECC4F-061F-483F-A155-B111BCBE8943}"
@@ -27,10 +25,6 @@ Global
 		{0A97370A-F236-4D65-A4A6-CC6FD9FD103C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A97370A-F236-4D65-A4A6-CC6FD9FD103C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A97370A-F236-4D65-A4A6-CC6FD9FD103C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9BCE57C5-AB05-4DF4-8D9A-7E24CCECB774}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9BCE57C5-AB05-4DF4-8D9A-7E24CCECB774}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9BCE57C5-AB05-4DF4-8D9A-7E24CCECB774}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9BCE57C5-AB05-4DF4-8D9A-7E24CCECB774}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E6A4533C-D956-4F43-A9A5-FAB8E34EEB84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E6A4533C-D956-4F43-A9A5-FAB8E34EEB84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6A4533C-D956-4F43-A9A5-FAB8E34EEB84}.Release|Any CPU.ActiveCfg = Release|Any CPU
