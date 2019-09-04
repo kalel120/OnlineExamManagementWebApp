@@ -55,9 +55,6 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Logo)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.IsDeleted)
-                    </th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -80,10 +77,7 @@
                             @Html.DisplayFor(modelItem => item.About)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Logo)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IsDeleted)
+                            <img src="@Url.Action("GetOrgLogo", new { orgId = item.Id })" class="orgLogo" />
                         </td>
                         <td>
                             @*@Html.ActionLink("Edit", "Edit", new { id = item.Id })*@ |

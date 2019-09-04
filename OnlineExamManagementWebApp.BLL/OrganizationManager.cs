@@ -13,7 +13,7 @@ namespace OnlineExamManagementWebApp.BLL {
         }
 
         public List<SelectListItem> GetAllSelectListOrganizations(string selectedOrgId) {
-            var organizations = _unitOfWork.Organizations.GetAllSelectListOrgnizations();
+            var organizations = _unitOfWork.Organizations.GetAllSelectListOrganizations();
             organizations.Insert(0, new SelectListItem { Value = "", Text = "--SELECT ORGANIZATION--" });
             return new SelectList(organizations, "Value", "Text", selectedOrgId).ToList();
         }
@@ -28,6 +28,10 @@ namespace OnlineExamManagementWebApp.BLL {
 
         public bool IsOrganizationSaved(Organization organization) {
             return _unitOfWork.Organizations.IsOrganizationSaved(organization);
+        }
+
+        public byte[] GetLogoByOrgId(int orgId) {
+            return _unitOfWork.Organizations.GetLogoByOrgId(orgId);
         }
     }
 }

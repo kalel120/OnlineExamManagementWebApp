@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Web;
+﻿using System.IO;
 using System.Web.Mvc;
 using AutoMapper;
 using OnlineExamManagementWebApp.BLL;
@@ -58,5 +56,9 @@ namespace OnlineExamManagementWebApp.Controllers {
             return View("Error");
         }
 
+        public ActionResult GetOrgLogo(int orgId) {
+            var imageData = _orgManager.GetLogoByOrgId(orgId);
+            return File(imageData, "image/jpg");
+        }
     }
 }

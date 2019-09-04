@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Text;
+using System.Collections.Generic;
+using System.Data.Entity.Core.Common.CommandTrees;
 using System.Linq;
 using System.Web.Mvc;
 using OnlineExamManagementWebApp.DatabaseContext;
@@ -16,7 +18,7 @@ namespace OnlineExamManagementWebApp.Repository {
             return _dbContext.Organizations.SingleOrDefault(o => o.Id == organizationId && o.IsDeleted == false);
         }
 
-        public List<SelectListItem> GetAllSelectListOrgnizations() {
+        public List<SelectListItem> GetAllSelectListOrganizations() {
             return _dbContext.Organizations
                 .Where(o => o.IsDeleted == false)
                 .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
@@ -32,6 +34,17 @@ namespace OnlineExamManagementWebApp.Repository {
         public bool IsOrganizationSaved(Organization organization) {
             _dbContext.Organizations.Add(organization);
             return _dbContext.SaveChanges() > 0;
+        }
+
+        public byte[] GetLogoByOrgId(int orgId) {
+            var result = _dbContext.Organizations
+                .Where(o => o.IsDeleted == false && o.Id == orgId)
+                .Select(o => o.Logo).FirstOrDefault();
+
+            if (result == null) {
+                result = Encoding.ASCII.GetBytes("");
+            }
+            return result;
         }
     }
 }
