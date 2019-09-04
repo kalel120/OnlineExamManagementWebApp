@@ -39,6 +39,9 @@
             <thead>
                 <tr>
                     <th>
+                        Serial No.
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(model => model.Name)
                     </th>
                     <th>
@@ -59,11 +62,18 @@
                     <th>Actions</th>
                 </tr>
             </thead>
+
             <tbody>
+                @{
+                    int count = 1;
+                }
                 @foreach (var item in Model) {
                     <tr>
                         <td>
                             <input type="hidden" id="OrgId" value="@item.Id" />
+                            @count
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
                         <td>
@@ -79,14 +89,14 @@
                             @Html.DisplayFor(modelItem => item.About)
                         </td>
                         <td>
-                            <img src="@Url.Action("GetOrgLogo", new {orgId = item.Id})" class="orgLogo"/>
+                            <img src="@Url.Action("GetOrgLogo", new {orgId = item.Id})" class="orgLogo" />
                         </td>
                         <td>
-                            @*@Html.ActionLink("Edit", "Edit", new { id = item.Id })*@
-                            @Html.ActionLink("Details", "Details", new {id = item.Id}) |
-                            <input type="button" class="btn btn-danger js-deleteOrgPopup" value="Delete"/>
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                            <input type="button" class="btn btn-danger js-deleteOrgPopup" value="Delete" />
                         </td>
                     </tr>
+                    count = count + 1;
                 }
 
             </tbody>

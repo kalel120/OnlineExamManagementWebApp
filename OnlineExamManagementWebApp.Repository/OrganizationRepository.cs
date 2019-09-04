@@ -1,6 +1,6 @@
 ﻿using System.Text;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Common.CommandTrees;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using OnlineExamManagementWebApp.DatabaseContext;
@@ -44,7 +44,14 @@ namespace OnlineExamManagementWebApp.Repository {
             if (result == null) {
                 result = Encoding.ASCII.GetBytes("");
             }
+
             return result;
+        }
+
+        public void Delete(int orgId) {
+            var organization = GetOrganizationById(orgId);
+            organization.IsDeleted = true;
+            _dbContext.Entry(organization).State = EntityState.Modified;
         }
     }
 }

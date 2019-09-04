@@ -10,16 +10,20 @@
         const deleteOrgById = (orgId) => {
             $.post("/Organization/Delete/", { orgId: orgId })
                 .done((data) => {
-                    alert("Deleted Successfully");
-                    location.reload(true);
+                    if (data) {
+                        alert("Deleted Successfully");
+                        location.reload(true);
+                    } else {
+                        alert("Deletion failed");
+                    }
                 })
-                .fail((jqXHR, textStatus) => {
+                .fail((jqXhr, textStatus) => {
                     alert(`Error >>${textStatus}`);
                 });
         }
 
         $(document).on("click", ".js-deleteOrgPopup", (event) => {
-            const orgId = $("#OrgId").val();
+            const orgId = $(event.target).closest("tr").find('input[type="hidden"]').val();
 
             deleteOrgDialog.dialog({
                 resizable: false,
@@ -28,11 +32,11 @@
                 modal: true,
                 show: {
                     effect: "puff",
-                    duration: 1000
+                    duration: 250
                 },
                 hide: {
                     effect: "explode",
-                    duration: 1000
+                    duration: 250
                 },
                 buttons: [
                     {

@@ -60,5 +60,9 @@ namespace OnlineExamManagementWebApp.Controllers {
             var imageData = _orgManager.GetLogoByOrgId(orgId);
             return File(imageData, "image/jpg");
         }
+
+        public JsonResult Delete(int orgId) {
+            return Json(_orgManager.IsOrganizationDeleted(orgId));
+        }
     }
 }

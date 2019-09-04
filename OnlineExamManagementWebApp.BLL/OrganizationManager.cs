@@ -33,5 +33,10 @@ namespace OnlineExamManagementWebApp.BLL {
         public byte[] GetLogoByOrgId(int orgId) {
             return _unitOfWork.Organizations.GetLogoByOrgId(orgId);
         }
+
+        public bool IsOrganizationDeleted(int orgId) {
+            _unitOfWork.Organizations.Delete(orgId);
+            return _unitOfWork.Complete();
+        }
     }
 }
