@@ -4,6 +4,8 @@
     ViewBag.Title = "Entry";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/Scripts/dropzone/basic.css" rel="stylesheet" />
+<link href="~/Scripts/dropzone/dropzone.css" rel="stylesheet" />
 
 <div class="x_panel">
     <div class="x_title">
@@ -31,9 +33,8 @@
     </div>
 
     <div class="x_content">
-        @using (Html.BeginForm()) {
+        @using (Html.BeginForm("Entry", "Organization", FormMethod.Post, new { id = "js_dropZoneForm", enctype = "multipart/form-data" })) {
             @Html.AntiForgeryToken()
-
             <div class="form-horizontal">
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -80,7 +81,7 @@
                 <div class="item form-group">
                     @Html.LabelFor(model => model.Logo, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                       
+                        <input type="file" name="Logo" />
                     </div>
                 </div>
 
@@ -103,5 +104,6 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript" src="~/Scripts/dropzone/dropzone.js"></script>
     <script type="text/javascript" src="~/Scripts/CustomScripts/org-entry.js"></script>
 }

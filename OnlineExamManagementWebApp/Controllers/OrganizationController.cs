@@ -1,6 +1,11 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.IO;
+using System.Web;
+using System.Web.Mvc;
+using AutoMapper;
 using OnlineExamManagementWebApp.BLL;
 using OnlineExamManagementWebApp.Models;
+using OnlineExamManagementWebApp.ViewModels;
 
 namespace OnlineExamManagementWebApp.Controllers {
     public class OrganizationController : Controller {
@@ -10,7 +15,6 @@ namespace OnlineExamManagementWebApp.Controllers {
             _orgManager = new OrganizationManager();
         }
 
-        // GET: Organization
         public ActionResult Index() {
             return View(_orgManager.GetAllOrganizations());
         }
@@ -32,16 +36,27 @@ namespace OnlineExamManagementWebApp.Controllers {
             return View();
         }
 
+        // Post New Org Entry
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Entry([Bind(Include = "Id,Name,Code,Address,Contact,About,Logo,IsDeleted")] Organization organization) {
+        public ActionResult Entry(OrgEntryViewModel viewModel) {
             if (ModelState.IsValid) {
-                if (_orgManager.IsOrganizationSaved(organization)) {
+                var org = Mapper.Map<Organization>(viewModel);
+
+                if (Request.Files[0] != null) {
+                    using (MemoryStream memory = new MemoryStream()) {
+                        Request.Files[0].InputStream.CopyTo(memory);
+                        org.Logo = memory.ToArray();
+                    }
+                }
+
+                if (_orgManager.IsOrganizationSaved(org)) {
                     return RedirectToAction("Index");
                 }
             }
 
-            return View(organization);
+            return View("Error");
         }
+
     }
 }
