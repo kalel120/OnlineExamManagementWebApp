@@ -32,11 +32,21 @@
 
     <div class="x_content">
         <!--TOP SECTION-->
-        <img src="@Url.Action("GetOrgLogo", new {orgId = Model.Id})"/>
-        @Html.DisplayFor(model => model.Name)
-        @Html.DisplayNameFor(model => model.About)
-        <!--TOP SECTION END-->
+        <div class="orgLogoDetails">
+            <img src="@Url.Action("GetOrgLogo", new {orgId = Model.Id})" />
+        </div>    
         
+        <div class="orgTopSection">
+            <div class="orgName">
+                @Html.DisplayFor(model => model.Name)
+            </div>
+            <div class="orgAbout">
+                @Html.DisplayNameFor(model => model.About)
+            </div>
+        </div>
+        <!--TOP SECTION END-->
+        <div class="clearfix"></div>
+
         <!--tab panel starts-->
         <div class="" role="tabpanel" data-example-id="toggle-tabs">
             <ul class="nav nav-tabs bar_tabs" role="tablist">
@@ -98,10 +108,15 @@
         </div>
         <!--tab panel ends-->
 
+        <div class="clearfix"></div>
+
         <!--BOTTOM SECTION-->
         @Html.DisplayFor(model => model.Address)
         @Html.DisplayFor(model => model.Contact)
         <!--BOTTOM SECTION ENDS-->
+        
+        <div class="clearfix"></div>
+        
         <p>
             @Html.ActionLink("Back to List", "Index")
         </p>
