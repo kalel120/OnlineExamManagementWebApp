@@ -31,6 +31,13 @@
     </div>
 
     <div class="x_content">
+        <!--TOP SECTION-->
+        <img src="@Url.Action("GetOrgLogo", new {orgId = Model.Id})"/>
+        @Html.DisplayFor(model => model.Name)
+        @Html.DisplayNameFor(model => model.About)
+        <!--TOP SECTION END-->
+        
+        <!--tab panel starts-->
         <div class="" role="tabpanel" data-example-id="toggle-tabs">
             <ul class="nav nav-tabs bar_tabs" role="tablist">
                 <li role="presentation" class="active">
@@ -57,7 +64,7 @@
                                 </ul>
                                 <div class="clearfix"></div>
                             </div>
-                            
+
                             <div class="x_content">
 
                             </div>
@@ -88,58 +95,16 @@
                     </div>
                 </div>
             </div>
-
-            @*<div>
-                <dl class="dl-horizontal">
-                    <dd>
-                        <img src="@Url.Action("GetOrgLogo", new {orgId = Model.Id})" class="orgLogo_details" />
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Name)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Code)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Code)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Address)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Address)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Contact)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Contact)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.About)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.About)
-                    </dd>
-                </dl>
-            </div>*@
-            <p>
-                @Html.ActionLink("Back to List", "Index")
-            </p>
         </div>
+        <!--tab panel ends-->
+
+        <!--BOTTOM SECTION-->
+        @Html.DisplayFor(model => model.Address)
+        @Html.DisplayFor(model => model.Contact)
+        <!--BOTTOM SECTION ENDS-->
+        <p>
+            @Html.ActionLink("Back to List", "Index")
+        </p>
     </div>
 </div>
 
