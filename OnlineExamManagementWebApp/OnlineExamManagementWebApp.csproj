@@ -382,7 +382,7 @@
     <Content Include="Theme\vendors\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Theme\vendors\font-awesome\fonts\FontAwesome.otf" />
     <Content Include="Views\Course\Search.cshtml" />
-    <Content Include="Views\Course\_ModalEditCourse.cshtml" />
+    <Content Include="Views\Shared\_ModalEditCourse.cshtml" />
     <Content Include="Views\Course\List.cshtml" />
     <Content Include="Views\Organization\Entry.cshtml" />
     <Content Include="Views\Organization\Delete.cshtml" />

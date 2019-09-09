@@ -23,7 +23,10 @@ namespace OnlineExamManagementWebApp.BLL {
         }
 
         public Organization GetOrganizationWithCoursesAndTrainers(int orgId) {
-            return _unitOfWork.Organizations.GetOrganizationWithCoursesAndTrainers(orgId);
+            var org = GetOrganizationById(orgId);
+            org.Courses = _unitOfWork.Courses.GetCoursesByOrgId(orgId).ToList();
+            org.Trainers = _unitOfWork.Trainers.GetTrainersByOrgId(orgId);
+            return org;
         }
 
         public ICollection<Organization> GetAllOrganizations() {

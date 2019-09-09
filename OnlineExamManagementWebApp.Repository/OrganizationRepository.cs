@@ -18,11 +18,6 @@ namespace OnlineExamManagementWebApp.Repository {
             return _dbContext.Organizations.SingleOrDefault(o => o.Id == organizationId && o.IsDeleted == false);
         }
 
-        public Organization GetOrganizationWithCoursesAndTrainers(int orgId) {
-            Organization query = _dbContext.Organizations.Include(o => o.Courses).Include(o => o.Trainers)
-                .SingleOrDefault(o => o.Id == orgId && o.IsDeleted == false);
-            return query;
-        }
         public List<SelectListItem> GetAllSelectListOrganizations() {
             return _dbContext.Organizations
                 .Where(o => o.IsDeleted == false)
