@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Net;
 using System.Web.Mvc;
 using AutoMapper;
 using OnlineExamManagementWebApp.BLL;
@@ -18,11 +20,12 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         // GET: Organization/Details/5
-        public ActionResult Details(int id) {
-            //if (id == null) {
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-            var organization = _orgManager.GetOrganizationById(id);
+        public ActionResult Details(int? id) {
+            if (id == null) {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var organization = _orgManager.GetOrganizationWithCoursesAndTrainers(Convert.ToInt32(id));
             if (organization == null) {
                 return HttpNotFound();
             }
