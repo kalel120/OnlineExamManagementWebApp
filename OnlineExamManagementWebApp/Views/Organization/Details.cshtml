@@ -107,7 +107,11 @@
                             </div>
 
                             <div class="x_content">
-                                <!--partial view of trainers-->
+                                @{
+                                    if (Model.Trainers!=null) {
+                                        Html.RenderPartial("_ListOfTrainers", Model.Trainers);
+                                    }
+                                }
                             </div>
                         </div>
                     </div>
