@@ -5,7 +5,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/r-2.2.2/datatables.min.css" />
+<!--DataTable Styles-->
+<link href="~/Theme/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="~/Theme/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+<link href="~/Theme/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+<link href="~/Theme/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+<link href="~/Theme/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+<!--DataTable END-->
+
 
 <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
@@ -88,6 +95,20 @@
 </div>
 
 @section scripts {
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/r-2.2.2/datatables.min.js"></script>
+    <!-- Datatables Scripts -->
+    <script src="~/Theme/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/Theme/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <!--Datatable end-->
+
     <script type="text/javascript" src="~/Scripts/CustomScripts/courseList.js"></script>
 }
