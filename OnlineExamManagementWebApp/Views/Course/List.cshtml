@@ -79,8 +79,7 @@
                                 @Html.DisplayFor(modelItem => item.CourseOutline)
                             </td>
                             <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) |
-                                @*@Html.ActionLink("Details", "Details", new { id=item.Id })*@
+                                <input type="button" class="btn btn-warning" value="Edit" onclick="location.href = '@Url.Action("Edit","Course",new{id=item.CourseId})'" />
                             </td>
                         </tr>
                     }
