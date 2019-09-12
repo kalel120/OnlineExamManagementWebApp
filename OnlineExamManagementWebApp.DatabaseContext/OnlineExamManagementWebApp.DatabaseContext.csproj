@@ -92,6 +92,10 @@
     <Compile Include="Migrations\201908312044547_SoftDeleteInOrganizationEntityModel.Designer.cs">
       <DependentUpon>201908312044547_SoftDeleteInOrganizationEntityModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909120929281_SoftDeleteInTrainerEntityModel.cs" />
+    <Compile Include="Migrations\201909120929281_SoftDeleteInTrainerEntityModel.Designer.cs">
+      <DependentUpon>201909120929281_SoftDeleteInTrainerEntityModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -138,6 +142,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908312044547_SoftDeleteInOrganizationEntityModel.resx">
       <DependentUpon>201908312044547_SoftDeleteInOrganizationEntityModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909120929281_SoftDeleteInTrainerEntityModel.resx">
+      <DependentUpon>201909120929281_SoftDeleteInTrainerEntityModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
