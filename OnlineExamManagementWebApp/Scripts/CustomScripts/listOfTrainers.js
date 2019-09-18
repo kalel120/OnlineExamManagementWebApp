@@ -5,16 +5,18 @@
         const deleteTrainerDialog = $("#js-deleteTrainer-dialog");
         deleteTrainerDialog.hide();
 
-        // Delete trainer with jquery UI dialog
+        // Delete trainer
         const deleteTrainerById = (id) => {
-            $.post("/.../Delete/", { orgId: id })
+            let dto = new Object();
+            dto.TrainerId = id;
+            $.ajax({
+                url: "/api/trainer/",
+                type: "DELETE",
+                dataType: "json",
+                data: dto
+            })
                 .done((data) => {
-                    if (data) {
-                        alert("Deleted Successfully");
-                        location.reload(true);
-                    } else {
-                        alert("Deletion failed");
-                    }
+                    console.log(data);
                 })
                 .fail((jqXhr, textStatus) => {
                     alert(`Error >>${textStatus}`);
@@ -23,6 +25,7 @@
 
         $(document).on("click", ".js-deleteTrainerPopup", (event) => {
             const trainerId = $(event.target).closest("tr").find('input[type="hidden"]').val();
+            console.log(trainerId);
 
             deleteTrainerDialog.dialog({
                 resizable: false,
