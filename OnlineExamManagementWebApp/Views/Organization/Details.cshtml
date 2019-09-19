@@ -40,9 +40,10 @@
     </div>
 
     <div class="x_content">
+        <input type="hidden" value="@Model.Id" id="js-org-id"/>
         <!--TOP SECTION-->
         <div class="orgLogoDetails">
-            <img src="@Url.Action("GetOrgLogo", new {orgId = Model.Id})" />
+            <img src="@Url.Action("GetOrgLogo", new {orgId = Model.Id})"/>
         </div>
 
         <div class="orgTopSection">
@@ -112,9 +113,9 @@
                                 <div class="clearfix"></div>
                             </div>
 
-                            <div class="x_content">
+                            <div class="x_content partialLoadTrainers">
                                 @{
-                                    if (Model.Trainers!=null) {
+                                    if (Model.Trainers != null) {
                                         Html.RenderPartial("_ListOfTrainers", Model.Trainers);
                                     }
                                 }

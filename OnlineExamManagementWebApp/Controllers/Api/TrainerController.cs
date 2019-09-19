@@ -1,7 +1,4 @@
-﻿using System;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using OnlineExamManagementWebApp.BLL;
 using OnlineExamManagementWebApp.DTOs;
 
@@ -14,17 +11,21 @@ namespace OnlineExamManagementWebApp.Controllers.Api {
         }
 
         [HttpDelete]
-        public HttpResponseMessage DeleteTrainer([FromBody] DeleteTrainerDto dto) {
-            try {
-                if (!_trainerManager.IsTrainerDeleted(dto.TrainerId)) {
-                    return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Trainer not found!");
-                }
+        public IHttpActionResult DeleteTrainer([FromBody] DeleteTrainerDto dto) {
+            if (!_trainerManager.IsTrainerDeleted(dto.TrainerId)) {
+                return BadRequest("Invalid!");
+            }
+            return Ok(true);
+        }
 
-                return Request.CreateResponse(HttpStatusCode.OK, true);
+        [HttpGet]
+        public IHttpActionResult GetTrainersById(int id) {
+            var trainers = _trainerManager.GetTrainersByOrgId(id);
+            if (trainers.Count == 0) {
+                return BadRequest("Invalid");
             }
-            catch (Exception exception) {
-                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, exception);
-            }
+
+            return Ok(trainers);
         }
     }
 }

@@ -5,7 +5,11 @@
         const deleteTrainerDialog = $("#js-deleteTrainer-dialog");
         deleteTrainerDialog.hide();
 
-        // Delete trainer
+        const orgId = $("#js-org-id").val();
+
+        /**
+         * Delete Trainer Functionality
+         */
         const deleteTrainerById = (id) => {
             let dto = new Object();
             dto.TrainerId = id;
@@ -16,7 +20,8 @@
                 data: dto
             })
                 .done((data) => {
-                    console.log(data);
+                    alert("Deleted Successfully!");
+                    location.reload(true);
                 })
                 .fail((jqXhr, textStatus) => {
                     alert(`Error >>${textStatus}`);
@@ -25,7 +30,6 @@
 
         $(document).on("click", ".js-deleteTrainerPopup", (event) => {
             const trainerId = $(event.target).closest("tr").find('input[type="hidden"]').val();
-            console.log(trainerId);
 
             deleteTrainerDialog.dialog({
                 resizable: false,
@@ -62,7 +66,6 @@
                 ]
             });
         });
-        // delete trainer functionality End
+        /**END**/
     });
 })(jQuery);
-
