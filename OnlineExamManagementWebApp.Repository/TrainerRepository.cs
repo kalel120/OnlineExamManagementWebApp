@@ -15,7 +15,7 @@ namespace OnlineExamManagementWebApp.Repository {
             return _dbContext.Trainers.Where(t => t.OrganizationId == orgId && t.IsDeleted == false).ToList();
         }
 
-        public Trainer GetTrainersById(int id) {
+        public Trainer GetTrainerById(int id) {
             return _dbContext.Trainers.Single(t => t.Id == id && t.IsDeleted == false);
         }
     }

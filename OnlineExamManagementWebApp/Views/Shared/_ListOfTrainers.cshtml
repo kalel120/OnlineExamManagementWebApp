@@ -1,9 +1,9 @@
-﻿@model List<OnlineExamManagementWebApp.Models.Trainer>
+﻿@*@model List<OnlineExamManagementWebApp.Models.Trainer>*@
 
-<table class="table table-striped table-bordered nowrap" id="tbl-listOfTrainers">
+<table class="table table-striped table-bordered nowrap" id="tbl-listOfTrainers" style="width: 100%">
     <thead>
         <tr>
-            <th>Serial No.</th>
+            <th>SL</th>
             <th>Name</th>
             <th>Contact</th>
             <th>Email</th>
@@ -16,36 +16,6 @@
             <th>Actions</th>
         </tr>
     </thead>
-
-    <tbody>
-        @{
-            if (Model != null) {
-                int counter = 1;
-                foreach (var trainer in Model) {
-                    <tr>
-                        <td>
-                            <input type="hidden" value="@trainer.Id" />
-                            @counter
-                        </td>
-                        <td>@trainer.Name</td>
-                        <td>@trainer.Contact</td>
-                        <td>@trainer.Email</td>
-                        <td>@trainer.Address</td>
-                        <td>@trainer.AlternateAddress</td>
-                        <td>@trainer.City</td>
-                        <td>@trainer.PostalCode</td>
-                        <td>@trainer.Country</td>
-                        <td>@trainer.OrganizationId</td>
-                        <td>
-                            <input type="button" class="btn btn-warning js-editTrainerModalPopup" value="Edit" />
-                            <input type="button" class="btn btn-danger js-deleteTrainerPopup" value="Delete" />
-                        </td>
-                    </tr>
-                    counter++;
-                }
-            }
-        }
-    </tbody>
 </table>
 
 <div id="js-deleteTrainer-dialog" title="Delete Trainer?">

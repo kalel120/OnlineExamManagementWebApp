@@ -36,7 +36,7 @@ namespace OnlineExamManagementWebApp.BLL {
         }
 
         public bool IsTrainerDeleted(int id) {
-            var trainer = _unitOfWork.Trainers.GetTrainersById(id);
+            var trainer = _unitOfWork.Trainers.GetTrainerById(id);
             trainer.IsDeleted = true;
             return _unitOfWork.Complete();
         }

@@ -113,11 +113,9 @@
                                 <div class="clearfix"></div>
                             </div>
 
-                            <div class="x_content partialLoadTrainers">
+                            <div class="x_content">
                                 @{
-                                    if (Model.Trainers != null) {
-                                        Html.RenderPartial("_ListOfTrainers", Model.Trainers);
-                                    }
+                                    Html.RenderPartial("_ListOfTrainers");
                                 }
                             </div>
                         </div>
@@ -160,7 +158,7 @@
     <script src="~/Theme/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
     <script src="~/Theme/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
     <script src="~/Theme/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-    <!--Datatable ends-->
+    <!--Datatables ends-->
 
     <script type="text/javascript" src="~/Scripts/CustomScripts/search-course.js"></script>
     <script type="text/javascript" src="~/Scripts/CustomScripts/listOfTrainers.js"></script>
