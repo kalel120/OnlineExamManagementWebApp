@@ -170,6 +170,7 @@
     <Compile Include="ViewModels\OrgEntryViewModel.cs" />
     <Compile Include="ViewModels\SearchCourseViewModel.cs" />
     <Compile Include="ViewModels\CreateExamViewModel.cs" />
+    <Compile Include="ViewModels\SearchOrgViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

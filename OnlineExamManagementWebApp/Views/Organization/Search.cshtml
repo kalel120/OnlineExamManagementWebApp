@@ -1,4 +1,4 @@
-﻿
+﻿@model OnlineExamManagementWebApp.ViewModels.SearchOrgViewModel
 @{
     ViewBag.Title = "Search";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -37,17 +37,77 @@
             </ul>
             <div class="clearfix"></div>
         </div>
-        <div class="x_content">
 
+        <div class="x_content">
+            @using (Html.BeginForm("Search", "Organization", FormMethod.Post, new { @class = "form-horizontal", id = "form-searchOrg" })) {
+                <div class="form-horizontal">
+                    <div class="item form-group">
+                        @Html.LabelFor(m => m.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        @Html.LabelFor(m => m.Address, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        @Html.LabelFor(m => m.Code, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(m => m.Code, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+                    <div class="item form-group">
+                        @Html.LabelFor(m => m.Contact, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBoxFor(m => m.Contact, new { @class = "form-control col-md-7 col-xs-12" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ln_solid"></div>
+                <div class="form-group">
+                    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                        <input type="submit" value="Search" class="btn btn-success" id="btn-searchOrg" />
+                    </div>
+                </div>
+
+            }
         </div>
+
+        <div class="clearfix"></div>
+        <br />
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><small>Search Result</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    Search Result table goes here
+                </div>
+            </div>
+        </div>
+
+        <!--x-panel End-->
     </div>
 </div>
 
 
 
 @section scripts{
-    <script type="text/javascript" src="~/Scripts/jquery.validate.js"></script>
-
     <!-- Datatables Scripts -->
     <script src="~/Theme/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="~/Theme/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
