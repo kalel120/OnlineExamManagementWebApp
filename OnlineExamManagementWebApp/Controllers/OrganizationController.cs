@@ -67,5 +67,9 @@ namespace OnlineExamManagementWebApp.Controllers {
         public JsonResult Delete(int orgId) {
             return Json(_orgManager.IsOrganizationDeleted(orgId));
         }
+
+        public ActionResult Search() {
+            return View();
+        }
     }
 }

@@ -444,6 +444,7 @@
     <Content Include="Views\Organization\Index.cshtml" />
     <Content Include="Views\Shared\_ListOfCourse.cshtml" />
     <Content Include="Views\Shared\_ListOfTrainers.cshtml" />
+    <Content Include="Views\Organization\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
