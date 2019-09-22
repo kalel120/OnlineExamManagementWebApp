@@ -80,39 +80,23 @@
         $(document).on("click", ".js-deleteTrainerPopup", (event) => {
             const trainerId = $(event.target).closest("tr").find('input[type="hidden"]').val();
 
-            deleteTrainerDialog.dialog({
-                resizable: false,
-                height: "auto",
-                width: 400,
-                modal: true,
-                show: {
-                    effect: "puff",
-                    duration: 150
-                },
-                hide: {
-                    effect: "explode",
-                    duration: 150
-                },
-                buttons: [
-                    {
-                        text: "Delete?",
-                        open: function () {
-                            $(this).addClass("cancelClass");
-                        },
-                        click: function () {
-                            deleteTrainerById(trainerId);
-                            $(this).dialog("close");
-                        }
-                    }, {
-                        text: "Cancel",
-                        open: function () {
-                            $(this).addClass("confirmClass");
-                        },
-                        click: function () {
-                            $(this).dialog("close");
-                        }
+            bootbox.confirm({
+                message: "Are you sure you want to delete this Trainer?",
+                buttons: {
+                    confirm: {
+                        label: `<i class="fa fa-check"></i> Yes`,
+                        className: "btn-danger"
                     }
-                ]
+                    , cancel: {
+                        label: `<i class="fa fa-times"></i> No`,
+                        className: "btn-success"
+                    }
+                },
+                callback: (result) => {
+                    if (result) {
+                        deleteTrainerById(trainerId);
+                    }
+                }
             });
         });
         /**END**/

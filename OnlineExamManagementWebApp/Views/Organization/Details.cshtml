@@ -40,10 +40,10 @@
     </div>
 
     <div class="x_content">
-        <input type="hidden" value="@Model.Id" id="js-org-id"/>
+        <input type="hidden" value="@Model.Id" id="js-org-id" />
         <!--TOP SECTION-->
         <div class="orgLogoDetails">
-            <img src="@Url.Action("GetOrgLogo", new {orgId = Model.Id})"/>
+            <img src="@Url.Action("GetOrgLogo", new {orgId = Model.Id})" />
         </div>
 
         <div class="orgTopSection">
@@ -144,7 +144,7 @@
 @section scripts{
     <script type="text/javascript" src="~/Scripts/jquery.validate.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery-ui-1.12.1.js"></script>
-    
+
     <!-- Datatables -->
     <script src="~/Theme/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="~/Theme/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -159,6 +159,10 @@
     <script src="~/Theme/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
     <script src="~/Theme/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
     <!--Datatables ends-->
+    
+    <!--bootbox-->
+    <script src="~/Scripts/bootbox.min.js"></script>
+    <!--bootbox End-->
 
     <script type="text/javascript" src="~/Scripts/CustomScripts/search-course.js"></script>
     <script type="text/javascript" src="~/Scripts/CustomScripts/listOfTrainers.js"></script>
