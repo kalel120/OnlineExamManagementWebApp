@@ -48,7 +48,7 @@
                     cell.innerHTML = i + 1;
                 });
         }).draw();
-        /**END */
+        /**DataTable END */
 
         const deleteTrainerDialog = $("#js-deleteTrainer-dialog");
         deleteTrainerDialog.hide();
@@ -99,6 +99,6 @@
                 }
             });
         });
-        /**END**/
+        /** Delete Trainer END**/
     });
 })(jQuery);

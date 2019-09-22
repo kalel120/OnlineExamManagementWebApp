@@ -253,49 +253,33 @@
                 bindDataToEditCoursePopup(rowData);
             }, 250);
         });
-            // End
+            // Edit Course End //
 
-            // Delete course with modal popup functionality
+            // Delete course with modal popup //
         $(document).on("click", ".js-deleteCoursePopup", (event) => {
             const rowData = getTableRowAsObject($(event.target).closest("tr"));
 
-            deleteCourseDialog.dialog({
-                resizable: false,
-                height: "auto",
-                width: 400,
-                modal: true,
-                show: {
-                    effect: "puff",
-                    duration: 1000
-                },
-                hide: {
-                    effect: "explode",
-                    duration: 1000
-                },
-                buttons: [
-                    {
-                        text: "Delete?",
-                        open: function() {
-                            $(this).addClass("cancelClass");
-                        },
-                        click: function () {
-                            deleteCourseById(rowData.Id);
-                            $(this).dialog("close");
-                        }
-                    }, {
-                        text: "Cancel",
-                        open: function() {
-                            $(this).addClass("confirmClass");
-                        },
-                        click: function () {
-                            $(this).dialog("close");
-                        }
+            bootbox.confirm({
+                message: "Are you sure you want to delete this Course?",
+                buttons: {
+                    confirm: {
+                        label: `<i class="fa fa-check"></i> Yes`,
+                        className: "btn-danger"
                     }
-                ]
+                    , cancel: {
+                        label: `<i class="fa fa-times"></i> No`,
+                        className: "btn-success"
+                    }
+                },
+                callback: (result) => {
+                    if (result) {
+                        deleteCourseById(rowData.Id);
+                    }
+                }
             });
-
         });
-            // End
+            // Delete course END //
+
         /** End**/
 
         // jQuery Code Ends Here
