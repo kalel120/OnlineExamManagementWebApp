@@ -22,6 +22,7 @@ namespace OnlineExamManagementWebApp.ViewModels {
 
         public string About { get; set; }
 
+        public List<Organization> Organizations { get; set; }
 
         public List<Course> Courses { get; set; }
 

@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Web.Mvc;
 using AutoMapper;
 using OnlineExamManagementWebApp.BLL;
+using OnlineExamManagementWebApp.DTOs;
 using OnlineExamManagementWebApp.Models;
 using OnlineExamManagementWebApp.ViewModels;
 
@@ -68,8 +72,30 @@ namespace OnlineExamManagementWebApp.Controllers {
             return Json(_orgManager.IsOrganizationDeleted(orgId));
         }
 
+        [HttpGet]
         public ActionResult Search() {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult SearchResult(SearchOrgDto dto) {
+            SearchOrgViewModel orgsViewModel = new SearchOrgViewModel();
+
+            if (IsAnyNullOrEmpty(dto)) {
+                orgsViewModel.Organizations = _orgManager.GetAllOrganizations().ToList();
+            }
+            else {
+                orgsViewModel.Organizations = _orgManager.GetOrganizationsByParams(dto).ToList();
+            }
+
+            return View("Search", orgsViewModel);
+        }
+
+        private bool IsAnyNullOrEmpty(object myObject) {
+            return myObject.GetType().GetProperties()
+                .Where(pi => pi.PropertyType == typeof(string))
+                .Select(pi => (string)pi.GetValue(myObject))
+                .Any(value => string.IsNullOrEmpty(value));
         }
     }
 }

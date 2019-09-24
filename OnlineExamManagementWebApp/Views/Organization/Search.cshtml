@@ -39,7 +39,7 @@
         </div>
 
         <div class="x_content">
-            @using (Html.BeginForm("Search", "Organization", FormMethod.Post, new { @class = "form-horizontal", id = "form-searchOrg" })) {
+            @using (Html.BeginForm("SearchResult", "Organization", FormMethod.Get, new { @class = "form-horizontal", id = "form-searchOrg" })) {
                 <div class="form-horizontal">
                     <div class="item form-group">
                         @Html.LabelFor(m => m.Name, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })

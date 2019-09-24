@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using OnlineExamManagementWebApp.DTOs;
 using OnlineExamManagementWebApp.Models;
 using OnlineExamManagementWebApp.Repository;
 
@@ -45,6 +46,28 @@ namespace OnlineExamManagementWebApp.BLL {
         public bool IsOrganizationDeleted(int orgId) {
             _unitOfWork.Organizations.Delete(orgId);
             return _unitOfWork.Complete();
+        }
+
+        public ICollection<Organization> GetOrganizationsByParams(SearchOrgDto dto) {
+            ICollection<Organization> orgs = null;
+
+            if (dto.Name != null) {
+                orgs = _unitOfWork.Organizations.GetOrgsContainsName(dto.Name);
+            }
+
+            if (dto.Code != null) {
+                orgs = _unitOfWork.Organizations.GetOrgsContainsCode(dto.Code);
+            }
+
+            if (dto.Contact != null) {
+                orgs = _unitOfWork.Organizations.GetOrgsContainsContact(dto.Contact);
+            }
+
+            if (dto.Address != null) {
+                orgs = _unitOfWork.Organizations.GetOrgsContainsAddress(dto.Address);
+            }
+
+            return orgs;
         }
     }
 }

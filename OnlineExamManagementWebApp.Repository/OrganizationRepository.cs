@@ -52,5 +52,25 @@ namespace OnlineExamManagementWebApp.Repository {
             organization.IsDeleted = true;
             _dbContext.Entry(organization).State = EntityState.Modified;
         }
+
+        public ICollection<Organization> GetOrgsContainsName(string name) {
+            var query = _dbContext.Organizations.Where(o => o.Name.Contains(name) && o.IsDeleted == false);
+            return query.ToList();
+        }
+
+        public ICollection<Organization> GetOrgsContainsCode(string code) {
+            var query = _dbContext.Organizations.Where(o => o.Code.Contains(code) && o.IsDeleted == false);
+            return query.ToList();
+        }
+
+        public ICollection<Organization> GetOrgsContainsContact(string contact) {
+            var query = _dbContext.Organizations.Where(o => o.Contact.Contains(contact) && o.IsDeleted == false);
+            return query.ToList();
+        }
+
+        public ICollection<Organization> GetOrgsContainsAddress(string address) {
+            var query = _dbContext.Organizations.Where(o => o.Address.Contains(address) && o.IsDeleted == false);
+            return query.ToList();
+        }
     }
 }
