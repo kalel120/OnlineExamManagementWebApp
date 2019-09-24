@@ -74,7 +74,8 @@ namespace OnlineExamManagementWebApp.Controllers {
 
         [HttpGet]
         public ActionResult Search() {
-            return View();
+            SearchOrgViewModel orgsViewModel = new SearchOrgViewModel();
+            return View(orgsViewModel);
         }
 
         [HttpGet]
@@ -95,7 +96,7 @@ namespace OnlineExamManagementWebApp.Controllers {
             return myObject.GetType().GetProperties()
                 .Where(pi => pi.PropertyType == typeof(string))
                 .Select(pi => (string)pi.GetValue(myObject))
-                .Any(value => string.IsNullOrEmpty(value));
+                .All(value => string.IsNullOrEmpty(value));
         }
     }
 }

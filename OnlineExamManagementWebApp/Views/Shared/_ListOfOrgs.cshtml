@@ -1,0 +1,42 @@
+﻿@model List<OnlineExamManagementWebApp.Models.Organization>
+
+<table class="table table-striped table-bordered nowrap" id="tbl-orgSearchResult" style="width: 100%">
+    <thead>
+        <tr>
+            <th>Serial</th>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Address</th>
+            <th>Contact No.</th>
+            <th>Courses</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (Model != null) {
+            int counter = 1;
+            foreach (var course in Model) {
+                <tr>
+                    <td>
+                        <input type="hidden" name="CourseId" value="@course.Id" />
+                        @counter
+                    </td>
+                    <td>@course.Name</td>
+                    <td>@course.Code</td>
+                    <td>@course.Address</td>
+                    <td>@course.Contact</td>
+                    <td>@course.Courses</td>
+                    <td>
+                        <input type="button" class="btn btn-warning js-editOrgModalPopup" value="Edit" />
+                        <input type="button" class="btn btn-danger js-deleteOrgPopup" value="Delete" />
+                    </td>
+                </tr>
+                counter++;
+            }
+        }
+
+    </tbody>
+</table>
+
+<div class="clearfix"></div>
