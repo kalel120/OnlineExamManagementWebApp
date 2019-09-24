@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Reflection;
 using System.Web.Mvc;
 using AutoMapper;
 using OnlineExamManagementWebApp.BLL;
@@ -15,6 +13,7 @@ namespace OnlineExamManagementWebApp.Controllers {
     public class OrganizationController : Controller {
 
         private readonly OrganizationManager _orgManager;
+
         public OrganizationController() {
             _orgManager = new OrganizationManager();
         }
@@ -23,7 +22,6 @@ namespace OnlineExamManagementWebApp.Controllers {
             return View(_orgManager.GetAllOrganizations());
         }
 
-        // GET: Organization/Details/5
         public ActionResult Details(int? id) {
             if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -36,12 +34,13 @@ namespace OnlineExamManagementWebApp.Controllers {
             return View(organization);
         }
 
-        // GET: Organization/Create
+        #region CreateNewOrganization
+
+        [HttpGet]
         public ActionResult Entry() {
             return View();
         }
 
-        // Post New Org Entry
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Entry(OrgEntryViewModel viewModel) {
@@ -62,27 +61,20 @@ namespace OnlineExamManagementWebApp.Controllers {
 
             return View("Error");
         }
+        #endregion
 
-        public ActionResult GetOrgLogo(int orgId) {
-            var imageData = _orgManager.GetLogoByOrgId(orgId);
-            return File(imageData, "image/jpg");
-        }
-
-        public JsonResult Delete(int orgId) {
-            return Json(_orgManager.IsOrganizationDeleted(orgId));
-        }
+        #region SearchOrganization
 
         [HttpGet]
         public ActionResult Search() {
-            SearchOrgViewModel orgsViewModel = new SearchOrgViewModel();
-            return View(orgsViewModel);
+            return View(new SearchOrgViewModel());
         }
 
         [HttpGet]
         public ActionResult SearchResult(SearchOrgDto dto) {
             SearchOrgViewModel orgsViewModel = new SearchOrgViewModel();
 
-            if (IsAnyNullOrEmpty(dto)) {
+            if (IsEveryPropertyNullOrEmpty(dto)) {
                 orgsViewModel.Organizations = _orgManager.GetAllOrganizations().ToList();
             }
             else {
@@ -92,11 +84,22 @@ namespace OnlineExamManagementWebApp.Controllers {
             return View("Search", orgsViewModel);
         }
 
-        private bool IsAnyNullOrEmpty(object myObject) {
+        private static bool IsEveryPropertyNullOrEmpty(object myObject) {
             return myObject.GetType().GetProperties()
                 .Where(pi => pi.PropertyType == typeof(string))
                 .Select(pi => (string)pi.GetValue(myObject))
-                .All(value => string.IsNullOrEmpty(value));
+                .All(string.IsNullOrEmpty);
+        }
+
+        #endregion
+
+        public ActionResult GetOrgLogo(int orgId) {
+            var imageData = _orgManager.GetLogoByOrgId(orgId);
+            return File(imageData, "image/jpg");
+        }
+
+        public JsonResult Delete(int orgId) {
+            return Json(_orgManager.IsOrganizationDeleted(orgId));
         }
     }
 }
