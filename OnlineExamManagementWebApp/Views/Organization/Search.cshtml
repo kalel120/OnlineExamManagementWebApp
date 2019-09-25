@@ -99,6 +99,7 @@
                     @{
                         if (Model.Organizations != null) {
                             Html.RenderPartial("_ListOfOrgs", Model.Organizations);
+                            Html.RenderPartial("_ModalViewOrg");
                         }
                     }
                 </div>
@@ -128,5 +129,6 @@
     <!--Datatable end-->
 
     <script src="~/Scripts/bootbox.min.js"></script>
-    <script src="~/Scripts/CustomScripts/search-org.js"></script>
+    <script src="~/Scripts/CustomScripts/organization/search-org.js"></script>
+    <script src="~/Scripts/CustomScripts/organization/viewOrgModal.js"></script>
 }

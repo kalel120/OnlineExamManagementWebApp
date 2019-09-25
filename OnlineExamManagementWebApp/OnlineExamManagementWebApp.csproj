@@ -250,8 +250,9 @@
     <Content Include="Scripts\CustomScripts\listOfTrainers.js" />
     <Content Include="Scripts\CustomScripts\org-entry.js" />
     <Content Include="Scripts\CustomScripts\org-index.js" />
+    <Content Include="Scripts\CustomScripts\organization\viewOrgModal.js" />
     <Content Include="Scripts\CustomScripts\search-course.js" />
-    <Content Include="Scripts\CustomScripts\search-org.js" />
+    <Content Include="Scripts\CustomScripts\organization\search-org.js" />
     <Content Include="Scripts\dropzone\basic.css" />
     <Content Include="Scripts\dropzone\basic.min.css" />
     <Content Include="Scripts\dropzone\dropzone-amd-module.js" />
@@ -448,6 +449,7 @@
     <Content Include="Views\Shared\_ListOfTrainers.cshtml" />
     <Content Include="Views\Organization\Search.cshtml" />
     <Content Include="Views\Shared\_ListOfOrgs.cshtml" />
+    <Content Include="Views\Organization\_ModalViewOrg.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
