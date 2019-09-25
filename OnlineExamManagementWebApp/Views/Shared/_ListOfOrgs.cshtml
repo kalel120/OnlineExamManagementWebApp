@@ -16,17 +16,23 @@
     <tbody>
         @if (Model != null) {
             int counter = 1;
-            foreach (var course in Model) {
+            foreach (var organization in Model) {
                 <tr>
                     <td>
-                        <input type="hidden" name="CourseId" value="@course.Id" />
+                        <input type="hidden" name="CourseId" value="@organization.Id" />
                         @counter
                     </td>
-                    <td>@course.Name</td>
-                    <td>@course.Code</td>
-                    <td>@course.Address</td>
-                    <td>@course.Contact</td>
-                    <td>@course.Courses</td>
+                    <td>@organization.Name</td>
+                    <td>@organization.Code</td>
+                    <td>@organization.Address</td>
+                    <td>@organization.Contact</td>
+                    <td>
+                        @{
+                            if (organization.Courses != null) {
+                                @organization.Courses.Count
+                            }
+                        }
+                    </td>
                     <td>
                         <input type="button" class="btn btn-warning js-editOrgModalPopup" value="Edit" />
                         <input type="button" class="btn btn-danger js-deleteOrgPopup" value="Delete" />
