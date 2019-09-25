@@ -50,10 +50,6 @@
         }).draw();
         /**DataTable END */
 
-        const deleteTrainerDialog = $("#js-deleteTrainer-dialog");
-        deleteTrainerDialog.hide();
-
-
         /**
          * Delete Trainer Functionality
          */
