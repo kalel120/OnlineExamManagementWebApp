@@ -15,10 +15,17 @@
             return row;
         }
 
+        const bindToViewOrgModal = (data) => {
+            $("#js-modal-viewOrg-name").val(data.Name);
+            $("#js-modal-viewOrg-code").val(data.Code);
+            $("#js-modal-viewOrg-address").val(data.Address);
+            $("#js-modal-viewOrg-contact").val(data.Contact);
+        }
+
         $(document).on("click", ".js-viewOrgModalPopup", (event) => {
             viewOrgModal.modal("toggle");
             const rowData = getTableRowAsObject($(event.target).closest("tr"));
-            console.log(rowData);
+            bindToViewOrgModal(rowData);
         });
     });
 })(jQuery);
