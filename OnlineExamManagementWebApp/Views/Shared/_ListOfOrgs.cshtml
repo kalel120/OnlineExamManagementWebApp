@@ -18,10 +18,7 @@
             int counter = 1;
             foreach (var organization in Model) {
                 <tr>
-                    <td>
-                        <input type="hidden" name="CourseId" value="@organization.Id" />
-                        @counter
-                    </td>
+                    <td>@counter</td>
                     <td>@organization.Name</td>
                     <td>@organization.Code</td>
                     <td>@organization.Address</td>
@@ -34,9 +31,9 @@
                         }
                     </td>
                     <td>
-                        <input type="button" class="btn btn-primary js-viewOrgModalPopup" value="View"/>|
-                        <input type="button" class="btn btn-warning js-editOrgModalPopup" value="Edit" />|
-                        <input type="button" class="btn btn-danger js-deleteOrgPopup" value="Delete" />
+                        <input type="button" class="btn btn-primary js-viewOrgModalPopup" value="View" data-org-id="@organization.Id" />|
+                        <input type="button" class="btn btn-warning js-editOrgModalPopup" value="Edit" data-org-id="@organization.Id" />|
+                        <input type="button" class="btn btn-danger js-deleteOrgPopup" value="Delete" data-org-id="@organization.Id" />
                     </td>
                 </tr>
                 counter++;
