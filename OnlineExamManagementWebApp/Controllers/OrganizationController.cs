@@ -103,5 +103,9 @@ namespace OnlineExamManagementWebApp.Controllers {
         public JsonResult Delete(int orgId) {
             return Json(_orgManager.IsOrganizationDeleted(orgId));
         }
+
+        public JsonResult UpdateOrganization(UpdateOrgDto dto, int orgId) {
+            return Json(true);
+        }
     }
 }

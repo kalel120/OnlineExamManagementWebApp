@@ -49,6 +49,7 @@
     <Compile Include="SearchCourseDto.cs" />
     <Compile Include="SearchOrgDto.cs" />
     <Compile Include="TagDto.cs" />
+    <Compile Include="UpdateOrgDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OnlineExamManagementWebApp.Models\OnlineExamManagementWebApp.Models.csproj">

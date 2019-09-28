@@ -33,13 +33,25 @@
 
 
         const updateOrganization = async (content, orgId) => {
-            let result = await $.post("/url", {});
-            console.log(result);
+            let result = await $.post("/Organization/UpdateOrganization/", { dto: content, orgId: orgId });
+            alert(result);
+        }
+
+        const getFormData = (form) => {
+            let unIndexedArray = form.serializeArray();
+            let indexedArray = {};
+
+            $.map(unIndexedArray, function (n, i) {
+                indexedArray[n["name"]] = n["value"];
+            });
+
+            return indexedArray;
         }
 
         btnEditOrgSubmit.on("click", () => {
-            const updatedModalContents = $("#js-modal-editOrg-form").serializeArray();
-            updateOrganization(updatedModalContents, btnEditOrgSubmit.data("orgId"));
+            const content = getFormData($("#js-modal-editOrg-form"));
+            console.log($("#js-modal-editOrg-form").serializeArray());
+            updateOrganization(content, btnEditOrgSubmit.data("orgId"));
         });
     });
 })(jQuery);
