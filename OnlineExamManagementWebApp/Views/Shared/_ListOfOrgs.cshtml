@@ -9,6 +9,7 @@
             <th>Address</th>
             <th>Contact No.</th>
             <th>Courses</th>
+            <th>Logo</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -28,6 +29,9 @@
                                 @organization.Courses.Count
                             }
                         }
+                    </td>
+                    <td>
+                        <img src="@Url.Action("GetOrgLogo","Organization", new {orgId = organization.Id})" class="orgLogo" />
                     </td>
                     <td>
                         <input type="button" class="btn btn-primary js-viewOrgModalPopup" value="View" data-org-id="@organization.Id" />|

@@ -5,14 +5,13 @@
 
 
         const getTableRowAsObject = (tableRow) => {
-            let row = {
-                Id: tableRow.find("td:eq(6)").children(".js-viewOrgModalPopup").attr("data-org-id"),
+            return {
+                Id: tableRow.find("td:eq(7)").children(".js-viewOrgModalPopup").attr("data-org-id"),
                 Name: tableRow.find("td:eq(1)").text(),
                 Code: tableRow.find("td:eq(2)").text(),
                 Address: tableRow.find("td:eq(3)").text(),
-                Contact: tableRow.find("td:eq(4)").text(),
-            }
-            return row;
+                Contact: tableRow.find("td:eq(4)").text()
+            };
         }
 
         const bindToViewOrgModal = (data) => {
@@ -23,9 +22,11 @@
         }
 
         $(document).on("click", ".js-viewOrgModalPopup", (event) => {
-            viewOrgModal.modal("toggle");
-            const rowData = getTableRowAsObject($(event.target).closest("tr"));
-            bindToViewOrgModal(rowData);
+            setTimeout(() => {
+                bindToViewOrgModal(getTableRowAsObject($(event.target).closest("tr")));
+                $(".js-modal-viewOrg-logo").attr("src", $(event.target).closest("tr").find("td:eq(6) img").attr("src"));
+                viewOrgModal.modal("toggle");
+            }, 300);
         });
     });
 })(jQuery);

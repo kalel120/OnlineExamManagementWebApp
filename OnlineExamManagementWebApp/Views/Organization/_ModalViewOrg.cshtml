@@ -15,6 +15,14 @@
                             <div class="x_content">
                                 <form class="form-horizontal" novalidate>
                                     <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12"></label>
+                                        <div class="col-md-55">
+                                            <div class="image view">
+                                                <img style="width: 100%; display: block;" src="" alt="image" class="js-modal-viewOrg-logo" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
                                             Name
                                         </label>
@@ -46,14 +54,6 @@
                                             <input type="text" id="js-modal-viewOrg-contact" class="form-control col-md-7 col-xs-12" readonly="readonly">
                                         </div>
                                     </div>
-                                    <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                            Logo
-                                        </label>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            @*<img src="@Url.Action("GetOrgLogo", new {orgId = Model.Id})" />*@
-                                        </div>
-                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
