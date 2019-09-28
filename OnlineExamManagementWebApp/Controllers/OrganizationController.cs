@@ -81,6 +81,8 @@ namespace OnlineExamManagementWebApp.Controllers {
                 orgsViewModel.Organizations = _orgManager.GetOrganizationsByParams(dto).ToList();
             }
 
+            ViewData["Orgs"] = orgsViewModel.Organizations;
+
             return View("Search", orgsViewModel);
         }
 

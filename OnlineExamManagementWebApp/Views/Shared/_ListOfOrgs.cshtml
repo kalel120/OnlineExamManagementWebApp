@@ -1,4 +1,4 @@
-﻿@model List<OnlineExamManagementWebApp.Models.Organization>
+﻿@using OnlineExamManagementWebApp.Models
 
 <table class="table table-striped table-bordered nowrap" id="tbl-orgSearchResult" style="width: 100%">
     <thead>
@@ -14,9 +14,8 @@
     </thead>
 
     <tbody>
-        @if (Model != null) {
-            int counter = 1;
-            foreach (var organization in Model) {
+        @{ var counter = 1;
+            foreach (var organization in (IList<Organization>)ViewData["Orgs"]) {
                 <tr>
                     <td>@counter</td>
                     <td>@organization.Name</td>
@@ -39,7 +38,6 @@
                 counter++;
             }
         }
-
     </tbody>
 </table>
 
