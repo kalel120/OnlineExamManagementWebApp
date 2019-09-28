@@ -13,29 +13,43 @@
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_content">
-                                <form class="form-horizontal" novalidate>
+                                <form class="form-horizontal" id="js-modal-editOrg-form">
                                     <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Name</label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input id="js-modal-editOrg-name" class="form-control col-md-7 col-xs-12" data-validate-length-range="20" placeholder="Should Not Exceed 20 Characters" required="required" type="text">
+                                            <input id="js-modal-editOrg-name" class="form-control col-md-7 col-xs-12" 
+                                                   data-validate-length-range="20" 
+                                                   placeholder="Should Not Exceed 20 Characters" 
+                                                   required="required" type="text" 
+                                                   name="Name">
                                         </div>
                                     </div>
                                     <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Code</label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="js-modal-editOrg-code" class="form-control col-md-7 col-xs-12" required="required">
+                                            <input type="text" id="js-modal-editOrg-code" class="form-control col-md-7 col-xs-12" 
+                                                   required="required" 
+                                                   name="Code">
                                         </div>
                                     </div>
                                     <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Address</label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="js-modal-editOrg-address" class="form-control col-md-7 col-xs-12" data-validate-length-range="20" placeholder="Should Not Exceed 20 Characters" required="required">
+                                            <input type="text" id="js-modal-editOrg-address" class="form-control col-md-7 col-xs-12" 
+                                                   data-validate-length-range="20" 
+                                                   placeholder="Should Not Exceed 20 Characters" 
+                                                   required="required"
+                                                   name="Address">
                                         </div>
                                     </div>
                                     <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Contact No.</label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" id="js-modal-editOrg-contact" class="form-control col-md-7 col-xs-12" data-validate-length-range="20" placeholder="Should Not Exceed 20 Characters" required="required">
+                                            <input type="text" id="js-modal-editOrg-contact" class="form-control col-md-7 col-xs-12" 
+                                                   data-validate-length-range="20" 
+                                                   placeholder="Should Not Exceed 20 Characters" 
+                                                   required="required"
+                                                   name="Contact">
                                         </div>
                                     </div>
                                 </form>
@@ -46,7 +60,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Save changes</button>
+                <button type="button" class="btn btn-success" id="js-modal-editOrg-Submit">Save changes</button>
             </div>
         </div>
     </div>
