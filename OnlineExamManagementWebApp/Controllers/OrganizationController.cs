@@ -105,7 +105,10 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         public JsonResult UpdateOrganization(UpdateOrgDto dto, int orgId) {
-            return Json(true);
+            if (_orgManager.IsOrganizationUpdated(dto, orgId)) {
+                return Json(true);
+            }
+            return Json(false);
         }
     }
 }

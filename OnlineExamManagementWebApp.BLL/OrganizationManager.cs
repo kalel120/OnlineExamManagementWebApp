@@ -69,5 +69,15 @@ namespace OnlineExamManagementWebApp.BLL {
 
             return orgs;
         }
+
+        public bool IsOrganizationUpdated(UpdateOrgDto dto, int orgId) {
+            var orgToBeUpdated = _unitOfWork.Organizations.GetOrganizationById(orgId);
+            orgToBeUpdated.Name = dto.Name;
+            orgToBeUpdated.Code = dto.Code;
+            orgToBeUpdated.Address = dto.Address;
+            orgToBeUpdated.Contact = dto.Contact;
+
+            return _unitOfWork.Complete();
+        }
     }
 }

@@ -411,9 +411,6 @@
     <Content Include="Theme\vendors\switchery\dist\switchery.js" />
     <Content Include="Theme\vendors\switchery\dist\switchery.min.css" />
     <Content Include="Theme\vendors\switchery\dist\switchery.min.js" />
-    <Content Include="Theme\vendors\validator\fv.css" />
-    <Content Include="Theme\vendors\validator\multifield.js" />
-    <Content Include="Theme\vendors\validator\validator.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -455,7 +452,6 @@
     <Content Include="Views\Shared\_ListOfOrgs.cshtml" />
     <Content Include="Views\Organization\_ModalViewOrg.cshtml" />
     <Content Include="Views\Organization\_ModalEditOrg.cshtml" />
-    <Content Include="Theme\vendors\validator\validator.jquery.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

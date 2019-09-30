@@ -35,6 +35,7 @@
         const updateOrganization = async (content, orgId) => {
             let result = await $.post("/Organization/UpdateOrganization/", { dto: content, orgId: orgId });
             alert(result);
+            location.reload(true);
         }
 
         const getFormData = (form) => {
