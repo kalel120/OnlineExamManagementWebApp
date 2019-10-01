@@ -106,9 +106,12 @@ namespace OnlineExamManagementWebApp.Controllers {
 
         public JsonResult UpdateOrganization(UpdateOrgDto dto, int orgId) {
             if (_orgManager.IsOrganizationUpdated(dto, orgId)) {
-                return Json(true);
+                return Json(new { Result = true, Message = "Updated Successfully!" });
             }
-            return Json(false);
+
+            Response.StatusCode = 400;
+            Response.TrySkipIisCustomErrors = true;
+            return Json(new { Result = false, Message = "Same or invalid data. Unable to update" });
         }
     }
 }

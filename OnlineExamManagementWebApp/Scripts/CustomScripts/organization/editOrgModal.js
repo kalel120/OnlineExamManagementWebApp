@@ -87,7 +87,7 @@
                 Address: $.trim(tableRow.find("td:eq(3)").text()),
                 Contact: $.trim(tableRow.find("td:eq(4)").text())
             };
-            
+
             return content;
         }
 
@@ -109,14 +109,15 @@
         });
 
         const updateOrganization = async (content, orgId) => {
-            let result = await $.post("/Organization/UpdateOrganization/", { dto: content, orgId: orgId });
-            if (result) {
-                alert("Updated Successfully!");
-                location.reload(true);
-            } else {
-                alert("Update Failed");
+            try {
+                await $.post("/Organization/UpdateOrganization/", { dto: content, orgId: orgId })
+                    .done((data) => {
+                        alert(data.Message);
+                        location.reload(true);
+                    });
+            } catch (e) {
+                alert(e.responseJSON.Message);
             }
-            
         }
 
         const getFormData = (form) => {
