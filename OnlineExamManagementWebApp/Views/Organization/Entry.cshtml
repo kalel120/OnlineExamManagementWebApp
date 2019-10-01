@@ -41,7 +41,7 @@
                 <div class="item form-group">
                     @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control col-md-7 col-xs-12", placeholder= "Should Not Exceed 50 Characters" })
                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                 <div class="item form-group">
                     @Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        @Html.TextBoxFor(model => model.Code, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.TextBoxFor(model => model.Code, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Should Not Exceed 20 Characters" })
                         @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                 <div class="item form-group">
                     @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        @Html.TextBoxFor(model => model.Address, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.TextBoxFor(model => model.Address, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Should Not Exceed 100 Characters" })
                         @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                 <div class="item form-group">
                     @Html.LabelFor(model => model.Contact, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        @Html.TextBoxFor(model => model.Contact, new { @class = "form-control col-md-7 col-xs-12" })
+                        @Html.TextBoxFor(model => model.Contact, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Should Not Exceed 100 Characters" })
                         @Html.ValidationMessageFor(model => model.Contact, "", new { @class = "text-danger" })
                     </div>
                 </div>

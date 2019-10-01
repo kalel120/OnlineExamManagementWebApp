@@ -17,21 +17,22 @@
                     "Name": {
                         required: true
                         , minlength: 3
-                        , maxlength: 20
+                        , maxlength: 50
                     },
                     "Code": {
                         required: true
                         , minlength: 3
+                        , maxlength: 20
                     },
                     "Address": {
                         required: true
                         , minlength: 3
-                        , maxlength: 20
+                        , maxlength: 100
                     },
                     "Contact": {
                         required: true
                         , minlength: 3
-                        , maxlength: 20
+                        , maxlength: 100
                     }
                 },
                 messages: {
