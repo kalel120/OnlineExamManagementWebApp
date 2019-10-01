@@ -4,6 +4,79 @@
     $(() => {
         const editOrgModal = $("#js-modal-editOrg");
         const btnEditOrgSubmit = $("#js-modal-editOrg-Submit");
+        const editOrgModalForm = $("#js-modal-editOrg-form");
+
+
+        //validation code
+        const validation = () => {
+            return editOrgModalForm.validate({
+                errorClass: "text-danger",
+                errorElement: "div",
+
+                rules: {
+                    "Name": {
+                        required: true
+                        , minlength: 3
+                        , maxlength: 20
+                    },
+                    "Code": {
+                        required: true
+                        , minlength: 3
+                    },
+                    "Address": {
+                        required: true
+                        , minlength: 3
+                        , maxlength: 20
+                    },
+                    "Contact": {
+                        required: true
+                        , minlength: 3
+                        , maxlength: 20
+                    }
+                },
+                messages: {
+                    "Name": {
+                        required: "Name Required"
+                        , minlength: "Should not be less than {0} character"
+                        , maxlength: "Should not be more than {0} character"
+                    },
+                    "Code": {
+                        required: "Code Required"
+                    },
+                    "Address": {
+                        required: "Address Required"
+                        , minlength: "Should not be less than  {0} character"
+                        , maxlength: "Should not be more than {0} character"
+
+                    },
+                    "Contact": {
+                        required: "Contact No. Required"
+                        , minlength: "Should not be less than  {0} character"
+                        , maxlength: "Should not be more than {0} character"
+                    }
+                },
+                errorPlacement: function (error, element) {
+                    if (element.parent(".input-group > div").length) {
+                        element.parent(".input-group > div").append(error);
+                    }
+                    element.parent(".form-group > div").append(error);
+                },
+
+                highlight: function (element) {
+                    $(element).closest(".form-group").removeClass("has-success has-error")
+                        .addClass("has-error");
+                },
+
+                unhighlight: function (element) {
+                    $(element).closest(".form-group").removeClass("has-error");
+                },
+
+                success: function (element) {
+                    element.closest(".form-group").removeClass("has-success has-error");
+                }
+            }).form();
+        }
+        // validation end
 
         const getTableRowAsObject = (tableRow) => {
             return {
@@ -31,11 +104,15 @@
             }, 300);
         });
 
-
         const updateOrganization = async (content, orgId) => {
             let result = await $.post("/Organization/UpdateOrganization/", { dto: content, orgId: orgId });
-            alert(result);
-            location.reload(true);
+            if (result) {
+                alert("Updated Successfully!");
+                location.reload(true);
+            } else {
+                alert("Update Failed");
+            }
+            
         }
 
         const getFormData = (form) => {
@@ -50,9 +127,9 @@
         }
 
         btnEditOrgSubmit.on("click", () => {
-            const content = getFormData($("#js-modal-editOrg-form"));
-            console.log($("#js-modal-editOrg-form").serializeArray());
-            updateOrganization(content, btnEditOrgSubmit.data("orgId"));
+            if (validation()) {
+                updateOrganization(getFormData(editOrgModalForm), btnEditOrgSubmit.data("orgId"));
+            }
         });
     });
 })(jQuery);
