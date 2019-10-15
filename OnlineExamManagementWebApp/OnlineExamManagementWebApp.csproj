@@ -179,6 +179,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -188,6 +189,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CourseEditViewModel.cs" />
     <Compile Include="ViewModels\CourseEntryViewModel.cs" />
     <Compile Include="ViewModels\CourseListViewModel.cs" />
@@ -488,9 +490,9 @@
       <Project>{452ecc4f-061f-483f-a155-b111bcbe8943}</Project>
       <Name>OnlineExamManagementWebApp.BLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\OnlineExamManagementWebApp.DatabaseContext\OnlineExamManagementWebApp.DatabaseContext.csproj">
-      <Project>{bb2076c3-3e1b-45c0-bc29-3272622d81a8}</Project>
-      <Name>OnlineExamManagementWebApp.DatabaseContext</Name>
+    <ProjectReference Include="..\OnlineExamManagementWebApp.Config\OnlineExamManagementWebApp.Config.csproj">
+      <Project>{4a340190-a899-4544-a7e7-db2ab18963e0}</Project>
+      <Name>OnlineExamManagementWebApp.Config</Name>
     </ProjectReference>
     <ProjectReference Include="..\OnlineExamManagementWebApp.DTOs\OnlineExamManagementWebApp.DTOs.csproj">
       <Project>{d3278a50-bee6-4e47-b079-474a52c23835}</Project>
