@@ -24,6 +24,7 @@ namespace OnlineExamManagementWebApp.DatabaseContext {
             modelBuilder.Entity<AppRole>().ToTable("AppRoles");
             modelBuilder.Entity<AppUserLogin>().ToTable("AppUserLogins");
             modelBuilder.Entity<AppUserClaim>().ToTable("AppUserClaims");
+            modelBuilder.Entity<AppUserRole>().ToTable("AppUserRoles");
         }
     }
 }
