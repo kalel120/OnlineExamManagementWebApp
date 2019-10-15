@@ -58,6 +58,8 @@
     <Compile Include="Exam.cs" />
     <Compile Include="Identity\AppRole.cs" />
     <Compile Include="Identity\AppUser.cs" />
+    <Compile Include="Identity\AppUserClaim.cs" />
+    <Compile Include="Identity\AppUserLogin.cs" />
     <Compile Include="Identity\AppUserRole.cs" />
     <Compile Include="Organization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

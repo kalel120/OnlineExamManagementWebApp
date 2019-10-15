@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace OnlineExamManagementWebApp.Models.Identity {
-    public class AppUser : IdentityUser<int, IdentityUserLogin<int>, AppUserRole, IdentityUserClaim<int>> {
+    public class AppUser : IdentityUser<int, AppUserLogin, AppUserRole, AppUserClaim> {
 
         public string Name { get; set; }
         public string Address { get; set; }
