@@ -15,6 +15,7 @@ namespace OnlineExamManagementWebApp.Config {
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<AppUserManager>(Create);
 
+
         }
 
         private static AppUserManager Create(IdentityFactoryOptions<AppUserManager> options, IOwinContext context) {
