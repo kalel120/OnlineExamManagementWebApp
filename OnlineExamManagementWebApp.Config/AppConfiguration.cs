@@ -13,12 +13,16 @@ namespace OnlineExamManagementWebApp.Config {
 
         public static void AuthConfiguration(IAppBuilder app) {
             app.CreatePerOwinContext(ApplicationDbContext.Create);
-            app.CreatePerOwinContext<AppUserManager>(Create);
-
+            app.CreatePerOwinContext<AppUserManager>(UserManagerCreate);
+            app.CreatePerOwinContext<AppSignInManager>(SignInManagerCreate);
 
         }
 
-        private static AppUserManager Create(IdentityFactoryOptions<AppUserManager> options, IOwinContext context) {
+        private static AppSignInManager SignInManagerCreate(IdentityFactoryOptions<AppSignInManager> options, IOwinContext context) {
+            return new AppSignInManager(context.GetUserManager<AppUserManager>(), context.Authentication);
+        }
+
+        private static AppUserManager UserManagerCreate(IdentityFactoryOptions<AppUserManager> options, IOwinContext context) {
             var manager = new AppUserManager(new UserStore<AppUser, AppRole, int, AppUserLogin, AppUserRole, AppUserClaim>(new ApplicationDbContext()));
 
             // Configure validation logic for usernames
@@ -43,6 +47,7 @@ namespace OnlineExamManagementWebApp.Config {
 
             return manager;
         }
+
 
     }
 }

@@ -7,6 +7,7 @@ using OnlineExamManagementWebApp.Models.Identity;
 namespace OnlineExamManagementWebApp.BLL.Identity {
 
     public class AppSignInManager : SignInManager<AppUser, int> {
-        public AppSignInManager(UserManager<AppUser, int> userManager, IAuthenticationManager authenticationManager) : base(userManager, authenticationManager) { }
+
+        public AppSignInManager(AppUserManager userManager, IAuthenticationManager authenticationManager) : base(userManager, authenticationManager) { }
     }
 }
