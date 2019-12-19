@@ -47,5 +47,10 @@ namespace OnlineExamManagementWebApp.Controllers {
             }
             return View();
         }
+
+        /* Login */
+        public ActionResult Login() {
+            return View();
+        }
     }
 }

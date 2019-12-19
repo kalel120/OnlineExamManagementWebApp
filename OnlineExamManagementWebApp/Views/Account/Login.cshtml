@@ -1,40 +1,37 @@
-﻿
-@{
-    ViewBag.Title = "Register";
+﻿@{
+    ViewBag.Title = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <body class="login">
     <div class="login_wrapper">
-        <div id="register" class="animate form">
+        <div class="animate form login_form">
             <section class="login_content">
                 <form>
-                    <h1>Create Account</h1>
+                    <h1>Login</h1>
                     <div>
                         <input type="text" class="form-control" placeholder="Username" required="" />
-                    </div>
-                    <div>
-                        <input type="email" class="form-control" placeholder="Email" required="" />
                     </div>
                     <div>
                         <input type="password" class="form-control" placeholder="Password" required="" />
                     </div>
                     <div>
-                        @*<a class="btn btn-primary submit" href="">Submit</a>*@
-                        @Html.ActionLink("Submit", "Login", "Account",new{@class="btn btn-primary submit"})
+                        <a class="btn btn-primary submit" href="index.html">Log in</a>
+                        <a class="reset_pass" href="#">Lost your password?</a>
                     </div>
 
                     <div class="clearfix"></div>
 
                     <div class="separator">
-                        <p class="change_link">Already a member ?
-                            @Html.ActionLink("Log in","Login","Account")
+                        <p class="change_link">New to site?
+                            @Html.ActionLink("Create Account","Register","Account")
                         </p>
 
                         <div class="clearfix"></div>
                         <br />
+
                         <div>
-                            <h1><i class="fa fa-paw"></i> Online Exam Manager </h1>
+                            <h1><i class="fa fa-paw"></i> Online Exam Manager</h1>
                             <p>©2019-2020 All Rights Reserved.</p>
                         </div>
                     </div>
