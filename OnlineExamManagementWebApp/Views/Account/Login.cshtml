@@ -16,15 +16,16 @@
                         <input type="password" class="form-control" placeholder="Password" required="" />
                     </div>
                     <div>
-                        <a class="btn btn-primary submit" href="index.html">Log in</a>
+                        @Html.ActionLink("Login", "Index", "Home",null, new { @class = "btn btn-primary submit" })
                         <a class="reset_pass" href="#">Lost your password?</a>
                     </div>
 
                     <div class="clearfix"></div>
 
                     <div class="separator">
-                        <p class="change_link">New to site?
-                            @Html.ActionLink("Create Account","Register","Account")
+                        <p class="change_link">
+                            New to site?
+                            @Html.ActionLink("Create Account", "Register", "Account",null,null)
                         </p>
 
                         <div class="clearfix"></div>

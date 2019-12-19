@@ -20,15 +20,15 @@
                         <input type="password" class="form-control" placeholder="Password" required="" />
                     </div>
                     <div>
-                        @*<a class="btn btn-primary submit" href="">Submit</a>*@
-                        @Html.ActionLink("Submit", "Login", "Account",new{@class="btn btn-primary submit"})
+                        @Html.ActionLink("Submit", "Login", "Account",null, new { @class = "btn btn-primary submit" })
                     </div>
 
                     <div class="clearfix"></div>
 
                     <div class="separator">
-                        <p class="change_link">Already a member ?
-                            @Html.ActionLink("Log in","Login","Account")
+                        <p class="change_link">
+                            Already a member ?
+                            @Html.ActionLink("Log in", "Login", "Account")
                         </p>
 
                         <div class="clearfix"></div>
