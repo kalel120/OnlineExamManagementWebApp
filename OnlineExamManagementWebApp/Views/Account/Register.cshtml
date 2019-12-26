@@ -19,21 +19,24 @@
         <div id="register" class="animate form">
             <section class="login_content">
                 @using (Html.BeginForm()) {
-
                     <h1>Create Account</h1>
                     <div>
                         @Html.TextBoxFor(model => model.Username, new { @class = "form-control", placeholder = "Username" })
+                        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
                     </div>
                     <div>
                         @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Email" })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
                     <div>
                         @Html.TextBoxFor(model => model.Password, new { @class = "form-control", placeholder = "Password", type = "password" })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                     </div>
                     <div>
                         @Html.TextBoxFor(model => model.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password", type = "password" })
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
                     </div>
-
+                    <br/>
                     <div>
                         <input type="submit" value="Submit" class="btn btn-primary" />
                     </div>
@@ -58,3 +61,8 @@
         </div>
     </div>
 </body>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
