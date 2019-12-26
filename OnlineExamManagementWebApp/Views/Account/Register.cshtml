@@ -1,26 +1,41 @@
-﻿
+﻿@model OnlineExamManagementWebApp.ViewModels.RegisterViewModel
+
 @{
     ViewBag.Title = "Register";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    if (ViewBag.Errors != null) {
+        foreach (var error in ViewBag.Errors) {
+            <div class="alert alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Error!</strong> @error
+            </div>
+        }
+    }
 }
 
 <body class="login">
     <div class="login_wrapper">
         <div id="register" class="animate form">
             <section class="login_content">
-                <form>
+                @using (Html.BeginForm()) {
+
                     <h1>Create Account</h1>
                     <div>
-                        <input type="text" class="form-control" placeholder="Username" required="" />
+                        @Html.TextBoxFor(model => model.Username, new { @class = "form-control", placeholder = "Username" })
                     </div>
                     <div>
-                        <input type="email" class="form-control" placeholder="Email" required="" />
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Email" })
                     </div>
                     <div>
-                        <input type="password" class="form-control" placeholder="Password" required="" />
+                        @Html.TextBoxFor(model => model.Password, new { @class = "form-control", placeholder = "Password", type = "password" })
                     </div>
                     <div>
-                        @Html.ActionLink("Submit", "Login", "Account",null, new { @class = "btn btn-primary submit" })
+                        @Html.TextBoxFor(model => model.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password", type = "password" })
+                    </div>
+
+                    <div>
+                        <input type="submit" value="Submit" class="btn btn-primary" />
                     </div>
 
                     <div class="clearfix"></div>
@@ -38,7 +53,7 @@
                             <p>©2019-2020 All Rights Reserved.</p>
                         </div>
                     </div>
-                </form>
+                }
             </section>
         </div>
     </div>

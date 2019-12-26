@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
@@ -41,9 +42,12 @@ namespace OnlineExamManagementWebApp.Controllers {
                 var user = Mapper.Map<AppUser>(viewModel);
                 var result = UserManager.Create(user, viewModel.Password);
 
-                if (result.Succeeded) {
-                    return RedirectToAction("List", "Course", null);
+                if (!result.Succeeded) {
+                    ViewBag.Errors = result.Errors.ToList();
+                    return View();
                 }
+
+                return RedirectToAction("Index", "Home", null);
             }
             return View();
         }
