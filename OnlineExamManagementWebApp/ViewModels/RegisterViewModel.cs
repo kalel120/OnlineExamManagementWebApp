@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace OnlineExamManagementWebApp.ViewModels {
     public class RegisterViewModel {
+        public string Username { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
