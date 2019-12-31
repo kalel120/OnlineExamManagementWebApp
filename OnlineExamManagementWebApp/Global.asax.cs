@@ -7,6 +7,7 @@ using OnlineExamManagementWebApp.DTOs;
 using OnlineExamManagementWebApp.Models;
 using OnlineExamManagementWebApp.Models.Identity;
 using OnlineExamManagementWebApp.ViewModels;
+using OnlineExamManagementWebApp.ViewModels.Account;
 
 namespace OnlineExamManagementWebApp {
     public class MvcApplication : System.Web.HttpApplication {

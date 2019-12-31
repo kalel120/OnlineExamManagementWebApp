@@ -200,8 +200,9 @@
     <Compile Include="ViewModels\CourseEditViewModel.cs" />
     <Compile Include="ViewModels\CourseEntryViewModel.cs" />
     <Compile Include="ViewModels\CourseListViewModel.cs" />
+    <Compile Include="ViewModels\Account\LoginViewModel.cs" />
     <Compile Include="ViewModels\OrgEntryViewModel.cs" />
-    <Compile Include="ViewModels\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
     <Compile Include="ViewModels\SearchCourseViewModel.cs" />
     <Compile Include="ViewModels\CreateExamViewModel.cs" />
     <Compile Include="ViewModels\SearchOrgViewModel.cs" />
