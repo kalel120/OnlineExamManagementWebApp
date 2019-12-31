@@ -40,16 +40,17 @@ namespace OnlineExamManagementWebApp.Controllers {
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Register(RegisterViewModel viewModel) {
+        public async Task<ActionResult> Register(RegisterViewModel viewModel) {
             if (ModelState.IsValid) {
                 var user = Mapper.Map<AppUser>(viewModel);
-                var result = UserManager.Create(user, viewModel.Password);
+                var result = await UserManager.CreateAsync(user, viewModel.Password);
 
                 if (!result.Succeeded) {
                     ViewBag.Errors = result.Errors.ToList();
                     return View();
                 }
 
+                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 return RedirectToAction("Index", "Home", null);
             }
             return View();
