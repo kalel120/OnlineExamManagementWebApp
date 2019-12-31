@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -8,7 +9,8 @@ using OnlineExamManagementWebApp.BLL.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using OnlineExamManagementWebApp.Models.Identity;
 using OnlineExamManagementWebApp.ViewModels.Account;
-
+using Microsoft.Owin.Security;
+using System.Security.Claims;
 namespace OnlineExamManagementWebApp.Controllers {
     public class AccountController : Controller {
 
@@ -103,5 +105,23 @@ namespace OnlineExamManagementWebApp.Controllers {
             return RedirectToAction("Index", "Home");
         }
         /* Login End */
+
+        /* Logoff */
+
+        public ActionResult Logoff() {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return RedirectToAction("Index", "Home");
+        }
+
+
+        /* Logoff end*/
+
+        #region helpers
+        private IAuthenticationManager AuthenticationManager {
+            get {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
+        #endregion
     }
 }
