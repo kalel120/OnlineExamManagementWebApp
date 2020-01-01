@@ -9,6 +9,7 @@ using OnlineExamManagementWebApp.Models;
 using OnlineExamManagementWebApp.ViewModels;
 
 namespace OnlineExamManagementWebApp.Controllers {
+    [Authorize]
     public class CourseController : Controller {
         private readonly CourseManager _courseManager;
         private readonly TrainerManager _trainerManager;
