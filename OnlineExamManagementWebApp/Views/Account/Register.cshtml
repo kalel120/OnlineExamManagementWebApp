@@ -36,6 +36,9 @@
                         @Html.TextBoxFor(model => model.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password", type = "password" })
                         @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
                     </div>
+                    <div>
+                        @Html.DropDownListFor(model=>model.Role, new SelectList(Model.RoleList), new {@class="form-control"})
+                    </div>
                     <br/>
                     <div>
                         <input type="submit" value="Submit" class="btn btn-primary" />

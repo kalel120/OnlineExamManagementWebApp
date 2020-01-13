@@ -36,7 +36,10 @@ namespace OnlineExamManagementWebApp.Controllers {
         /* Registration */
         [AllowAnonymous]
         public ActionResult Register() {
-            return View();
+            var viewModel = new RegisterViewModel {
+                RoleList = RoleManager.Roles.Select(r => r.Name).ToList()
+            };
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -51,6 +54,10 @@ namespace OnlineExamManagementWebApp.Controllers {
                     return View();
                 }
 
+                //Role assign
+                if (!string.IsNullOrEmpty(viewModel.Role)) {
+                    await UserManager.AddToRoleAsync(user.Id, viewModel.Role);
+                }
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 return RedirectToAction("Index", "Home", null);
             }

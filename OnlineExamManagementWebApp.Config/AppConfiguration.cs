@@ -16,6 +16,7 @@ namespace OnlineExamManagementWebApp.Config {
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<AppUserManager>(CreateUserManager);
             app.CreatePerOwinContext<AppSignInManager>(CreateSignInManager);
+            app.CreatePerOwinContext<AppRoleManager>(CreateAppRoleManager);
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
@@ -97,6 +98,9 @@ namespace OnlineExamManagementWebApp.Config {
             return manager;
         }
 
-
+        private static AppRoleManager CreateAppRoleManager() {
+            var roleManager = new AppRoleManager(new RoleStore<AppRole, int, AppUserRole>(new ApplicationDbContext()));
+            return roleManager;
+        }
     }
 }
