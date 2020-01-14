@@ -1,54 +1,53 @@
 ﻿@model OnlineExamManagementWebApp.ViewModels.Account.LoginViewModel
 @{
     ViewBag.Title = "Login";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutLoginRegister.cshtml";
 }
 
-<body class="login">
-    <div class="login_wrapper">
-        <div class="animate form login_form">
-            <section class="login_content">
-                @using (Html.BeginForm("Login","Account", new {ReturnUrl=ViewBag.ReturnUrl},FormMethod.Post)) {
-                    <h1>Login</h1>
-                    <div>
-                        @Html.TextBoxFor(model => model.Username, new { @class = "form-control", placeholder = "Username" })
-                        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
-                    </div>
 
-                    <div>
-                        @Html.TextBoxFor(model => model.Password, new { @class = "form-control", placeholder = "password", type="password" })
-                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                    </div>
+<div class="login_wrapper">
+    <div class="animate form login_form">
+        <section class="login_content">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post)) {
+                <h1>Login</h1>
+                <div>
+                    @Html.TextBoxFor(model => model.Username, new { @class = "form-control", placeholder = "Username" })
+                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                </div>
 
-                    <div class="checkbox">
-                        @Html.CheckBoxFor(m => m.RememberMe)
-                        @Html.LabelFor(m => m.RememberMe)
-                    </div>
+                <div>
+                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control", placeholder = "password", type = "password" })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
 
-                    <div>
-                        <input type="submit" value="Log in" class="btn btn-default" />
-                    </div>
+                <div class="checkbox">
+                    @Html.CheckBoxFor(m => m.RememberMe)
+                    @Html.LabelFor(m => m.RememberMe)
+                </div>
+
+                <div>
+                    <input type="submit" value="Log in" class="btn btn-default" />
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="separator">
+                    <p class="change_link">
+                        New to site?
+                        @Html.ActionLink("Create Account", "Register", "Account", null, null)
+                    </p>
 
                     <div class="clearfix"></div>
-
-                    <div class="separator">
-                        <p class="change_link">
-                            New to site?
-                            @Html.ActionLink("Create Account", "Register", "Account", null, null)
-                        </p>
-
-                        <div class="clearfix"></div>
-                        <br />
-                        <div>
-                            <h1><i class="fa fa-paw"></i> Online Exam Manager</h1>
-                            <p>©2019-2020 All Rights Reserved.</p>
-                        </div>
+                    <br />
+                    <div>
+                        <h1><i class="fa fa-paw"></i> Online Exam Manager</h1>
+                        <p>©2019-2020 All Rights Reserved.</p>
                     </div>
-                }
-            </section>
-        </div>
+                </div>
+            }
+        </section>
     </div>
-</body>
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
