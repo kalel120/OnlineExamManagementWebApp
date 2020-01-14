@@ -26,6 +26,7 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         #region course entry page
+        [Authorize(Roles = "Admin,Employee")]
         public ActionResult Entry() {
             return View(GetCourseEntryViewModel());
         }
@@ -43,6 +44,7 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,Employee")]
         public ActionResult Entry(CourseEntryViewModel courseEntryVm) {
             if (ModelState.IsValid) {
                 var course = Mapper.Map<Course>(courseEntryVm);
