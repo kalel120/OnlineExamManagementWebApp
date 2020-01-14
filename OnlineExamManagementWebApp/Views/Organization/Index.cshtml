@@ -100,9 +100,15 @@
                             <img src="@Url.Action("GetOrgLogo", new {orgId = item.Id})" class="orgLogo" />
                         </td>
                         <td>
-                            <input type="button" class="btn btn-info" value="Details" onclick="location.href = '@Url.Action("Details","Organization",new{id=item.Id})'" />
-                            <input type="button" class="btn btn-warning js-editOrgModalPopup" value="Edit" data-org-id="@item.Id" />
-                            <input type="button" class="btn btn-danger js-deleteOrgPopup" value="Delete" />
+                            <a href="@Url.Action("Details", "Organization", new {id = item.Id})" class="btn btn-primary">
+                                <i class="fa fa-folder"> View</i>
+                            </a>
+                            <a href="#" class="btn btn-info js-editOrgModalPopup" data-org-id="@item.Id">
+                                <i class="fa fa-pencil"> Edit</i>
+                            </a>
+                            <a href="#" class="btn btn-danger js-deleteOrgPopup">
+                                <i class="fa fa-trash-o"> Delete</i>
+                            </a>
                         </td>
                     </tr>
                     count = count + 1;

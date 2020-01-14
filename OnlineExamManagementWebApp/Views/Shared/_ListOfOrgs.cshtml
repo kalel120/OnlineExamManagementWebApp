@@ -34,9 +34,15 @@
                         <img src="@Url.Action("GetOrgLogo","Organization", new {orgId = organization.Id})" class="orgLogo" />
                     </td>
                     <td>
-                        <input type="button" class="btn btn-primary js-viewOrgModalPopup" value="View" data-org-id="@organization.Id" />|
-                        <input type="button" class="btn btn-warning js-editOrgModalPopup" value="Edit" data-org-id="@organization.Id" />|
-                        <input type="button" class="btn btn-danger js-deleteOrgPopup" value="Delete" data-org-id="@organization.Id" />
+                        <a href="#" class="btn btn-primary js-viewOrgModalPopup" data-org-id="@organization.Id">
+                            <i class="fa fa-folder"> View</i>
+                        </a>
+                        <a href="#" class="btn btn-info js-editOrgModalPopup" data-org-id="@organization.Id">
+                            <i class="fa fa-pencil"> Edit</i>
+                        </a>
+                        <a href="#" class="btn btn-danger js-deleteOrgPopup" data-org-id="@organization.Id">
+                            <i class="fa fa-trash-o"> Delete</i>
+                        </a>
                     </td>
                 </tr>
                 counter++;
