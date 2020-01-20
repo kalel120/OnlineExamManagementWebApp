@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace OnlineExamManagementWebApp.ViewModels.Account {
     public class RegisterViewModel {
@@ -20,11 +21,15 @@ namespace OnlineExamManagementWebApp.ViewModels.Account {
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+
         public string ConfirmPassword { get; set; }
 
+        [Required]
         public string Role { get; set; }
 
-        public List<string> RoleList { get; set; }
+        public string RoleText { get; set; }
+
+        public List<SelectListItem> RoleList { get; set; }
     }
 }

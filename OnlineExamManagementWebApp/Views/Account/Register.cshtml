@@ -36,7 +36,9 @@
                     @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
                 </div>
                 <div>
-                    @Html.DropDownListFor(model => model.Role, new SelectList(Model.RoleList), new { @class = "form-control" })
+                    @Html.HiddenFor(model => model.RoleText)
+                    @Html.DropDownListFor(model => model.Role, Model.RoleList, "--SELECT ROLE--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
                 </div>
                 <br />
                 <div>
@@ -66,4 +68,13 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        (() => {
+            $(() => {
+                $("#Role").on("change", (event)=> {
+                    $("#RoleText").val($(event.target).find(":selected").text());
+                });
+            });
+        })(jQuery);
+    </script>
 }

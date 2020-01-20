@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -37,9 +38,21 @@ namespace OnlineExamManagementWebApp.Controllers {
         [AllowAnonymous]
         public ActionResult Register() {
             var viewModel = new RegisterViewModel {
-                RoleList = RoleManager.Roles.Select(r => r.Name).ToList()
+                RoleList = GetRoles()
             };
             return View(viewModel);
+        }
+
+        private List<SelectListItem> GetRoles() {
+            var roles = new List<SelectListItem>();
+
+            foreach (var item in RoleManager.Roles) {
+                roles.Add(new SelectListItem {
+                    Value = item.Id.ToString(),
+                    Text = item.Name
+                });
+            }
+            return roles;
         }
 
         [HttpPost]
@@ -54,10 +67,8 @@ namespace OnlineExamManagementWebApp.Controllers {
                     return View();
                 }
 
-                //Role assign
-                if (!string.IsNullOrEmpty(viewModel.Role)) {
-                    await UserManager.AddToRoleAsync(user.Id, viewModel.Role);
-                }
+                await UserManager.AddToRoleAsync(user.Id, viewModel.RoleText);
+
                 await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 return RedirectToAction("Index", "Home", null);
             }
@@ -71,7 +82,6 @@ namespace OnlineExamManagementWebApp.Controllers {
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-
 
         [HttpPost]
         [AllowAnonymous]
