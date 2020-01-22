@@ -85,7 +85,6 @@ namespace OnlineExamManagementWebApp.Controllers {
 
         [HttpPost]
         [AllowAnonymous]
-
         public async Task<ActionResult> Login(LoginViewModel loginViewModel, string returnUrl) {
             if (ModelState.IsValid) {
                 // This doesn't count login failures towards account lockout
@@ -123,14 +122,19 @@ namespace OnlineExamManagementWebApp.Controllers {
         /* Login End */
 
         /* Logoff */
-
         public ActionResult Logoff() {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
-
-
         /* Logoff end*/
+
+        /*
+         * User Profile
+         */
+        public ActionResult UserProfile() {
+            return View();
+        }
+        /*User Profile End*/
 
         #region helpers
         private IAuthenticationManager AuthenticationManager {
