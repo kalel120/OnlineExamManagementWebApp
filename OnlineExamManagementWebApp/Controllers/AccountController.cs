@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -131,8 +132,10 @@ namespace OnlineExamManagementWebApp.Controllers {
         /*
          * User Profile
          */
+        [Authorize]
         public ActionResult UserProfile() {
-            return View();
+            AppUser currentUser = UserManager.FindById(Convert.ToInt32(User.Identity.GetUserId()));
+            return View(currentUser);
         }
         /*User Profile End*/
 
