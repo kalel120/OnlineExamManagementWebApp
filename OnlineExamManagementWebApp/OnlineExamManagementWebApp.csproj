@@ -398,6 +398,10 @@
     <Content Include="Theme\vendors\animate.css\animate-config.json" />
     <Content Include="Theme\vendors\animate.css\animate.css" />
     <Content Include="Theme\vendors\animate.css\animate.min.css" />
+    <Content Include="Theme\vendors\bootstrap-daterangepicker\daterangepicker.css" />
+    <Content Include="Theme\vendors\bootstrap-daterangepicker\daterangepicker.js" />
+    <Content Include="Theme\vendors\bootstrap-daterangepicker\package.js" />
+    <Content Include="Theme\vendors\bootstrap-progressbar\bootstrap-progressbar.min.js" />
     <Content Include="Theme\vendors\datatables.net-bs\css\dataTables.bootstrap.css" />
     <Content Include="Theme\vendors\datatables.net-bs\css\dataTables.bootstrap.min.css" />
     <Content Include="Theme\vendors\datatables.net-bs\js\dataTables.bootstrap.js" />
@@ -442,6 +446,18 @@
     <Content Include="Theme\vendors\malihu-custom-scrollbar-plugin\jquery.mCustomScrollbar.js" />
     <Content Include="Theme\vendors\malihu-custom-scrollbar-plugin\jquery.mCustomScrollbar.min.css" />
     <Content Include="Theme\vendors\malihu-custom-scrollbar-plugin\mCSB_buttons.png" />
+    <Content Include="Theme\vendors\moment\min\locales.js" />
+    <Content Include="Theme\vendors\moment\min\locales.min.js" />
+    <Content Include="Theme\vendors\moment\min\moment-with-locales.js" />
+    <Content Include="Theme\vendors\moment\min\moment-with-locales.min.js" />
+    <Content Include="Theme\vendors\moment\min\moment.min.js" />
+    <Content Include="Theme\vendors\moment\min\tests.js" />
+    <Content Include="Theme\vendors\morris.js\morris.min.js" />
+    <Content Include="Theme\vendors\nprogress\nprogress.css" />
+    <Content Include="Theme\vendors\nprogress\nprogress.js" />
+    <Content Include="Theme\vendors\nprogress\support\extras.css" />
+    <Content Include="Theme\vendors\nprogress\support\style.css" />
+    <Content Include="Theme\vendors\raphael\raphael.min.js" />
     <Content Include="Theme\vendors\switchery\dist\switchery.css" />
     <Content Include="Theme\vendors\switchery\dist\switchery.js" />
     <Content Include="Theme\vendors\switchery\dist\switchery.min.css" />
@@ -492,6 +508,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_LayoutLoginRegister.cshtml" />
     <Content Include="Views\Account\UserProfile.cshtml" />
+    <Content Include="Theme\vendors\bootstrap-daterangepicker\daterangepicker.scss" />
+    <Content Include="Theme\vendors\bootstrap-daterangepicker\package.json" />
+    <Content Include="Theme\vendors\nprogress\component.json" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
