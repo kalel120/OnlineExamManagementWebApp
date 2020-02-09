@@ -36,6 +36,8 @@ namespace OnlineExamManagementWebApp {
                 cfg.CreateMap<OrgEntryViewModel, Organization>();
 
                 cfg.CreateMap<RegisterViewModel, AppUser>();
+
+                cfg.CreateMap<AppUser, UserProfileVm>();
             });
         }
     }

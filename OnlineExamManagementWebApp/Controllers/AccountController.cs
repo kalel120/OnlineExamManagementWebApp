@@ -134,10 +134,19 @@ namespace OnlineExamManagementWebApp.Controllers {
          */
         [Authorize]
         public ActionResult UserProfile() {
-            AppUser currentUser = UserManager.FindById(Convert.ToInt32(User.Identity.GetUserId()));
-            return View(currentUser);
+            var currentUser = UserManager.FindById(Convert.ToInt32(User.Identity.GetUserId()));
+            UserProfileVm userProfileVm = Mapper.Map<UserProfileVm>(currentUser);
+
+            return View(userProfileVm);
         }
         /*User Profile End*/
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult UserProfile(UserProfileVm viewModel) {
+            return View();
+        }
+
 
         #region helpers
         private IAuthenticationManager AuthenticationManager {

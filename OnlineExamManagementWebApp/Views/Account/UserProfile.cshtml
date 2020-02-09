@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
-@model OnlineExamManagementWebApp.Models.Identity.AppUser
+@model OnlineExamManagementWebApp.ViewModels.Account.UserProfileVm
 
 @{
     ViewBag.Title = ".";
@@ -44,8 +44,7 @@
                 <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
                     <div class="profile_img">
                         <div id="crop-avatar">
-                            <!-- Current avatar -->
-                            <img class="img-responsive avatar-view" src="~/Theme/images/picture.jpg" alt="Avatar" title="Change the avatar">
+                            <img class="img-responsive avatar-view" src="@Model.Image" alt="Avatar" title="Change the avatar">
                         </div>
                     </div>
                     <h3>@User.Identity.GetUserName()</h3>
@@ -60,10 +59,22 @@
                         </li>
                     </ul>
 
-                    <a class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>
+                    <a class="btn btn-success js-updateProfile-popup">
+                        <i class="fa fa-edit m-right-xs"></i>
+                        Edit Profile
+                    </a>
                     <br />
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@{
+    Html.RenderPartial("_ModalUpdateProfile");
+}
+
+@section scripts {
+    <script type="text/javascript" src="~/Scripts/dropzone/dropzone.js"></script>
+    <script src="~/Scripts/CustomScripts/account/userProfile.js"></script>
+}
