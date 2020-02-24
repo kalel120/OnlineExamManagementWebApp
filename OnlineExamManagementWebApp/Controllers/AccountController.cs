@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -147,15 +148,28 @@ namespace OnlineExamManagementWebApp.Controllers {
             AppUser updateableUser = UserManager.FindById(viewModel.Id);
 
             AppUser updatedUser = UserManager.MapExistingUserWithVm(updateableUser, Mapper.Map<AppUser>(viewModel));
+
+            if (Request.Files[0] != null) {
+                using (MemoryStream memory = new MemoryStream()) {
+                    Request.Files[0].InputStream.CopyTo(memory);
+                    updatedUser.Image = memory.ToArray();
+                }
+            }
+
             IdentityResult result = UserManager.Update(updatedUser);
 
             if (!result.Succeeded) {
                 return View("Error");
             }
 
-            return View();
+            return RedirectToAction("UserProfile");
         }
 
+        public ActionResult GetUserProfilePicture(int id) {
+            var user = UserManager.FindById(id);
+            var imageData = user.Image;
+            return File(imageData, "image/jpg");
+        }
 
         #region helpers
         private IAuthenticationManager AuthenticationManager {

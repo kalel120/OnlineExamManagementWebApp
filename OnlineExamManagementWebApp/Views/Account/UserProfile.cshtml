@@ -44,7 +44,7 @@
                 <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
                     <div class="profile_img">
                         <div id="crop-avatar">
-                            <img class="img-responsive avatar-view" src="@Model.Image" alt="Avatar" title="Change the avatar">
+                            <img class="img-responsive avatar-view" src="@Url.Action("GetUserProfilePicture",new{id=Model.Id})" alt="Avatar" title="change the avatar">
                         </div>
                     </div>
                     <h3>@User.Identity.GetUserName()</h3>
@@ -75,6 +75,11 @@
 }
 
 @section scripts {
+    <!--jQuery Validation-->
+    <script type="text/javascript" src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <!--jQuery Validation-->
+
     <script type="text/javascript" src="~/Scripts/dropzone/dropzone.js"></script>
     <script src="~/Scripts/CustomScripts/account/userProfile.js"></script>
 }
