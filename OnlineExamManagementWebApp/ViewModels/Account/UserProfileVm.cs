@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace OnlineExamManagementWebApp.ViewModels.Account {
     public class UserProfileVm {
+        public int Id { get; set; }
         public string UserName { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }

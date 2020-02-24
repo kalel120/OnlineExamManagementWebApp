@@ -144,6 +144,15 @@ namespace OnlineExamManagementWebApp.Controllers {
         [Authorize]
         [HttpPost]
         public ActionResult UserProfile(UserProfileVm viewModel) {
+            AppUser updateableUser = UserManager.FindById(viewModel.Id);
+
+            AppUser updatedUser = UserManager.MapExistingUserWithVm(updateableUser, Mapper.Map<AppUser>(viewModel));
+            IdentityResult result = UserManager.Update(updatedUser);
+
+            if (!result.Succeeded) {
+                return View("Error");
+            }
+
             return View();
         }
 

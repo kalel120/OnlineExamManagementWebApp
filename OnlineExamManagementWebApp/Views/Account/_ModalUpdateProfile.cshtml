@@ -7,10 +7,11 @@
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">×</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Update Profile For @Model.UserName</h4>
+                <h4 class="modal-title" id="myModalLabel">@Model.UserName</h4>
             </div>
             <div class="modal-body">
                 @using (Html.BeginForm("UserProfile", "Account", FormMethod.Post, new { @class = "form-horizontal form-label-left input_mask" })) {
+                    @Html.HiddenFor(m=>m.Id)
                     <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
                         @Html.TextBoxFor(m => m.Name, new { @class = "form-control has-feedback-left", placeholder = "Name" })
                         <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
@@ -72,15 +73,13 @@
                     <div class="form-group">
                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
                             <button type="button" class="btn btn-primary">Cancel</button>
-                            <button class="btn btn-primary" type="reset">Reset</button>
-                            <button type="submit" class="btn btn-success">Submit</button>
+                            <button type="submit" class="btn btn-success">Update</button>
                         </div>
                     </div>
                 }
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
