@@ -36,7 +36,7 @@ namespace OnlineExamManagementWebApp.Controllers {
             }
         }
 
-        /* Registration */
+        #region Registration
         [AllowAnonymous]
         public ActionResult Register() {
             var viewModel = new RegisterViewModel {
@@ -76,9 +76,9 @@ namespace OnlineExamManagementWebApp.Controllers {
             }
             return View();
         }
-        /* Registration End */
+        #endregion
 
-        /* Login */
+        #region Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl) {
             ViewBag.ReturnUrl = returnUrl;
@@ -121,18 +121,16 @@ namespace OnlineExamManagementWebApp.Controllers {
             }
             return RedirectToAction("Index", "Home");
         }
-        /* Login End */
+        #endregion
 
-        /* Logoff */
+        #region Logoff
         public ActionResult Logoff() {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
-        /* Logoff end*/
+        #endregion
 
-        /*
-         * User Profile
-         */
+        #region ProfilePage
         [Authorize]
         public ActionResult UserProfile() {
             var currentUser = UserManager.FindById(Convert.ToInt32(User.Identity.GetUserId()));
@@ -140,7 +138,6 @@ namespace OnlineExamManagementWebApp.Controllers {
 
             return View(userProfileVm);
         }
-        /*User Profile End*/
 
         [Authorize]
         [HttpPost]
@@ -170,6 +167,7 @@ namespace OnlineExamManagementWebApp.Controllers {
             var imageData = user.Image;
             return File(imageData, "image/jpg");
         }
+        #endregion
 
         #region helpers
         private IAuthenticationManager AuthenticationManager {
