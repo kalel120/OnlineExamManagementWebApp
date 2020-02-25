@@ -142,9 +142,7 @@ namespace OnlineExamManagementWebApp.Controllers {
         [Authorize]
         [HttpPost]
         public ActionResult UserProfile(UserProfileVm viewModel) {
-            AppUser updateableUser = UserManager.FindById(viewModel.Id);
-
-            AppUser updatedUser = UserManager.MapExistingUserWithVm(updateableUser, Mapper.Map<AppUser>(viewModel));
+            AppUser updatedUser = UserManager.MapExistingUserWithVm(UserManager.FindById(viewModel.Id), Mapper.Map<AppUser>(viewModel));
 
             if (Request.Files[0] != null) {
                 using (MemoryStream memory = new MemoryStream()) {
@@ -159,7 +157,8 @@ namespace OnlineExamManagementWebApp.Controllers {
                 return View("Error");
             }
 
-            return RedirectToAction("UserProfile");
+            ViewBag.UpdateMessage = "Successfully Updated";
+            return View(viewModel);
         }
 
         public ActionResult GetUserProfilePicture(int id) {

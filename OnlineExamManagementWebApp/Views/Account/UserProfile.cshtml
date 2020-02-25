@@ -9,7 +9,7 @@
 
 <div class="page-title">
     <div class="title_left">
-        <h3>User Profile</h3>
+        <h3>Profile of @User.Identity.GetUserName()</h3>
     </div>
 
     <div class="title_right">
@@ -41,13 +41,22 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
+                @{
+                    if (ViewBag.UpdateMessage!=null) {
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>@ViewBag.UpdateMessage</strong>  
+                        </div>
+                    }
+                }
+
                 <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
                     <div class="profile_img">
                         <div id="crop-avatar">
-                            <img class="img-responsive avatar-view" src="@Url.Action("GetUserProfilePicture",new{id=Model.Id})" alt="Avatar" title="change the avatar">
+                            <img class="img-responsive avatar-view" src="@Url.Action("GetUserProfilePicture", new {id = Model.Id})" alt="Avatar" title="change the avatar">
                         </div>
                     </div>
-                    <h3>@User.Identity.GetUserName()</h3>
+                    <h3>@Model.Name</h3>
 
                     <ul class="list-unstyled user_data">
                         <li>
@@ -63,7 +72,7 @@
                         <i class="fa fa-edit m-right-xs"></i>
                         Edit Profile
                     </a>
-                    <br />
+                    <br/>
                 </div>
             </div>
         </div>
