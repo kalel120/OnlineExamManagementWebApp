@@ -95,3 +95,11 @@ textarea {
     margin: 1px 5px;
     font-size: large;
 }
+
+/* User Profile Image */
+.img-responsive, .thumbnail > img, .thumbnail a > img, .carousel-inner > .item > img, .carousel-inner > .item > a > img {
+    display: block;
+    max-width: 50%;
+    height: auto;
+}
+/* User Profile Image End*/
