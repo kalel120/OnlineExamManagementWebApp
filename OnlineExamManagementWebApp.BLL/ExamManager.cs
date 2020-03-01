@@ -89,5 +89,10 @@ namespace OnlineExamManagementWebApp.BLL {
             var existingExams = _unitOfWork.Exams.GetActiveExamsByCourseId(courseId);
             return existingExams;
         }
+
+        public ICollection<Exam> GetAllExams() {
+            ICollection<Exam> exams = _unitOfWork.Exams.GetAllExams();
+            return exams;
+        }
     }
 }

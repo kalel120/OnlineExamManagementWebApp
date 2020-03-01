@@ -30,5 +30,11 @@ namespace OnlineExamManagementWebApp.Repository {
         public void Update(Exam updatable) {
             _dbContext.Entry(updatable).State = EntityState.Modified;
         }
+
+        public ICollection<Exam> GetAllExams() {
+            ICollection<Exam> exams = _dbContext.Exams.Where(e => e.IsDeleted == false).OrderBy(e => e.SerialNo)
+                .ToList();
+            return exams;
+        }
     }
 }
