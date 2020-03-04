@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Http;
 using OnlineExamManagementWebApp.BLL;
+using OnlineExamManagementWebApp.DTOs;
 using OnlineExamManagementWebApp.Models;
 
 namespace OnlineExamManagementWebApp.Controllers.Api {
@@ -13,8 +14,8 @@ namespace OnlineExamManagementWebApp.Controllers.Api {
 
         // Exam/Index
         [HttpGet]
-        public IHttpActionResult Index() {
-            ICollection<Exam> exams = _examManager.GetAllExams();
+        public IHttpActionResult GetAllExamsForIndex() {
+            ICollection<ExamIndexPageDto> exams = _examManager.GetAllExamsForIndex();
             return Ok(exams);
         }
     }

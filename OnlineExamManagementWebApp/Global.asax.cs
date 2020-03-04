@@ -39,6 +39,8 @@ namespace OnlineExamManagementWebApp {
 
                 cfg.CreateMap<AppUser, UserProfileVm>();
                 cfg.CreateMap<UserProfileVm, AppUser>();
+
+                cfg.CreateMap<ExamIndexPageDto, ExamIndexViewModel>();
             });
         }
     }

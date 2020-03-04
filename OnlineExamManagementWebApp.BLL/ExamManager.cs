@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using OnlineExamManagementWebApp.DTOs;
 using OnlineExamManagementWebApp.Models;
 using OnlineExamManagementWebApp.Repository;
 
@@ -90,8 +91,8 @@ namespace OnlineExamManagementWebApp.BLL {
             return existingExams;
         }
 
-        public ICollection<Exam> GetAllExams() {
-            ICollection<Exam> exams = _unitOfWork.Exams.GetAllExams();
+        public ICollection<ExamIndexPageDto> GetAllExamsForIndex() {
+            var exams = _unitOfWork.Exams.GetAllExamsForIndex();
             return exams;
         }
     }
