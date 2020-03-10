@@ -1,24 +1,21 @@
 ﻿// IIFE to wrap all jQuery code
 
 (($) => {
-
+    let loadingSpinner = $('#loading');
+    loadingSpinner.hide();
     $(() => {
         $("#dataTable-examList").DataTable();
     });
 
     const deleteExamById = (examId) => {
-        //$.post("/Exam/Delete", { examId: examId })
-        //    .done((result) => {
-        //        return result;
-        //    })
-        //    .fail((jqXhr, textStatus) => {
-        //        console.log(`ERROR >> ${textStatus}`);
-        //    });
         return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                
-                resolve(true);
-            },1000);
+            $.post("/Exam/Delete", { examId: examId })
+                .done((result) => {
+                    resolve(result);
+                })
+                .fail((jqXhr, textStatus) => {
+                    reject(textStatus);
+                });
         });
     }
 
@@ -41,15 +38,17 @@
             },
             callback: (result) => {
                 if (result) {
-                    // start the spinner
+                    loadingSpinner.show();
                     deleteExamById(examId)
                         .then(value => {
                             if (value) {
-                                //end spinner
-                                console.log('promise fulfilled');
+                                loadingSpinner.hide();
                                 bootbox.alert(`Exam is deleted`, () => location.reload(true));
                             }
-                    });
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
                 }
             }
         });

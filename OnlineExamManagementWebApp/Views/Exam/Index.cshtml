@@ -12,7 +12,9 @@
 <link href="~/Theme/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 <!--DataTable END-->
 
+<div id="loading"></div>
 <div class="x_panel">
+   
     <div class="x_title">
         <h2>Currently Available Exams</h2>
         <ul class="nav navbar-right panel_toolbox">
@@ -40,86 +42,87 @@
     <div class="x_content">
         <table id="dataTable-examList" class="table table-striped table-bordered dt-responsive nowrap" width="100%">
             <thead>
-                <tr>
-                    <th>
-                        Serial
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Code)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Type)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Topic)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FullMarks)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Duration)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.CourseName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.OrganizationName)
-                    </th>
-                    <th>Actions</th>
-                </tr>
+            <tr>
+                <th>
+                    Serial
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Code)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Topic)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FullMarks)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Duration)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CourseName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OrganizationName)
+                </th>
+                <th>Actions</th>
+            </tr>
             </thead>
 
             <tbody>
-                @{
-                    int count = 1;
-                }
-                @foreach (var item in Model) {
-                    <tr>
-                        <td>
-                            <input type="hidden" id="OrgId" value="@item.Id" />
-                            @count
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Code)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Type)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Topic)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FullMarks)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Duration)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CourseName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.OrganizationName)
-                        </td>
+            @{
+                int count = 1;
+            }
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        <input type="hidden" id="OrgId" value="@item.Id"/>
+                        @count
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Code)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Topic)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullMarks)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Duration)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrganizationName)
+                    </td>
 
-                        <td>
-                            <a href="#" class="btn btn-info js-editExamModal" data-exam-id="@item.Id">
-                                <i class="avoid-clicks fa fa-pencil" style="pointer-events: none"> Edit</i>
-                            </a>
-                            <a href="#" class="btn btn-danger js-deleteExam" data-exam-Id="@item.Id">
-                                <i class="avoid-clicks fa fa-trash-o"> Delete</i>
-                            </a>
-                        </td>
-                    </tr>
-                    count = count + 1;
-                }
+                    <td>
+                        <a href="#" class="btn btn-info js-editExamModal" data-exam-id="@item.Id">
+                            <i class="avoid-clicks fa fa-pencil" style="pointer-events: none"> Edit</i>
+                        </a>
+                        <a href="#" class="btn btn-danger js-deleteExam" data-exam-Id="@item.Id">
+                            <i class="avoid-clicks fa fa-trash-o"> Delete</i>
+                        </a>
+                    </td>
+                </tr>
+                count = count + 1;
+            }
 
             </tbody>
         </table>
+        
+        <div id="clearfix"></div>
 
-        <div class="clearfix"></div>
         @*@{
-                Html.RenderPartial("_ModalEditOrg");
-            }*@
+            Html.RenderPartial("_ModalEditOrg");
+        }*@
     </div>
 </div>
 
