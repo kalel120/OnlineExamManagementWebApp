@@ -103,3 +103,9 @@ textarea {
     height: auto;
 }
 /* User Profile Image End*/
+
+/* Avoid unwanted clicks*/
+.avoid-clicks {
+    pointer-events: none;
+}
+/* Avoid unwanted clicks*/
