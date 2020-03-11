@@ -28,6 +28,11 @@ namespace OnlineExamManagementWebApp.Repository {
             return exam;
         }
 
+        public Exam GetActiveExamById(int id) {
+            var exam = _dbContext.Exams.SingleOrDefault(e => e.Id == id && e.IsDeleted == false);
+            return exam;
+        }
+
         public void Update(Exam updatable) {
             _dbContext.Entry(updatable).State = EntityState.Modified;
         }
@@ -54,5 +59,7 @@ namespace OnlineExamManagementWebApp.Repository {
 
             return exams;
         }
+
+
     }
 }

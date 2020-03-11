@@ -9,7 +9,7 @@
 
     const deleteExamById = (examId) => {
         return new Promise((resolve, reject) => {
-            $.post("/Exam/Delete", { examId: examId })
+            $.post("/Exam/DeleteExam", { examId: examId })
                 .done((result) => {
                     resolve(result);
                 })

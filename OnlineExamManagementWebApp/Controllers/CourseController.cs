@@ -159,13 +159,13 @@ namespace OnlineExamManagementWebApp.Controllers {
 
         public JsonResult IsNeedReSequancing(List<ExamDto> examDtos) {
             var exams = GetExamsUsingMapper(examDtos);
-            var result = _examManager.IsNeedReSequancing(exams);
+            var result = _examManager.IsNeedReSequencing(exams);
             return Json(result);
         }
 
         public JsonResult ReSequanceSerial(List<ExamDto> examDtos) {
             var exams = GetExamsUsingMapper(examDtos);
-            var result = _examManager.ReSequanceSerial(exams);
+            var result = _examManager.ReSequenceSerial(exams);
             return Json(result);
         }
 

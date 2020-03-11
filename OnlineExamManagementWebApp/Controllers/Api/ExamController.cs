@@ -2,7 +2,6 @@
 using System.Web.Http;
 using OnlineExamManagementWebApp.BLL;
 using OnlineExamManagementWebApp.DTOs;
-using OnlineExamManagementWebApp.Models;
 
 namespace OnlineExamManagementWebApp.Controllers.Api {
     public class ExamController : ApiController {
@@ -17,6 +16,19 @@ namespace OnlineExamManagementWebApp.Controllers.Api {
         public IHttpActionResult GetAllExamsForIndex() {
             ICollection<ExamIndexPageDto> exams = _examManager.GetAllExamsForIndex();
             return Ok(exams);
+        }
+
+        [HttpDelete]
+        public IHttpActionResult Delete(int id) {
+            if (id <= 0) {
+                return BadRequest("Invalid request");
+            }
+
+            if (_examManager.DeleteExamById(id)) {
+                return Ok(true);
+            }
+
+            return NotFound();
         }
     }
 }
