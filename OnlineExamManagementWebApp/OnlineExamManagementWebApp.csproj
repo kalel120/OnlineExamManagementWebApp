@@ -196,6 +196,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrganizationController.cs" />
     <Compile Include="Controllers\Api\TrainerController.cs" />
+    <Compile Include="Controllers\QuestionAnswerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -209,6 +210,7 @@
     <Compile Include="ViewModels\ExamIndexViewModel.cs" />
     <Compile Include="ViewModels\OrgEntryViewModel.cs" />
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\QuestionAnswerViewModel.cs" />
     <Compile Include="ViewModels\SearchCourseViewModel.cs" />
     <Compile Include="ViewModels\CreateExamViewModel.cs" />
     <Compile Include="ViewModels\SearchOrgViewModel.cs" />
@@ -521,6 +523,7 @@
     <Content Include="Theme\vendors\nprogress\component.json" />
     <Content Include="Views\Account\_ModalUpdateProfile.cshtml" />
     <Content Include="Views\Exam\Index.cshtml" />
+    <Content Include="Views\QuestionAnswer\QuestionAnswer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
