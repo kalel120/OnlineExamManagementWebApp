@@ -118,6 +118,10 @@
     <Compile Include="Migrations\201910151740043_Change_AspNetUserRoles_tableName.Designer.cs">
       <DependentUpon>201910151740043_Change_AspNetUserRoles_tableName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003151940199_Added_Questions_Options_and_QuestionOption.cs" />
+    <Compile Include="Migrations\202003151940199_Added_Questions_Options_and_QuestionOption.designer.cs">
+      <DependentUpon>202003151940199_Added_Questions_Options_and_QuestionOption.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -176,6 +180,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910151740043_Change_AspNetUserRoles_tableName.resx">
       <DependentUpon>201910151740043_Change_AspNetUserRoles_tableName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003151940199_Added_Questions_Options_and_QuestionOption.resx">
+      <DependentUpon>202003151940199_Added_Questions_Options_and_QuestionOption.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

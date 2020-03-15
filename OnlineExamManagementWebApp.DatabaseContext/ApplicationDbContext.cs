@@ -17,6 +17,10 @@ namespace OnlineExamManagementWebApp.DatabaseContext {
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<CourseTrainer> CourseTrainers { get; set; }
 
+        public DbSet<Question> Questions { get; }
+        public DbSet<Option> Options { get; }
+        public DbSet<QuestionOption> QuestionOptions { get; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
 
