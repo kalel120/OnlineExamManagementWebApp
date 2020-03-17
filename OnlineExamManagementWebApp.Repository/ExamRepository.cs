@@ -37,9 +37,10 @@ namespace OnlineExamManagementWebApp.Repository {
             _dbContext.Entry(updatable).State = EntityState.Modified;
         }
 
-        public ICollection<ExamIndexPageDto> GetAllExamsForIndex() {
+        public ICollection<ExamDetailsDto> GetAllExamsDetails() {
             var exams = _dbContext.Exams.Include(c => c.Course)
-                .Select(result => new ExamIndexPageDto {
+                .Where(e => e.IsDeleted == false)
+                .Select(result => new ExamDetailsDto {
                     Id = result.Id,
                     Code = result.Code,
                     Type = result.Type,
@@ -54,12 +55,30 @@ namespace OnlineExamManagementWebApp.Repository {
                     IsDeleted = result.IsDeleted
 
                 })
-                .Where(e => e.IsDeleted == false)
                 .ToList();
 
             return exams;
         }
 
-
+        public ExamDetailsDto GetExamDetailsById(int examId) {
+            return _dbContext.Exams.Include(c => c.Course)
+                .Where(e => e.Id == examId && e.IsDeleted == false)
+                .Select(
+                    result => new ExamDetailsDto {
+                        Id = result.Id,
+                        Code = result.Code,
+                        Type = result.Type,
+                        Topic = result.Topic,
+                        FullMarks = result.FullMarks,
+                        Duration = result.Duration,
+                        CourseName = result.Course.Name,
+                        CourseId = result.CourseId,
+                        OrganizationId = result.Course.OrganizationId,
+                        OrganizationName = result.Course.Organization.Name,
+                        SerialNo = result.SerialNo,
+                        IsDeleted = result.IsDeleted
+                    })
+                .SingleOrDefault();
+        }
     }
 }
