@@ -523,7 +523,7 @@
     <Content Include="Theme\vendors\nprogress\component.json" />
     <Content Include="Views\Account\_ModalUpdateProfile.cshtml" />
     <Content Include="Views\Exam\Index.cshtml" />
-    <Content Include="Views\QuestionAnswer\QuestionAnswer.cshtml" />
+    <Content Include="Views\QuestionAnswer\Entry.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

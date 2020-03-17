@@ -9,5 +9,6 @@ namespace OnlineExamManagementWebApp.ViewModels {
         public string CourseName { get; set; }
         public string ExamCode { get; set; }
         public string QuestionDescription { get; set; }
+
     }
 }
