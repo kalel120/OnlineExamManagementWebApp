@@ -6,6 +6,7 @@
         //start
         const middleRowPanel = $('#qa_entry_middleRow');
         const btnToggleQaSection = $('#btn-toggle-qaSection');
+        const tblQuestions = $('#tbl-questions');
 
         const toggleDom = (domElement, status) => {
             if (status === "hide") {
@@ -32,6 +33,8 @@
             toggleDom(middleRowPanel,"show");
         });
 
+
+        tblQuestions.DataTable();
         //end
     });
 })(jQuery);
