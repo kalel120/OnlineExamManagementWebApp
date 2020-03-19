@@ -45,7 +45,7 @@
     <Compile Include="CourseWithOrgNameDto.cs" />
     <Compile Include="DeleteTrainerDto.cs" />
     <Compile Include="ExamDto.cs" />
-    <Compile Include="ExamIndexPageDto.cs" />
+    <Compile Include="ExamDetailsDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuestionsDto.cs" />
     <Compile Include="SearchCourseDto.cs" />

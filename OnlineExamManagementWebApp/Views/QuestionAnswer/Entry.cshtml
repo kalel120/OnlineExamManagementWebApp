@@ -1,4 +1,4 @@
-﻿
+﻿@model OnlineExamManagementWebApp.ViewModels.QuestionAnswerViewModel
 
 @{
     ViewBag.Title = "Question and Answer";
@@ -41,21 +41,21 @@
                 <br />
                 <form class="form-horizontal form-label-left">
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="">Organization</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="first-name" class="form-control col-md-7 col-xs-12" disabled="disabled">
+                        @Html.LabelFor(m => m.OrganizationName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            @Html.TextBoxFor(m => m.OrganizationName, new { @class = "form-control col-md-7 col-xs-12", disabled = "disabled" })
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="">Course</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="last-name" name="last-name" class="form-control col-md-7 col-xs-12" disabled="disabled">
+                        @Html.LabelFor(m => m.CourseName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            @Html.TextBoxFor(m => m.CourseName, new { @class = "form-control col-md-7 col-xs-12", disabled = "disabled" })
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="middle-name" class="control-label col-md-3 col-sm-3 col-xs-12">Exam Code</label>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input id="middle-name" type="text" name="middle-name" class="form-control col-md-7 col-xs-12" disabled="disabled">
+                        @Html.LabelFor(m => m.ExamCode, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            @Html.TextBoxFor(m => m.ExamCode, new { @class = "form-control col-md-7 col-xs-12", disabled = "disabled" })
                         </div>
                     </div>
                     <div class="ln_solid"></div>
@@ -125,24 +125,26 @@
 
                     <tbody>
                         @{
-                            if (Model != null) {
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <a href="#" class="btn btn-primary " data-org-id="">
-                                            <i class="avoid-clicks fa fa-folder"> View</i>
-                                        </a>
-                                        <a href="#" class="btn btn-info " data-org-id="">
-                                            <i class="avoid-clicks fa fa-pencil"> Edit</i>
-                                        </a>
-                                        <a href="#" class="btn btn-danger " data-org-id="">
-                                            <i class="avoid-clicks fa fa-trash-o"> Delete</i>
-                                        </a>
-                                    </td>
-                                </tr>
+                            if (Model != null && Model.Questions.Count != 0) {
+                                foreach (var question in Model.Questions) {
+                                    <tr>
+                                        <td>@question.Serial</td>
+                                        <td>@question.Description</td>
+                                        <td>@question.OptionType</td>
+                                        <td>@question.OptionType</td>
+                                        <td>
+                                            <a href="#" class="btn btn-primary " data-org-id="">
+                                                <i class="avoid-clicks fa fa-folder"> View</i>
+                                            </a>
+                                            <a href="#" class="btn btn-info " data-org-id="">
+                                                <i class="avoid-clicks fa fa-pencil"> Edit</i>
+                                            </a>
+                                            <a href="#" class="btn btn-danger " data-org-id="">
+                                                <i class="avoid-clicks fa fa-trash-o"> Delete</i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
                             }
                         }
                     </tbody>
@@ -154,7 +156,7 @@
 
 
 @section scripts {
-    
+
     <!-- DataTable Scripts -->
     <script src="~/Theme/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="~/Theme/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -169,8 +171,6 @@
     <script src="~/Theme/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
     <script src="~/Theme/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
     <!--DataTable end-->
-    
-
     <!--Custom Scripts-->
     <script src="~/Scripts/CustomScripts/qa/questionAnswerEntry.js"></script>
     <!--Custom Scripts End-->

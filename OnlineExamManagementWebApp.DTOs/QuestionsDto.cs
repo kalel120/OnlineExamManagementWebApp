@@ -5,5 +5,6 @@ namespace OnlineExamManagementWebApp.DTOs {
         public Guid QuestionId { get; set; }
         public int Serial { get; set; }
         public string OptionType { get; set; }
+        public string Description { get; set; }
     }
 }

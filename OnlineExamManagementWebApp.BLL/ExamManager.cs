@@ -96,6 +96,11 @@ namespace OnlineExamManagementWebApp.BLL {
             return exams;
         }
 
+        public ExamDetailsDto GetExamDetailsById(int examId) {
+            var exam = _unitOfWork.Exams.GetExamDetailsById(examId);
+            return exam;
+        }
+
         public bool DeleteExamById(int id) {
             var updatableExam = _unitOfWork.Exams.GetActiveExamById(id);
             updatableExam.IsDeleted = true;

@@ -297,6 +297,7 @@
     <Content Include="Scripts\CustomScripts\organization\org-entry.js" />
     <Content Include="Scripts\CustomScripts\organization\org-index.js" />
     <Content Include="Scripts\CustomScripts\organization\viewOrgModal.js" />
+    <Content Include="Scripts\CustomScripts\qa\questionAnswerEntry.js" />
     <Content Include="Scripts\CustomScripts\search-course.js" />
     <Content Include="Scripts\CustomScripts\organization\search-org.js" />
     <Content Include="Scripts\dropzone\basic.css" />
