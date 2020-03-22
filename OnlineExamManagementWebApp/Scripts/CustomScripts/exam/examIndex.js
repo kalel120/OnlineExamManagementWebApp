@@ -6,7 +6,13 @@
         // start
         let loadingSpinner = $('#loading');
         loadingSpinner.hide();
-        $("#dataTable-examList").DataTable();
+        $("#dataTable-examList").DataTable({
+            //"processing": true,
+            //"language": {
+            //    "loadingRecords": "&nbsp;",
+            //    "processing": '<div id="loading"></div>'
+            //}
+        });
 
         const deleteExamById = (examId) => {
             return new Promise((resolve, reject) => {
