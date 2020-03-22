@@ -5,6 +5,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<!--DataTable Styles-->
+<link href="~/Theme/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="~/Theme/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+<link href="~/Theme/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+<link href="~/Theme/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+<link href="~/Theme/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+<!--DataTable END-->
+
+
 <div class="page-title">
     <div class="title_left">
         <h2>Question and Answer Entry</h2>
@@ -40,23 +49,23 @@
             <div class="x_content">
                 <br />
                 <form class="form-horizontal form-label-left">
-                    @Html.HiddenFor(m=>m.ExamId, new {@id="js_examId"})
+                    @Html.HiddenFor(m => m.ExamId, new { @id = "js_examId" })
                     <div class="form-group">
-                        @Html.LabelFor(m => m.OrganizationName, new {@class = "control-label col-md-3 col-sm-3 col-xs-12"})
+                        @Html.LabelFor(m => m.OrganizationName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                         <div class="col-md-4 col-sm-4 col-xs-12">
-                            @Html.TextBoxFor(m => m.OrganizationName, new {@class = "form-control col-md-7 col-xs-12", disabled = "disabled"})
+                            @Html.TextBoxFor(m => m.OrganizationName, new { @class = "form-control col-md-7 col-xs-12", disabled = "disabled" })
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.CourseName, new {@class = "control-label col-md-3 col-sm-3 col-xs-12"})
+                        @Html.LabelFor(m => m.CourseName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                         <div class="col-md-4 col-sm-4 col-xs-12">
-                            @Html.TextBoxFor(m => m.CourseName, new {@class = "form-control col-md-7 col-xs-12", disabled = "disabled"})
+                            @Html.TextBoxFor(m => m.CourseName, new { @class = "form-control col-md-7 col-xs-12", disabled = "disabled" })
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.ExamCode, new {@class = "control-label col-md-3 col-sm-3 col-xs-12"})
+                        @Html.LabelFor(m => m.ExamCode, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                         <div class="col-md-4 col-sm-4 col-xs-12">
-                            @Html.TextBoxFor(m => m.ExamCode, new {@class = "form-control col-md-7 col-xs-12", disabled = "disabled"})
+                            @Html.TextBoxFor(m => m.ExamCode, new { @class = "form-control col-md-7 col-xs-12", disabled = "disabled" })
                         </div>
                     </div>
                     <div class="ln_solid"></div>
@@ -126,29 +135,29 @@
                     </thead>
 
                     <tbody>
-                        @{
-                            if (Model != null && Model.Questions.Count != 0) {
-                                foreach (var question in Model.Questions) {
-                                    <tr>
-                                        <td>@question.Serial</td>
-                                        <td>@question.Description</td>
-                                        <td>@question.OptionType</td>
-                                        <td>@question.QuestionOption.Count</td>
-                                        <td>
-                                            <a href="#" class="btn btn-primary " data-org-id="">
-                                                <i class="avoid-clicks fa fa-folder"> View</i>
-                                            </a>
-                                            <a href="#" class="btn btn-info " data-org-id="">
-                                                <i class="avoid-clicks fa fa-pencil"> Edit</i>
-                                            </a>
-                                            <a href="#" class="btn btn-danger " data-org-id="">
-                                                <i class="avoid-clicks fa fa-trash-o"> Delete</i>
-                                            </a>
-                                        </td>
-                                    </tr>
+                        @*@{
+                                if (Model != null && Model.Questions.Count != 0) {
+                                    foreach (var question in Model.Questions) {
+                                        <tr>
+                                            <td>@question.Serial</td>
+                                            <td>@question.Description</td>
+                                            <td>@question.OptionType</td>
+                                            <td>@question.QuestionOption.Count</td>
+                                            <td>
+                                                <a href="#" class="btn btn-primary " data-org-id="">
+                                                    <i class="avoid-clicks fa fa-folder"> View</i>
+                                                </a>
+                                                <a href="#" class="btn btn-info " data-org-id="">
+                                                    <i class="avoid-clicks fa fa-pencil"> Edit</i>
+                                                </a>
+                                                <a href="#" class="btn btn-danger " data-org-id="">
+                                                    <i class="avoid-clicks fa fa-trash-o"> Delete</i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
                                 }
-                            }
-                        }
+                            }*@
                     </tbody>
                 </table>
             </div>

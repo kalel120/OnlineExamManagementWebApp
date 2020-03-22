@@ -7,7 +7,7 @@
         const examId = $('#js_examId').val();
         const middleRowPanel = $('#qa_entry_middleRow');
         const btnToggleQaSection = $('#btn-toggle-qaSection');
-        const tblQuestions = $('#tbl-questions');
+        
 
         const toggleDom = (domElement, status) => {
             if (status === "hide") {
@@ -44,14 +44,51 @@
             });
         }
 
-        $('#btn_testCallback').on('click', async () => {
-            let result = await getQuestionsByExamId(examId);
-            console.log(result);
+        const tblQuestions = $('#tbl-questions').DataTable({
+            "ajax": {
+                "url": `/QuestionAnswer/GetQuestionsByExamId?id=${examId}`,
+                "contentType": "applicaiton/json",
+                "data": function (d) {
+                    return JSON.stringify(d);
+                },
+                "dataSrc": ""
+            },
+            "columns": [
+                { "data": "Serial" },
+                { "data": "Description" },
+                { "data": "OptionType" },
+                {
+                    "data": "QuestionOption",
+                    "render": function (data,row) {
+                        return data.length;
+                    }
+                },
+                {
+                    "data": null,
+                    "render": function (data, row) {
+                        return `<a href="#" class="btn btn-primary" data-org-id="${data.QuestionId}"><i class="avoid-clicks fa fa-folder"> View</i></a>
+                                 <a href="#" class="btn btn-info" data-org-id="${data.QuestionId}"><i class="avoid-clicks fa fa-pencil"> Edit</i></a>
+                                 <a href="#" class="btn btn-danger" data-org-id="${data.QuestionId}"><i class="avoid-clicks fa fa-trash-o"> Delete</i></a>`;
+                    }
+                }
+            ],
+            "processing": true,
+            "language": {
+                "loadingRecords": "&nbsp;",
+                "processing": '<div id="loading"></div>'
+            }
+
         });
 
 
-        tblQuestions.DataTable();
+        $("#btn_testCallback").on('click', function() {
+            //tblQuestions.ajax.reload(null,false); // user pagination is not reset on reload
+            //console.log('reloaded');
 
+            tblQuestions.ajax.reload(function() {
+                setTimeout(() => console.log('three seconds'), 3000);
+            }, false);
+        });
         //end
     });
 })(jQuery);
