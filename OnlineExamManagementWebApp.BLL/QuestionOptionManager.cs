@@ -11,7 +11,7 @@ namespace OnlineExamManagementWebApp.BLL {
         }
 
         public ICollection<QuestionsDto> GetQuestionsByExamId(int examId) {
-            return _unitOfWork.QuestionOptions.GetQuestionsByExamId(examId);
+            return _unitOfWork.Questions.GetQuestionsByExamId(examId);
         }
 
     }

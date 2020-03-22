@@ -33,5 +33,11 @@ namespace OnlineExamManagementWebApp.Controllers {
             // Display Them on entry page
             return View(viewModel);
         }
+
+        public JsonResult GetQuestionsByExamId(int id) {
+            ICollection<QuestionsDto> questions = _qoManager.GetQuestionsByExamId(id);
+            return Json(questions, JsonRequestBehavior.AllowGet);
+        }
     }
+
 }

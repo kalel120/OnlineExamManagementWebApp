@@ -40,28 +40,30 @@
             <div class="x_content">
                 <br />
                 <form class="form-horizontal form-label-left">
+                    @Html.HiddenFor(m=>m.ExamId, new {@id="js_examId"})
                     <div class="form-group">
-                        @Html.LabelFor(m => m.OrganizationName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        @Html.LabelFor(m => m.OrganizationName, new {@class = "control-label col-md-3 col-sm-3 col-xs-12"})
                         <div class="col-md-4 col-sm-4 col-xs-12">
-                            @Html.TextBoxFor(m => m.OrganizationName, new { @class = "form-control col-md-7 col-xs-12", disabled = "disabled" })
+                            @Html.TextBoxFor(m => m.OrganizationName, new {@class = "form-control col-md-7 col-xs-12", disabled = "disabled"})
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.CourseName, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        @Html.LabelFor(m => m.CourseName, new {@class = "control-label col-md-3 col-sm-3 col-xs-12"})
                         <div class="col-md-4 col-sm-4 col-xs-12">
-                            @Html.TextBoxFor(m => m.CourseName, new { @class = "form-control col-md-7 col-xs-12", disabled = "disabled" })
+                            @Html.TextBoxFor(m => m.CourseName, new {@class = "form-control col-md-7 col-xs-12", disabled = "disabled"})
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.ExamCode, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        @Html.LabelFor(m => m.ExamCode, new {@class = "control-label col-md-3 col-sm-3 col-xs-12"})
                         <div class="col-md-4 col-sm-4 col-xs-12">
-                            @Html.TextBoxFor(m => m.ExamCode, new { @class = "form-control col-md-7 col-xs-12", disabled = "disabled" })
+                            @Html.TextBoxFor(m => m.ExamCode, new {@class = "form-control col-md-7 col-xs-12", disabled = "disabled"})
                         </div>
                     </div>
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                             <button id="btn-toggle-qaSection" class="btn btn-primary" type="button">Add Question</button>
+                            <button id="btn_testCallback" class="btn btn-primary" type="button">Check</button>
                         </div>
                     </div>
                 </form>
@@ -131,7 +133,7 @@
                                         <td>@question.Serial</td>
                                         <td>@question.Description</td>
                                         <td>@question.OptionType</td>
-                                        <td>@question.OptionType</td>
+                                        <td>@question.QuestionOption.Count</td>
                                         <td>
                                             <a href="#" class="btn btn-primary " data-org-id="">
                                                 <i class="avoid-clicks fa fa-folder"> View</i>

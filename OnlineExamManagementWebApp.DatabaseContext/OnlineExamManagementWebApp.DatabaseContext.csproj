@@ -122,6 +122,14 @@
     <Compile Include="Migrations\202003151940199_Added_Questions_Options_and_QuestionOption.designer.cs">
       <DependentUpon>202003151940199_Added_Questions_Options_and_QuestionOption.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003221434332_Remove_4_OptionColumns_From_Questions.cs" />
+    <Compile Include="Migrations\202003221434332_Remove_4_OptionColumns_From_Questions.designer.cs">
+      <DependentUpon>202003221434332_Remove_4_OptionColumns_From_Questions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003221448125_Added_DateCreated_DateUpdated.cs" />
+    <Compile Include="Migrations\202003221448125_Added_DateCreated_DateUpdated.designer.cs">
+      <DependentUpon>202003221448125_Added_DateCreated_DateUpdated.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -183,6 +191,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003151940199_Added_Questions_Options_and_QuestionOption.resx">
       <DependentUpon>202003151940199_Added_Questions_Options_and_QuestionOption.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003221434332_Remove_4_OptionColumns_From_Questions.resx">
+      <DependentUpon>202003221434332_Remove_4_OptionColumns_From_Questions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003221448125_Added_DateCreated_DateUpdated.resx">
+      <DependentUpon>202003221448125_Added_DateCreated_DateUpdated.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -4,6 +4,8 @@ using OnlineExamManagementWebApp.DTOs;
 
 namespace OnlineExamManagementWebApp.ViewModels {
     public class QuestionAnswerViewModel {
+        public int ExamId { get; set; }
+
         [Display(Name = "Organization")]
         public string OrganizationName { get; set; }
 

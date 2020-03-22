@@ -13,6 +13,9 @@ namespace OnlineExamManagementWebApp.Models {
         public bool IsDeleted { get; set; }
         public bool IsCorrectAnswer { get; set; }
 
+        public DateTime DateCreated { get; set; }
+        public DateTime? DateUpdated { get; set; }
+
         // Navigation
         public Question Question { get; set; }
         public Option Option { get; set; }
