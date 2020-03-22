@@ -27,9 +27,6 @@ namespace OnlineExamManagementWebApp.Controllers {
             viewModel.OrganizationName = examDetails.OrganizationName;
             viewModel.ExamCode = examDetails.Code;
 
-            // Get List of Questions from BLL
-            viewModel.Questions = _qoManager.GetQuestionsByExamId(examId);
-
             // Display Them on entry page
             return View(viewModel);
         }

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using OnlineExamManagementWebApp.DTOs;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace OnlineExamManagementWebApp.ViewModels {
     public class QuestionAnswerViewModel {
@@ -14,7 +12,5 @@ namespace OnlineExamManagementWebApp.ViewModels {
 
         [Display(Name = "Exam Code")]
         public string ExamCode { get; set; }
-
-        public ICollection<QuestionsDto> Questions { get; set; }
     }
 }
