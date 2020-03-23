@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using OnlineExamManagementWebApp.DatabaseContext;
-using OnlineExamManagementWebApp.DTOs;
+using OnlineExamManagementWebApp.DTOs.QuestionOption;
 
 namespace OnlineExamManagementWebApp.Repository {
     public class QuestionRepository {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using OnlineExamManagementWebApp.Repository;
-using OnlineExamManagementWebApp.DTOs;
+using OnlineExamManagementWebApp.DTOs.QuestionOption;
 
 namespace OnlineExamManagementWebApp.BLL {
     public class QuestionOptionManager {
