@@ -10,6 +10,8 @@ namespace OnlineExamManagementWebApp.Models {
         [Key, Column(Order = 1)]
         public Guid OptionId { get; set; }
 
+        public int Order { get; set; }
+
         public bool IsDeleted { get; set; }
         public bool IsCorrectAnswer { get; set; }
 
