@@ -90,34 +90,44 @@
 
             <div class="x_content">
                 <br />
-                <div class="form-horizontal">
+                <form id="form_qaEntry" class="form-horizontal" data-parsley-validate>
                     <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Order</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Order *</label>
                         <div class="col-md-2 col-sm-6 col-xs-6">
-                            <input type="text" id="question_Order" name="Serial" class="form-control col-md-7 col-xs-12" value="" placeholder="Question Order" />
+                            <input type="text" id="question_Order" name="Serial" class="form-control col-md-7 col-xs-12" value="" placeholder="Question Order" required="" />
                         </div>
                     </div>
 
                     <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Question</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Question*</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <textarea id="question_Description" name="QuestionDescription" class="form-control col-md-7 col-xs-12" placeholder="Enter your Question here"></textarea>
+                            <textarea id="question_Description" name="QuestionDescription" class="form-control col-md-7 col-xs-12" placeholder="Enter your Question here"
+                                      data-parsley-trigger="keyup"  data-parsley-maxlength="200"
+                                      data-parsley-maxlength-message="You need to enter under 200 character"
+                                      data-parsley-validation-threshold="10" required=""></textarea>
                         </div>
                     </div>
 
                     <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">OptionType</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                            <div class="radio"><input type="radio" class="flat" name="OptionType" value="Single Answer" /> Single Answer</div>
-                            <div class="radio"><input type="radio" class="flat" name="OptionType" value="Multiple Answer"/> Multiple Answer</div>
+                            <div class="radio">
+                                <input type="radio" class="flat" name="OptionType" value="Single Answer" required="" checked="" /> Single Answer
+                            </div>
+                            <div class="radio">
+                                <input type="radio" class="flat" name="OptionType" value="Multiple Answer" /> Multiple Answer
+                            </div>
                         </div>
                     </div>
 
                     <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Add Option</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Add Option * </label>
 
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="option_Description" name="OptionDescription" class="form-control col-md-7 col-xs-12" value="" placeholder="Enter Option Here" />
+                            <input type="text" id="option_Description" name="OptionDescription" class="form-control col-md-7 col-xs-12" value="" placeholder="Enter Option Here"
+                                   data-parsley-trigger="keyup" data-parsley-maxlength="100"
+                                   data-parsley-maxlength-message="Input under 100 character"
+                                   data-parsley-validation-threshold="10" required="" />
                         </div>
 
                         <div class="col-md-3 col-sm-3 col-xs-12">
@@ -129,7 +139,7 @@
 
                     <div class="ln_solid"></div>
 
-                    <table class="table table-striped table-bordered nowrap" id="tbl-options" style="width: 100%">
+                    <table class="table table-bordered table-hover table-responsive" id="tbl-options" style="width: 100%">
                         <thead>
                             <tr>
                                 <th>Order</th>
@@ -138,17 +148,17 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody id="tbl-options-tbody"></tbody>
                     </table>
 
                     <div class="ln_solid"></div>
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                            <button class="btn btn-primary" type="reset">Reset</button>
-                            <button id="" class="btn btn-success" type="button">Submit</button>
+                            <button id="btn_test" class="btn btn-primary" type="reset">TEST</button>
+                            <button id="btn_qaSubmit" class="btn btn-success" type="button">Submit</button>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -193,6 +203,7 @@
 
 
 @section scripts {
+    <script src="~/Scripts/parsley.min.js"></script>
     <script src="~/Theme/vendors/iCheck/icheck.min.js"></script>
     <!-- DataTable Scripts -->
     <script src="~/Theme/vendors/datatables.net/js/jquery.dataTables.min.js"></script>

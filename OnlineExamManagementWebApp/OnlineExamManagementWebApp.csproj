@@ -376,6 +376,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\parsley.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\select2.js" />
@@ -478,6 +479,8 @@
     <Content Include="Theme\vendors\nprogress\nprogress.js" />
     <Content Include="Theme\vendors\nprogress\support\extras.css" />
     <Content Include="Theme\vendors\nprogress\support\style.css" />
+    <Content Include="Theme\vendors\parsleyjs\dist\parsley.js" />
+    <Content Include="Theme\vendors\parsleyjs\dist\parsley.min.js" />
     <Content Include="Theme\vendors\raphael\raphael.min.js" />
     <Content Include="Theme\vendors\switchery\dist\switchery.css" />
     <Content Include="Theme\vendors\switchery\dist\switchery.js" />

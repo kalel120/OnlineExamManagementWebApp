@@ -4,37 +4,30 @@
     $(() => {
         //start
 
+        /**
+         * Initialize
+         */
         let loadingSpinner = $('#loading');
         loadingSpinner.hide();
 
         const examId = $('#js_examId').val();
         const middleRowPanel = $('#qa_entry_middleRow');
         const btnToggleQaSection = $('#btn-toggle-qaSection');
-        
-       const toggleDom = (domElement, status) => {
-            if (status === "hide") {
-                if (domElement.is(":visible")) {
-                    domElement.hide();
-                }
-                return;
-            }
-            if (status === "show") {
-                if (domElement.is(":hidden")) {
-                    domElement.show();
-                }
-                return;
-            }
-        }
 
-        toggleDom(middleRowPanel, "hide");
+        middleRowPanel.hide();
 
         $('#hide-section').on('click', function () {
-            toggleDom(middleRowPanel, "hide");
+            middleRowPanel.hide();
         });
 
         btnToggleQaSection.on('click', function () {
-            toggleDom(middleRowPanel, "show");
+            middleRowPanel.show();
         });
+
+        const formQAEntry = $('#form_qaEntry');
+        let btnQASubmit = $('#btn_qaSubmit');
+        btnQASubmit.hide();
+        /**END */
 
         /**
          * DataTable section
@@ -44,7 +37,7 @@
                 "beforeSend": () => { loadingSpinner.show(); },
                 "url": `/QuestionAnswer/GetQuestionsByExamId?id=${examId}`,
                 "contentType": "applicaiton/json",
-                "data": function(d) {
+                "data": function (d) {
                     return JSON.stringify(d);
                 },
                 "complete": () => { loadingSpinner.hide(); },
@@ -56,7 +49,7 @@
                 { "data": "OptionType" },
                 {
                     "data": "QuestionOption",
-                    "render": function (data,row) {
+                    "render": function (data, row) {
                         return data.length;
                     }
                 },
@@ -77,12 +70,48 @@
 
         });
 
-
-        $("#btn_testCallback").on('click', function() {
-            tblQuestions.ajax.reload(null,false); // user pagination is not reset on reload
+        $("#btn_testCallback").on('click', function () {
+            tblQuestions.ajax.reload(null, false); // user pagination is not reset on reload
         });
         /* END */
 
+
+        /**
+         * Add option section
+         */
+        const addOptionToTable = () => {
+
+        }
+
+        const createOption = () => {
+            let option = {};
+            let order = $('#tbl-options tbody tr').length;
+
+            if (order >= 0 && order < 3) {
+                option = {
+                    Order: order + 1,
+                    Description: $('#option_Description').val().trim(),
+                    OptionType: $("input[name='OptionType']:checked").val()
+                }
+            }
+            return option;
+        }
+
+        $('#btn_AddOption').on('click', function () {
+            //if (!formQAEntry.parsley().validate()) {
+            //    return;
+            //}
+
+            let option = createOption();
+            if ($.isEmptyObject(option)) {
+                alert('invalid');
+                return;
+            }
+            console.log(createOption());
+
+        });
+
+        /* END */
         //end
     });
 })(jQuery);

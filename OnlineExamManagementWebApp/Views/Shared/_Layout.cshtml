@@ -41,7 +41,7 @@
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                         <div class="profile_pic">
-                           <img src="@Url.Action("GetUserProfilePicture","Account",new {id=User.Identity.GetUserId()})" alt="..." class="img-circle profile_img">
+                            <img src="@Url.Action("GetUserProfilePicture","Account",new {id=User.Identity.GetUserId()})" alt="..." class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
@@ -136,6 +136,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+
     <!-- FastClick -->
     <script src="~/Theme/vendors/fastclick/lib/fastclick.js"></script>
     <!-- jQuery custom content scroller -->
@@ -148,6 +149,7 @@
     <script src="~/Theme/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
     <!-- bootstrap-daterangepicker -->
     <script src="~/Theme/vendors/moment/min/moment.min.js"></script>
+
 
     <!-- Custom Theme Scripts -->
     <script src="~/Theme/js/custom.min.js"></script>
