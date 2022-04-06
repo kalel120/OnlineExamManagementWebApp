@@ -1,0 +1,100 @@
+﻿@model OnlineExamManagementWebApp.ViewModels.Account.UserProfileVm
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="js-modal-updateProfile">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">@Model.UserName</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("UserProfile", "Account", FormMethod.Post, new { @class = "form-horizontal form-label-left input_mask", enctype = "multipart/form-data" })) {
+                    @Html.HiddenFor(m => m.Id)
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control has-feedback-left", placeholder = "Name" })
+                            <span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
+                            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control has-feedback-right", placeholder = "Email" })
+                            <span class="fa fa-envelope form-control-feedback right" aria-hidden="true"></span>
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control has-feedback-left", placeholder = "Address" })
+
+                            <span class="fa fa-home form-control-feedback left" aria-hidden="true"></span>
+                            @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control has-feedback-right", placeholder = "Phone" })
+
+                            <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
+                            @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        @Html.LabelFor(m => m.City, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.TextBoxFor(m => m.City, new { @class = "form-control", placeholder = "City" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        @Html.LabelFor(m => m.Country, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.TextBoxFor(m => m.Country, new { @class = "form-control", placeholder = "Country" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        @Html.LabelFor(m => m.PostalCode, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.TextBoxFor(m => m.PostalCode, new { @class = "form-control", placeholder = "Postal Code" })
+                            @Html.ValidationMessageFor(m => m.PostalCode, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        @Html.LabelFor(m => m.Profession, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.TextBoxFor(m => m.Profession, new { @class = "form-control", placeholder = "Profession" })
+                            @Html.ValidationMessageFor(m => m.Profession, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        @Html.LabelFor(m => m.HighestAcademic, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.TextBoxFor(m => m.HighestAcademic, new { @class = "form-control", placeholder = "Highest Academic" })
+                            @Html.ValidationMessageFor(m => m.HighestAcademic, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        @Html.LabelFor(m => m.ProfilePicture, new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            <input type="file" name="ProfilePicture" />
+                        </div>
+                    </div>
+
+                    <div class="ln_solid"></div>
+                    <div class="form-group">
+                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                            <button type="submit" class="btn btn-success">Update</button>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

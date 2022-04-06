@@ -1,0 +1,94 @@
+﻿@using Microsoft.AspNet.Identity
+@model OnlineExamManagementWebApp.ViewModels.Account.UserProfileVm
+
+@{
+    ViewBag.Title = ".";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>Profile of @User.Identity.GetUserName()</h3>
+    </div>
+
+    <div class="title_right">
+        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Go!</button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @{
+                    if (ViewBag.UpdateMessage!=null) {
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <strong>@ViewBag.UpdateMessage</strong>  
+                        </div>
+                    }
+                }
+
+                <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                    <div class="profile_img">
+                        <div id="crop-avatar">
+                            <img class="img-responsive avatar-view" src="@Url.Action("GetUserProfilePicture", new {id = Model.Id})" alt="Avatar" title="change the avatar">
+                        </div>
+                    </div>
+                    <h3>@Model.Name</h3>
+
+                    <ul class="list-unstyled user_data">
+                        <li>
+                            <i class="fa fa-map-marker user-profile-icon"></i> @Model.City , @Model.Country
+                        </li>
+
+                        <li>
+                            <i class="fa fa-briefcase user-profile-icon"></i> @Model.Profession
+                        </li>
+                    </ul>
+
+                    <a class="btn btn-success js-updateProfile-popup">
+                        <i class="fa fa-edit m-right-xs"></i>
+                        Edit Profile
+                    </a>
+                    <br/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@{
+    Html.RenderPartial("_ModalUpdateProfile");
+}
+
+@section scripts {
+    <!--jQuery Validation-->
+    <script type="text/javascript" src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <!--jQuery Validation-->
+
+    <script type="text/javascript" src="~/Scripts/dropzone/dropzone.js"></script>
+    <script src="~/Scripts/CustomScripts/account/userProfile.js"></script>
+}

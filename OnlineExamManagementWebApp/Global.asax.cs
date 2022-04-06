@@ -5,7 +5,9 @@ using System.Web.Routing;
 using AutoMapper;
 using OnlineExamManagementWebApp.DTOs;
 using OnlineExamManagementWebApp.Models;
+using OnlineExamManagementWebApp.Models.Identity;
 using OnlineExamManagementWebApp.ViewModels;
+using OnlineExamManagementWebApp.ViewModels.Account;
 
 namespace OnlineExamManagementWebApp {
     public class MvcApplication : System.Web.HttpApplication {
@@ -32,6 +34,13 @@ namespace OnlineExamManagementWebApp {
                 cfg.CreateMap<CourseWithOrgNameDto, CourseListViewModel>();
 
                 cfg.CreateMap<OrgEntryViewModel, Organization>();
+
+                cfg.CreateMap<RegisterViewModel, AppUser>();
+
+                cfg.CreateMap<AppUser, UserProfileVm>();
+                cfg.CreateMap<UserProfileVm, AppUser>();
+
+                cfg.CreateMap<ExamIndexPageDto, ExamIndexViewModel>();
             });
         }
     }

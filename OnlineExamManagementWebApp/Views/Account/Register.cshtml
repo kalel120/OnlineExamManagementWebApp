@@ -1,0 +1,80 @@
+﻿@model OnlineExamManagementWebApp.ViewModels.Account.RegisterViewModel
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LayoutLoginRegister.cshtml";
+
+    if (ViewBag.Errors != null) {
+        foreach (var error in ViewBag.Errors) {
+            <div class="alert alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Error!</strong> @error
+            </div>
+        }
+    }
+}
+
+<div class="login_wrapper">
+    <div id="register" class="animate form">
+        <section class="login_content">
+            @using (Html.BeginForm()) {
+                <h1>Create Account</h1>
+                <div>
+                    @Html.TextBoxFor(model => model.Username, new { @class = "form-control", placeholder = "Username" })
+                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                </div>
+                <div>
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Email" })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+                <div>
+                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control", placeholder = "Password", type = "password" })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+                <div>
+                    @Html.TextBoxFor(model => model.ConfirmPassword, new { @class = "form-control", placeholder = "Confirm Password", type = "password" })
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                </div>
+                <div>
+                    @Html.HiddenFor(model => model.RoleText)
+                    @Html.DropDownListFor(model => model.Role, Model.RoleList, "--SELECT ROLE--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+                </div>
+                <br />
+                <div>
+                    <input type="submit" value="Submit" class="btn btn-primary" />
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="separator">
+                    <p class="change_link">
+                        Already a member ?
+                        @Html.ActionLink("Log in", "Login", "Account")
+                    </p>
+
+                    <div class="clearfix"></div>
+                    <br />
+                    <div>
+                        <h1><i class="fa fa-paw"></i> Online Exam Manager </h1>
+                        <p>©2019-2020 All Rights Reserved.</p>
+                    </div>
+                </div>
+            }
+        </section>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        (() => {
+            $(() => {
+                $("#Role").on("change", (event)=> {
+                    $("#RoleText").val($(event.target).find(":selected").text());
+                });
+            });
+        })(jQuery);
+    </script>
+}

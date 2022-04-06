@@ -80,13 +80,15 @@
         // validation end
 
         const getTableRowAsObject = (tableRow) => {
-            return {
-                Id: tableRow.find("td:eq(7)").children(".js-viewOrgModalPopup").attr("data-org-id"),
-                Name: tableRow.find("td:eq(1)").text(),
-                Code: tableRow.find("td:eq(2)").text(),
-                Address: tableRow.find("td:eq(3)").text(),
-                Contact: tableRow.find("td:eq(4)").text()
+            let content = {
+                Id: tableRow.find("input.btn.btn-warning.js-editOrgModalPopup").attr("data-org-id"),
+                Name: $.trim(tableRow.find("td:eq(1)").text()),
+                Code: $.trim(tableRow.find("td:eq(2)").text()),
+                Address: $.trim(tableRow.find("td:eq(3)").text()),
+                Contact: $.trim(tableRow.find("td:eq(4)").text())
             };
+
+            return content;
         }
 
         const bindToEditOrgModal = (data) => {
@@ -100,20 +102,22 @@
         $(document).on("click", ".js-editOrgModalPopup", (event) => {
             setTimeout(() => {
                 let tableRow = getTableRowAsObject($(event.target).closest("tr"));
+                console.log($(event.target).data("org-id"));
                 bindToEditOrgModal(tableRow);
                 editOrgModal.modal("toggle");
             }, 300);
         });
 
         const updateOrganization = async (content, orgId) => {
-            let result = await $.post("/Organization/UpdateOrganization/", { dto: content, orgId: orgId });
-            if (result) {
-                alert("Updated Successfully!");
-                location.reload(true);
-            } else {
-                alert("Update Failed");
+            try {
+                await $.post("/Organization/UpdateOrganization/", { dto: content, orgId: orgId })
+                    .done((data) => {
+                        alert(data.Message);
+                        location.reload(true);
+                    });
+            } catch (e) {
+                alert(e.responseJSON.Message);
             }
-            
         }
 
         const getFormData = (form) => {

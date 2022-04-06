@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using OnlineExamManagementWebApp.DTOs;
 using OnlineExamManagementWebApp.Models;
 using OnlineExamManagementWebApp.Repository;
 
@@ -59,7 +60,7 @@ namespace OnlineExamManagementWebApp.BLL {
             return result == null ? false : true;
         }
 
-        public bool ReSequanceSerial(List<Exam> examsFromView) {
+        public bool ReSequenceSerial(List<Exam> examsFromView) {
             var existingExams = GetExistingExams(examsFromView);
 
             foreach (var exam in existingExams) {
@@ -69,25 +70,37 @@ namespace OnlineExamManagementWebApp.BLL {
             return _unitOfWork.Complete();
         }
 
-        public bool IsNeedReSequancing(List<Exam> examsFromView) {
+        public bool IsNeedReSequencing(List<Exam> examsFromView) {
             var existingExams = GetExistingExams(examsFromView);
 
-            var isNeedResequancing = false;
+            var isNeedReSequencing = false;
             for (var index = 0; index < existingExams.Count; index++) {
                 if (!(existingExams[index].Code == examsFromView[index].Code
                       && existingExams[index].SerialNo == examsFromView[index].SerialNo)) {
-                    isNeedResequancing = true;
+                    isNeedReSequencing = true;
                     break;
                 }
             }
 
-            return isNeedResequancing;
+            return isNeedReSequencing;
         }
 
         private List<Exam> GetExistingExams(List<Exam> examsFromView) {
             var courseId = examsFromView[0].CourseId;
             var existingExams = _unitOfWork.Exams.GetActiveExamsByCourseId(courseId);
             return existingExams;
+        }
+
+        public ICollection<ExamIndexPageDto> GetAllExamsForIndex() {
+            var exams = _unitOfWork.Exams.GetAllExamsForIndex();
+            return exams;
+        }
+
+        public bool DeleteExamById(int id) {
+            var updatableExam = _unitOfWork.Exams.GetActiveExamById(id);
+            updatableExam.IsDeleted = true;
+            _unitOfWork.Exams.Update(updatableExam);
+            return _unitOfWork.Complete();
         }
     }
 }

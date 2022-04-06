@@ -4298,10 +4298,12 @@ form:after {
     padding: 15px 0
 }
 
+
 .login_content form input[type="submit"],
 #content form .submit {
-    float: left;
-    margin-left: 38px
+    /*This is to center submit button on register page*/
+    /*float: left;
+    margin-left: 38px*/
 }
 
 .button a {

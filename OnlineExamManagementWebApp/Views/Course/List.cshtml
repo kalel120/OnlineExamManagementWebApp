@@ -41,9 +41,14 @@
         </div>
 
         <div class="x_content">
-            <p>
-                @Html.ActionLink("Create New Course", "Entry")
-            </p>
+            @{
+                if (User.IsInRole("Admin")) {
+                    <p>
+                        <input type="button" value="Create New Course" onclick="location.href='@Url.Action("Entry")'" class="btn btn-primary" />
+                    </p>
+                }
+            }
+
             <table id="dataTable-courseList" class="table table-striped table-bordered dt-responsive nowrap" width="100%">
                 <thead>
                     <tr>
@@ -79,7 +84,9 @@
                                 @Html.DisplayFor(modelItem => item.CourseOutline)
                             </td>
                             <td>
-                                <input type="button" class="btn btn-warning" value="Edit" onclick="location.href = '@Url.Action("Edit","Course",new{id=item.CourseId})'" />
+                                <a href="@Url.Action("Edit", "Course", new {id = item.CourseId})" class="btn btn-info">
+                                    <i class="fa fa-pencil"> Edit</i>
+                                </a>
                             </td>
                         </tr>
                     }

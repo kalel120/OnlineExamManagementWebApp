@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExamManagementWebApp.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExamManagementWebApp.DTOs", "OnlineExamManagementWebApp.DTOs\OnlineExamManagementWebApp.DTOs.csproj", "{D3278A50-BEE6-4E47-B079-474A52C23835}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExamManagementWebApp.Config", "OnlineExamManagementWebApp.Config\OnlineExamManagementWebApp.Config.csproj", "{4A340190-A899-4544-A7E7-DB2AB18963E0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{D3278A50-BEE6-4E47-B079-474A52C23835}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3278A50-BEE6-4E47-B079-474A52C23835}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3278A50-BEE6-4E47-B079-474A52C23835}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A340190-A899-4544-A7E7-DB2AB18963E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A340190-A899-4544-A7E7-DB2AB18963E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A340190-A899-4544-A7E7-DB2AB18963E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A340190-A899-4544-A7E7-DB2AB18963E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

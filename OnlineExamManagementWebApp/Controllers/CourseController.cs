@@ -9,6 +9,7 @@ using OnlineExamManagementWebApp.Models;
 using OnlineExamManagementWebApp.ViewModels;
 
 namespace OnlineExamManagementWebApp.Controllers {
+    [Authorize]
     public class CourseController : Controller {
         private readonly CourseManager _courseManager;
         private readonly TrainerManager _trainerManager;
@@ -25,6 +26,7 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         #region course entry page
+        [Authorize(Roles = "Admin,Employee")]
         public ActionResult Entry() {
             return View(GetCourseEntryViewModel());
         }
@@ -42,6 +44,7 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin,Employee")]
         public ActionResult Entry(CourseEntryViewModel courseEntryVm) {
             if (ModelState.IsValid) {
                 var course = Mapper.Map<Course>(courseEntryVm);
@@ -156,13 +159,13 @@ namespace OnlineExamManagementWebApp.Controllers {
 
         public JsonResult IsNeedReSequancing(List<ExamDto> examDtos) {
             var exams = GetExamsUsingMapper(examDtos);
-            var result = _examManager.IsNeedReSequancing(exams);
+            var result = _examManager.IsNeedReSequencing(exams);
             return Json(result);
         }
 
         public JsonResult ReSequanceSerial(List<ExamDto> examDtos) {
             var exams = GetExamsUsingMapper(examDtos);
-            var result = _examManager.ReSequanceSerial(exams);
+            var result = _examManager.ReSequenceSerial(exams);
             return Json(result);
         }
 

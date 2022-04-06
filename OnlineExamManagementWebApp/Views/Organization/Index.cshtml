@@ -100,8 +100,15 @@
                             <img src="@Url.Action("GetOrgLogo", new {orgId = item.Id})" class="orgLogo" />
                         </td>
                         <td>
-                            <input type="button" class="btn btn-info" value="Details" onclick="location.href = '@Url.Action("Details","Organization",new{id=item.Id})'" />
-                            <input type="button" class="btn btn-danger js-deleteOrgPopup" value="Delete" />
+                            <a href="@Url.Action("Details", "Organization", new {id = item.Id})" class="btn btn-primary">
+                                <i class="fa fa-folder"> View</i>
+                            </a>
+                            <a href="#" class="btn btn-info js-editOrgModalPopup" data-org-id="@item.Id">
+                                <i class="fa fa-pencil"> Edit</i>
+                            </a>
+                            <a href="#" class="btn btn-danger js-deleteOrgPopup">
+                                <i class="fa fa-trash-o"> Delete</i>
+                            </a>
                         </td>
                     </tr>
                     count = count + 1;
@@ -116,12 +123,18 @@
             </p>
         </div>
         <div class="clearfix"></div>
+        @{
+            Html.RenderPartial("_ModalEditOrg");
+        }
     </div>
 </div>
 
 @section scripts {
     <script type="text/javascript" src="~/Scripts/jquery-ui-1.12.1.js"></script>
-    <!-- Datatables -->
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/bootbox.min.js"></script>
+
+    <!-- DataTable -->
     <script src="~/Theme/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="~/Theme/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <script src="~/Theme/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
@@ -134,6 +147,8 @@
     <script src="~/Theme/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
     <script src="~/Theme/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
     <script src="~/Theme/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
-    <!--Datatable end-->
+    <!--DataTable end-->
+
     <script src="~/Scripts/CustomScripts/organization/org-index.js"></script>
+    <script src="~/Scripts/CustomScripts/organization/editOrgModal.js"></script>
 }

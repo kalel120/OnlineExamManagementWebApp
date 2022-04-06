@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="~/Theme/images/favicon.ico" type="image/ico" />
+    <title>Exam Management System</title>
+
+    @Styles.Render("~/Content/css")
+
+    <!-- Font Awesome -->
+    <link href="~/Theme/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- jQuery custom content scroller -->
+    <link href="~/Theme/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
+    <!-- Animate -->
+    <link href="~/Theme/vendors/animate.css/animate.min.css" rel="stylesheet" />
+    <!-- Custom Theme Style -->
+    <link href="~/Theme/css/custom.css" rel="stylesheet">
+
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body class="login">
+    <div>
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <!-- FastClick -->
+    <script src="~/Theme/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- jQuery custom content scroller -->
+    <script src="~/Theme/vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="~/Theme/js/custom.min.js"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
