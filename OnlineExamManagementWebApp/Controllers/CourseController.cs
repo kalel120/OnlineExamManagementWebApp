@@ -184,7 +184,6 @@ namespace OnlineExamManagementWebApp.Controllers {
         #endregion
 
         #region course search page
-
         private SearchCourseViewModel GetInitialCourseSearchVm(string selectedOrgId, string selectedTrainerId) {
             var searchViewModel = new SearchCourseViewModel {
                 Organizations = _orgManager.GetAllSelectListOrganizations(selectedOrgId),

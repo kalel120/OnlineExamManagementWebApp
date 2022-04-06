@@ -61,6 +61,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
@@ -74,6 +77,12 @@
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
@@ -146,9 +155,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrganizationController.cs" />
+    <Compile Include="Controllers\Api\TrainerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -159,6 +170,7 @@
     <Compile Include="ViewModels\OrgEntryViewModel.cs" />
     <Compile Include="ViewModels\SearchCourseViewModel.cs" />
     <Compile Include="ViewModels\CreateExamViewModel.cs" />
+    <Compile Include="ViewModels\SearchOrgViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -223,15 +235,25 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Scripts\bootbox.all.js" />
+    <Content Include="Scripts\bootbox.all.min.js" />
+    <Content Include="Scripts\bootbox.js" />
+    <Content Include="Scripts\bootbox.locales.js" />
+    <Content Include="Scripts\bootbox.locales.min.js" />
+    <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\CustomScripts\assign-trainer.js" />
     <Content Include="Scripts\CustomScripts\course-entry.js" />
     <Content Include="Scripts\CustomScripts\courseList.js" />
     <Content Include="Scripts\CustomScripts\create-exams.js" />
-    <Content Include="Scripts\CustomScripts\org-entry.js" />
-    <Content Include="Scripts\CustomScripts\org-index.js" />
+    <Content Include="Scripts\CustomScripts\listOfTrainers.js" />
+    <Content Include="Scripts\CustomScripts\organization\editOrgModal.js" />
+    <Content Include="Scripts\CustomScripts\organization\org-entry.js" />
+    <Content Include="Scripts\CustomScripts\organization\org-index.js" />
+    <Content Include="Scripts\CustomScripts\organization\viewOrgModal.js" />
     <Content Include="Scripts\CustomScripts\search-course.js" />
+    <Content Include="Scripts\CustomScripts\organization\search-org.js" />
     <Content Include="Scripts\dropzone\basic.css" />
     <Content Include="Scripts\dropzone\basic.min.css" />
     <Content Include="Scripts\dropzone\dropzone-amd-module.js" />
@@ -341,6 +363,41 @@
     <Content Include="Theme\vendors\animate.css\animate-config.json" />
     <Content Include="Theme\vendors\animate.css\animate.css" />
     <Content Include="Theme\vendors\animate.css\animate.min.css" />
+    <Content Include="Theme\vendors\datatables.net-bs\css\dataTables.bootstrap.css" />
+    <Content Include="Theme\vendors\datatables.net-bs\css\dataTables.bootstrap.min.css" />
+    <Content Include="Theme\vendors\datatables.net-bs\js\dataTables.bootstrap.js" />
+    <Content Include="Theme\vendors\datatables.net-bs\js\dataTables.bootstrap.min.js" />
+    <Content Include="Theme\vendors\datatables.net-buttons-bs\css\buttons.bootstrap.css" />
+    <Content Include="Theme\vendors\datatables.net-buttons-bs\css\buttons.bootstrap.min.css" />
+    <Content Include="Theme\vendors\datatables.net-buttons-bs\js\buttons.bootstrap.js" />
+    <Content Include="Theme\vendors\datatables.net-buttons-bs\js\buttons.bootstrap.min.js" />
+    <Content Include="Theme\vendors\datatables.net-buttons\js\buttons.colVis.js" />
+    <Content Include="Theme\vendors\datatables.net-buttons\js\buttons.colVis.min.js" />
+    <Content Include="Theme\vendors\datatables.net-buttons\js\buttons.flash.js" />
+    <Content Include="Theme\vendors\datatables.net-buttons\js\buttons.flash.min.js" />
+    <Content Include="Theme\vendors\datatables.net-buttons\js\buttons.html5.js" />
+    <Content Include="Theme\vendors\datatables.net-buttons\js\buttons.html5.min.js" />
+    <Content Include="Theme\vendors\datatables.net-buttons\js\buttons.print.js" />
+    <Content Include="Theme\vendors\datatables.net-buttons\js\buttons.print.min.js" />
+    <Content Include="Theme\vendors\datatables.net-buttons\js\dataTables.buttons.js" />
+    <Content Include="Theme\vendors\datatables.net-buttons\js\dataTables.buttons.min.js" />
+    <Content Include="Theme\vendors\datatables.net-fixedheader-bs\css\fixedHeader.bootstrap.css" />
+    <Content Include="Theme\vendors\datatables.net-fixedheader-bs\css\fixedHeader.bootstrap.min.css" />
+    <Content Include="Theme\vendors\datatables.net-fixedheader\js\dataTables.fixedHeader.js" />
+    <Content Include="Theme\vendors\datatables.net-fixedheader\js\dataTables.fixedHeader.min.js" />
+    <Content Include="Theme\vendors\datatables.net-keytable\js\dataTables.keyTable.js" />
+    <Content Include="Theme\vendors\datatables.net-keytable\js\dataTables.keyTable.min.js" />
+    <Content Include="Theme\vendors\datatables.net-responsive-bs\css\responsive.bootstrap.css" />
+    <Content Include="Theme\vendors\datatables.net-responsive-bs\css\responsive.bootstrap.min.css" />
+    <Content Include="Theme\vendors\datatables.net-responsive-bs\js\responsive.bootstrap.js" />
+    <Content Include="Theme\vendors\datatables.net-responsive\js\dataTables.responsive.js" />
+    <Content Include="Theme\vendors\datatables.net-responsive\js\dataTables.responsive.min.js" />
+    <Content Include="Theme\vendors\datatables.net-scroller-bs\css\scroller.bootstrap.css" />
+    <Content Include="Theme\vendors\datatables.net-scroller-bs\css\scroller.bootstrap.min.css" />
+    <Content Include="Theme\vendors\datatables.net-scroller\js\dataTables.scroller.js" />
+    <Content Include="Theme\vendors\datatables.net-scroller\js\dataTables.scroller.min.js" />
+    <Content Include="Theme\vendors\datatables.net\js\jquery.dataTables.js" />
+    <Content Include="Theme\vendors\datatables.net\js\jquery.dataTables.min.js" />
     <Content Include="Theme\vendors\fastclick\lib\fastclick.js" />
     <Content Include="Theme\vendors\font-awesome\css\font-awesome.css" />
     <Content Include="Theme\vendors\font-awesome\css\font-awesome.min.css" />
@@ -382,13 +439,19 @@
     <Content Include="Theme\vendors\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Theme\vendors\font-awesome\fonts\FontAwesome.otf" />
     <Content Include="Views\Course\Search.cshtml" />
-    <Content Include="Views\Course\_ModalEditCourse.cshtml" />
+    <Content Include="Views\Shared\_ModalEditCourse.cshtml" />
     <Content Include="Views\Course\List.cshtml" />
     <Content Include="Views\Organization\Entry.cshtml" />
     <Content Include="Views\Organization\Delete.cshtml" />
     <Content Include="Views\Organization\Details.cshtml" />
     <Content Include="Views\Organization\Edit.cshtml" />
     <Content Include="Views\Organization\Index.cshtml" />
+    <Content Include="Views\Shared\_ListOfCourse.cshtml" />
+    <Content Include="Views\Shared\_ListOfTrainers.cshtml" />
+    <Content Include="Views\Organization\Search.cshtml" />
+    <Content Include="Views\Shared\_ListOfOrgs.cshtml" />
+    <Content Include="Views\Organization\_ModalViewOrg.cshtml" />
+    <Content Include="Views\Organization\_ModalEditOrg.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

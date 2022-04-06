@@ -4,8 +4,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link rel="stylesheet" href="http://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" media="all" />
 <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+<!--DataTable Styles-->
+<link href="~/Theme/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="~/Theme/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+<link href="~/Theme/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+<link href="~/Theme/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+<link href="~/Theme/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+<!--DataTable END-->
 
 
 <div class="x_panel">
@@ -126,91 +132,37 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <table class="table table-striped table-bordered nowrap" id="tbl-courseSearchResult" style="width: 100%">
-                        <thead>
-                        <tr>
-                            <th>Serial</th> 
-                            <th>Name</th>
-                            <th>Code</th>
-                            <th>Duration</th>
-                            <th>Fees</th>
-                            <th>Credit</th>
-                            <th>Outline</th>
-                            <th>Trainers</th>
-                            <th>Lead Trainer</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                            @if (Model.Courses != null) {
-                                int counter = 1;
-                                foreach (var course in Model.Courses) {
-                                    <tr>
-                                        <td>
-                                            <input type="hidden" name="CourseId" value="@course.Id" />
-                                            @counter
-                                        </td>
-                                        <td>@course.Name</td>
-                                        <td>@course.Code</td>
-                                        <td>@course.Duration</td>
-                                        <td>Fees</td>
-                                        <td>@course.Credit</td>
-                                        <td>@course.Outline</td>
-                                        <td>
-                                            @{
-                                                int index = course.CourseTrainers.Count;
-                                                int loopCounter = 1;
-                                            }
-
-                                            @foreach (var item in course.CourseTrainers) {
-                                                if (loopCounter < index) {
-                                                    @item.Trainer.Name<span>&#44;&nbsp;</span>
-                                                }
-                                                else {
-                                                    @item.Trainer.Name
-                                                }
-                                                loopCounter++;
-                                            }
-                                        </td>
-                                        <td>
-                                           @foreach (var item in course.CourseTrainers) {
-                                               if (item.IsLead) {
-                                                   @item.Trainer.Name
-                                               }
-                                           }
-                                        </td>
-                                        <td>
-                                            <input type="button" class="btn btn-warning js-editCourseModalPopup" value="Edit"/>
-                                            <input type="button" class="btn btn-danger js-deleteCoursePopup" value="Delete"/>
-                                        </td>
-                                    </tr>
-                                    counter++;
-                                }
-                            }
-                        </tbody>
-                    </table>
+                    @{
+                        if (Model.Courses != null) {
+                            Html.RenderPartial("_ListOfCourse", Model.Courses);
+                            Html.RenderPartial("_ModalEditCourse");
+                        }
+                    }
                 </div>
             </div>
         </div>
-        
-        <div id="js-deleteCourse-dialog" title="Delete Course?">
-            <p>
-                <span class="ui-icon ui-icon-alert"></span>
-                This Course will be permanently deleted and cannot be recovered. Are you sure?
-            </p>
-        </div>
-        <div class="clearfix"></div>
     </div>
 </div>
 
-@{
-    Html.RenderPartial("_ModalEditCourse");
-}
-
 @section scripts{
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery.validate.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery-ui-1.12.1.js"></script>
+    
+    <!-- Datatables Scripts -->
+    <script src="~/Theme/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/Theme/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <!--Datatable end-->
+
+    <script src="~/Scripts/bootbox.min.js"></script>
     <script type="text/javascript" src="~/Scripts/CustomScripts/search-course.js"></script>
 }

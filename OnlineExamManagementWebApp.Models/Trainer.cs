@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OnlineExamManagementWebApp.Models {
     public class Trainer {
@@ -33,11 +32,12 @@ namespace OnlineExamManagementWebApp.Models {
 
         public byte[] Image { get; set; }
 
-        public Organization Organization { get; set; }
-
         public int OrganizationId { get; set; }
 
+        public Organization Organization { get; set; }
 
         public ICollection<CourseTrainer> CourseTrainers { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }

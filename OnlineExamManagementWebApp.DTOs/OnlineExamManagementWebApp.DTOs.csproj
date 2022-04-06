@@ -43,10 +43,19 @@
   <ItemGroup>
     <Compile Include="CourseTrainerDto.cs" />
     <Compile Include="CourseWithOrgNameDto.cs" />
+    <Compile Include="DeleteTrainerDto.cs" />
     <Compile Include="ExamDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchCourseDto.cs" />
+    <Compile Include="SearchOrgDto.cs" />
     <Compile Include="TagDto.cs" />
+    <Compile Include="UpdateOrgDto.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OnlineExamManagementWebApp.Models\OnlineExamManagementWebApp.Models.csproj">
+      <Project>{E6A4533C-D956-4F43-A9A5-FAB8E34EEB84}</Project>
+      <Name>OnlineExamManagementWebApp.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

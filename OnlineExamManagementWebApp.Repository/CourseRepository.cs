@@ -33,6 +33,11 @@ namespace OnlineExamManagementWebApp.Repository {
                 .Where(c => c.OrganizationId == organizationId && c.IsDeleted == false).ToList();
         }
 
+        public ICollection<Course> GetCoursesByOrgId(int orgId) {
+            var query = _dbContext.Courses.Where(c => c.IsDeleted == false && c.OrganizationId == orgId);
+            return query.ToList();
+        }
+
         public ICollection<Course> GetCoursesLikeName(string name) {
             return _dbContext.Courses
                 .Include(c => c.CourseTrainers)

@@ -1,0 +1,48 @@
+﻿@using OnlineExamManagementWebApp.Models
+
+<table class="table table-striped table-bordered nowrap" id="tbl-orgSearchResult" style="width: 100%">
+    <thead>
+        <tr>
+            <th>Serial</th>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Address</th>
+            <th>Contact No.</th>
+            <th>Courses</th>
+            <th>Logo</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @{ var counter = 1;
+            foreach (var organization in (IList<Organization>)ViewData["Orgs"]) {
+                <tr>
+                    <td>@counter</td>
+                    <td>@organization.Name</td>
+                    <td>@organization.Code</td>
+                    <td>@organization.Address</td>
+                    <td>@organization.Contact</td>
+                    <td>
+                        @{
+                            if (organization.Courses != null) {
+                                @organization.Courses.Count
+                            }
+                        }
+                    </td>
+                    <td>
+                        <img src="@Url.Action("GetOrgLogo","Organization", new {orgId = organization.Id})" class="orgLogo" />
+                    </td>
+                    <td>
+                        <input type="button" class="btn btn-primary js-viewOrgModalPopup" value="View" data-org-id="@organization.Id" />|
+                        <input type="button" class="btn btn-warning js-editOrgModalPopup" value="Edit" data-org-id="@organization.Id" />|
+                        <input type="button" class="btn btn-danger js-deleteOrgPopup" value="Delete" data-org-id="@organization.Id" />
+                    </td>
+                </tr>
+                counter++;
+            }
+        }
+    </tbody>
+</table>
+
+<div class="clearfix"></div>

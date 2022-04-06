@@ -52,16 +52,18 @@
                                 <li>
                                     <a><i class="fa fa-home"></i> Course <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li>@Html.ActionLink("Course Entry", "Entry", "Course")</li>
-                                        <li>@Html.ActionLink("List of Courses", "List", "Course")</li>
-                                        <li>@Html.ActionLink("Search Course", "Search", "Course")</li>
+                                        <li>@Html.ActionLink("Index", "List", "Course")</li>
+                                        <li>@Html.ActionLink("New Entry", "Entry", "Course")</li>
+                                        <li>@Html.ActionLink("Search", "Search", "Course")</li>
                                     </ul>
                                 </li>
                                 <li>
                                     <a><i class="fa fa-home"></i>Organization <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
-                                        <li>@Html.ActionLink("Organizations", "Index", "Organization")</li>
+                                        <li>@Html.ActionLink("Index", "Index", "Organization")</li>
                                         <li>@Html.ActionLink("New Entry", "Entry", "Organization")</li>
+                                        <li>@Html.ActionLink("Search", "Search", "Organization")</li>
+
                                     </ul>
                                 </li>
                             </ul>

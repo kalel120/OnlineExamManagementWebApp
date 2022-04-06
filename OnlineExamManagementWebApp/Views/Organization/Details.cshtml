@@ -4,6 +4,15 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+
+<!--DataTable Styles-->
+<link href="~/Theme/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+<link href="~/Theme/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+<link href="~/Theme/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+<link href="~/Theme/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+<link href="~/Theme/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+<!--DataTable END-->
 
 <div class="x_panel">
     <div class="x_title">
@@ -31,61 +40,130 @@
     </div>
 
     <div class="x_content">
-        <div>
-            <hr />
-            <dl class="dl-horizontal">
-                <dd>
-                    <img src="@Url.Action("GetOrgLogo", new { orgId = Model.Id })" class="orgLogo_details" />
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Name)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Name)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Code)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Code)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Address)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Address)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Contact)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Contact)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.About)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.About)
-                </dd>
-
-
-            </dl>
+        <input type="hidden" value="@Model.Id" id="js-org-id" />
+        <!--TOP SECTION-->
+        <div class="orgLogoDetails">
+            <img src="@Url.Action("GetOrgLogo", new {orgId = Model.Id})" />
         </div>
+
+        <div class="orgTopSection">
+            <div class="orgName">
+                @Html.DisplayFor(model => model.Name)
+            </div>
+            <div class="orgAbout">
+                @Html.DisplayNameFor(model => model.About)
+            </div>
+        </div>
+        <!--TOP SECTION END-->
+        <div class="clearfix"></div>
+
+        <!--tab panel starts-->
+        <div class="" role="tabpanel" data-example-id="toggle-tabs">
+            <ul class="nav nav-tabs bar_tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#course-tab" role="tab" data-toggle="tab" aria-expanded="True">Courses</a>
+                </li>
+                <li>
+                    <a href="#trainer-tab" role="tab" data-toggle="tab" aria-expanded="False">Trainers</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade active in" id="course-tab">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2><small>Course Info.</small></h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li>
+                                        <a class="close-link"><i class="fa fa-close"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="x_content">
+                                @{
+                                    if (Model.Courses != null) {
+                                        Html.RenderPartial("_ListOfCourse", Model.Courses);
+                                        Html.RenderPartial("_ModalEditCourse");
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div role="tabpanel" class="tab-pane fade" id="trainer-tab">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2><small>Trainer Info.</small></h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li>
+                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+                                    <li>
+                                        <a class="close-link"><i class="fa fa-close"></i></a>
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="x_content">
+                                @{
+                                    Html.RenderPartial("_ListOfTrainers");
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--tab panel ends-->
+
+        <div class="clearfix"></div>
+
+        <!--BOTTOM SECTION-->
+        @Html.DisplayFor(model => model.Address)
+        @Html.DisplayFor(model => model.Contact)
+        <!--BOTTOM SECTION ENDS-->
+
+        <div class="clearfix"></div>
+
         <p>
-            @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
             @Html.ActionLink("Back to List", "Index")
         </p>
     </div>
 </div>
 
 
+@section scripts{
+    <script type="text/javascript" src="~/Scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-ui-1.12.1.js"></script>
+
+    <!-- Datatables -->
+    <script src="~/Theme/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/Theme/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="~/Theme/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
+    <!--Datatables ends-->
+    
+    <!--bootbox-->
+    <script src="~/Scripts/bootbox.min.js"></script>
+    <!--bootbox End-->
+
+    <script type="text/javascript" src="~/Scripts/CustomScripts/search-course.js"></script>
+    <script type="text/javascript" src="~/Scripts/CustomScripts/listOfTrainers.js"></script>
+}

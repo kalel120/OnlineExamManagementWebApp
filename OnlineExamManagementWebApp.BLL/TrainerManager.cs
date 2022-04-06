@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -34,6 +33,12 @@ namespace OnlineExamManagementWebApp.BLL {
             var trainers = new List<SelectListItem>();
             trainers.Insert(0, new SelectListItem { Value = "", Text = @"--SELECT TRAINER--" });
             return trainers;
+        }
+
+        public bool IsTrainerDeleted(int id) {
+            var trainer = _unitOfWork.Trainers.GetTrainerById(id);
+            trainer.IsDeleted = true;
+            return _unitOfWork.Complete();
         }
     }
 }
