@@ -28,9 +28,9 @@ namespace OnlineExamManagementWebApp.Controllers {
 
                     var result = response.Result;
                     if (result.IsSuccessStatusCode) {
-                        var readTask = result.Content.ReadAsAsync<ICollection<ExamIndexPageDto>>();
+                        var readTask = result.Content.ReadAsAsync<ICollection<ExamDetailsDto>>();
                         readTask.Wait();
-                        examIndexVm = Mapper.Map<ICollection<ExamIndexPageDto>, ICollection<ExamIndexViewModel>>(readTask.Result);
+                        examIndexVm = Mapper.Map<ICollection<ExamDetailsDto>, ICollection<ExamIndexViewModel>>(readTask.Result);
                     }
                 }
             }

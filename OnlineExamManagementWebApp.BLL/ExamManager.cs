@@ -91,9 +91,14 @@ namespace OnlineExamManagementWebApp.BLL {
             return existingExams;
         }
 
-        public ICollection<ExamIndexPageDto> GetAllExamsForIndex() {
-            var exams = _unitOfWork.Exams.GetAllExamsForIndex();
+        public ICollection<ExamDetailsDto> GetAllExamsForIndex() {
+            var exams = _unitOfWork.Exams.GetAllExamsDetails();
             return exams;
+        }
+
+        public ExamDetailsDto GetExamDetailsById(int examId) {
+            var exam = _unitOfWork.Exams.GetExamDetailsById(examId);
+            return exam;
         }
 
         public bool DeleteExamById(int id) {

@@ -1,5 +1,5 @@
 ﻿namespace OnlineExamManagementWebApp.DTOs {
-    public class ExamIndexPageDto {
+    public class ExamDetailsDto {
         public int Id { get; set; }
 
         public string Code { get; set; }

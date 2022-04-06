@@ -14,7 +14,7 @@ namespace OnlineExamManagementWebApp.Controllers.Api {
         // Exam/Index
         [HttpGet]
         public IHttpActionResult GetAllExamsForIndex() {
-            ICollection<ExamIndexPageDto> exams = _examManager.GetAllExamsForIndex();
+            ICollection<ExamDetailsDto> exams = _examManager.GetAllExamsForIndex();
             return Ok(exams);
         }
 

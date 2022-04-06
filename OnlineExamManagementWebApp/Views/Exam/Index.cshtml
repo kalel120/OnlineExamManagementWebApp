@@ -104,8 +104,8 @@
                                 </td>
 
                                 <td>
-                                    <a href="#" class="btn btn-info js-editExamModal" data-exam-id="@item.Id">
-                                        <i class="avoid-clicks fa fa-pencil" style="pointer-events: none"> Edit</i>
+                                    <a href="@Url.Action("Entry","QuestionAnswer",new{examId=item.Id})" class="btn btn-info js-editExamModal" data-exam-id="@item.Id">
+                                        <i class="avoid-clicks fa fa-pencil"> Edit</i>
                                     </a>
                                     <a href="#" class="btn btn-danger js-deleteExam" data-exam-Id="@item.Id">
                                         <i class="avoid-clicks fa fa-trash-o"> Delete</i>

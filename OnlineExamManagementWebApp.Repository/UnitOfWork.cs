@@ -10,6 +10,9 @@ namespace OnlineExamManagementWebApp.Repository {
         public TrainerRepository Trainers { get; private set; }
         public CourseTrainerRepository CourseTrainers { get; private set; }
         public ExamRepository Exams { get; private set; }
+        public QuestionRepository Questions { get; }
+        public OptionRepository Options { get; }
+        public QuestionOptionRepository QuestionOptions { get; }
 
         public UnitOfWork() {
             _dbContext = new ApplicationDbContext();
@@ -19,6 +22,9 @@ namespace OnlineExamManagementWebApp.Repository {
             Trainers = new TrainerRepository(_dbContext);
             CourseTrainers = new CourseTrainerRepository(_dbContext);
             Exams = new ExamRepository(_dbContext);
+            Questions = new QuestionRepository(_dbContext);
+            Options = new OptionRepository(_dbContext);
+            QuestionOptions = new QuestionOptionRepository(_dbContext);
         }
 
         public bool Complete() {
