@@ -183,17 +183,28 @@
                 return false;
             }
 
+            let html = "";
             let serialNo = addOptionButtonClickCounter + 1;
             let optionBody = $("#option_Description").val();
             let optionType = $("input[name='OptionType']:checked").val();
 
-
-            //Building htmlTable:
-            let html = `"<tr>
+            if (optionType === "Single Answer") {
+                html = `"<tr>
                             <td>${serialNo}</td>
                             <td><input type = "radio" name="OptionRadioButton"/> ${optionBody}</td>
                             <td><a href="#" class="js-remove-option btn btn-danger"><i class="avoid-clicks fa fa-trash-o"> Remove </i> </a> </td>
                          </tr>`;
+            }
+
+            if (optionType === "Multiple Answer") {
+                html = `"<tr>
+                            <td>${serialNo}</td>
+                            <td><input type = "radio" name="OptionRadioButton${serialNo}"/> ${optionBody}</td>
+                            <td><a href="#" class="js-remove-option btn btn-danger"><i class="avoid-clicks fa fa-trash-o"> Remove </i> </a> </td>
+                         </tr>`;
+            }
+            //Building htmlTable:
+
 
             $("#js-tbl-options").append(html);
             addOptionButtonClickCounter++;
