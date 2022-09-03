@@ -90,28 +90,25 @@
 
             <div class="x_content">
                 <br />
-                <form id="form_qaEntry" class="form-horizontal" data-parsley-validate>
+                <form id="form_qaEntry" class="form-horizontal">
                     <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Order *</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Order</label>
                         <div class="col-md-1 col-sm-6 col-xs-6">
-                            <input type="text" id="question_Order" name="Serial" class="form-control col-md-7 col-xs-12" value="" placeholder="Order" required="" />
+                            <input type="text" id="question_Order" name="Serial" class="form-control col-md-7 col-xs-12" value="" placeholder="Order"/>
                         </div>
                     </div>
 
                     <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Marks</label>
                         <div class="col-md-1 col-sm-6 col-xs-6">
-                            <input type="text" id="question_Marks" name="Marks" class="form-control col-md-7 col-xs-12" value="" placeholder="Marks" required="" />
+                            <input type="text" id="question_Marks" name="Marks" class="form-control col-md-7 col-xs-12" value="" placeholder="Marks"/>
                         </div>
                     </div>
 
                     <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Question*</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <textarea id="question_Description" name="QuestionDescription" class="form-control col-md-7 col-xs-12" placeholder="Enter your Question here"
-                                      data-parsley-trigger="keyup"  data-parsley-maxlength="200"
-                                      data-parsley-maxlength-message="You need to enter under 200 character"
-                                      data-parsley-validation-threshold="10" required=""></textarea>
+                            <textarea id="question_Description" name="QuestionDescription" class="form-control col-md-7 col-xs-12" placeholder="Enter your Question here (Maximum 200 characters)"></textarea>
                         </div>
                     </div>
 
@@ -128,13 +125,10 @@
                     </div>
 
                     <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Add Option * </label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Add Option</label>
 
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <input type="text" id="option_Description" name="OptionDescription" class="form-control col-md-7 col-xs-12" value="" placeholder="Enter Option Here"
-                                   data-parsley-trigger="keyup" data-parsley-maxlength="100"
-                                   data-parsley-maxlength-message="Input under 100 character"
-                                   data-parsley-validation-threshold="10" required="" />
+                            <input type="text" id="option_Description" name="OptionDescription" class="form-control col-md-7 col-xs-12" value="" placeholder="Enter Option Description (Maximum 50 characters)"/>
                         </div>
 
                         <div class="col-md-3 col-sm-3 col-xs-12">
@@ -212,8 +206,12 @@
 
 
 @section scripts {
-    <script src="~/Scripts/parsley.min.js"></script>
     <script src="~/Theme/vendors/iCheck/icheck.min.js"></script>
+
+    <!-- jQuery Validation -->
+    <script type="text/javascript" src="~/Scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-ui-1.12.1.js"></script>
+    
     <!-- DataTable Scripts -->
     <script src="~/Theme/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="~/Theme/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>

@@ -30,6 +30,79 @@
         /**END */
 
         /**
+         * Validation
+         */
+        const qaEntryFormValidation = () => {
+            const qaEntryForm = $("#form_qaEntry");
+
+            return qaEntryForm.validate({
+                errorClass: "text-danger",
+                errorElement: "div",
+
+                rules: {
+                    "Serial": {
+                        required: true
+                    },
+                    "Marks": {
+                        required: true,
+                        digits: true
+                    },
+                    "QuestionDescription": {
+                        required: true,
+                        minlength: 10,
+                        maxlength: 200
+                    },
+
+                    "OptionDescription": {
+                        required: true,
+                        minlength: 1,
+                        maxlength:50
+                    }
+                },
+
+                messages: {
+                    "Serial": {
+                        required: "Insert Question Order"
+                    },
+                    "Marks": {
+                        required: "Insert Question Marks",
+                        digits: "Only positive integer are allowed"
+                    },
+                    "QuestionDescription": {
+                        required: "Enter Question",
+                        minlength: "Option can not be less than 10 character",
+                        maxlength: "Option can not exceed more than 200 characters "
+                    },
+                    "OptionDescription": {
+                        required: "Enter Option",
+                        minlength: "Option can not be less than 1 character",
+                        maxlength: "Option can not exceed more than 50 characters "
+                    }
+                },
+
+                errorPlacement: function (error, element) {
+                    element.parent(".form-group > div").append(error);
+                },
+
+                highlight: function (element) {
+                    $(element).closest(".form-group").removeClass("has-success has-error")
+                        .addClass("has-error");
+                },
+
+                unhighlight: function (element) {
+                    $(element).closest(".form-group").removeClass("has-error");
+                },
+
+                success: function (element) {
+                    element.closest(".form-group").removeClass("has-success has-error");
+                }
+            }).form();
+        }
+        /**
+         * Validation END
+         */
+
+        /**
          * DataTable section
          */
         const tblQuestions = $('#tbl-questions').DataTable({
@@ -74,7 +147,7 @@
         $("#btn_testCallback").on('click', function () {
             tblQuestions.ajax.reload(null, false); // user pagination is not reset on reload
         });
-        /* END */
+        /* DataTable section END */
 
 
         /**
@@ -99,15 +172,17 @@
             return option;
         }
 
-        $('#btn_AddOption').on('click', function () {
-            //if (!formQAEntry.parsley().validate()) {
-            //    return;
-            //}
+        $("#btn_AddOption").on("click", function () {
+            // Validation reference
+            if (!qaEntryFormValidation()) {
+                return false;
+            }
+            // END
 
             let option = createOption();
             if ($.isEmptyObject(option)) {
-                alert('invalid');
-                return;
+                alert("invalid");
+                return false;
             }
             console.log(createOption());
 
