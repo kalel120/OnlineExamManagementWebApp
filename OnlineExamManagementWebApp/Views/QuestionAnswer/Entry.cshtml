@@ -93,8 +93,15 @@
                 <form id="form_qaEntry" class="form-horizontal" data-parsley-validate>
                     <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Order *</label>
-                        <div class="col-md-2 col-sm-6 col-xs-6">
-                            <input type="text" id="question_Order" name="Serial" class="form-control col-md-7 col-xs-12" value="" placeholder="Question Order" required="" />
+                        <div class="col-md-1 col-sm-6 col-xs-6">
+                            <input type="text" id="question_Order" name="Serial" class="form-control col-md-7 col-xs-12" value="" placeholder="Order" required="" />
+                        </div>
+                    </div>
+
+                    <div class="item form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Marks</label>
+                        <div class="col-md-1 col-sm-6 col-xs-6">
+                            <input type="text" id="question_Marks" name="Marks" class="form-control col-md-7 col-xs-12" value="" placeholder="Marks" required="" />
                         </div>
                     </div>
 
@@ -143,6 +150,7 @@
                         <thead>
                             <tr>
                                 <th>Order</th>
+                                <th>Marks</th>
                                 <th>Option</th>
                                 <th>Option Type</th>
                                 <th>Actions</th>
@@ -187,6 +195,7 @@
                     <thead>
                         <tr>
                             <th>Order</th>
+                            <th>Marks</th>
                             <th>Question</th>
                             <th>Option Type</th>
                             <th>Options</th>

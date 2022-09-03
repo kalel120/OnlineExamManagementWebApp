@@ -45,6 +45,7 @@
             },
             "columns": [
                 { "data": "Serial" },
+                { "data": "Marks" },
                 { "data": "Description" },
                 { "data": "OptionType" },
                 {
@@ -90,6 +91,7 @@
             if (order >= 0 && order < 3) {
                 option = {
                     Order: order + 1,
+                    Marks: $('#question_Marks').val().trim(),
                     Description: $('#option_Description').val().trim(),
                     OptionType: $("input[name='OptionType']:checked").val()
                 }
