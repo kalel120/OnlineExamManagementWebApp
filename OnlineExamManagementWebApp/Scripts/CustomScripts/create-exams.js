@@ -18,7 +18,7 @@ $(function () {
                 return true;
             }
             return false;
-        }, "Must be greater than 0 next incremntal serial number");
+        }, "Must be greater than 0 next incremental serial number");
 
         $.validator.addMethod("uniqueExamCode", (value) => {
             var isUnique = true;
