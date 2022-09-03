@@ -24,7 +24,6 @@
             middleRowPanel.show();
         });
 
-        const formQAEntry = $('#form_qaEntry');
         let btnQASubmit = $('#btn_qaSubmit');
         btnQASubmit.hide();
         /**END */
@@ -56,7 +55,7 @@
                     "OptionDescription": {
                         required: true,
                         minlength: 1,
-                        maxlength:50
+                        maxlength: 50
                     }
                 },
 
@@ -157,39 +156,78 @@
 
         }
 
-        const createOption = () => {
-            let option = {};
-            let order = $('#tbl-options tbody tr').length;
+        /**
+         * Add option section
+        */
+        //const createOption = () => {
+        //    let option = {};
+        //    let order = $('#tbl-options tbody tr').length;
 
-            if (order >= 0 && order < 3) {
-                option = {
-                    Order: order + 1,
-                    Marks: $('#question_Marks').val().trim(),
-                    Description: $('#option_Description').val().trim(),
-                    OptionType: $("input[name='OptionType']:checked").val()
-                }
-            }
-            return option;
-        }
+        //    if (order >= 0 && order < 3) {
+        //        option = {
+        //            Order: order + 1,
+        //            Marks: $('#question_Marks').val().trim(),
+        //            Description: $('#option_Description').val().trim(),
+        //            OptionType: $("input[name='OptionType']:checked").val()
+        //        }
+        //    }
+        //    return option;
+        //}
 
-        $("#btn_AddOption").on("click", function () {
-            // Validation reference
+        let addOptionButtonClickCounter = 0;
+
+
+
+        $("#js-btn-AddOption").on("click", function () {
             if (!qaEntryFormValidation()) {
                 return false;
             }
-            // END
 
-            let option = createOption();
-            if ($.isEmptyObject(option)) {
-                alert("invalid");
-                return false;
+            let serialNo = addOptionButtonClickCounter + 1;
+            let optionBody = $("#option_Description").val();
+            let optionType = $("input[name='OptionType']:checked").val();
+
+
+            //Building htmlTable:
+            let html = `"<tr>
+                            <td>${serialNo}</td>
+                            <td><input type = "radio" name="OptionRadioButton"/> ${optionBody}</td>
+                            <td><a href="#" class="js-remove-option btn btn-danger"><i class="avoid-clicks fa fa-trash-o"> Remove </i> </a> </td>
+                         </tr>`;
+
+            $("#js-tbl-options").append(html);
+            addOptionButtonClickCounter++;
+            if (addOptionButtonClickCounter === 4) {
+                $("#js-btn-AddOption").prop("disabled", true);
             }
-            console.log(createOption());
 
+            //let option = createOption();
+            //if ($.isEmptyObject(option)) {
+            //    alert("invalid");
+            //    return false;
+            //}
+            //console.log(createOption());
         });
 
-        /* END */
-        //end
+
+        // Remove option from html table
+
+        $(document).on("click", ".js-remove-option", function() {
+            let closestRow = $(this).closest("tr");
+
+            if (confirm("Are you sure you want to Remove?")) {
+                closestRow.remove();
+                addOptionButtonClickCounter--;
+            }
+            console.log(addOptionButtonClickCounter);
+            if (addOptionButtonClickCounter < 4) {
+                $("#js-btn-AddOption").removeAttr("disabled");
+            }
+        });
+
+        /*
+         * Add option END
+         */
     });
 })(jQuery);
 
