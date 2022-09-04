@@ -175,8 +175,18 @@
         //}
 
         let addOptionButtonClickCounter = 0;
-
         let addOptionButton = $("#js-btn-AddOption");
+
+        let isOptionBodyDuplicate = function (optionText) {
+            let isDuplicated = false;
+            $("#js-tbl-options tbody tr td:nth-child(2)")
+                .each(function (index, element) {
+                if (optionText === $.trim($(element).text())) {
+                    isDuplicated = true;
+                }
+            });
+            return isDuplicated;
+        };
 
 
         // On add option click, build option table
@@ -187,8 +197,13 @@
 
             let html = "";
             let serialNo = addOptionButtonClickCounter + 1;
-            let optionBody = $("#option_Description").val();
+            let optionBody = $("#option_Description").val().trim();
             let optionTypeVal = $("input[name='OptionType']:checked").val();
+
+            if (isOptionBodyDuplicate(optionBody)) {
+                alert("Duplicate Option Text Detected");
+                return false;
+            }
 
             //disable radio button
             $("input[name='OptionType']").iCheck("disable");
@@ -197,7 +212,7 @@
             if (optionTypeVal === "Single Answer") {
                 html = `"<tr>
                             <td>${serialNo}</td>
-                            <td><input type = "radio" name="OptionRadioButton"/> ${optionBody}</td>
+                            <td><input type = "radio" name="OptionRadioButton"/> ${optionBody} </td>
                             <td><a href="#" class="js-remove-option btn btn-danger"><i class="avoid-clicks fa fa-trash-o"> Remove </i> </a> </td>
                          </tr>`;
             }
@@ -216,11 +231,15 @@
             if (addOptionButtonClickCounter === 4) {
                 addOptionButton.prop("disabled", true);
             }
+
+            return true;
         });
 
 
+
+
         // Remove option from html table and change button, radio button behavior
-        $(document).on("click", ".js-remove-option", function() {
+        $(document).on("click", ".js-remove-option", function () {
             let closestRow = $(this).closest("tr");
 
             if (confirm("Are you sure you want to Remove?")) {
