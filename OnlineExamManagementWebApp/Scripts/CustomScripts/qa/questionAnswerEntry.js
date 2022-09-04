@@ -24,8 +24,6 @@
             middleRowPanel.show();
         });
 
-        let btnQASubmit = $('#btn_qaSubmit');
-        btnQASubmit.hide();
         /**END */
 
         /**
@@ -98,7 +96,7 @@
             }).form();
         }
         /**
-         * Validation END
+         *  END
          */
 
         /**
@@ -146,7 +144,7 @@
         $("#btn_testCallback").on('click', function () {
             tblQuestions.ajax.reload(null, false); // user pagination is not reset on reload
         });
-        /* DataTable section END */
+        /* END */
 
         /**
          * Add option section
@@ -238,9 +236,13 @@
             });
 
         /*
-         * Add option END
+         *  END
          */
 
+
+        /**
+         * Submit Q&A button functionality
+         */ 
         $(document).on("click",
             '#js-btn-qaSubmit',
             function () {
@@ -257,6 +259,11 @@
                         listOfOptions.push(option);
                     });
 
+                if (listOfOptions.length < 4) {
+                    alert("Can't submit unless there are 4 options");
+                    return false;
+                }
+
                 // Create questionAnswer data to submit
                 let questionAnsData = {
                     Order: $("#question_Order").val(),
@@ -270,7 +277,7 @@
             });
 
         /*
-        * Fetch question and answers and submit data to controller END
+        * END
         */
     });
 })(jQuery);
