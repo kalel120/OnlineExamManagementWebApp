@@ -148,32 +148,9 @@
         });
         /* DataTable section END */
 
-
-        /**
-         * Add option section
-         */
-        const addOptionToTable = () => {
-
-        }
-
         /**
          * Add option section
         */
-        //const createOption = () => {
-        //    let option = {};
-        //    let order = $('#tbl-options tbody tr').length;
-
-        //    if (order >= 0 && order < 3) {
-        //        option = {
-        //            Order: order + 1,
-        //            Marks: $('#question_Marks').val().trim(),
-        //            Description: $('#option_Description').val().trim(),
-        //            OptionType: $("input[name='OptionType']:checked").val()
-        //        }
-        //    }
-        //    return option;
-        //}
-
         let addOptionButtonClickCounter = 0;
         let addOptionButton = $("#js-btn-AddOption");
 
@@ -259,6 +236,27 @@
         /*
          * Add option END
          */
+
+
+        /*
+         * Fetch question and answers and submit data to controller
+         */
+        //const createOption = () => {
+        //    let option = {};
+        //    let order = $('#tbl-options tbody tr').length;
+
+        //    if (order >= 0 && order < 3) {
+        //        option = {
+        //            Order: order + 1,
+        //            Marks: $('#question_Marks').val().trim(),
+        //            Description: $('#option_Description').val().trim(),
+        //            OptionType: $("input[name='OptionType']:checked").val()
+        //        }
+        //    }
+        //    return option;
+        //}
+
+
     });
 })(jQuery);
 
