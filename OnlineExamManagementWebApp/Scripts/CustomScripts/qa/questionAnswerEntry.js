@@ -268,14 +268,36 @@
             return questionAnsData;
         };
 
+        const isAnswerSelected = function (listOfOptions) {
+            let isSelected = false;
+
+            $.each(listOfOptions, function (key,value) {
+                $.each(value, function(innerKey, innerValue) {
+                    if (innerKey === "IsCorrectAns") {
+                        if (innerValue) {
+                            isSelected = true;
+                        }
+                    }
+                    
+                });
+            });
+
+            return isSelected;
+        };
+
         $(document).on("click",
             '#js-btn-qaSubmit',
             function () {
                 // loop through option table and get values
                 let listOfOptions = getOptionsTableData(new Array());
+
                 
                 if (listOfOptions.length < 4) {
                     alert("Can't submit unless there are 4 options");
+                    return false;
+                }
+                if (!isAnswerSelected(listOfOptions)) {
+                    alert("Can't submit unless correct answer/answers are selected");
                     return false;
                 }
 
