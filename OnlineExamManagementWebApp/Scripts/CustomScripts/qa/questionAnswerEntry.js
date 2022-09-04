@@ -176,9 +176,11 @@
 
         let addOptionButtonClickCounter = 0;
 
+        let addOptionButton = $("#js-btn-AddOption");
 
 
-        $("#js-btn-AddOption").on("click", function () {
+        // On add option click, build option table
+        addOptionButton.on("click", function () {
             if (!qaEntryFormValidation()) {
                 return false;
             }
@@ -186,9 +188,13 @@
             let html = "";
             let serialNo = addOptionButtonClickCounter + 1;
             let optionBody = $("#option_Description").val();
-            let optionType = $("input[name='OptionType']:checked").val();
+            let optionTypeVal = $("input[name='OptionType']:checked").val();
 
-            if (optionType === "Single Answer") {
+            //disable radio button
+            $("input[name='OptionType']").iCheck("disable");
+
+            //Building htmlTable:
+            if (optionTypeVal === "Single Answer") {
                 html = `"<tr>
                             <td>${serialNo}</td>
                             <td><input type = "radio" name="OptionRadioButton"/> ${optionBody}</td>
@@ -196,33 +202,24 @@
                          </tr>`;
             }
 
-            if (optionType === "Multiple Answer") {
+            if (optionTypeVal === "Multiple Answer") {
                 html = `"<tr>
                             <td>${serialNo}</td>
                             <td><input type = "radio" name="OptionRadioButton${serialNo}"/> ${optionBody}</td>
                             <td><a href="#" class="js-remove-option btn btn-danger"><i class="avoid-clicks fa fa-trash-o"> Remove </i> </a> </td>
                          </tr>`;
             }
-            //Building htmlTable:
-
 
             $("#js-tbl-options").append(html);
             addOptionButtonClickCounter++;
-            if (addOptionButtonClickCounter === 4) {
-                $("#js-btn-AddOption").prop("disabled", true);
-            }
 
-            //let option = createOption();
-            //if ($.isEmptyObject(option)) {
-            //    alert("invalid");
-            //    return false;
-            //}
-            //console.log(createOption());
+            if (addOptionButtonClickCounter === 4) {
+                addOptionButton.prop("disabled", true);
+            }
         });
 
 
-        // Remove option from html table
-
+        // Remove option from html table and change button, radio button behavior
         $(document).on("click", ".js-remove-option", function() {
             let closestRow = $(this).closest("tr");
 
@@ -230,9 +227,13 @@
                 closestRow.remove();
                 addOptionButtonClickCounter--;
             }
-            console.log(addOptionButtonClickCounter);
+
             if (addOptionButtonClickCounter < 4) {
-                $("#js-btn-AddOption").removeAttr("disabled");
+                addOptionButton.removeAttr("disabled");
+            }
+
+            if (addOptionButtonClickCounter === 0) {
+                $("input[name='OptionType']").iCheck("enable");
             }
         });
 
