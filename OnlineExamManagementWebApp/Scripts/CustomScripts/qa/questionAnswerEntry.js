@@ -242,38 +242,47 @@
 
         /**
          * Submit Q&A button functionality
-         */ 
+         */
+
+        const getOptionsTableData = function(listOfOptions) {
+            $("#js-tbl-options tbody tr")
+                .each(function (index, element) {
+                    let option = {
+                        "SerialNo": $(element).find("td:nth-child(1)").text(),
+                        "OptionText": $.trim($(element).find("td:nth-child(2)").text()),
+                        "IsCorrectAns": $(element).find("td input:radio").is(":checked")
+                    }
+                    listOfOptions.push(option);
+                });
+            return listOfOptions;
+        };
+
+        const getQaDataToSubmit = function(listOfOptions) {
+            let questionAnsData = {
+                Order: $("#question_Order").val(),
+                Marks: $("#question_Marks").val(),
+                QuestionDescription: $("#question_Description").val(),
+                OptionType: $("input[name='OptionType']:checked").val(),
+                Options: listOfOptions
+            };
+            return questionAnsData;
+        };
+
         $(document).on("click",
             '#js-btn-qaSubmit',
             function () {
                 // loop through option table and get values
-                let listOfOptions = new Array();
-
-                $("#js-tbl-options tbody tr")
-                    .each(function (index, element) {
-                        let option = {
-                            "SerialNo": $(element).find("td:nth-child(1)").text(),
-                            "OptionText": $.trim($(element).find("td:nth-child(2)").text()),
-                            "IsCorrectAns": $(element).find("td input:radio").is(":checked")
-                        }
-                        listOfOptions.push(option);
-                    });
-
+                let listOfOptions = getOptionsTableData(new Array());
+                
                 if (listOfOptions.length < 4) {
                     alert("Can't submit unless there are 4 options");
                     return false;
                 }
 
                 // Create questionAnswer data to submit
-                let questionAnsData = {
-                    Order: $("#question_Order").val(),
-                    Marks: $("#question_Marks").val(),
-                    QuestionDescription: $("#question_Description").val(),
-                    OptionType: $("input[name='OptionType']:checked").val(),
-                    Options: listOfOptions
-                };
+                let qaDataToSubmit = getQaDataToSubmit(listOfOptions);
 
-                console.log(questionAnsData);
+                console.log(qaDataToSubmit);
             });
 
         /*
