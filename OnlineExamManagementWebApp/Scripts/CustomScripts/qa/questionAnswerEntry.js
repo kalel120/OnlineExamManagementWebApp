@@ -39,7 +39,7 @@
                 errorElement: "div",
 
                 rules: {
-                    "Serial": {
+                    "Order": {
                         required: true
                     },
                     "Marks": {
@@ -60,7 +60,7 @@
                 },
 
                 messages: {
-                    "Serial": {
+                    "Order": {
                         required: "Insert Question Order"
                     },
                     "Marks": {
@@ -154,14 +154,16 @@
         let addOptionButtonClickCounter = 0;
         let addOptionButton = $("#js-btn-AddOption");
 
+
+
         let isOptionBodyDuplicate = function (optionText) {
             let isDuplicated = false;
             $("#js-tbl-options tbody tr td:nth-child(2)")
                 .each(function (index, element) {
-                if (optionText === $.trim($(element).text())) {
-                    isDuplicated = true;
-                }
-            });
+                    if (optionText === $.trim($(element).text())) {
+                        isDuplicated = true;
+                    }
+                });
             return isDuplicated;
         };
 
@@ -216,47 +218,60 @@
 
 
         // Remove option from html table and change button, radio button behavior
-        $(document).on("click", ".js-remove-option", function () {
-            let closestRow = $(this).closest("tr");
+        $(document).on("click",
+            ".js-remove-option",
+            function () {
+                let closestRow = $(this).closest("tr");
 
-            if (confirm("Are you sure you want to Remove?")) {
-                closestRow.remove();
-                addOptionButtonClickCounter--;
-            }
+                if (confirm("Are you sure you want to Remove?")) {
+                    closestRow.remove();
+                    addOptionButtonClickCounter--;
+                }
 
-            if (addOptionButtonClickCounter < 4) {
-                addOptionButton.removeAttr("disabled");
-            }
+                if (addOptionButtonClickCounter < 4) {
+                    addOptionButton.removeAttr("disabled");
+                }
 
-            if (addOptionButtonClickCounter === 0) {
-                $("input[name='OptionType']").iCheck("enable");
-            }
-        });
+                if (addOptionButtonClickCounter === 0) {
+                    $("input[name='OptionType']").iCheck("enable");
+                }
+            });
 
         /*
          * Add option END
          */
 
+        $(document).on("click",
+            '#js-btn-qaSubmit',
+            function () {
+                // loop through option table and get values
+                let listOfOptions = new Array();
+
+                $("#js-tbl-options tbody tr")
+                    .each(function (index, element) {
+                        let option = {
+                            "SerialNo": $(element).find("td:nth-child(1)").text(),
+                            "OptionText": $.trim($(element).find("td:nth-child(2)").text()),
+                            "IsCorrectAns": $(element).find("td input:radio").is(":checked")
+                        }
+                        listOfOptions.push(option);
+                    });
+
+                // Create questionAnswer data to submit
+                let questionAnsData = {
+                    Order: $("#question_Order").val(),
+                    Marks: $("#question_Marks").val(),
+                    QuestionDescription: $("#question_Description").val(),
+                    OptionType: $("input[name='OptionType']:checked").val(),
+                    Options: listOfOptions
+                };
+
+                console.log(questionAnsData);
+            });
 
         /*
-         * Fetch question and answers and submit data to controller
-         */
-        //const createOption = () => {
-        //    let option = {};
-        //    let order = $('#tbl-options tbody tr').length;
-
-        //    if (order >= 0 && order < 3) {
-        //        option = {
-        //            Order: order + 1,
-        //            Marks: $('#question_Marks').val().trim(),
-        //            Description: $('#option_Description').val().trim(),
-        //            OptionType: $("input[name='OptionType']:checked").val()
-        //        }
-        //    }
-        //    return option;
-        //}
-
-
+        * Fetch question and answers and submit data to controller END
+        */
     });
 })(jQuery);
 
