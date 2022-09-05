@@ -212,7 +212,13 @@
             return true;
         });
 
-
+        const reSequenceOptionSerialNo = function () {
+            let currentSerial = 1;
+            $("#js-tbl-options tbody tr td:nth-child(1)")
+                .each(function(index, element) {
+                    $(element).text(currentSerial++);
+                });
+        };
 
 
         // Remove option from html table and change button, radio button behavior
@@ -225,6 +231,10 @@
                     closestRow.remove();
                     addOptionButtonClickCounter--;
                 }
+
+                // re-sequence SL
+                reSequenceOptionSerialNo();
+                // END
 
                 if (addOptionButtonClickCounter < 4) {
                     addOptionButton.removeAttr("disabled");
