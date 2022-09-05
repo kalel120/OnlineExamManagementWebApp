@@ -172,6 +172,7 @@
                 return false;
             }
 
+
             let html = "";
             let serialNo = addOptionButtonClickCounter + 1;
             let optionBody = $("#option_Description").val().trim();
@@ -238,20 +239,19 @@
                     callback: function (result) {
                         if (result) {
                             closestRow.remove();
-                            console.log(addOptionButtonClickCounter);
                             reSequenceOptionSerialNo();
                             addOptionButtonClickCounter--;
+
+                            if (addOptionButtonClickCounter < 4) {
+                                addOptionButton.removeAttr("disabled");
+                            }
+
+                            if (addOptionButtonClickCounter === 0) {
+                                $("input[name='OptionType']").iCheck("enable");
+                            }
                         } 
                     }
                 });
-
-                if (addOptionButtonClickCounter < 4) {
-                    addOptionButton.removeAttr("disabled");
-                }
-
-                if (addOptionButtonClickCounter === 0) {
-                    $("input[name='OptionType']").iCheck("enable");
-                }
             });
 
         /*
