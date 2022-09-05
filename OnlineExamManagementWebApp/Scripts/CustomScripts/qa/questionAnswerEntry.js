@@ -178,7 +178,12 @@
             let optionTypeVal = $("input[name='OptionType']:checked").val();
 
             if (isOptionBodyDuplicate(optionBody)) {
-                alert("Duplicate Option Text Detected");
+                bootbox.alert({
+                    size: "small",
+                    title: "<b>Warning!</b>",
+                    message: "Duplicate Option Text Detected",
+                    callback: function () { }
+                });
                 return false;
             }
 
@@ -215,7 +220,7 @@
         const reSequenceOptionSerialNo = function () {
             let currentSerial = 1;
             $("#js-tbl-options tbody tr td:nth-child(1)")
-                .each(function(index, element) {
+                .each(function (index, element) {
                     $(element).text(currentSerial++);
                 });
         };
@@ -227,14 +232,18 @@
             function () {
                 let closestRow = $(this).closest("tr");
 
-                if (confirm("Are you sure you want to Remove?")) {
-                    closestRow.remove();
-                    addOptionButtonClickCounter--;
-                }
-
-                // re-sequence SL
-                reSequenceOptionSerialNo();
-                // END
+                bootbox.confirm({
+                    size: "large",
+                    message: "Are you sure you want to Remove?",
+                    callback: function (result) {
+                        if (result) {
+                            closestRow.remove();
+                            console.log(addOptionButtonClickCounter);
+                            reSequenceOptionSerialNo();
+                            addOptionButtonClickCounter--;
+                        } 
+                    }
+                });
 
                 if (addOptionButtonClickCounter < 4) {
                     addOptionButton.removeAttr("disabled");
@@ -254,7 +263,7 @@
          * Submit Q&A button functionality
          */
 
-        const getOptionsTableData = function(listOfOptions) {
+        const getOptionsTableData = function (listOfOptions) {
             $("#js-tbl-options tbody tr")
                 .each(function (index, element) {
                     let option = {
@@ -267,7 +276,7 @@
             return listOfOptions;
         };
 
-        const getQaDataToSubmit = function(listOfOptions) {
+        const getQaDataToSubmit = function (listOfOptions) {
             let questionAnsData = {
                 Order: $("#question_Order").val(),
                 Marks: $("#question_Marks").val(),
@@ -281,14 +290,14 @@
         const isAnswerSelected = function (listOfOptions) {
             let isSelected = false;
 
-            $.each(listOfOptions, function (key,value) {
-                $.each(value, function(innerKey, innerValue) {
+            $.each(listOfOptions, function (key, value) {
+                $.each(value, function (innerKey, innerValue) {
                     if (innerKey === "IsCorrectAns") {
                         if (innerValue) {
                             isSelected = true;
                         }
                     }
-                    
+
                 });
             });
 
@@ -301,13 +310,24 @@
                 // loop through option table and get values
                 let listOfOptions = getOptionsTableData(new Array());
 
-                
+
                 if (listOfOptions.length < 4) {
-                    alert("Can't submit unless there are 4 options");
+                    bootbox.alert({
+                        size: "small",
+                        title: "<b>Warning!</b>",
+                        message: "Can't submit unless there are 4 options",
+                        callback: function () { }
+                    });
                     return false;
                 }
                 if (!isAnswerSelected(listOfOptions)) {
-                    alert("Can't submit unless correct answer/answers are selected");
+                    bootbox.alert({
+                        size: "small",
+                        title: "<b>Warning!</b>",
+                        message: "Can't submit unless correct answer/answers are selected",
+                        callback: function () { }
+                    });
+
                     return false;
                 }
 
