@@ -1,6 +1,6 @@
 /*! @preserve
  * bootbox.locales.js
- * version: 5.2.0
+ * version: 5.5.2
  * author: Nick Payne <nick@kurai.co.uk>
  * license: MIT
  * http://bootboxjs.com/
@@ -185,6 +185,14 @@
   })();
 
   (function () {
+    bootbox.addLocale('ka', {
+      OK: 'OK',
+      CANCEL: 'გაუქმება',
+      CONFIRM: 'დადასტურება'
+    });
+  })();
+
+  (function () {
     bootbox.addLocale('ko', {
       OK: 'OK',
       CANCEL: '취소',
@@ -317,6 +325,14 @@
       OK: 'OK',
       CANCEL: 'Відміна',
       CONFIRM: 'Прийняти'
+    });
+  })();
+
+  (function () {
+    bootbox.addLocale('vi', {
+      OK: 'OK',
+      CANCEL: 'Hủy bỏ',
+      CONFIRM: 'Xác nhận'
     });
   })();
 
