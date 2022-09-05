@@ -211,6 +211,7 @@
     <Compile Include="ViewModels\ExamIndexViewModel.cs" />
     <Compile Include="ViewModels\OrgEntryViewModel.cs" />
     <Compile Include="ViewModels\Account\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\QuestionAnswerEntryViewModel.cs" />
     <Compile Include="ViewModels\QuestionAnswerViewModel.cs" />
     <Compile Include="ViewModels\SearchCourseViewModel.cs" />
     <Compile Include="ViewModels\CreateExamViewModel.cs" />

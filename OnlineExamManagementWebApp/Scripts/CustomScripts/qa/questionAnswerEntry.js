@@ -249,7 +249,7 @@
                             if (addOptionButtonClickCounter === 0) {
                                 $("input[name='OptionType']").iCheck("enable");
                             }
-                        } 
+                        }
                     }
                 });
             });
@@ -269,7 +269,7 @@
                     let option = {
                         "SerialNo": $(element).find("td:nth-child(1)").text(),
                         "OptionText": $.trim($(element).find("td:nth-child(2)").text()),
-                        "IsCorrectAns": $(element).find("td input:radio").is(":checked")
+                        "IsCorrectAnswer": $(element).find("td input:radio").is(":checked")
                     }
                     listOfOptions.push(option);
                 });
@@ -292,7 +292,7 @@
 
             $.each(listOfOptions, function (key, value) {
                 $.each(value, function (innerKey, innerValue) {
-                    if (innerKey === "IsCorrectAns") {
+                    if (innerKey === "IsCorrectAnswer") {
                         if (innerValue) {
                             isSelected = true;
                         }
@@ -333,8 +333,29 @@
 
                 // Create questionAnswer data to submit
                 let qaDataToSubmit = getQaDataToSubmit(listOfOptions);
-
                 console.log(qaDataToSubmit);
+
+                $.ajax({
+                    type: "POST",
+                    url: "/QuestionAnswer/Entry",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify(qaDataToSubmit),
+                    success: function (response) {
+                        if (response != null) {
+                            window.location.reload();
+                        } else {
+                            bootbox.alert("something is wrong");
+
+                        }
+                    },
+                    failure: function(response) {
+                        bootbox.alert(`failure response >> ${response.responseText}`);
+                    },
+                    error: function(response) {
+                        bootbox.alert(`error response >> ${response.responseText}`);
+                    }
+                });
             });
 
         /*

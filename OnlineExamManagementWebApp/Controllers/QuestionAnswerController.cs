@@ -36,6 +36,13 @@ namespace OnlineExamManagementWebApp.Controllers {
             ICollection<QuestionsDto> questions = _qoManager.GetQuestionsByExamId(id);
             return Json(questions, JsonRequestBehavior.AllowGet);
         }
+
+
+        [HttpPost]
+        public JsonResult Entry(QuestionAnswerEntryViewModel qaEntryViewModel) {
+            bool result = true;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
     }
 
 }
