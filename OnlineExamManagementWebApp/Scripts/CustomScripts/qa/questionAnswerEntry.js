@@ -151,10 +151,9 @@
         */
         let addOptionButtonClickCounter = 0;
         let addOptionButton = $("#js-btn-AddOption");
+        $("#question_Order").val($("#tbl-questions tr").length + 1);
 
-
-
-        let isOptionBodyDuplicate = function (optionText) {
+        const isOptionBodyDuplicate = function (optionText) {
             let isDuplicated = false;
             $("#js-tbl-options tbody tr td:nth-child(2)")
                 .each(function (index, element) {
