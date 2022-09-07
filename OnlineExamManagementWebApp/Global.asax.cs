@@ -4,6 +4,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using AutoMapper;
 using OnlineExamManagementWebApp.DTOs;
+using OnlineExamManagementWebApp.DTOs.QuestionOption;
 using OnlineExamManagementWebApp.Models;
 using OnlineExamManagementWebApp.Models.Identity;
 using OnlineExamManagementWebApp.ViewModels;
@@ -41,6 +42,9 @@ namespace OnlineExamManagementWebApp {
                 cfg.CreateMap<UserProfileVm, AppUser>();
 
                 cfg.CreateMap<ExamDetailsDto, ExamIndexViewModel>();
+
+                cfg.CreateMap<QuestionAnswerEntryViewModel, QuestionToSaveDto>();
+                cfg.CreateMap<OptionEntryViewModel, OptionToSaveDto>();
             });
         }
     }

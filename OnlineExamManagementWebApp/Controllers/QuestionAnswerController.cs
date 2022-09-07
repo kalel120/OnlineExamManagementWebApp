@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using OnlineExamManagementWebApp.BLL;
 using OnlineExamManagementWebApp.DTOs;
 using OnlineExamManagementWebApp.DTOs.QuestionOption;
@@ -43,20 +44,10 @@ namespace OnlineExamManagementWebApp.Controllers {
             ICollection<OptionToSaveDto> optionsToSaveDto = new List<OptionToSaveDto>();
 
             foreach (var item in qaEntryViewModel.Options) {
-                optionsToSaveDto.Add(new OptionToSaveDto {
-                    SerialNo = item.SerialNo,
-                    OptionText = item.OptionText,
-                    IsCorrectAnswer = item.IsCorrectAnswer
-                });
+                optionsToSaveDto.Add(Mapper.Map<OptionToSaveDto>(item));
             }
 
-            QuestionToSaveDto questionToSaveDto = new QuestionToSaveDto {
-                ExamId = qaEntryViewModel.ExamId,
-                Order = qaEntryViewModel.Order,
-                Marks = qaEntryViewModel.Marks,
-                QuestionDescription = qaEntryViewModel.QuestionDescription,
-                OptionType = qaEntryViewModel.OptionType
-            };
+            QuestionToSaveDto questionToSaveDto = Mapper.Map<QuestionToSaveDto>(qaEntryViewModel);
 
             bool result = _qoManager.IsQuestionAnswerSaved(questionToSaveDto, optionsToSaveDto);
             return Json(result, JsonRequestBehavior.AllowGet);
