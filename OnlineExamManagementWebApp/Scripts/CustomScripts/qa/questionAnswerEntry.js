@@ -277,6 +277,7 @@
 
         const getQaDataToSubmit = function (listOfOptions) {
             let questionAnsData = {
+                ExamId: examId,
                 Order: $("#question_Order").val(),
                 Marks: $("#question_Marks").val(),
                 QuestionDescription: $("#question_Description").val(),
