@@ -40,7 +40,25 @@ namespace OnlineExamManagementWebApp.Controllers {
 
         [HttpPost]
         public JsonResult Entry(QuestionAnswerEntryViewModel qaEntryViewModel) {
-            bool result = true;
+            ICollection<OptionToSaveDto> optionsToSaveDto = new List<OptionToSaveDto>();
+
+            foreach (var item in qaEntryViewModel.Options) {
+                optionsToSaveDto.Add(new OptionToSaveDto {
+                    SerialNo = item.SerialNo,
+                    OptionText = item.OptionText,
+                    IsCorrectAnswer = item.IsCorrectAnswer
+                });
+            }
+
+            QuestionToSaveDto questionToSaveDto = new QuestionToSaveDto {
+                ExamId = qaEntryViewModel.ExamId,
+                Order = qaEntryViewModel.Order,
+                Marks = qaEntryViewModel.Marks,
+                QuestionDescription = qaEntryViewModel.QuestionDescription,
+                OptionType = qaEntryViewModel.OptionType
+            };
+
+            bool result = _qoManager.IsQuestionSaved(questionToSaveDto, optionsToSaveDto);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
