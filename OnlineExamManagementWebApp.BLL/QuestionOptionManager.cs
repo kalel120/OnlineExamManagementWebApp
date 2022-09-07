@@ -17,55 +17,59 @@ namespace OnlineExamManagementWebApp.BLL {
         }
 
         public bool IsQuestionAnswerSaved(QuestionToSaveDto questionToSaveDto, ICollection<OptionToSaveDto> optionsToSaveDto) {
-            Guid questionGuid = Guid.NewGuid();
             DateTime currentDateTime = DateTime.Now;
             ICollection<Option> optionsToSave = new List<Option>();
             ICollection<QuestionOption> questionAndOptionsToSave = new List<QuestionOption>();
 
-            // Mapping dto data to Model data
-            Question questionToSave = new Question {
-                Id = questionGuid,
-                Description = questionToSaveDto.QuestionDescription,
-                OptionType = questionToSaveDto.OptionType,
-                Marks = questionToSaveDto.Marks,
-                Serial = questionToSaveDto.Order,
+            var questionToSave = MapQuestionWithDto(questionToSaveDto, currentDateTime);
+
+            // Adding the question and it's options to bridging table list. Saving this list will auto save question and options in DB
+            foreach (var item in optionsToSaveDto) {
+                var option = MapOptionWithDto(item, currentDateTime);
+                optionsToSave.Add(option);
+                questionAndOptionsToSave.Add(MapQuestionOptionBridgeTable(questionToSave, option, item.SerialNo, item.IsCorrectAnswer, currentDateTime));
+            }
+
+            return _unitOfWork.QuestionOptions.IsQuestionAnswerSaved(questionAndOptionsToSave);
+        }
+
+        private QuestionOption MapQuestionOptionBridgeTable(Question question, Option option, int serialNo, bool isCorrectAnswer, DateTime currentDateTime) {
+            return new QuestionOption {
+                QuestionId = question.Id,
+                OptionId = option.Id,
+                Order = serialNo,
+                IsDeleted = false,
+                IsCorrectAnswer = isCorrectAnswer,
+                DateCreated = currentDateTime,
+                DateUpdated = null,
+                Question = question,
+                Option = option
+            };
+
+        }
+
+        private Question MapQuestionWithDto(QuestionToSaveDto dto, DateTime currentDateTime) {
+            return new Question {
+                Id = Guid.NewGuid(),
+                Description = dto.QuestionDescription,
+                OptionType = dto.OptionType,
+                Marks = dto.Marks,
+                Serial = dto.Order,
                 IsDeleted = false,
                 DateCreated = currentDateTime,
                 DateUpdated = null,
-                ExamId = questionToSaveDto.ExamId
+                ExamId = dto.ExamId
             };
+        }
 
-            foreach (var item in optionsToSaveDto) {
-                var option = new Option {
-                    Id = Guid.NewGuid(),
-                    Description = item.OptionText,
-                    IsDeleted = false,
-                    DateCreated = currentDateTime,
-                    DateUpdated = null
-                };
-
-                optionsToSave.Add(option);
-
-                var qoToSave = new QuestionOption {
-                    QuestionId = questionGuid,
-                    OptionId = option.Id,
-                    Order = item.SerialNo,
-                    IsDeleted = false,
-                    IsCorrectAnswer = item.IsCorrectAnswer,
-                    DateCreated = currentDateTime,
-                    DateUpdated = null,
-                    Question = questionToSave,
-                    Option = option
-                };
-
-                questionAndOptionsToSave.Add(qoToSave);
-            }
-
-            bool result = _unitOfWork.QuestionOptions.IsQuestionAnswerSaved(questionAndOptionsToSave);
-
-            // END
-
-            return result;
+        private Option MapOptionWithDto(OptionToSaveDto dto, DateTime currentDateTime) {
+            return new Option {
+                Id = Guid.NewGuid(),
+                Description = dto.OptionText,
+                IsDeleted = false,
+                DateCreated = currentDateTime,
+                DateUpdated = null
+            };
         }
     }
 }
