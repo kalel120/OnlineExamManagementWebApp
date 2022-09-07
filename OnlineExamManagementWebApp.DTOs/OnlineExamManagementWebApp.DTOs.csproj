@@ -48,7 +48,9 @@
     <Compile Include="ExamDetailsDto.cs" />
     <Compile Include="QuestionOption\OptionDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuestionOption\OptionToSaveDto.cs" />
     <Compile Include="QuestionOption\QuestionsDto.cs" />
+    <Compile Include="QuestionOption\QuestionToSaveDto.cs" />
     <Compile Include="SearchCourseDto.cs" />
     <Compile Include="SearchOrgDto.cs" />
     <Compile Include="TagDto.cs" />
