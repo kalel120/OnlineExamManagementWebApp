@@ -58,7 +58,7 @@ namespace OnlineExamManagementWebApp.Controllers {
                 OptionType = qaEntryViewModel.OptionType
             };
 
-            bool result = _qoManager.IsQuestionSaved(questionToSaveDto, optionsToSaveDto);
+            bool result = _qoManager.IsQuestionAnswerSaved(questionToSaveDto, optionsToSaveDto);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
     }
