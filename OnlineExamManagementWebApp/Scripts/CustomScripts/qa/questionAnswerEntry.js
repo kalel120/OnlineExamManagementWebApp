@@ -104,13 +104,19 @@
          */
         const tblQuestions = $('#tbl-questions').DataTable({
             "ajax": {
-                "beforeSend": () => { loadingSpinner.show(); },
+                "beforeSend": function () {
+                    loadingSpinner.show();
+                },
                 "url": `/QuestionAnswer/GetQuestionsByExamId?id=${examId}`,
                 "contentType": "applicaiton/json",
                 "data": function (d) {
                     return JSON.stringify(d);
                 },
-                "complete": () => { loadingSpinner.hide(); },
+                "complete": function () {
+                    $("#question_Order").val($("#tbl-questions tr").length);
+                    loadingSpinner.hide();
+
+                }, //() => { loadingSpinner.hide(); },
                 "dataSrc": ""
             },
             "columns": [
@@ -349,10 +355,10 @@
 
                         }
                     },
-                    failure: function(response) {
+                    failure: function (response) {
                         bootbox.alert(`failure response >> ${response.responseText}`);
                     },
-                    error: function(response) {
+                    error: function (response) {
                         bootbox.alert(`error response >> ${response.responseText}`);
                     }
                 });

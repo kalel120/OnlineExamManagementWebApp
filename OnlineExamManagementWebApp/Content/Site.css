@@ -120,9 +120,10 @@ textarea {
     height: 100%;
     z-index: 1000;
     background-color: rgba(192, 192, 192, 0.5);
-    background-image: url("https://i.stack.imgur.com/FhHRx.gif");
+    background-image: url('gif/fidget-spinner.gif');
     background-repeat: no-repeat;
     background-position: center;
 }
 
 /*Loading Spinners*/
+
