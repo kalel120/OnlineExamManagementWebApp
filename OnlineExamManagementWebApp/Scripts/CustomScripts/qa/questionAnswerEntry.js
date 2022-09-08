@@ -139,22 +139,13 @@
                     }
                 }
             ]
-            //"processing": true,
-            //"language": {
-            //    "loadingRecords": "&nbsp;",
-            //    "processing": '<div id="loading"></div>'
-            //}
-
-        });
-
-        $("#btn_testCallback").on('click', function () {
-            tblQuestions.ajax.reload(null, false); // user pagination is not reset on reload
         });
         /* END */
 
         /**
          * Add option section
         */
+
         let addOptionButtonClickCounter = 0;
         let addOptionButton = $("#js-btn-AddOption");
         $("#question_Order").val($("#tbl-questions tr").length + 1);
@@ -176,7 +167,6 @@
             if (!qaEntryFormValidation()) {
                 return false;
             }
-
 
             let html = "";
             let serialNo = addOptionButtonClickCounter + 1;
@@ -204,11 +194,11 @@
                             <td><a href="#" class="js-remove-option btn btn-danger"><i class="avoid-clicks fa fa-trash-o"> Remove </i> </a> </td>
                          </tr>`;
             }
-
+            // If Multiple answer then include checkboxes
             if (optionTypeVal === "Multiple Answer") {
                 html = `"<tr>
                             <td>${serialNo}</td>
-                            <td><input type = "radio" name="OptionRadioButton${serialNo}"/> ${optionBody}</td>
+                            <td><input type = "checkbox" name="OptionCheckBox${serialNo}" id="OptionCheckBox${serialNo}"/> ${optionBody}</td>
                             <td><a href="#" class="js-remove-option btn btn-danger"><i class="avoid-clicks fa fa-trash-o"> Remove </i> </a> </td>
                          </tr>`;
             }
@@ -274,7 +264,7 @@
                     let option = {
                         "SerialNo": $(element).find("td:nth-child(1)").text(),
                         "OptionText": $.trim($(element).find("td:nth-child(2)").text()),
-                        "IsCorrectAnswer": $(element).find("td input:radio").is(":checked")
+                        "IsCorrectAnswer": $(element).find("td input:checkbox").is(":checked")
                     }
                     listOfOptions.push(option);
                 });
