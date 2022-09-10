@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using OnlineExamManagementWebApp.BLL;
-using OnlineExamManagementWebApp.DTOs;
 using OnlineExamManagementWebApp.DTOs.QuestionOption;
 using OnlineExamManagementWebApp.ViewModels;
 
@@ -38,6 +35,11 @@ namespace OnlineExamManagementWebApp.Controllers {
             return Json(questions, JsonRequestBehavior.AllowGet);
         }
 
+
+        public JsonResult GetOptionsByQuestionId(Guid id) {
+            ICollection<OptionDto> options = _qoManager.GetOptionsByQuestionId(id);
+            return Json(options, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpPost]
         public JsonResult Entry(QuestionAnswerEntryViewModel qaEntryViewModel) {

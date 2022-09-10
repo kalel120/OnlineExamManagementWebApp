@@ -25,10 +25,49 @@
         };
 
         const bindToViewQoModal = function (data) {
+            const firstOptionChk = $("#js-modal-viewQo-firstOption");
+            const firstOptionSpan = $("#js-span-modal-viewQo-firstOption");
+            const secondOptionChk = $("#js-modal-viewQo-secondOption");
+            const secondOptionSpan = $("#js-span-modal-viewQo-secondOption");
+            const thirdOptionChk = $("#js-modal-viewQo-thirdOption");
+            const thirdOptionSpan = $("#js-span-modal-viewQo-thirdOption");
+            const fourthOptionChk = $("#js-modal-viewQo-fourthOption");
+            const fourthOptionSpan = $("#js-span-viewQo-fourthOption");
+
+
             $("#js-modal-viewQo-order").val(data.Serial);
             $("#js-modal-viewQo-marks").val(data.Marks);
             $("#js-modal-viewQo-qText").val(data.Description);
             $("#js-modal-viewQo-optionType").val(data.OptionType);
+
+            firstOptionChk.text(data.Options[0].Description);
+            firstOptionSpan.text(data.Options[0].Description);
+
+            if (data.Options[0].IsMarkedAsAnswer) {
+                firstOptionChk.removeAttr("disabled").prop("checked", true).iCheck("update");
+            } 
+
+            secondOptionChk.text(data.Options[1].Description);
+            secondOptionSpan.text(data.Options[1].Description);
+
+            if (data.Options[1].IsMarkedAsAnswer) {
+                secondOptionChk.removeAttr("disabled").prop("checked", true).iCheck("update");
+            } 
+
+            thirdOptionChk.text(data.Options[2].Description);
+            thirdOptionSpan.text(data.Options[2].Description);
+
+
+            if (data.Options[2].IsMarkedAsAnswer) {
+                thirdOptionChk.removeAttr("disabled").prop("checked", true).iCheck("update");
+            }
+
+            fourthOptionChk.text(data.Options[3].Description);
+            fourthOptionSpan.text(data.Options[3].Description);
+
+            if (data.Options[3].IsMarkedAsAnswer) {
+                fourthOptionChk.removeAttr("disabled").prop("checked", true).iCheck("update");
+            }
         };
 
         const getOptionsByQuestionId = function (questionId) {
@@ -36,35 +75,25 @@
                 type: "GET",
                 url: `/QuestionAnswer/GetOptionsByQuestionId?id=${questionId}`,
                 dataType: "json"
-            })
-                .done(function (data) {
-
-                });
+            });
         };
 
 
         // Popup Question Option Modal
         $(document).on("click", ".js-qoModalPopup", async function (event) {
-
             let tableRow = getRowOfQuestionTableAsObject($(event.target).closest("tr"));
-            bindToViewQoModal(tableRow);
 
             try {
-                let serverResponse = await getOptionsByQuestionId(tableRow.QuestionId);
-                console.log(serverResponse);
-
+                tableRow.Options = await getOptionsByQuestionId(tableRow.QuestionId);
+                bindToViewQoModal(tableRow);
+                qoViewModal.modal("toggle");
             }
 
             catch (exception) {
-                if (exception.status == 404) {
+                if (exception.status === 404) {
                     window.location = "/Error/Error404";
                 }
             }
-
-            //if (serverResponse.StatusCode == 200) {
-            //    qoViewModal.modal("toggle");
-            //}
-
         });
 
         // End

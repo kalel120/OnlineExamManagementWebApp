@@ -71,5 +71,9 @@ namespace OnlineExamManagementWebApp.BLL {
                 DateUpdated = null
             };
         }
+
+        public ICollection<OptionDto> GetOptionsByQuestionId(Guid questionId) {
+            return _unitOfWork.QuestionOptions.GetOptionsByQuestionId(questionId);
+        }
     }
 }
