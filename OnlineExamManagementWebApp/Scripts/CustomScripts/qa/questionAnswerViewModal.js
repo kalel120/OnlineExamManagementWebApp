@@ -5,12 +5,7 @@
          * Initialization
          */
         const qoViewModal = $("#js-modal-viewQo");
-
-        $("#js-modal-viewQo-qText").on("change", function () {
-            $(this).height(0).height(this.scrollHeight);
-        }).find("js-modal-viewQo-qText").trigger("change");
         // End
-
 
         const getRowOfQuestionTableAsObject = function (row) {
             let content = {
