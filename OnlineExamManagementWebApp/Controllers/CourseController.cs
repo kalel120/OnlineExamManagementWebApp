@@ -251,7 +251,7 @@ namespace OnlineExamManagementWebApp.Controllers {
         #endregion
 
         public ActionResult Error() {
-            return View("Error");
+            return RedirectToAction("Error", "Error");
         }
     }
 }

@@ -154,7 +154,7 @@ namespace OnlineExamManagementWebApp.Controllers {
             IdentityResult result = UserManager.Update(updatedUser);
 
             if (!result.Succeeded) {
-                return View("Error");
+                return RedirectToAction("Error", "Error");
             }
 
             ViewBag.UpdateMessage = "Successfully Updated";

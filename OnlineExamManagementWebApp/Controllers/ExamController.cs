@@ -35,7 +35,7 @@ namespace OnlineExamManagementWebApp.Controllers {
                 }
             }
             catch (Exception e) {
-                return View("Error");
+                return RedirectToAction("Error", "Error");
             }
 
             return View(examIndexVm);

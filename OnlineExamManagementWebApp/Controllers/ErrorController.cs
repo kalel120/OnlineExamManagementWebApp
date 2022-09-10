@@ -6,5 +6,9 @@ namespace OnlineExamManagementWebApp.Controllers {
         public ActionResult Error404() {
             return View("Error_404");
         }
+
+        public ActionResult Error() {
+            return View("Error");
+        }
     }
 }

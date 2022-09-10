@@ -31,49 +31,40 @@
             $("#js-modal-viewQo-optionType").val(data.OptionType);
         };
 
-        const getOptionsByQuestionId = async function (questionId) {
-            try {
-                await $.ajax({
-                    type: "GET",
-                    url: `/QuestionAnswer/GetOptionsByQuestionId?id=${questionId}`,
-                    dataType: "json",
-                    statusCode: {
-                        404: function (response, statusText, jqXhr) {
-                            console.log("response >>" + response);
-                            console.log("statusText >>" + statusText);
-                            console.log("statusText >>" + jqXhr);
-                            window.location = "/Error/Error404";
-                        }
-                    }
-                })
-                    .done(function (data) {
-                        bootbox.alert("ajax request successful");
-                    })
-                    .fail(function (data) {
-                        bootbox.alert("ajax request failed");
-                        console.log(data);
-                    });
+        const getOptionsByQuestionId = function (questionId) {
+            return $.ajax({
+                type: "GET",
+                url: `/QuestionAnswer/GetOptionsByQuestionId?id=${questionId}`,
+                dataType: "json"
+            })
+                .done(function (data) {
 
-            } catch (e) {
-                console.log(e.responseJSON.Message);
-            }
+                });
         };
 
 
         // Popup Question Option Modal
-        $(document).on("click", ".js-qoModalPopup", function (event) {
+        $(document).on("click", ".js-qoModalPopup", async function (event) {
 
+            let tableRow = getRowOfQuestionTableAsObject($(event.target).closest("tr"));
+            bindToViewQoModal(tableRow);
 
-            setTimeout(function () {
-                // Get data from HTML table
-                let tableRow = getRowOfQuestionTableAsObject($(event.target).closest("tr"));
-                bindToViewQoModal(tableRow);
+            try {
+                let serverResponse = await getOptionsByQuestionId(tableRow.QuestionId);
+                console.log(serverResponse);
 
-                // Get data from server
-                let optionsDataFromServer = getOptionsByQuestionId(tableRow.QuestionId);
+            }
 
-                qoViewModal.modal("toggle");
-            }, 300);
+            catch (exception) {
+                if (exception.status == 404) {
+                    window.location = "/Error/Error404";
+                }
+            }
+
+            //if (serverResponse.StatusCode == 200) {
+            //    qoViewModal.modal("toggle");
+            //}
+
         });
 
         // End
