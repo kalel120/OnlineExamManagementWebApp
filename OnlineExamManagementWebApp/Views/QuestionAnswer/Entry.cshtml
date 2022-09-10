@@ -162,7 +162,7 @@
         </div>
     </div>
 </div>
-
+@*END*@
 
 @*DataTable section*@
 <div class="row" id="qa_entry_bottomRow">
@@ -200,6 +200,99 @@
         </div>
     </div>
 </div>
+@*END*@
+
+@*Question Option View Button Modal popup*@
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="js-modal-viewQo">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h3 class="modal-title">Question and Related Options</h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_content">
+                                <form class="form-horizontal" novalidate>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                            Order
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="js-modal-viewQo-order" class="form-control col-md-7 col-xs-12" type="text" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                            Marks
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="js-modal-viewQo-Marks" class="form-control col-md-7 col-xs-12" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                            Question
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="js-modal-viewQo-qText" class="form-control col-md-7 col-xs-12" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                            Option Type
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="js-modal-viewQo-optionType" class="form-control col-md-7 col-xs-12" readonly="readonly">
+                                        </div>
+                                    </div>                                    
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                            Options
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="js-modal-viewQo-firstOption" class="flat" checked="checked"> First Option
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="js-modal-viewQo-secondOption" class="flat"> Second Option
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="js-modal-viewQo-thirdOption" class="flat"> Third Option
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="js-modal-viewQo-fourthOption" class="flat"> Fourth Option
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*END*@
 
 
 @section scripts {
@@ -223,12 +316,11 @@
     <script src="~/Theme/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
     <script src="~/Theme/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
     <!--DataTable end-->
-
     <!--bootbox end-->
     <script src="~/Scripts/bootbox.min.js"></script>
     <!--bootbox end-->
-    
     <!--Custom Scripts-->
     <script src="~/Scripts/CustomScripts/qa/questionAnswerEntry.js"></script>
+    <script src="~/Scripts/CustomScripts/qa/questionAnswerViewModal.js"></script>
     <!--Custom Scripts End-->
 }

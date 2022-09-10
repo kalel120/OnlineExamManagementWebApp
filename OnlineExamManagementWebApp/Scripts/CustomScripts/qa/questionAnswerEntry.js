@@ -112,14 +112,14 @@
                 "data": function (d) {
                     return JSON.stringify(d);
                 },
-                "complete": function () {
+                "complete": function (response) {
                     $("#question_Order").val($("#tbl-questions tr").length);
+                    //console.log(response);
                     loadingSpinner.hide();
-
-                }, //() => { loadingSpinner.hide(); },
+                }, 
                 "dataSrc": ""
             },
-            "columns": [
+            "columns": [ 
                 { "data": "Serial" },
                 { "data": "Marks" },
                 { "data": "Description" },
@@ -133,9 +133,9 @@
                 {
                     "data": null,
                     "render": function (data, row) {
-                        return `<a href="#" class="btn btn-primary" data-org-id="${data.QuestionId}"><i class="avoid-clicks fa fa-folder"> View</i></a>
-                                 <a href="#" class="btn btn-info" data-org-id="${data.QuestionId}"><i class="avoid-clicks fa fa-pencil"> Edit</i></a>
-                                 <a href="#" class="btn btn-danger" data-org-id="${data.QuestionId}"><i class="avoid-clicks fa fa-trash-o"> Delete</i></a>`;
+                        return `<a href="#" class="btn btn-primary js-qoModalPopup" data-question-id="${data.QuestionId}"><i class="avoid-clicks fa fa-folder"> View</i></a>
+                                 <a href="#" class="btn btn-info" data-question-id="${data.QuestionId}"><i class="avoid-clicks fa fa-pencil"> Edit</i></a>
+                                 <a href="#" class="btn btn-danger" data-question-id="${data.QuestionId}"><i class="avoid-clicks fa fa-trash-o"> Delete</i></a>`;
                     }
                 }
             ]
@@ -357,6 +357,7 @@
         /*
         * END
         */
+
     });
 })(jQuery);
 
