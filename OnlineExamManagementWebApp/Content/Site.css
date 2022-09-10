@@ -127,3 +127,11 @@ textarea {
 
 /*Loading Spinners*/
 
+/*View Question Option Modal popup*/
+#js-modal-viewQo-qText {
+    resize: none;
+    width: 100%;
+    min-height: 100px;
+    max-height: 200ch;
+}
+/*End*/
