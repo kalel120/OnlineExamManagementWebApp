@@ -132,6 +132,15 @@ textarea {
     resize: none;
     width: 100%;
     min-height: 100px;
-    max-height: 200ch;
+    max-height: 250ch;
+}
+/*End*/
+
+/*Edit Question Option Modal popup*/
+#js-modal-editQo-qText {
+    resize: none;
+    width: 100%;
+    min-height: 100px;
+    max-height: 250ch;
 }
 /*End*/

@@ -5,11 +5,11 @@
          * Initialization
          */
         const qoViewModal = $("#js-modal-viewQo");
-        // End
+        /*END*/
 
         const getRowOfQuestionTableAsObject = function (row) {
             let content = {
-                QuestionId: row.find("a.btn.btn-primary.js-qoModalPopup").attr("data-question-id"),
+                QuestionId: row.find("a.btn.btn-primary.js-qoViewModalPopup").attr("data-question-id"),
                 Serial: $.trim(row.find("td:eq(0)").text()),
                 Marks: $.trim(row.find("td:eq(1)").text()),
                 Description: $.trim(row.find("td:eq(2)").text()),
@@ -74,8 +74,8 @@
         };
 
 
-        // Popup Question Option Modal
-        $(document).on("click", ".js-qoModalPopup", async function (event) {
+        /** Popup question options view modal **/
+        $(document).on("click", ".js-qoViewModalPopup", async function (event) {
             let tableRow = getRowOfQuestionTableAsObject($(event.target).closest("tr"));
 
             try {
@@ -87,10 +87,12 @@
             catch (exception) {
                 if (exception.status === 404) {
                     window.location = "/Error/Error404";
+                } else {
+                    console.log(exception);
                 }
             }
         });
 
-        // End
+        /*END*/
     });
 })(jQuery);

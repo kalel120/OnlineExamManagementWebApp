@@ -133,8 +133,8 @@
                 {
                     "data": null,
                     "render": function (data, row) {
-                        return `<a href="#" class="btn btn-primary js-qoModalPopup" data-question-id="${data.QuestionId}"><i class="avoid-clicks fa fa-folder"> View</i></a>
-                                 <a href="#" class="btn btn-info" data-question-id="${data.QuestionId}"><i class="avoid-clicks fa fa-pencil"> Edit</i></a>
+                        return `<a href="#" class="btn btn-primary js-qoViewModalPopup" data-question-id="${data.QuestionId}"><i class="avoid-clicks fa fa-folder"> View</i></a>
+                                 <a href="#" class="btn btn-info js-qoEditModalPopup" data-question-id="${data.QuestionId}"><i class="avoid-clicks fa fa-pencil"> Edit</i></a>
                                  <a href="#" class="btn btn-danger" data-question-id="${data.QuestionId}"><i class="avoid-clicks fa fa-trash-o"> Delete</i></a>`;
                     }
                 }

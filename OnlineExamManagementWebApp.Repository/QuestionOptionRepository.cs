@@ -24,11 +24,11 @@ namespace OnlineExamManagementWebApp.Repository {
                 .Where(qo => qo.QuestionId == questionId && qo.IsDeleted == false)
                 //.Include(qo => qo.Option)
                 //.Select(qo => qo.Option)
-                .Select(oDto => new OptionDto {
-                    OptionId = oDto.OptionId,
-                    DateCreated = oDto.Option.DateCreated,
-                    Description = oDto.Option.Description,
-                    IsMarkedAsAnswer = oDto.IsCorrectAnswer
+                .Select(qo => new OptionDto {
+                    OptionId = qo.OptionId,
+                    DateCreated = qo.Option.DateCreated,
+                    Description = qo.Option.Description,
+                    IsMarkedAsAnswer = qo.IsCorrectAnswer
                 })
                 .ToList();
 

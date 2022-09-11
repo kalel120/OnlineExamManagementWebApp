@@ -108,7 +108,8 @@
                     <div class="item form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Question*</label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <textarea id="question_Description" name="QuestionDescription" class="form-control col-md-7 col-xs-12" placeholder="Enter your Question here (Maximum 200 characters)"></textarea>
+                            <textarea id="question_Description" name="QuestionDescription" class="form-control col-md-7 col-xs-12"
+                                      placeholder="Enter your Question here (Maximum 200 characters)"></textarea>
                         </div>
                     </div>
 
@@ -242,7 +243,7 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input type="text" id="js-modal-viewQo-optionType" class="form-control col-md-7 col-xs-12" readonly="readonly">
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
                                             Question
@@ -251,7 +252,7 @@
                                             <textarea id="js-modal-viewQo-qText" class="form-control col-md-7 col-xs-12" readonly="readonly"> </textarea>
                                         </div>
                                     </div>
-                                   
+
                                     <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">
                                             Options
@@ -259,7 +260,7 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <div class="checkbox">
                                                 <label>
-                                                    <input type="checkbox" id="js-modal-viewQo-firstOption" class="flat"  disabled="disabled">
+                                                    <input type="checkbox" id="js-modal-viewQo-firstOption" class="flat" disabled="disabled">
                                                     <span id="js-span-modal-viewQo-firstOption">First Option</span>
                                                 </label>
                                             </div>
@@ -296,7 +297,110 @@
         </div>
     </div>
 </div>
+@*END*@
 
+@*Question Option Edit Button Modal popup*@
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="js-modal-editQo">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h3 class="modal-title">Question and Related Options</h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_content">
+                                <form class="form-horizontal" id="js-modal-editQo-form">
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                            Order
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input id="js-modal-editQo-order" name="Serial" class="form-control col-md-7 col-xs-12" type="text" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                            Marks
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" name="Marks" id="js-modal-editQo-marks" class="form-control col-md-7 col-xs-12"
+                                                   placeholder="Marks" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                            Option Type
+                                        </label>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <div class="radio">
+                                                <input type="radio" class="flat" name="OptionType" id="js-modal-editQo-oType-single" value="Single Answer" required="" /> Single Answer
+                                            </div>
+                                            <div class="radio">
+                                                <input type="radio" class="flat" name="OptionType" id="js-modal-editQo-oType-multiple" value="Multiple Answer" /> Multiple Answer
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                            Question
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <textarea id="js-modal-editQo-qText" name="Description" class="form-control col-md-7 col-xs-12"
+                                                      placeholder="Enter your Question here (Maximum 200 characters)" required="required"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="item form-group">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+                                            Options
+                                        </label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="js-modal-editQo-firstOption" class="flat" disabled="disabled">
+                                                    <span id="js-span-modal-editQo-firstOption">First Option</span>
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="js-modal-editQo-secondOption" class="flat" disabled="disabled">
+                                                    <span id="js-span-modal-editQo-secondOption">Second Option</span>
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="js-modal-editQo-thirdOption" class="flat" disabled="disabled">
+                                                    <span id="js-span-modal-editQo-thirdOption">Third Option</span>
+                                                </label>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" id="js-modal-editQo-fourthOption" class="flat" disabled="disabled">
+                                                    <span id="js-span-modal-editQo-fourthOption">Fourth Option</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" id="js-modal-editQo-Submit">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 @*END*@
 
 
@@ -327,5 +431,6 @@
     <!--Custom Scripts-->
     <script src="~/Scripts/CustomScripts/qa/questionAnswerEntry.js"></script>
     <script src="~/Scripts/CustomScripts/qa/questionAnswerViewModal.js"></script>
+    <script src="~/Scripts/CustomScripts/qa/questionAnswerEditModal.js"></script>
     <!--Custom Scripts End-->
 }
