@@ -11,6 +11,8 @@
         const qoEditSingleRadioBtn = $("#js-modal-editQo-oType-single");
         const qoEditMultiRadioBtn = $("#js-modal-editQo-oType-multiple");
 
+        const optionsChkBoxDiv = $(".js-div-options-editModal");
+
         /*END*/
 
         const getRowOfQuestionTableAsObject = function (row) {
@@ -33,7 +35,7 @@
             });
         };
 
-        const bindToEditQoModal = function(data) {
+        const bindToEditQoModal = function (data) {
             qoEditOrderTextBox.val(data.Serial);
             qoEditMarksTextBox.val(data.Marks);
             qoEditDescTextBox.val(data.Description);
@@ -47,10 +49,23 @@
                 qoEditMultiRadioBtn.prop("checked", true).iCheck("update");
                 qoEditSingleRadioBtn.prop("checked", false).iCheck("update");
             }
+
+            optionsChkBoxDiv.find("span").each(function (index, element) {
+                $(element).text(data.Options[index].Description);
+            });
+
+            optionsChkBoxDiv.find("input[type=checkbox]").each(function (index, element) {
+                if (data.Options[index].IsMarkedAsAnswer) {
+                    $(element).prop("checked", true).iCheck("update");
+                } else {
+                    $(element).prop("checked", false).iCheck("update");
+                }
+            });
+
         };
 
         /** Popup question options edit modal **/
-        $(document).on("click", ".js-qoEditModalPopup", async function(event) {
+        $(document).on("click", ".js-qoEditModalPopup", async function (event) {
             let tableRow = getRowOfQuestionTableAsObject($(event.target).closest("tr"));
 
             try {
