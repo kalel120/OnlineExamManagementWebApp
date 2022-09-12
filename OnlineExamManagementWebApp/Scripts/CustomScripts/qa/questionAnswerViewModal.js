@@ -5,6 +5,7 @@
          * Initialization
          */
         const qoViewModal = $("#js-modal-viewQo");
+        const optionsChkBoxDiv = $(".js-div-options-viewModal");
         /*END*/
 
         const getRowOfQuestionTableAsObject = function (row) {
@@ -20,49 +21,24 @@
         };
 
         const bindToViewQoModal = function (data) {
-            const firstOptionChk = $("#js-modal-viewQo-firstOption");
-            const firstOptionSpan = $("#js-span-modal-viewQo-firstOption");
-            const secondOptionChk = $("#js-modal-viewQo-secondOption");
-            const secondOptionSpan = $("#js-span-modal-viewQo-secondOption");
-            const thirdOptionChk = $("#js-modal-viewQo-thirdOption");
-            const thirdOptionSpan = $("#js-span-modal-viewQo-thirdOption");
-            const fourthOptionChk = $("#js-modal-viewQo-fourthOption");
-            const fourthOptionSpan = $("#js-span-viewQo-fourthOption");
-
-
             $("#js-modal-viewQo-order").val(data.Serial);
             $("#js-modal-viewQo-marks").val(data.Marks);
             $("#js-modal-viewQo-qText").val(data.Description);
             $("#js-modal-viewQo-optionType").val(data.OptionType);
 
-            firstOptionChk.text(data.Options[0].Description);
-            firstOptionSpan.text(data.Options[0].Description);
+            // bind options text to checkboxes
+            optionsChkBoxDiv.find("span").each(function (index, element) {
+                $(element).text(data.Options[index].Description);
+            });
 
-            if (data.Options[0].IsMarkedAsAnswer) {
-                firstOptionChk.removeAttr("disabled").prop("checked", true).iCheck("update");
-            } 
-
-            secondOptionChk.text(data.Options[1].Description);
-            secondOptionSpan.text(data.Options[1].Description);
-
-            if (data.Options[1].IsMarkedAsAnswer) {
-                secondOptionChk.removeAttr("disabled").prop("checked", true).iCheck("update");
-            } 
-
-            thirdOptionChk.text(data.Options[2].Description);
-            thirdOptionSpan.text(data.Options[2].Description);
-
-
-            if (data.Options[2].IsMarkedAsAnswer) {
-                thirdOptionChk.removeAttr("disabled").prop("checked", true).iCheck("update");
-            }
-
-            fourthOptionChk.text(data.Options[3].Description);
-            fourthOptionSpan.text(data.Options[3].Description);
-
-            if (data.Options[3].IsMarkedAsAnswer) {
-                fourthOptionChk.removeAttr("disabled").prop("checked", true).iCheck("update");
-            }
+            // bind correct answers to checkboxes
+            optionsChkBoxDiv.find("input[type=checkbox]").each(function (index, element) {
+                if (data.Options[index].IsMarkedAsAnswer) {
+                    $(element).removeAttr("disabled").prop("checked", true).iCheck("update");
+                } else {
+                    $(element).prop("disabled",true).prop("checked", false).iCheck("update");
+                }
+            });
         };
 
         const getOptionsByQuestionId = function (questionId) {

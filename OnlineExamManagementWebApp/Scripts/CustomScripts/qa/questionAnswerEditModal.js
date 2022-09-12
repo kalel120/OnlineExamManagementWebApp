@@ -50,10 +50,12 @@
                 qoEditSingleRadioBtn.prop("checked", false).iCheck("update");
             }
 
+            // bind options text to checkboxes
             optionsChkBoxDiv.find("span").each(function (index, element) {
                 $(element).text(data.Options[index].Description);
             });
 
+            // bind correct answers to checkboxes
             optionsChkBoxDiv.find("input[type=checkbox]").each(function (index, element) {
                 if (data.Options[index].IsMarkedAsAnswer) {
                     $(element).prop("checked", true).iCheck("update");
