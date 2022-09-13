@@ -17,7 +17,7 @@
 
 
         /** validation **/
-        const validation = function() {
+        const validation = function () {
             return qoEditModalForm.validate({
                 errorClass: "text-danger",
                 errorElement: "div",
@@ -30,7 +30,7 @@
                     "Description": {
                         required: true,
                         minlength: 10,
-                        maxlength: 200 
+                        maxlength: 200
                     }
                 },
                 messages: {
@@ -104,19 +104,41 @@
             }
 
             // bind options text to checkboxes
-            optionsChkBoxDiv.find("span").each(function (index, element) {
-                $(element).text(data.Options[index].Description);
-            });
+            //optionsChkBoxDiv.find("span").each(function (index, element) {
+            //    $(element).text(data.Options[index].Description);
+            //});
 
             // bind correct answers to checkboxes
-            optionsChkBoxDiv.find("input[type=checkbox]").each(function (index, element) {
-                if (data.Options[index].IsMarkedAsAnswer) {
-                    $(element).prop("checked", true).iCheck("update");
-                } else {
-                    $(element).prop("checked", false).iCheck("update");
-                }
-            });
+            //optionsChkBoxDiv.find("input[type=checkbox]").each(function (index, element) {
+            //    if (data.Options[index].IsMarkedAsAnswer) {
+            //        $(element).prop("checked", true).iCheck("update");
+            //    } else {
+            //        $(element).prop("checked", false).iCheck("update");
+            //    }
+            //});
 
+            // dynamically generated tablebody
+            $("#js-tbl-editOptionModal-tbody").empty();
+            for (let index = 0; index < data.Options.length; index++) {
+                let html = `<tr>
+                            <td>${index + 1}</td>
+                            <td> 
+                                <input type="text" name="OptionDescription" class="form-control col-md-7 col-xs-12"
+                                    value="${data.Options[index].Description}"
+                                    placeholder="Enter Option Description (Maximum 50 characters)" />
+                            </td>`;
+
+                if (data.Options[index].IsMarkedAsAnswer) {
+                    html += `<td><input type = "checkbox" name="OptionEditModalChkBox" checked="${data.Options[index].IsMarkedAsAnswer}"/></td>`;
+                } else {
+                    html += `<td><input type = "checkbox" name="OptionEditModalChkBox"/></td>`;
+                }
+                html += `<td><a href="#" class="js-editOptions-modal-remove-option btn btn-danger"><i class="avoid-clicks fa fa-trash-o"> Remove </i> </a> </td>
+                         </tr>`;
+
+
+                $("#js-tbl-editOptions-modal").append(html);
+            }
         };
 
         $(document).on("click", ".js-qoEditModalPopup", async function (event) {
@@ -138,7 +160,7 @@
         /*END*/
 
         /** Quesiton Option Update, Save change button actions **/
-        editQoSubmitBtn.on("click", function() {
+        editQoSubmitBtn.on("click", function () {
             if (validation()) {
                 bootbox.alert("validated");
             }
