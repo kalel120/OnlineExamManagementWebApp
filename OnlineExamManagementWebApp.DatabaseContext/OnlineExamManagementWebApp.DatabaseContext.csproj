@@ -134,6 +134,10 @@
     <Compile Include="Migrations\202003231544305_Add_OrderColumn_QuestionOption.designer.cs">
       <DependentUpon>202003231544305_Add_OrderColumn_QuestionOption.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202209131344032_Add_ExamIdColumn_QuestionOption.cs" />
+    <Compile Include="Migrations\202209131344032_Add_ExamIdColumn_QuestionOption.designer.cs">
+      <DependentUpon>202209131344032_Add_ExamIdColumn_QuestionOption.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -204,6 +208,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003231544305_Add_OrderColumn_QuestionOption.resx">
       <DependentUpon>202003231544305_Add_OrderColumn_QuestionOption.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202209131344032_Add_ExamIdColumn_QuestionOption.resx">
+      <DependentUpon>202209131344032_Add_ExamIdColumn_QuestionOption.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
