@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using OnlineExamManagementWebApp.DatabaseContext;
 using OnlineExamManagementWebApp.DTOs.QuestionOption;
@@ -15,17 +14,25 @@ namespace OnlineExamManagementWebApp.Repository {
 
         public ICollection<QuestionsDto> GetQuestionsByExamId(int examId) {
             try {
-                ICollection<QuestionsDto> result = _dbContext.Questions
-                    .Where(q => q.ExamId == examId && q.IsDeleted == false)
-                    .Include(q => q.QuestionOptions)
-                    .Select(dto => new QuestionsDto {
-                        QuestionId = dto.Id,
-                        Serial = dto.Serial,
-                        OptionType = dto.OptionType,
-                        Description = dto.Description,
-                        QuestionOption = dto.QuestionOptions
-                    })
+                var questions = _dbContext.QuestionOptions
+                    .Where(qo => qo.ExamId == examId && qo.IsDeleted == false)
+                    .Select(qo => qo.Question)
+                    .Distinct()
                     .ToList();
+
+                var result = new List<QuestionsDto>();
+
+                foreach (var item in questions) {
+                    result.Add(new QuestionsDto {
+                        QuestionId = item.Id,
+                        Serial = item.Serial,
+                        Marks = item.Marks,
+                        OptionType = item.OptionType,
+                        Description = item.Description,
+                        DateCreated = item.DateCreated,
+                        OptionCount = item.QuestionOptions.Select(qo => qo.Option).Count()
+                    });
+                }
 
                 return result;
             }

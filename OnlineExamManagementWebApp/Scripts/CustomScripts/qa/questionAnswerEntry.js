@@ -116,20 +116,15 @@
                     $("#question_Order").val($("#tbl-questions tr").length);
                     //console.log(response);
                     loadingSpinner.hide();
-                }, 
+                },
                 "dataSrc": ""
             },
-            "columns": [ 
+            "columns": [
                 { "data": "Serial" },
                 { "data": "Marks" },
                 { "data": "Description" },
                 { "data": "OptionType" },
-                {
-                    "data": "QuestionOption",
-                    "render": function (data, row) {
-                        return data.length;
-                    }
-                },
+                { "data": "OptionCount" },
                 {
                     "data": null,
                     "render": function (data, row) {

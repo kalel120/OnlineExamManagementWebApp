@@ -56,11 +56,5 @@
     <Compile Include="TagDto.cs" />
     <Compile Include="UpdateOrgDto.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\OnlineExamManagementWebApp.Models\OnlineExamManagementWebApp.Models.csproj">
-      <Project>{E6A4533C-D956-4F43-A9A5-FAB8E34EEB84}</Project>
-      <Name>OnlineExamManagementWebApp.Models</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

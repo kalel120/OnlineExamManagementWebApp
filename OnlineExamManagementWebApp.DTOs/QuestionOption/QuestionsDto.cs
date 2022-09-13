@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace OnlineExamManagementWebApp.DTOs.QuestionOption {
     public class QuestionsDto {
@@ -9,8 +8,6 @@ namespace OnlineExamManagementWebApp.DTOs.QuestionOption {
         public string OptionType { get; set; }
         public string Description { get; set; }
         public DateTime DateCreated { get; set; }
-
-        public ICollection<Models.QuestionOption> QuestionOption { get; set; }
-        public ICollection<OptionDto> Options { get; set; }
+        public int OptionCount { get; set; }
     }
 }
