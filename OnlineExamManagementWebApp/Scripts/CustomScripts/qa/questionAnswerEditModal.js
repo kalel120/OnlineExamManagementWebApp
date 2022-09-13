@@ -4,17 +4,70 @@
     $(() => {
         /**Initialization**/
         const qoEditModal = $("#js-modal-editQo");
-
+        const qoEditModalForm = $("#js-modal-editQo-form");
         const qoEditOrderTextBox = $("#js-modal-editQo-order");
         const qoEditMarksTextBox = $("#js-modal-editQo-marks");
         const qoEditDescTextBox = $("#js-modal-editQo-qText");
         const qoEditSingleRadioBtn = $("#js-modal-editQo-oType-single");
         const qoEditMultiRadioBtn = $("#js-modal-editQo-oType-multiple");
-
         const optionsChkBoxDiv = $(".js-div-options-editModal");
-
+        const editQoSubmitBtn = $("#js-modal-editQo-Submit");
+        //editQoSubmitBtn.prop("disabled",true);
         /*END*/
 
+
+        /** validation **/
+        const validation = function() {
+            return qoEditModalForm.validate({
+                errorClass: "text-danger",
+                errorElement: "div",
+
+                rules: {
+                    "Marks": {
+                        required: true,
+                        digits: true
+                    },
+                    "Description": {
+                        required: true,
+                        minlength: 10,
+                        maxlength: 200 
+                    }
+                },
+                messages: {
+                    "Marks": {
+                        required: "Insert Question Marks",
+                        digits: "Only positive integer are allowed"
+                    },
+                    "Description": {
+                        required: "Enter Question",
+                        minlength: "Option can not be less than 10 character",
+                        maxlength: "Option can not exceed more than 200 characters "
+                    }
+                },
+                errorPlacement: function (error, element) {
+                    if (element.parent(".input-group > div").length) {
+                        element.parent(".input-group > div").append(error);
+                    }
+                    element.parent(".form-group > div").append(error);
+                },
+
+                highlight: function (element) {
+                    $(element).closest(".form-group").removeClass("has-success has-error")
+                        .addClass("has-error");
+                },
+
+                unhighlight: function (element) {
+                    $(element).closest(".form-group").removeClass("has-error");
+                },
+
+                success: function (element) {
+                    element.closest(".form-group").removeClass("has-success has-error");
+                }
+            }).form();
+        };
+        /*END*/
+
+        /** Popup question options edit modal **/
         const getRowOfQuestionTableAsObject = function (row) {
             let content = {
                 QuestionId: row.find("td:eq(5)").children(".js-qoEditModalPopup").attr("data-question-id"),
@@ -66,7 +119,6 @@
 
         };
 
-        /** Popup question options edit modal **/
         $(document).on("click", ".js-qoEditModalPopup", async function (event) {
             let tableRow = getRowOfQuestionTableAsObject($(event.target).closest("tr"));
 
@@ -81,6 +133,14 @@
                 } else {
                     console.log(exception);
                 }
+            }
+        });
+        /*END*/
+
+        /** Quesiton Option Update, Save change button actions **/
+        editQoSubmitBtn.on("click", function() {
+            if (validation()) {
+                bootbox.alert("validated");
             }
         });
         /*END*/
