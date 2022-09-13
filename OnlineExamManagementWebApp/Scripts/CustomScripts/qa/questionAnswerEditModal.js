@@ -15,6 +15,10 @@
         //editQoSubmitBtn.prop("disabled",true);
         /*END*/
 
+        qoEditModal.on("hidden.bs.modal", function() {
+            $(this).find("form").trigger("reset");
+            console.log("modal form reset complete");
+        });
 
         /** validation **/
         const validation = function () {
@@ -27,10 +31,15 @@
                         required: true,
                         digits: true
                     },
-                    "Description": {
+                    "QuestionDescription": {
                         required: true,
                         minlength: 10,
                         maxlength: 200
+                    },
+                    "OptionDescription": {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 50
                     }
                 },
                 messages: {
@@ -38,10 +47,15 @@
                         required: "Insert Question Marks",
                         digits: "Only positive integer are allowed"
                     },
-                    "Description": {
+                    "QuestionDescription": {
                         required: "Enter Question",
                         minlength: "Option can not be less than 10 character",
                         maxlength: "Option can not exceed more than 200 characters "
+                    },
+                    "OptionDescription": {
+                        required: "Enter Option",
+                        minlength: "Option can not be less than 1 character",
+                        maxlength: "Option can not exceed more than 50 characters "
                     }
                 },
                 errorPlacement: function (error, element) {
@@ -121,12 +135,8 @@
             $("#js-tbl-editOptionModal-tbody").empty();
             for (let index = 0; index < data.Options.length; index++) {
                 let html = `<tr>
-                            <td>${index + 1}</td>
-                            <td> 
-                                <input type="text" name="OptionDescription" class="form-control col-md-7 col-xs-12"
-                                    value="${data.Options[index].Description}"
-                                    placeholder="Enter Option Description (Maximum 50 characters)" />
-                            </td>`;
+                            <td>${data.Options[index].Order}</td>
+                            <td> ${data.Options[index].Description}</td>`;
 
                 if (data.Options[index].IsMarkedAsAnswer) {
                     html += `<td><input type = "checkbox" name="OptionEditModalChkBox" checked="${data.Options[index].IsMarkedAsAnswer}"/></td>`;

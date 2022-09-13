@@ -24,6 +24,7 @@ namespace OnlineExamManagementWebApp.Repository {
                     .Where(qo => qo.QuestionId == questionId && qo.IsDeleted == false)
                     .Select(qo => new OptionDto {
                         OptionId = qo.OptionId,
+                        Order = qo.Order,
                         DateCreated = qo.Option.DateCreated,
                         Description = qo.Option.Description,
                         IsMarkedAsAnswer = qo.IsCorrectAnswer
