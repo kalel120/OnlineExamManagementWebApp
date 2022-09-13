@@ -13,7 +13,7 @@ namespace OnlineExamManagementWebApp.BLL {
         }
 
         public ICollection<QuestionsDto> GetQuestionsByExamId(int examId) {
-            return _unitOfWork.Questions.GetQuestionsByExamId(examId);
+            return _unitOfWork.QuestionOptions.GetQuestionsByExamId(examId);
         }
 
         public bool IsQuestionAnswerSaved(QuestionToSaveDto questionToSaveDto, ICollection<OptionToSaveDto> optionsToSaveDto) {
