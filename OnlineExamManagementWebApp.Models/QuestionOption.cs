@@ -18,8 +18,10 @@ namespace OnlineExamManagementWebApp.Models {
         public DateTime DateCreated { get; set; }
         public DateTime? DateUpdated { get; set; }
 
+        public int ExamId { get; set; }
+
         // Navigation
-        public Question Question { get; set; }
-        public Option Option { get; set; }
+        public virtual Question Question { get; set; }
+        public virtual Option Option { get; set; }
     }
 }
