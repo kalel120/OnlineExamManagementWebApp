@@ -5,6 +5,7 @@
         /**Initialization**/
         const qoEditModal = $("#js-modal-editQo");
         const qoEditModalForm = $("#js-modal-editQo-form");
+        const qoEditModalFormInputs = $("#js-modal-editQo-form :input");
         const qoEditOrderTextBox = $("#js-modal-editQo-order");
         const qoEditMarksTextBox = $("#js-modal-editQo-marks");
         const qoEditDescTextBox = $("#js-modal-editQo-qText");
@@ -12,13 +13,30 @@
         const qoEditMultiRadioBtn = $("#js-modal-editQo-oType-multiple");
         const optionsChkBoxDiv = $(".js-div-options-editModal");
         const editQoSubmitBtn = $("#js-modal-editQo-Submit");
-        //editQoSubmitBtn.prop("disabled",true);
+        const qoEditModalTbl = $("#js-tbl-editOptions-modal");
+
+        editQoSubmitBtn.hide();
         /*END*/
 
+        /*** Modal Reset*/
         qoEditModal.on("hidden.bs.modal", function() {
             $(this).find("form").trigger("reset");
+            editQoSubmitBtn.hide();
             console.log("modal form reset complete");
         });
+
+        /**END */
+
+        /** On any input change, will trigger an event to enable disable save button */
+        qoEditModalFormInputs.on("keyup change ifChanged", function () {
+            editQoSubmitBtn.show();
+        });
+
+        qoEditModalTbl.on("change", function() {
+            editQoSubmitBtn.show();
+        });
+
+        /**END */
 
         /** validation **/
         const validation = function () {
@@ -147,7 +165,7 @@
                          </tr>`;
 
 
-                $("#js-tbl-editOptions-modal").append(html);
+                qoEditModalTbl.append(html);
             }
         };
 

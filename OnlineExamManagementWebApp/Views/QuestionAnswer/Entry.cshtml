@@ -204,7 +204,7 @@
 @*END*@
 
 @*Question Option Edit Button Modal popup*@
-<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="js-modal-editQo">
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="js-modal-editQo" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -221,38 +221,28 @@
                             <div class="x_content">
                                 <form class="form-horizontal" id="js-modal-editQo-form">
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                            Order
-                                        </label>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Order</label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <input id="js-modal-editQo-order" name="Order" class="form-control col-md-7 col-xs-12" type="text" readonly="readonly">
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                            Marks
-                                        </label>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Marks</label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="text" name="Marks" id="js-modal-editQo-marks" class="form-control col-md-7 col-xs-12"
-                                                   placeholder="Marks" required="required">
+                                            <input type="text" name="Marks" id="js-modal-editQo-marks" class="form-control col-md-7 col-xs-12" placeholder="Marks" required="required">
                                             <span class="field-validation-valid text-danger" data-valmsg-for="Marks" data-valmsg-replace="true"></span>
                                         </div>
                                     </div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                            Question
-                                        </label>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Question</label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <textarea id="js-modal-editQo-qText" name="QuestionDescription" class="form-control col-md-7 col-xs-12"
-                                                      placeholder="Enter your Question here (Maximum 200 characters)" required="required"></textarea>
+                                            <textarea id="js-modal-editQo-qText" name="QuestionDescription" class="form-control col-md-7 col-xs-12" placeholder="Enter your Question here (Maximum 200 characters)" required="required"></textarea>
                                             <span class="field-validation-valid text-danger" data-valmsg-for="Description" data-valmsg-replace="true"></span>
                                         </div>
                                     </div>
 
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                            Option Type
-                                        </label>
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Option Type</label>
                                         <div class="col-md-9 col-sm-9 col-xs-12">
                                             <div class="radio">
                                                 <input type="radio" class="flat" name="OptionType" id="js-modal-editQo-oType-single" value="Single Answer" required="" /> Single Answer
@@ -264,10 +254,11 @@
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="item form-group">
-                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                                            Add New Option
-                                        </label>
-                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Add New Option</label>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
+                                            <input type="text" id="js-modal-editQo-oText" name="OptionDescription" class="form-control col-md-7 col-xs-12" value="" placeholder="Enter Option Description (Maximum 50 characters)" />
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-xs-12">
                                             <button type="button" id="js-btn-editOptionModal-AddOption" class="btn btn-primary">
                                                 <i class="avoid-clicks fa fa-plus-circle"></i> Add
                                             </button>
