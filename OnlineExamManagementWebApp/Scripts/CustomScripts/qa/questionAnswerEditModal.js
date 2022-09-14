@@ -4,6 +4,7 @@
     $(() => {
         /**Initialization**/
         const qoEditModal = $("#js-modal-editQo");
+        const qoEditModalQuestionId = $("#js-editModal-hidden-qId");
         const qoEditModalForm = $("#js-modal-editQo-form");
         const qoEditModalFormInputs = $("#js-modal-editQo-form :input");
         const qoEditOrderTextBox = $("#js-modal-editQo-order");
@@ -15,6 +16,7 @@
         const editQoSubmitBtn = $("#js-modal-editQo-Submit");
         const qoEditModalTbl = $("#js-tbl-editOptions-modal");
         const addOptionDiv = $(".js-div-addOption-editQoModal");
+
 
         const resetModalState = function() {
             editQoSubmitBtn.hide();
@@ -42,6 +44,7 @@
         });
 
         /**END */
+
 
         /** validation **/
         const validation = function () {
@@ -125,6 +128,26 @@
             });
         };
 
+        const buildModalOptionsTable = function (data) {
+            $("#js-tbl-editOptionModal-tbody").empty();
+            for (let index = 0; index < data.length; index++) {
+                let html = `<tr>
+                            <td>${data[index].Order}</td>
+                            <td> ${data[index].Description}</td>`;
+
+                if (data[index].IsMarkedAsAnswer) {
+                    html += `<td><input type = "checkbox" name="OptionEditModalChkBox" checked="${data[index].IsMarkedAsAnswer}"/></td>`;
+                } else {
+                    html += `<td><input type = "checkbox" name="OptionEditModalChkBox"/></td>`;
+                }
+                html += `<td><a href="#" data-option-id="${data[index].OptionId}" class="js-editOptions-modal-remove-option btn btn-danger"><i class="avoid-clicks fa fa-trash-o"> Remove </i> </a> </td>
+                         </tr>`;
+
+
+                qoEditModalTbl.append(html);
+            }
+        };
+
         const bindToEditQoModal = function (data) {
             qoEditOrderTextBox.val(data.Serial);
             qoEditMarksTextBox.val(data.Marks);
@@ -153,34 +176,22 @@
             //        $(element).prop("checked", false).iCheck("update");
             //    }
             //});
-
-            // dynamically generated tablebody
-            $("#js-tbl-editOptionModal-tbody").empty();
-            for (let index = 0; index < data.Options.length; index++) {
-                let html = `<tr>
-                            <td>${data.Options[index].Order}</td>
-                            <td> ${data.Options[index].Description}</td>`;
-
-                if (data.Options[index].IsMarkedAsAnswer) {
-                    html += `<td><input type = "checkbox" name="OptionEditModalChkBox" checked="${data.Options[index].IsMarkedAsAnswer}"/></td>`;
-                } else {
-                    html += `<td><input type = "checkbox" name="OptionEditModalChkBox"/></td>`;
-                }
-                html += `<td><a href="#" class="js-editOptions-modal-remove-option btn btn-danger"><i class="avoid-clicks fa fa-trash-o"> Remove </i> </a> </td>
-                         </tr>`;
-
-
-                qoEditModalTbl.append(html);
-            }
         };
 
-        $(document).on("click", ".js-qoEditModalPopup", async function (event) {
-            let tableRow = getRowOfQuestionTableAsObject($(event.target).closest("tr"));
 
+
+        $(document).on("click", ".js-qoEditModalPopup", async function (event) {
             try {
-                // asynchronously get options data from server
-                tableRow.Options = await getOptionsByQuestionId(tableRow.QuestionId);
+                let tableRow = getRowOfQuestionTableAsObject($(event.target).closest("tr"));
                 bindToEditQoModal(tableRow);
+                qoEditModalQuestionId.val(tableRow.QuestionId);
+
+                // asynchronously get options data from server
+                let options = await getOptionsByQuestionId(tableRow.QuestionId);
+
+                // dynamically build html options table
+                buildModalOptionsTable(options);
+
                 qoEditModal.modal("toggle");
             } catch (exception) {
                 if (exception.status === 404) {
@@ -195,12 +206,25 @@
         /**
          * Remove Option from edit modal and db
          */
+        const removeRowOfOptionsTbl = function() {
+
+        };
+
         $(document).on("click", ".js-editOptions-modal-remove-option", function(event) {
             bootbox.confirm("Are you sure?", function(result) {
                 if (result) {
+                    let tableRow = $(event.target).closest("tr").remove();
                     addOptionDiv.show();
                 }
             });
+        });
+
+        $(document).on("click", "#js-btn-editOptionModal-AddOption",  async function(event) {
+            // asynchronously get options data from server
+            let options = await getOptionsByQuestionId(qoEditModalQuestionId.val());
+
+            // dynamically build html options table
+            buildModalOptionsTable(options); 
         });
 
         /** Quesiton Option Update, Save change button actions **/
