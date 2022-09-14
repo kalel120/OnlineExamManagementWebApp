@@ -14,15 +14,20 @@
         const optionsChkBoxDiv = $(".js-div-options-editModal");
         const editQoSubmitBtn = $("#js-modal-editQo-Submit");
         const qoEditModalTbl = $("#js-tbl-editOptions-modal");
+        const addOptionDiv = $(".js-div-addOption-editQoModal");
 
-        editQoSubmitBtn.hide();
+        const resetModalState = function() {
+            editQoSubmitBtn.hide();
+            addOptionDiv.hide();
+        }
+
+        resetModalState();
         /*END*/
 
         /*** Modal Reset*/
         qoEditModal.on("hidden.bs.modal", function() {
             $(this).find("form").trigger("reset");
-            editQoSubmitBtn.hide();
-            console.log("modal form reset complete");
+            resetModalState();
         });
 
         /**END */
@@ -186,6 +191,17 @@
             }
         });
         /*END*/
+
+        /**
+         * Remove Option from edit modal and db
+         */
+        $(document).on("click", ".js-editOptions-modal-remove-option", function(event) {
+            bootbox.confirm("Are you sure?", function(result) {
+                if (result) {
+                    addOptionDiv.show();
+                }
+            });
+        });
 
         /** Quesiton Option Update, Save change button actions **/
         editQoSubmitBtn.on("click", function () {
