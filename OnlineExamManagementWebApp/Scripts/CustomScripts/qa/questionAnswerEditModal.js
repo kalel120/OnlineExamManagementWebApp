@@ -205,7 +205,6 @@
         /*END*/
 
         /*** Remove Option from edit modal and db*/
-
         const removeOptionFromDb = function (optionId, examId) {
             let optionToRemove = {
                 OptionId: optionId,
@@ -218,11 +217,32 @@
                 dataType: "json",
                 data: optionToRemove
             })
-                .done(function (res, textStatus,jqXhr) {
+                .done(function (res, textStatus, jqXhr) {
                     //console.log(res);
                     //console.log(textStatus);
                 })
-                .fail(function(res, textStatus, errorThrown ) {
+                .fail(function (res, textStatus, errorThrown) {
+                    console.log(res);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                });
+        };
+
+
+        const reSequenceOptionTbl = function (options) {
+            return $.ajax({
+                type: "PUT",
+                url: `/QuestionAnswer/ReOrderOptionsOnRemove`,
+                dataType: "json",
+                contentTYpe: "application/json",
+                data: JSON.stringify(options)
+            })
+                .done(function (res, textStatus, jqXhr) {
+                    console.log(res);
+                    console.log(textStatus);
+                    console.log(jqXhr);
+                })
+                .fail(function (res, textStatus, errorThrown) {
                     console.log(res);
                     console.log(textStatus);
                     console.log(errorThrown);
@@ -237,21 +257,31 @@
             // remove from html table
             row.remove();
 
-            // remove from db
-            let isRemoved = await removeOptionFromDb(optionIdToRemove, examId);
-            console.log(isRemoved);
+            try{
+                // remove from db
+                let isRemoved = await removeOptionFromDb(optionIdToRemove, examId);
 
-            // fetch html table content as object
-            qoEditModalTblBody.find("tr").each(function (index, element) {
-                let option = {
-                    Order: index + 1,
-                    OptionId: $(element).find("td:eq(3) > a").attr("data-option-id"),
-                    ExamId: examId
-                };
-                currentOptions.push(option);
-            });
+                // fetch html table content as object
+                qoEditModalTblBody.find("tr").each(function (index, element) {
+                    let option = {
+                        Order: index + 1,
+                        OptionId: $(element).find("td:eq(3) > a").attr("data-option-id"),
+                        ExamId: examId
+                    };
+                    currentOptions.push(option);
+                });
 
-            // re-sequence option serial
+                // re-sequence option serial
+                let isSequenced = await reSequenceOptionTbl(currentOptions);
+                console.log(isSequenced);
+            }
+            catch (exception) {
+                if (exception.status === 404) {
+                   // window.location = "/Error/Error404";
+                } else {
+                    console.log(exception);
+                }
+            }
         };
 
         $(document).on("click", ".js-editOptions-modal-remove-option", function (event) {
@@ -262,6 +292,7 @@
                 }
             });
         });
+        /*** END */
 
         $(document).on("click", "#js-btn-editOptionModal-AddOption", async function (event) {
             // asynchronously get options data from server
