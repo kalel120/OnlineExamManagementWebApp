@@ -15,10 +15,11 @@
         const optionsChkBoxDiv = $(".js-div-options-editModal");
         const editQoSubmitBtn = $("#js-modal-editQo-Submit");
         const qoEditModalTbl = $("#js-tbl-editOptions-modal");
+        const qoEditModalTblBody = $("#js-tbl-editOptionModal-tbody");
         const addOptionDiv = $(".js-div-addOption-editQoModal");
 
 
-        const resetModalState = function() {
+        const resetModalState = function () {
             editQoSubmitBtn.hide();
             addOptionDiv.hide();
         }
@@ -27,7 +28,7 @@
         /*END*/
 
         /*** Modal Reset*/
-        qoEditModal.on("hidden.bs.modal", function() {
+        qoEditModal.on("hidden.bs.modal", function () {
             $(this).find("form").trigger("reset");
             resetModalState();
         });
@@ -39,7 +40,7 @@
             editQoSubmitBtn.show();
         });
 
-        qoEditModalTbl.on("change", function() {
+        qoEditModalTbl.on("change", function () {
             editQoSubmitBtn.show();
         });
 
@@ -129,7 +130,7 @@
         };
 
         const buildModalOptionsTable = function (data) {
-            $("#js-tbl-editOptionModal-tbody").empty();
+            qoEditModalTblBody.empty();
             for (let index = 0; index < data.length; index++) {
                 let html = `<tr>
                             <td>${data[index].Order}</td>
@@ -203,28 +204,77 @@
         });
         /*END*/
 
-        /**
-         * Remove Option from edit modal and db
-         */
-        const removeRowOfOptionsTbl = function() {
+        /*** Remove Option from edit modal and db*/
+
+        const removeOptionFromDb = function (optionId, examId) {
+            let optionToRemove = {
+                OptionId: optionId,
+                ExamId: examId
+            };
+
+            let result = false;
+
+            $.ajax({
+                type: "PUT",
+                url: `/QuestionAnswer/RemoveAnOption`,
+                dataType: "json",
+                data: optionToRemove
+            })
+                .done(function(res) {
+                    result = true;
+                    console.log("done ");
+                    console.log(res);
+                })
+                .fail(function(res) {
+                    result = false;
+                    console.log("fail");
+                    console.log(res);
+                });
+
+            return result;
+        };
+
+        const removeRowOfOptionsTbl = async function (row) {
+            let optionIdToRemove = row.find("td:eq(3) > a").attr("data-option-id");
+            let examId = $("#js_examId").val();
+            let currentOptions = new Array();
+
+            // remove from html table
+            row.remove();
+            let isRemoved = await removeOptionFromDb(optionIdToRemove, examId);
+            // remove from db
+
+            // fetch html table content as object
+            qoEditModalTblBody.find("tr").each(function (index, element) {
+                let option = {
+                    Order: index + 1,
+                    OptionId: $(element).find("td:eq(3) > a").attr("data-option-id"),
+                    ExamId: examId
+                };
+                currentOptions.push(option);
+            });
+
+            console.log(currentOptions);
+
+
 
         };
 
-        $(document).on("click", ".js-editOptions-modal-remove-option", function(event) {
-            bootbox.confirm("Are you sure?", function(result) {
+        $(document).on("click", ".js-editOptions-modal-remove-option", function (event) {
+            bootbox.confirm("Are you sure?", function (result) {
                 if (result) {
-                    let tableRow = $(event.target).closest("tr").remove();
+                    removeRowOfOptionsTbl($(event.target).closest("tr"));
                     addOptionDiv.show();
                 }
             });
         });
 
-        $(document).on("click", "#js-btn-editOptionModal-AddOption",  async function(event) {
+        $(document).on("click", "#js-btn-editOptionModal-AddOption", async function (event) {
             // asynchronously get options data from server
             let options = await getOptionsByQuestionId(qoEditModalQuestionId.val());
 
             // dynamically build html options table
-            buildModalOptionsTable(options); 
+            buildModalOptionsTable(options);
         });
 
         /** Quesiton Option Update, Save change button actions **/
