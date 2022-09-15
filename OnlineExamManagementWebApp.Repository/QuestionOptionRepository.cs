@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using OnlineExamManagementWebApp.DatabaseContext;
 using OnlineExamManagementWebApp.DTOs.QuestionOption;
@@ -64,6 +65,25 @@ namespace OnlineExamManagementWebApp.Repository {
             catch (Exception e) {
                 return (ICollection<QuestionsDto>)Enumerable.Empty<QuestionsDto>();
             }
+        }
+
+        public bool IsOptionRemoved(Guid optionId, int examId) {
+            bool result;
+            try {
+                var optionToRemove = _dbContext.QuestionOptions
+                    .FirstOrDefault(qo => qo.ExamId == examId && qo.OptionId == optionId);
+
+                if (optionToRemove != null) {
+                    optionToRemove.IsDeleted = true;
+                    _dbContext.Entry(optionToRemove).State = EntityState.Modified;
+                }
+
+                result = _dbContext.SaveChanges() > 0;
+            }
+            catch (Exception e) {
+                throw new NotImplementedException();
+            }
+            return result;
         }
     }
 }

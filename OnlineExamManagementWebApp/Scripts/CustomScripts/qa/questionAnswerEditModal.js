@@ -212,26 +212,21 @@
                 ExamId: examId
             };
 
-            let result = false;
-
-            $.ajax({
+            return $.ajax({
                 type: "PUT",
                 url: `/QuestionAnswer/RemoveAnOption`,
                 dataType: "json",
                 data: optionToRemove
             })
-                .done(function(res) {
-                    result = true;
-                    console.log("done ");
-                    console.log(res);
+                .done(function (res, textStatus,jqXhr) {
+                    //console.log(res);
+                    //console.log(textStatus);
                 })
-                .fail(function(res) {
-                    result = false;
-                    console.log("fail");
+                .fail(function(res, textStatus, errorThrown ) {
                     console.log(res);
+                    console.log(textStatus);
+                    console.log(errorThrown);
                 });
-
-            return result;
         };
 
         const removeRowOfOptionsTbl = async function (row) {
@@ -241,8 +236,10 @@
 
             // remove from html table
             row.remove();
-            let isRemoved = await removeOptionFromDb(optionIdToRemove, examId);
+
             // remove from db
+            let isRemoved = await removeOptionFromDb(optionIdToRemove, examId);
+            console.log(isRemoved);
 
             // fetch html table content as object
             qoEditModalTblBody.find("tr").each(function (index, element) {
@@ -254,10 +251,7 @@
                 currentOptions.push(option);
             });
 
-            console.log(currentOptions);
-
-
-
+            // re-sequence option serial
         };
 
         $(document).on("click", ".js-editOptions-modal-remove-option", function (event) {

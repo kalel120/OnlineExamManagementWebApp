@@ -54,6 +54,12 @@ namespace OnlineExamManagementWebApp.Controllers {
             bool result = _qoManager.IsQuestionAnswerSaved(questionToSaveDto, optionsToSaveDto);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPut]
+        public JsonResult RemoveAnOption(OptionToUpdate dto) {
+            var result = _qoManager.IsOptionRemoved(dto);
+            return Json(result, JsonRequestBehavior.DenyGet);
+        }
     }
 
 }
