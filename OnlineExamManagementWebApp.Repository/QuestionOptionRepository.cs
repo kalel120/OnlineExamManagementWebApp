@@ -46,6 +46,11 @@ namespace OnlineExamManagementWebApp.Repository {
                     .Distinct()
                     .ToList();
 
+                var questionOptions = _dbContext.QuestionOptions
+                    .Where(qo => qo.ExamId == examId && qo.IsDeleted == false)
+                    .Distinct()
+                    .Select(x => new { x.QuestionId, x.OptionId });
+
                 var result = new List<QuestionsDto>();
 
                 foreach (var item in questions) {
@@ -56,7 +61,7 @@ namespace OnlineExamManagementWebApp.Repository {
                         OptionType = item.OptionType,
                         Description = item.Description,
                         DateCreated = item.DateCreated,
-                        OptionCount = item.QuestionOptions.Select(qo => qo.Option).Count()
+                        OptionCount = questionOptions.Count(s => s.QuestionId == item.Id)
                     });
                 }
 

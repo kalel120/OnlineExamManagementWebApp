@@ -15,6 +15,6 @@ namespace OnlineExamManagementWebApp.Models {
         // Navigation
         public int ExamId { get; set; }
         public Exam Exam { get; set; }
-        public virtual ICollection<QuestionOption> QuestionOptions { get; set; }
+        public ICollection<QuestionOption> QuestionOptions { get; set; }
     }
 }

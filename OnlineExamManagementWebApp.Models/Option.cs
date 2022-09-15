@@ -10,6 +10,6 @@ namespace OnlineExamManagementWebApp.Models {
         public DateTime? DateUpdated { get; set; }
 
         //Navigation
-        public virtual ICollection<QuestionOption> QuestionOptions { get; set; }
+        public ICollection<QuestionOption> QuestionOptions { get; set; }
     }
 }
