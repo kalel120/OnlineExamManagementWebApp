@@ -85,5 +85,31 @@ namespace OnlineExamManagementWebApp.Repository {
             }
             return result;
         }
+
+        public bool IsOptionReordered(ICollection<OptionToUpdate> dto) {
+            bool result = false;
+
+            int examId = dto.Select(i => i.ExamId).First();
+            Guid questionId = dto.Select(i => i.QuestionId).First();
+
+            var dtoList = dto.ToList();
+
+
+            //List<ICollection<QuestionOption>> items = _dbContext.Questions
+            //    .Where(q => q.Id == questionId && q.ExamId == examId)
+            //    .Select(q => q.QuestionOptions)
+            //    .Where(qo=>qo.)
+            //    .Distinct()
+            //    .ToList();
+
+            //for (int index = 0; index < questionOptionsToUpdate.Count; index++) {
+            //    if (dtoList[index].OptionId == questionOptionsToUpdate[index].OptionId) {
+            //        questionOptionsToUpdate[index].Order = dtoList[index].Order;
+            //    }
+            //}
+
+
+            return result;
+        }
     }
 }

@@ -234,7 +234,7 @@
                 type: "PUT",
                 url: `/QuestionAnswer/ReOrderOptionsOnRemove`,
                 dataType: "json",
-                contentTYpe: "application/json",
+                contentType: "application/json",
                 data: JSON.stringify(options)
             })
                 .done(function (res, textStatus, jqXhr) {
@@ -266,10 +266,13 @@
                     let option = {
                         Order: index + 1,
                         OptionId: $(element).find("td:eq(3) > a").attr("data-option-id"),
+                        QuestionId: qoEditModalQuestionId.val(),
                         ExamId: examId
                     };
                     currentOptions.push(option);
                 });
+
+                console.log(currentOptions);
 
                 // re-sequence option serial
                 let isSequenced = await reSequenceOptionTbl(currentOptions);

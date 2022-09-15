@@ -60,6 +60,12 @@ namespace OnlineExamManagementWebApp.Controllers {
             var result = _qoManager.IsOptionRemoved(dto);
             return Json(result, JsonRequestBehavior.DenyGet);
         }
+
+        [HttpPut]
+        public JsonResult ReOrderOptionsOnRemove(ICollection<OptionToUpdate> dto) {
+            var result = _qoManager.IsOptionReordered(dto);
+            return Json(result, JsonRequestBehavior.DenyGet);
+        }
     }
 
 }

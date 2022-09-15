@@ -79,5 +79,9 @@ namespace OnlineExamManagementWebApp.BLL {
         public bool IsOptionRemoved(OptionToUpdate dToUpdate) {
             return _unitOfWork.QuestionOptions.IsOptionRemoved(dToUpdate.OptionId, dToUpdate.ExamId);
         }
+
+        public bool IsOptionReordered(ICollection<OptionToUpdate> dto) {
+            return _unitOfWork.QuestionOptions.IsOptionReordered(dto);
+        }
     }
 }
