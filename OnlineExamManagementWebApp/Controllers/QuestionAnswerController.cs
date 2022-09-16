@@ -18,6 +18,8 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         public ActionResult Entry(int examId) {
+            if (examId == null || examId == 0) { return RedirectToAction("Error", "Error"); }
+
             var viewModel = new QuestionAnswerViewModel();
 
             // Get Organization, Course, Exam Code info. from BLL
@@ -31,18 +33,24 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         public JsonResult GetQuestionsByExamId(int id) {
+            if (id == null || id == 0) { return Json(false, JsonRequestBehavior.AllowGet); }
+
             ICollection<QuestionsDto> questions = _qoManager.GetQuestionsByExamId(id);
             return Json(questions, JsonRequestBehavior.AllowGet);
         }
 
 
         public JsonResult GetOptionsByQuestionId(Guid id) {
+            if (id == null || id == Guid.Empty) { return Json(false, JsonRequestBehavior.AllowGet); }
+
             ICollection<OptionDto> options = _qoManager.GetOptionsByQuestionId(id);
             return Json(options, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         public JsonResult Entry(QuestionAnswerEntryViewModel qaEntryViewModel) {
+            if (qaEntryViewModel == null) { return Json(false, JsonRequestBehavior.AllowGet); }
+
             ICollection<OptionToSaveDto> optionsToSaveDto = new List<OptionToSaveDto>();
 
             foreach (var item in qaEntryViewModel.Options) {
@@ -57,9 +65,8 @@ namespace OnlineExamManagementWebApp.Controllers {
 
         [HttpPut]
         public JsonResult RemoveAnOption(OptionToUpdate dto) {
-            if (dto == null) {
-                return Json(false, JsonRequestBehavior.DenyGet);
-            }
+            if (dto == null) { return Json(false, JsonRequestBehavior.DenyGet); }
+
             var result = _qoManager.IsOptionRemoved(dto);
             return Json(result, JsonRequestBehavior.DenyGet);
         }
@@ -72,7 +79,6 @@ namespace OnlineExamManagementWebApp.Controllers {
 
             var result = _qoManager.IsOptionReordered(dto, examId, questionId);
             return Json(result, JsonRequestBehavior.DenyGet);
-
         }
     }
 

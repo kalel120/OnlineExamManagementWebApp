@@ -225,7 +225,7 @@
         };
 
 
-        const reSequenceOptionTbl = function (options,examId,questionId) {
+        const reSequenceOptionTbl = function (options, examId, questionId) {
             return $.ajax({
                 type: "PUT",
                 url: `/QuestionAnswer/ReOrderOptionsOnRemove?examId=${examId}&questionId=${questionId}`,
@@ -244,12 +244,11 @@
             let examId = $("#js_examId").val();
             let questionId = qoEditModalQuestionId.val();
             let optionIdToRemove = row.find("td:eq(3) > a").attr("data-option-id");
-            
+
             let currentOptions = new Array();
 
             // remove from html table
             row.remove();
-
 
             // fetch html table content as object
             qoEditModalTblBody.find("tr").each(function (index, element) {
@@ -261,30 +260,18 @@
             });
 
             // remove from  server and re-sequence serial
-            try {
-                if (await removeOptionFromDb(optionIdToRemove, examId)) {
-                    // re-sequence option serial and build options table
-                    if (await reSequenceOptionTbl(currentOptions,examId,questionId)) {
-                        buildModalOptionsTable(await getOptionsByQuestionId(qoEditModalQuestionId.val()));
-                    }
-                }
+            if (!await removeOptionFromDb(optionIdToRemove, examId)) return;
+            if (!await reSequenceOptionTbl(currentOptions, examId, questionId)) return;
 
-            }
-            catch (exception) {
-                if (exception.status === 404) {
-                     window.location = "/Error/Error404";
-                } else {
-                    console.log(exception);
-                }
-            }
+            buildModalOptionsTable(await getOptionsByQuestionId(qoEditModalQuestionId.val()));
         };
 
         $(document).on("click", ".js-editOptions-modal-remove-option", function (event) {
             bootbox.confirm("Are you sure?", function (result) {
-                if (result) {
-                    removeRowOfOptionsTbl($(event.target).closest("tr"));
-                    addOptionDiv.show();
-                }
+                if (!result) return;
+
+                removeRowOfOptionsTbl($(event.target).closest("tr"));
+                addOptionDiv.show();
             });
         });
         /*** END */
