@@ -258,9 +258,16 @@
                 .each(function (index, element) {
                     let option = {
                         "SerialNo": $(element).find("td:nth-child(1)").text(),
-                        "OptionText": $.trim($(element).find("td:nth-child(2)").text()),
-                        "IsCorrectAnswer": $(element).find("input[name='OptionRadioButton']").is(":checked")
+                        "OptionText": $.trim($(element).find("td:nth-child(2)").text())
+                        //,"IsCorrectAnswer": $(element).find("input[name='OptionRadioButton']").is(":checked")
                     }
+                    if ($(element).find("input[type='radio']").is(":checked") ||
+                        $(element).find("input[type='checkbox']").is(":checked")) {
+                        option.IsCorrectAnswer = true;
+                    } else {
+                        option.IsCorrectAnswer = false;
+                    }
+
                     listOfOptions.push(option);
                 });
             return listOfOptions;
