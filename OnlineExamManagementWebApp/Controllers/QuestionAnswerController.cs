@@ -57,14 +57,22 @@ namespace OnlineExamManagementWebApp.Controllers {
 
         [HttpPut]
         public JsonResult RemoveAnOption(OptionToUpdate dto) {
+            if (dto == null) {
+                return Json(false, JsonRequestBehavior.DenyGet);
+            }
             var result = _qoManager.IsOptionRemoved(dto);
             return Json(result, JsonRequestBehavior.DenyGet);
         }
 
         [HttpPut]
-        public JsonResult ReOrderOptionsOnRemove(ICollection<OptionToUpdate> dto) {
-            var result = _qoManager.IsOptionReordered(dto);
+        public JsonResult ReOrderOptionsOnRemove(ICollection<OptionToUpdate> dto, int examId, Guid questionId) {
+            if (dto == null || examId == 0 || questionId == Guid.Empty) {
+                return Json(false, JsonRequestBehavior.DenyGet);
+            }
+
+            var result = _qoManager.IsOptionReordered(dto, examId, questionId);
             return Json(result, JsonRequestBehavior.DenyGet);
+
         }
     }
 

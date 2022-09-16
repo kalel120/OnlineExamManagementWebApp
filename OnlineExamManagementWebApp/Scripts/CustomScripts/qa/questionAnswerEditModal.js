@@ -225,10 +225,10 @@
         };
 
 
-        const reSequenceOptionTbl = function (options) {
+        const reSequenceOptionTbl = function (options,examId,questionId) {
             return $.ajax({
                 type: "PUT",
-                url: `/QuestionAnswer/ReOrderOptionsOnRemove`,
+                url: `/QuestionAnswer/ReOrderOptionsOnRemove?examId=${examId}&questionId=${questionId}`,
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(options)
@@ -241,8 +241,10 @@
         };
 
         const removeRowOfOptionsTbl = async function (row) {
-            let optionIdToRemove = row.find("td:eq(3) > a").attr("data-option-id");
             let examId = $("#js_examId").val();
+            let questionId = qoEditModalQuestionId.val();
+            let optionIdToRemove = row.find("td:eq(3) > a").attr("data-option-id");
+            
             let currentOptions = new Array();
 
             // remove from html table
@@ -253,9 +255,7 @@
             qoEditModalTblBody.find("tr").each(function (index, element) {
                 let option = {
                     Order: index + 1,
-                    OptionId: $(element).find("td:eq(3) > a").attr("data-option-id"),
-                    QuestionId: qoEditModalQuestionId.val(),
-                    ExamId: examId
+                    OptionId: $(element).find("td:eq(3) > a").attr("data-option-id")
                 };
                 currentOptions.push(option);
             });
@@ -264,7 +264,7 @@
             try {
                 if (await removeOptionFromDb(optionIdToRemove, examId)) {
                     // re-sequence option serial and build options table
-                    if (await reSequenceOptionTbl(currentOptions)) {
+                    if (await reSequenceOptionTbl(currentOptions,examId,questionId)) {
                         buildModalOptionsTable(await getOptionsByQuestionId(qoEditModalQuestionId.val()));
                     }
                 }

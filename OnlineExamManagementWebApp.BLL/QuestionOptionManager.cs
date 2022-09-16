@@ -80,8 +80,8 @@ namespace OnlineExamManagementWebApp.BLL {
             return _unitOfWork.QuestionOptions.IsOptionRemoved(dToUpdate.OptionId, dToUpdate.ExamId);
         }
 
-        public bool IsOptionReordered(ICollection<OptionToUpdate> dto) {
-            return _unitOfWork.QuestionOptions.IsOptionReordered(dto);
+        public bool IsOptionReordered(ICollection<OptionToUpdate> dto, int examId, Guid questionId) {
+            return _unitOfWork.QuestionOptions.IsOptionReordered(dto, examId, questionId);
         }
     }
 }

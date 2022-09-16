@@ -91,12 +91,7 @@ namespace OnlineExamManagementWebApp.Repository {
             return result;
         }
 
-        public bool IsOptionReordered(ICollection<OptionToUpdate> dto) {
-            bool result = false;
-
-            int examId = dto.Select(i => i.ExamId).First();
-            Guid questionId = dto.Select(i => i.QuestionId).First();
-
+        public bool IsOptionReordered(ICollection<OptionToUpdate> dto, int examId, Guid questionId) {
             var dtoList = dto.ToList();
 
             var qoList = _dbContext.QuestionOptions
@@ -113,8 +108,7 @@ namespace OnlineExamManagementWebApp.Repository {
                 }
             }
 
-
-            result = _dbContext.SaveChanges() > 0;
+            var result = _dbContext.SaveChanges() > 0;
             return result;
         }
     }
