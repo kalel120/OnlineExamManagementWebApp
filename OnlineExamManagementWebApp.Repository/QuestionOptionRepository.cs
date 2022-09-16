@@ -30,6 +30,7 @@ namespace OnlineExamManagementWebApp.Repository {
                         Description = qo.Option.Description,
                         IsMarkedAsAnswer = qo.IsCorrectAnswer
                     })
+                    .OrderBy(o => o.Order)
                     .ToList();
                 return result;
             }
