@@ -99,21 +99,22 @@ namespace OnlineExamManagementWebApp.Repository {
 
             var dtoList = dto.ToList();
 
-
-            //List<ICollection<QuestionOption>> items = _dbContext.Questions
-            //    .Where(q => q.Id == questionId && q.ExamId == examId)
-            //    .Select(q => q.QuestionOptions)
-            //    .Where(qo=>qo.)
-            //    .Distinct()
-            //    .ToList();
-
-            //for (int index = 0; index < questionOptionsToUpdate.Count; index++) {
-            //    if (dtoList[index].OptionId == questionOptionsToUpdate[index].OptionId) {
-            //        questionOptionsToUpdate[index].Order = dtoList[index].Order;
-            //    }
-            //}
+            var qoList = _dbContext.QuestionOptions
+                .Where(qo => qo.ExamId == examId && qo.QuestionId == questionId && qo.IsDeleted == false)
+                .Distinct()
+                .ToList();
 
 
+            for (int index = 0; index < qoList.Count; index++) {
+                if (dtoList[index].OptionId == qoList[index].OptionId) {
+                    qoList[index].Order = dtoList[index].Order;
+
+                    _dbContext.Entry(qoList[index]).State = EntityState.Modified;
+                }
+            }
+
+
+            result = _dbContext.SaveChanges() > 0;
             return result;
         }
     }

@@ -217,10 +217,6 @@
                 dataType: "json",
                 data: optionToRemove
             })
-                .done(function (res, textStatus, jqXhr) {
-                    //console.log(res);
-                    //console.log(textStatus);
-                })
                 .fail(function (res, textStatus, errorThrown) {
                     console.log(res);
                     console.log(textStatus);
@@ -237,11 +233,6 @@
                 contentType: "application/json",
                 data: JSON.stringify(options)
             })
-                .done(function (res, textStatus, jqXhr) {
-                    console.log(res);
-                    console.log(textStatus);
-                    console.log(jqXhr);
-                })
                 .fail(function (res, textStatus, errorThrown) {
                     console.log(res);
                     console.log(textStatus);
@@ -257,30 +248,31 @@
             // remove from html table
             row.remove();
 
-            try{
-                // remove from db
-                let isRemoved = await removeOptionFromDb(optionIdToRemove, examId);
 
-                // fetch html table content as object
-                qoEditModalTblBody.find("tr").each(function (index, element) {
-                    let option = {
-                        Order: index + 1,
-                        OptionId: $(element).find("td:eq(3) > a").attr("data-option-id"),
-                        QuestionId: qoEditModalQuestionId.val(),
-                        ExamId: examId
-                    };
-                    currentOptions.push(option);
-                });
+            // fetch html table content as object
+            qoEditModalTblBody.find("tr").each(function (index, element) {
+                let option = {
+                    Order: index + 1,
+                    OptionId: $(element).find("td:eq(3) > a").attr("data-option-id"),
+                    QuestionId: qoEditModalQuestionId.val(),
+                    ExamId: examId
+                };
+                currentOptions.push(option);
+            });
 
-                console.log(currentOptions);
+            // remove from  server and re-sequence serial
+            try {
+                if (await removeOptionFromDb(optionIdToRemove, examId)) {
+                    // re-sequence option serial and build options table
+                    if (await reSequenceOptionTbl(currentOptions)) {
+                        buildModalOptionsTable(await getOptionsByQuestionId(qoEditModalQuestionId.val()));
+                    }
+                }
 
-                // re-sequence option serial
-                let isSequenced = await reSequenceOptionTbl(currentOptions);
-                console.log(isSequenced);
             }
             catch (exception) {
                 if (exception.status === 404) {
-                   // window.location = "/Error/Error404";
+                     window.location = "/Error/Error404";
                 } else {
                     console.log(exception);
                 }
@@ -297,12 +289,11 @@
         });
         /*** END */
 
-        $(document).on("click", "#js-btn-editOptionModal-AddOption", async function (event) {
-            // asynchronously get options data from server
-            let options = await getOptionsByQuestionId(qoEditModalQuestionId.val());
 
-            // dynamically build html options table
-            buildModalOptionsTable(options);
+        // For testing purpose below function fetches data from server and build options table. Need to refactor this later.
+        $(document).on("click", "#js-btn-editOptionModal-AddOption", async function (event) {
+            // asynchronously get options data from server and dynamically build html options table
+            buildModalOptionsTable(await getOptionsByQuestionId(qoEditModalQuestionId.val()));
         });
 
         /** Quesiton Option Update, Save change button actions **/
