@@ -277,17 +277,17 @@
         /*** END */
 
 
-        // For testing purpose below function fetches data from server and build options table. Need to refactor this later.
-        $(document).on("click", "#js-btn-editOptionModal-AddOption", async function (event) {
-            // asynchronously get options data from server and dynamically build html options table
-            buildModalOptionsTable(await getOptionsByQuestionId(qoEditModalQuestionId.val()));
+        
+        $(document).on("click", "#js-btn-editOptionModal-AddOption",function (event) {
+            if (!validation()) { return; }
+            bootbox.alert("validated");
+
+
         });
 
         /** Quesiton Option Update, Save change button actions **/
         editQoSubmitBtn.on("click", function () {
-            if (validation()) {
-                bootbox.alert("validated");
-            }
+            
         });
         /*END*/
     });

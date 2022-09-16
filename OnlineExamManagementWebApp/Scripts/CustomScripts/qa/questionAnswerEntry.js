@@ -259,7 +259,7 @@
                     let option = {
                         "SerialNo": $(element).find("td:nth-child(1)").text(),
                         "OptionText": $.trim($(element).find("td:nth-child(2)").text()),
-                        "IsCorrectAnswer": $(element).find("td input:checkbox").is(":checked")
+                        "IsCorrectAnswer": $(element).find("input[name='OptionRadioButton']").is(":checked")
                     }
                     listOfOptions.push(option);
                 });

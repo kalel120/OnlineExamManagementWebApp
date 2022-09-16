@@ -27,13 +27,13 @@ namespace OnlineExamManagementWebApp.BLL {
             foreach (var item in optionsToSaveDto) {
                 var option = MapOptionWithDto(item, currentDateTime);
                 optionsToSave.Add(option);
-                questionAndOptionsToSave.Add(MapQuestionOptionBridgeTable(questionToSave, option, item.SerialNo, item.IsCorrectAnswer, currentDateTime));
+                questionAndOptionsToSave.Add(MapQuestionOptionBridgeTable(questionToSave, option, item.SerialNo, item.IsCorrectAnswer, currentDateTime, questionToSave.ExamId));
             }
 
             return _unitOfWork.QuestionOptions.IsQuestionAnswerSaved(questionAndOptionsToSave);
         }
 
-        private QuestionOption MapQuestionOptionBridgeTable(Question question, Option option, int serialNo, bool isCorrectAnswer, DateTime currentDateTime) {
+        private QuestionOption MapQuestionOptionBridgeTable(Question question, Option option, int serialNo, bool isCorrectAnswer, DateTime currentDateTime, int examId) {
             return new QuestionOption {
                 QuestionId = question.Id,
                 OptionId = option.Id,
@@ -43,7 +43,8 @@ namespace OnlineExamManagementWebApp.BLL {
                 DateCreated = currentDateTime,
                 DateUpdated = null,
                 Question = question,
-                Option = option
+                Option = option,
+                ExamId = examId
             };
 
         }
