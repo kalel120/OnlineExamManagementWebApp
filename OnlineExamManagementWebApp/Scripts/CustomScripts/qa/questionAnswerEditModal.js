@@ -27,7 +27,8 @@
         /*END*/
 
         /** Jobs when modal pops */
-        const setCheckBoxForSingleAnswer = function() {
+
+        const setCheckBoxForSingleAnswer = function () {
             $(document).on("click", "input[name='OptionEditModalChkBox']", function () {
                 if (!qoEditSingleRadioBtn.is(":checked")) { return; }
 
@@ -35,7 +36,7 @@
             });
         };
 
-
+        // when modal pops, set behavior of checkbox based on option type selected
         qoEditModal.on("shown.bs.modal", function () {
             if (!qoEditSingleRadioBtn.is(":checked")) { return; }
 
@@ -43,10 +44,12 @@
         });
 
 
+        // if single answer type is selected, make checkbox behave like radio button
         $(document).on("ifClicked", "#js-modal-editQo-oType-single", function () {
             setCheckBoxForSingleAnswer();
         });
 
+        // if multiple answer is selected, then reset checkbox behavior
         $(document).on("ifClicked", "#js-modal-editQo-oType-multiple", function () {
             $("input[name='OptionEditModalChkBox']").each(function (index, item) {
                 if ($(this).is(":checked")) { return; }
@@ -54,7 +57,6 @@
                 $(this).prop("checked", false);
             });
         });
-
         /**END*/
 
         /** Jobs when modal got hidden */
@@ -159,7 +161,11 @@
         };
 
         const buildModalOptionsTable = function (data) {
+            if (!data) { return; }
+
             qoEditModalTblBody.empty();
+
+            //build html and append to tablebody
             for (let index = 0; index < data.length; index++) {
                 let html = `<tr>
                             <td>${data[index].Order}</td>
@@ -173,8 +179,12 @@
                 html += `<td><a href="#" data-option-id="${data[index].OptionId}" class="js-editOptions-modal-remove-option btn btn-danger"><i class="avoid-clicks fa fa-trash-o"> Remove </i> </a> </td>
                          </tr>`;
 
-
                 qoEditModalTbl.append(html);
+            }
+
+            // hide add option button based on table row count
+            if (data.length === 4 && addOptionDiv.is(":visible")) {
+                addOptionDiv.hide();
             }
         };
 
@@ -307,9 +317,14 @@
         /***  Add option if option count is less than 4 */
         $(document).on("click", "#js-btn-editOptionModal-AddOption", function (event) {
             if (!validation()) { return; }
-            bootbox.alert("validated");
 
+            bootbox.confirm("Are you sure?", function (result) {
+                if (!result) return;
 
+                // save new option to db
+
+                // refresh options table
+            });
         });
         /*** END */
 
