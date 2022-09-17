@@ -12,7 +12,6 @@
         const qoEditDescTextBox = $("#js-modal-editQo-qText");
         const qoEditSingleRadioBtn = $("#js-modal-editQo-oType-single");
         const qoEditMultiRadioBtn = $("#js-modal-editQo-oType-multiple");
-        const optionsChkBoxDiv = $(".js-div-options-editModal");
         const editQoSubmitBtn = $("#js-modal-editQo-Submit");
         const qoEditModalTbl = $("#js-tbl-editOptions-modal");
         const qoEditModalTblBody = $("#js-tbl-editOptionModal-tbody");
@@ -27,7 +26,38 @@
         resetModalState();
         /*END*/
 
-        /*** Modal Reset*/
+        /** Jobs when modal pops */
+        const setCheckBoxForSingleAnswer = function() {
+            $(document).on("click", "input[name='OptionEditModalChkBox']", function () {
+                if (!qoEditSingleRadioBtn.is(":checked")) { return; }
+
+                $("input[name='OptionEditModalChkBox']").not(this).prop("checked", false);
+            });
+        };
+
+
+        qoEditModal.on("shown.bs.modal", function () {
+            if (!qoEditSingleRadioBtn.is(":checked")) { return; }
+
+            setCheckBoxForSingleAnswer();
+        });
+
+
+        $(document).on("ifClicked", "#js-modal-editQo-oType-single", function () {
+            setCheckBoxForSingleAnswer();
+        });
+
+        $(document).on("ifClicked", "#js-modal-editQo-oType-multiple", function () {
+            $("input[name='OptionEditModalChkBox']").each(function (index, item) {
+                if ($(this).is(":checked")) { return; }
+
+                $(this).prop("checked", false);
+            });
+        });
+
+        /**END*/
+
+        /** Jobs when modal got hidden */
         qoEditModal.on("hidden.bs.modal", function () {
             $(this).find("form").trigger("reset");
             resetModalState();
@@ -43,7 +73,6 @@
         qoEditModalTbl.on("change", function () {
             editQoSubmitBtn.show();
         });
-
         /**END */
 
 
@@ -137,9 +166,9 @@
                             <td> ${data[index].Description}</td>`;
 
                 if (data[index].IsMarkedAsAnswer) {
-                    html += `<td><input type = "checkbox" name="OptionEditModalChkBox" checked="${data[index].IsMarkedAsAnswer}"/></td>`;
+                    html += `<td><input type = "checkbox" value=${data[index].OptionId} name="OptionEditModalChkBox" checked="${data[index].IsMarkedAsAnswer}"/></td>`;
                 } else {
-                    html += `<td><input type = "checkbox" name="OptionEditModalChkBox"/></td>`;
+                    html += `<td><input type = "checkbox" value=${data[index].OptionId} name="OptionEditModalChkBox"/></td>`;
                 }
                 html += `<td><a href="#" data-option-id="${data[index].OptionId}" class="js-editOptions-modal-remove-option btn btn-danger"><i class="avoid-clicks fa fa-trash-o"> Remove </i> </a> </td>
                          </tr>`;
@@ -178,7 +207,6 @@
             //    }
             //});
         };
-
 
 
         $(document).on("click", ".js-qoEditModalPopup", async function (event) {
@@ -276,18 +304,18 @@
         });
         /*** END */
 
-
-        
-        $(document).on("click", "#js-btn-editOptionModal-AddOption",function (event) {
+        /***  Add option if option count is less than 4 */
+        $(document).on("click", "#js-btn-editOptionModal-AddOption", function (event) {
             if (!validation()) { return; }
             bootbox.alert("validated");
 
 
         });
+        /*** END */
 
         /** Quesiton Option Update, Save change button actions **/
         editQoSubmitBtn.on("click", function () {
-            
+
         });
         /*END*/
     });
