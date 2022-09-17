@@ -4,12 +4,14 @@
     $(() => {
         /**Initialization**/
         const qoEditModal = $("#js-modal-editQo");
+        const qoEditModalExamId = $("#js_examId");
         const qoEditModalQuestionId = $("#js-editModal-hidden-qId");
         const qoEditModalForm = $("#js-modal-editQo-form");
         const qoEditModalFormInputs = $("#js-modal-editQo-form :input");
         const qoEditOrderTextBox = $("#js-modal-editQo-order");
         const qoEditMarksTextBox = $("#js-modal-editQo-marks");
         const qoEditDescTextBox = $("#js-modal-editQo-qText");
+        const qoEditAddOptionTextBox = $("#js-modal-editQo-oText");
         const qoEditSingleRadioBtn = $("#js-modal-editQo-oType-single");
         const qoEditMultiRadioBtn = $("#js-modal-editQo-oType-multiple");
         const editQoSubmitBtn = $("#js-modal-editQo-Submit");
@@ -40,7 +42,10 @@
         qoEditModal.on("shown.bs.modal", function () {
             if (!qoEditSingleRadioBtn.is(":checked")) { return; }
 
+            if (qoEditModalTblBody.find("tr").length === 4) { return;}
+
             setCheckBoxForSingleAnswer();
+            addOptionDiv.show();
         });
 
 
@@ -315,13 +320,32 @@
         /*** END */
 
         /***  Add option if option count is less than 4 */
+        const getOptionToSave = function () {
+            let optionToSave = {
+                Order: qoEditModalTblBody.find("tr").length + 1,
+                Description: $.trim(qoEditAddOptionTextBox.val()),
+                QuestionId: $.trim(qoEditModalQuestionId.val()),
+                ExamId: $.trim(qoEditModalExamId.val()),
+                IsCorrectAnswer: $("#js-modal-editQo-AddOption-isCorrect").is(":checked")
+        }
+            return optionToSave;
+        };
+
         $(document).on("click", "#js-btn-editOptionModal-AddOption", function (event) {
             if (!validation()) { return; }
+
+            // Disable option type based on existing correct answer.
+            //for single answer -> search through checkboxes. If any checkbox is checked then disable option type
+
+            //for multiple answer -> need to have a check
+
 
             bootbox.confirm("Are you sure?", function (result) {
                 if (!result) return;
 
                 // save new option to db
+                let optionToSave = getOptionToSave();
+                console.table(optionToSave);
 
                 // refresh options table
             });
