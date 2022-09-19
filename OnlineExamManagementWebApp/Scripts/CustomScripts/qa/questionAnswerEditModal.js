@@ -15,6 +15,7 @@
         const qoEditSingleRadioBtn = $("#js-modal-editQo-oType-single");
         const qoEditMultiRadioBtn = $("#js-modal-editQo-oType-multiple");
         const editQoSubmitBtn = $("#js-modal-editQo-Submit");
+        const editQoCloseBtn = $(".js-modal-editQo-close");
         const qoEditModalTbl = $("#js-tbl-editOptions-modal");
         const qoEditModalTblBody = $("#js-tbl-editOptionModal-tbody");
         const addOptionDiv = $(".js-div-addOption-editQoModal");
@@ -29,7 +30,6 @@
         /*END*/
 
         /** Jobs when modal pops */
-
         const setCheckBoxForSingleAnswer = function () {
             $(document).on("click", "input[name='OptionEditModalChkBox']", function () {
                 if (!qoEditSingleRadioBtn.is(":checked")) { return; }
@@ -42,12 +42,11 @@
         qoEditModal.on("shown.bs.modal", function () {
             if (!qoEditSingleRadioBtn.is(":checked")) { return; }
 
-            if (qoEditModalTblBody.find("tr").length === 4) { return;}
+            if (qoEditModalTblBody.find("tr").length === 4) { return; }
 
             setCheckBoxForSingleAnswer();
             addOptionDiv.show();
         });
-
 
         // if single answer type is selected, make checkbox behave like radio button
         $(document).on("ifClicked", "#js-modal-editQo-oType-single", function () {
@@ -68,6 +67,7 @@
         qoEditModal.on("hidden.bs.modal", function () {
             $(this).find("form").trigger("reset");
             resetModalState();
+            qoEditModalTblBody.empty();
         });
 
         /**END */
@@ -81,7 +81,6 @@
             editQoSubmitBtn.show();
         });
         /**END */
-
 
         /** validation **/
         const validation = function () {
@@ -165,32 +164,27 @@
             });
         };
 
-        const buildModalOptionsTable = function (data) {
+        const bindNewOptionToTbl = function (data) {
             if (!data) { return; }
 
-            qoEditModalTblBody.empty();
+            let html = `<tr>`;
+            html += `<td>${data.Order}</td>`;
+            html += `<td> ${data.Description}</td>`;
 
-            //build html and append to tablebody
-            for (let index = 0; index < data.length; index++) {
-                let html = `<tr>
-                            <td>${data[index].Order}</td>
-                            <td> ${data[index].Description}</td>`;
-
-                if (data[index].IsMarkedAsAnswer) {
-                    html += `<td><input type = "checkbox" value=${data[index].OptionId} name="OptionEditModalChkBox" checked="${data[index].IsMarkedAsAnswer}"/></td>`;
-                } else {
-                    html += `<td><input type = "checkbox" value=${data[index].OptionId} name="OptionEditModalChkBox"/></td>`;
-                }
-                html += `<td><a href="#" data-option-id="${data[index].OptionId}" class="js-editOptions-modal-remove-option btn btn-danger"><i class="avoid-clicks fa fa-trash-o"> Remove </i> </a> </td>
-                         </tr>`;
-
-                qoEditModalTbl.append(html);
+            if (data.IsMarkedAsAnswer) {
+                html += `<td><input type = "checkbox" value=${data.OptionId} name="OptionEditModalChkBox" checked="checked"/></td>`;
+            } else {
+                html += `<td><input type = "checkbox" value=${data.OptionId} name="OptionEditModalChkBox"/></td>`;
             }
 
-            // hide add option button based on table row count
-            if (data.length === 4 && addOptionDiv.is(":visible")) {
-                addOptionDiv.hide();
+            html += `<td><a href="#" data-option-id="${data.OptionId}" class="js-editOptions-modal-remove-option btn btn-danger"><i class="avoid-clicks fa fa-trash-o"> Remove </i> </a>`;
+
+            if (!data.OptionId) {
+                html += `<a href="#" data-option-id="" class="js-editOptions-modal-tbl-saveOption btn btn-success"><i class="avoid-clicks fa fa-check-square"> Save </i> </a>`;
             }
+
+            html += `</td></tr>`;
+            qoEditModalTbl.append(html);
         };
 
         const bindToEditQoModal = function (data) {
@@ -207,22 +201,7 @@
                 qoEditMultiRadioBtn.prop("checked", true).iCheck("update");
                 qoEditSingleRadioBtn.prop("checked", false).iCheck("update");
             }
-
-            // bind options text to checkboxes
-            //optionsChkBoxDiv.find("span").each(function (index, element) {
-            //    $(element).text(data.Options[index].Description);
-            //});
-
-            // bind correct answers to checkboxes
-            //optionsChkBoxDiv.find("input[type=checkbox]").each(function (index, element) {
-            //    if (data.Options[index].IsMarkedAsAnswer) {
-            //        $(element).prop("checked", true).iCheck("update");
-            //    } else {
-            //        $(element).prop("checked", false).iCheck("update");
-            //    }
-            //});
         };
-
 
         $(document).on("click", ".js-qoEditModalPopup", async function (event) {
             try {
@@ -234,7 +213,7 @@
                 let options = await getOptionsByQuestionId(tableRow.QuestionId);
 
                 // dynamically build html options table
-                buildModalOptionsTable(options);
+                options.forEach(bindNewOptionToTbl);
 
                 qoEditModal.modal("toggle");
             } catch (exception) {
@@ -247,7 +226,7 @@
         });
         /*END*/
 
-        /*** Remove Option from edit modal and db*/
+        /*** Remove Option from edit modal and db and re-sequence option serial */
         const removeOptionFromDb = function (optionId, examId) {
             let optionToRemove = {
                 OptionId: optionId,
@@ -267,7 +246,6 @@
                 });
         };
 
-
         const reSequenceOptionTbl = function (options, examId, questionId) {
             return $.ajax({
                 type: "PUT",
@@ -283,17 +261,22 @@
                 });
         };
 
-        const removeRowOfOptionsTbl = async function (row) {
-            let examId = $("#js_examId").val();
-            let questionId = qoEditModalQuestionId.val();
-            let optionIdToRemove = row.find("td:eq(3) > a").attr("data-option-id");
+        const removeTrFromHtml = function(tr) {
+            tr.remove();
 
+            qoEditModalTblBody.find("tr").each(function(index, element) {
+                $(element).find("td:eq(0)").html(index + 1);
+            });
+        };
+
+        const removeTrFromDb = async function(optionId, examId) {
+            let isRemovedFromDb = await removeOptionFromDb(optionId, examId);
+            if (!isRemovedFromDb) { return; }
+        };
+
+        const reOrderOptionTbl = async function(examId, questionId) {
             let currentOptions = new Array();
 
-            // remove from html table
-            row.remove();
-
-            // fetch html table content as object
             qoEditModalTblBody.find("tr").each(function (index, element) {
                 let option = {
                     Order: index + 1,
@@ -302,33 +285,65 @@
                 currentOptions.push(option);
             });
 
-            // remove from  server and re-sequence serial
-            if (!await removeOptionFromDb(optionIdToRemove, examId)) return;
-            if (!await reSequenceOptionTbl(currentOptions, examId, questionId)) return;
-
-            buildModalOptionsTable(await getOptionsByQuestionId(qoEditModalQuestionId.val()));
+            let isReordered = await reSequenceOptionTbl(currentOptions, examId, questionId);
+            if (!isReordered) { return; }
         };
 
         $(document).on("click", ".js-editOptions-modal-remove-option", function (event) {
             bootbox.confirm("Are you sure?", function (result) {
                 if (!result) return;
 
-                removeRowOfOptionsTbl($(event.target).closest("tr"));
+                let tr = $(event.target).closest("tr");
+                let optionId = tr.find("td:eq(3) > a").data("option-id");
+
+                if (!optionId) {
+                    removeTrFromHtml(tr);
+                } else {
+                    removeTrFromHtml(tr);
+                    removeTrFromDb(optionId, qoEditModalExamId.val());
+                    reOrderOptionTbl(qoEditModalExamId.val(), qoEditModalQuestionId.val());
+                }
+                //removeRowOfOptionsTbl();
                 addOptionDiv.show();
             });
         });
         /*** END */
 
         /***  Add option if option count is less than 4 */
-        const getOptionToSave = function () {
-            let optionToSave = {
+        const getSingleOptionToBindOnHtmlTbl = function () {
+            return {
                 Order: qoEditModalTblBody.find("tr").length + 1,
                 Description: $.trim(qoEditAddOptionTextBox.val()),
                 QuestionId: $.trim(qoEditModalQuestionId.val()),
                 ExamId: $.trim(qoEditModalExamId.val()),
-                IsCorrectAnswer: $("#js-modal-editQo-AddOption-isCorrect").is(":checked")
-        }
-            return optionToSave;
+                OptionId: null,
+                IsMarkedAsAnswer: $("#js-modal-editQo-AddOption-isCorrect").prop("checked") ? true : false
+            }
+        };
+
+        const getSingleOptionToSaveOnDb = function (tr) {
+            return {
+                SerialNo: tr.find("td:eq(0)").text(),
+                OptionText: tr.find("td:eq(1)").text(),
+                IsCorrectAnswer: tr.find("td:eq(2)").find("input[type='checkbox']").prop("checked"),
+                ExamId: $.trim(qoEditModalExamId.val()),
+                QuestionId: $.trim(qoEditModalQuestionId.val())
+            }
+        };
+
+        const saveSingleOptionToDb = function (option) {
+            return $.ajax({
+                type: "POST",
+                url: `/QuestionAnswer/SaveSingleOption`,
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(option)
+            })
+                .fail(function (res, textStatus, errorThrown) {
+                    console.log(res);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                });
         };
 
         $(document).on("click", "#js-btn-editOptionModal-AddOption", function (event) {
@@ -339,23 +354,63 @@
 
             //for multiple answer -> need to have a check
 
+            let option = getSingleOptionToBindOnHtmlTbl();
 
-            bootbox.confirm("Are you sure?", function (result) {
-                if (!result) return;
+            bindNewOptionToTbl(option);
 
-                // save new option to db
-                let optionToSave = getOptionToSave();
-                console.table(optionToSave);
-
-                // refresh options table
-            });
+            // hide add option button based on table row count
+            if (qoEditModalTblBody.find("tr").length === 4 && addOptionDiv.is(":visible")) {
+                addOptionDiv.hide();
+            }
         });
         /*** END */
 
-        /** Quesiton Option Update, Save change button actions **/
-        editQoSubmitBtn.on("click", function () {
+        /** Save newly added option to db **/
+        $(document).on("click", ".js-editOptions-modal-tbl-saveOption", async function (event) {
+            // build savable object
+            let tr = $(event.target).closest("tr");
+            let singleOptionToSaveDb = getSingleOptionToSaveOnDb(tr);
 
+            // save single option to db
+            if (!await saveSingleOptionToDb(singleOptionToSaveDb)) { return; }
+
+            // remove individual save option button from table column
+            tr.find("a.js-editOptions-modal-tbl-saveOption").remove();
+        });
+
+        /***END*/
+
+
+        /** Quesiton Option Update, Save change button actions **/
+        const anyUnsavedOption = function () {
+            let isUnsaved = false;
+
+            qoEditModalTblBody.find("tr").each(function (index, element) {
+                if ($(element).find("td:eq(3) > a").hasClass("js-editOptions-modal-tbl-saveOption")) {
+                    isUnsaved = true;
+                    return;
+                }
+            });
+            return isUnsaved;
+        };
+
+        editQoSubmitBtn.on("click", function () {
+            if (anyUnsavedOption()) {
+                bootbox.alert("Still unsaved option left");
+                return;
+            }
         });
         /*END*/
+
+        /** Modal close button actions*/
+        editQoCloseBtn.on("click", function () {
+            if (anyUnsavedOption()) {
+                bootbox.alert("Still unsaved option left");
+                editQoCloseBtn.removeAttr("data-dismiss");
+                return;
+            }
+            editQoCloseBtn.attr("data-dismiss", "modal");
+        });
+        /**END*/
     });
 })(jQuery);

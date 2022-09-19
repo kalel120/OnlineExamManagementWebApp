@@ -84,5 +84,9 @@ namespace OnlineExamManagementWebApp.BLL {
         public bool IsOptionReordered(ICollection<OptionToUpdate> dto, int examId, Guid questionId) {
             return _unitOfWork.QuestionOptions.IsOptionReordered(dto, examId, questionId);
         }
+
+        public bool IsSingleOptionSaved(SingleOptionToSave dtoOptionToSave) {
+            return _unitOfWork.QuestionOptions.IsSingleOptionSaved(dtoOptionToSave);
+        }
     }
 }

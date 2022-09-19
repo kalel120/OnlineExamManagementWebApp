@@ -112,5 +112,37 @@ namespace OnlineExamManagementWebApp.Repository {
             var result = _dbContext.SaveChanges() > 0;
             return result;
         }
+
+        public bool IsSingleOptionSaved(SingleOptionToSave dtoOptionToSave) {
+            // Create a single Option. Fetch existing question with id.
+            // Create single QuestionOption. Bind question and option to this and save it. 
+            // This will auto create data on Option table
+
+            DateTime currentDateTime = DateTime.Now;
+            Option singleOption = new Option {
+                Id = Guid.NewGuid(),
+                DateCreated = currentDateTime,
+                Description = dtoOptionToSave.OptionText,
+                IsDeleted = false,
+                DateUpdated = null,
+            };
+
+            QuestionOption questionOption = new QuestionOption {
+                DateCreated = currentDateTime,
+                DateUpdated = null,
+                ExamId = dtoOptionToSave.ExamId,
+                IsCorrectAnswer = dtoOptionToSave.IsCorrectAnswer,
+                Option = singleOption,
+                IsDeleted = false,
+                OptionId = singleOption.Id,
+                Order = dtoOptionToSave.SerialNo,
+                Question = _dbContext.Questions.SingleOrDefault(q => q.Id == dtoOptionToSave.QuestionId && q.IsDeleted == false)
+            };
+
+            _dbContext.QuestionOptions.Add(questionOption);
+
+            var result = _dbContext.SaveChanges() > 0;
+            return result;
+        }
     }
 }

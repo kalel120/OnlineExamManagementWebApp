@@ -63,6 +63,14 @@ namespace OnlineExamManagementWebApp.Controllers {
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult SaveSingleOption(SingleOptionToSave dtoOptionToSave) {
+            if (dtoOptionToSave == null) { return Json(false, JsonRequestBehavior.AllowGet); }
+
+            bool result = _qoManager.IsSingleOptionSaved(dtoOptionToSave);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPut]
         public JsonResult RemoveAnOption(OptionToUpdate dto) {
             if (dto == null) { return Json(false, JsonRequestBehavior.DenyGet); }
