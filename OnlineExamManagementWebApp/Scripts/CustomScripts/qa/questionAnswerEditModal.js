@@ -316,8 +316,8 @@
                 Description: $.trim(qoEditAddOptionTextBox.val()),
                 QuestionId: $.trim(qoEditModalQuestionId.val()),
                 ExamId: $.trim(qoEditModalExamId.val()),
-                OptionId: null,
-                IsMarkedAsAnswer: $("#js-modal-editQo-AddOption-isCorrect").prop("checked") ? true : false
+                OptionId: null
+                //,IsMarkedAsAnswer: $("#js-modal-editQo-AddOption-isCorrect").prop("checked") ? true : false
             }
         };
 
