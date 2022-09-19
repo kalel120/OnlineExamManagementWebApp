@@ -349,11 +349,6 @@
         $(document).on("click", "#js-btn-editOptionModal-AddOption", function (event) {
             if (!validation()) { return; }
 
-            // Disable option type based on existing correct answer.
-            //for single answer -> search through checkboxes. If any checkbox is checked then disable option type
-
-            //for multiple answer -> need to have a check
-
             let option = getSingleOptionToBindOnHtmlTbl();
 
             bindNewOptionToTbl(option);
@@ -395,10 +390,11 @@
         };
 
         editQoSubmitBtn.on("click", function () {
-            if (anyUnsavedOption()) {
-                bootbox.alert("Still unsaved option left");
+            if (anyUnsavedOption() || qoEditModalTblBody.find("tr").length !== 4) {
+                bootbox.alert("Still unsaved option left or options are less than 4");
                 return;
             }
+
         });
         /*END*/
 
