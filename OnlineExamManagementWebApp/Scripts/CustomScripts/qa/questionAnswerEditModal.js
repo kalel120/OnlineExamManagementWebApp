@@ -269,15 +269,18 @@
             });
         };
 
-        const removeTrFromDb = async function (optionId, examId) {
-            let isRemovedFromDb = await removeOptionFromDb(optionId, examId);
-            if (!isRemovedFromDb) { return; }
-        };
-
         const reOrderOptionTbl = async function (examId, questionId) {
-            let currentOptions = new Array();
+            let tableBodyRowCount = qoEditModalTblBody.children().length;
+            if (tableBodyRowCount === 0) {
+                bootbox.alert("No options are assigned to this question");
+                return;
+            }
 
+            let currentOptions = new Array();
             qoEditModalTblBody.find("tr").each(function (index, element) {
+                let optionId = $(element).find("td:eq(3) > a").data("option-id");
+                if (!optionId) { return; }
+
                 let option = {
                     Order: index + 1,
                     OptionId: $(element).find("td:eq(3) > a").attr("data-option-id")
@@ -286,11 +289,15 @@
             });
 
             let isReordered = await reSequenceOptionTbl(currentOptions, examId, questionId);
-            if (!isReordered) { return; }
+            if (!isReordered) {
+                bootbox.alert("Re-Order Options failed!");
+                 return;
+            }
         };
 
-        $(document).on("click", ".js-editOptions-modal-remove-option", function (event) {
-            bootbox.confirm("Are you sure?", function (result) {
+        $(document).on("click", ".js-editOptions-modal-remove-option",  function (event) {
+
+            bootbox.confirm("Are you sure?", async function (result) {
                 if (!result) return;
 
                 let tr = $(event.target).closest("tr");
@@ -298,12 +305,15 @@
 
                 if (!optionId) {
                     removeTrFromHtml(tr);
-                } else {
+                }
+                else {
                     removeTrFromHtml(tr);
-                    removeTrFromDb(optionId, qoEditModalExamId.val());
+
+                    let isRemovedFromDb = await removeOptionFromDb(optionId, qoEditModalExamId.val());
+                    if (!isRemovedFromDb) { return; }
+
                     reOrderOptionTbl(qoEditModalExamId.val(), qoEditModalQuestionId.val());
                 }
-                //removeRowOfOptionsTbl();
                 addOptionDiv.show();
             });
         });
@@ -317,7 +327,6 @@
                 QuestionId: $.trim(qoEditModalQuestionId.val()),
                 ExamId: $.trim(qoEditModalExamId.val()),
                 OptionId: null
-                //,IsMarkedAsAnswer: $("#js-modal-editQo-AddOption-isCorrect").prop("checked") ? true : false
             }
         };
 
@@ -412,6 +421,20 @@
                 bootbox.alert("Still unsaved option left or options are less than 4");
                 return;
             }
+
+            // prevent save if its a single option type but multiple answer is selected.
+
+            //let correctAnswerCount = 0;
+            //$("input[name='OptionEditModalChkBox']").each(function (index, item) {
+            //    if ($(this).is(":checked")) {
+            //        correctAnswerCount++;
+            //    }
+            //});
+
+            //if (qoEditSingleRadioBtn.is(":checked") && correctAnswerCount !== 1) {
+            //    bootbox.alert("Multiple correct answers are selected for single answer type question");
+            //    return;
+            //}
 
         });
         /*END*/
