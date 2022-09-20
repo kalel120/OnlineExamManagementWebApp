@@ -261,20 +261,20 @@
                 });
         };
 
-        const removeTrFromHtml = function(tr) {
+        const removeTrFromHtml = function (tr) {
             tr.remove();
 
-            qoEditModalTblBody.find("tr").each(function(index, element) {
+            qoEditModalTblBody.find("tr").each(function (index, element) {
                 $(element).find("td:eq(0)").html(index + 1);
             });
         };
 
-        const removeTrFromDb = async function(optionId, examId) {
+        const removeTrFromDb = async function (optionId, examId) {
             let isRemovedFromDb = await removeOptionFromDb(optionId, examId);
             if (!isRemovedFromDb) { return; }
         };
 
-        const reOrderOptionTbl = async function(examId, questionId) {
+        const reOrderOptionTbl = async function (examId, questionId) {
             let currentOptions = new Array();
 
             qoEditModalTblBody.find("tr").each(function (index, element) {
@@ -346,10 +346,28 @@
                 });
         };
 
+        const isOptionTextExistsOnTable = function (newOptionText) {
+            let result = false;
+
+            qoEditModalTblBody.find("tr").each(function (index, element) {
+                let tblOptionText = $.trim($(element).find("td:eq(1)").text().toLowerCase());
+                if (newOptionText === tblOptionText) {
+                    result = true;
+                    return;
+                }
+            });
+            return result;
+        };
+
         $(document).on("click", "#js-btn-editOptionModal-AddOption", function (event) {
             if (!validation()) { return; }
 
             let option = getSingleOptionToBindOnHtmlTbl();
+
+            if (isOptionTextExistsOnTable(option.Description.toLowerCase())) {
+                bootbox.alert("Option Description already exists on this table");
+                return;
+            }
 
             bindNewOptionToTbl(option);
 
