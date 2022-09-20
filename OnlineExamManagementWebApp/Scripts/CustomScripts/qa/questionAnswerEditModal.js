@@ -424,17 +424,17 @@
 
             // prevent save if its a single option type but multiple answer is selected.
 
-            //let correctAnswerCount = 0;
-            //$("input[name='OptionEditModalChkBox']").each(function (index, item) {
-            //    if ($(this).is(":checked")) {
-            //        correctAnswerCount++;
-            //    }
-            //});
+            let correctAnswerCount = 0;
+            $("input[name='OptionEditModalChkBox']").each(function (index, item) {
+                if ($(this).is(":checked")) {
+                    correctAnswerCount++;
+                }
+            });
 
-            //if (qoEditSingleRadioBtn.is(":checked") && correctAnswerCount !== 1) {
-            //    bootbox.alert("Multiple correct answers are selected for single answer type question");
-            //    return;
-            //}
+            if (qoEditSingleRadioBtn.is(":checked") && correctAnswerCount !== 1) {
+                bootbox.alert("Multiple correct answers are selected for single answer type question");
+                return;
+            }
 
         });
         /*END*/

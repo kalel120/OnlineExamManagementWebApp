@@ -97,7 +97,6 @@ namespace OnlineExamManagementWebApp.Repository {
 
             var qoList = _dbContext.QuestionOptions
                 .Where(qo => qo.ExamId == examId && qo.QuestionId == questionId && qo.IsDeleted == false)
-                .Distinct()
                 .ToList();
 
 
