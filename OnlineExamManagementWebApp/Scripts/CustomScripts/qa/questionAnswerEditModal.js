@@ -397,7 +397,7 @@
             qoEditModalTblBody.find("input[type='checkbox']").attr("type", "radio");
         });
 
-        $(document).on("ifClicked", "#js-modal-editQo-oType-multiple", function() {
+        $(document).on("ifClicked", "#js-modal-editQo-oType-multiple", function () {
             if (qoEditModalTblBody.find("input[type='checkbox']").length > 0) {
                 //Checkbox already exists
                 return;
@@ -406,6 +406,46 @@
         });
 
         /**END**/
+
+        /** Show unsaved state if correct answer selection is modified **/
+        $(document).on("change", "input[name='OptionEditModalAnsSelect']", function (event) {
+            // $(event.target).prop("checked") // returns bool
+            //$(event.target).attr("checked") //    returns string -> 'checked' or 'undefined'
+            //$(event.target).val() //  returns string -> value or 'null'
+
+            let optionId = $(event.target).val();
+            let tbodyUpdateAnsClass = qoEditModalTblBody.find(".js-editOptions-modal-tbl-updateAnswer");
+            let thisUpdateAnsClass = $(this).closest("tr").find(".js-editOptions-modal-tbl-updateAnswer");
+            let html = `<a href="#" data-option-id="${optionId}" class="js-editOptions-modal-tbl-updateAnswer btn btn-primary"><i class="avoid-clicks fa fa-check-square"> Update Answer </i> </a>`;
+
+            let checkedAttr = $(event.target).attr("checked");
+
+            if (optionId === "null") { // Option is not saved on server
+
+            }
+            else {  //option is saved on server
+                // for single option type
+                if (qoEditSingleRadioBtn.prop("checked")) {
+                    // remove existing update answer css class
+                    if (tbodyUpdateAnsClass.length !== 0) {
+                        tbodyUpdateAnsClass.remove();
+                    }
+
+                    // append html if no 'checked' found and no update-answer button exists
+                    if ((typeof checkedAttr === "undefined") && thisUpdateAnsClass.length === 0) {
+                        $(event.target).closest("tr").find("td:eq(3)").append(html);
+                    }
+                } else {
+                    if (!(thisUpdateAnsClass.length >= 1)) {
+                        $(event.target).closest("tr").find("td:eq(3)").append(html);
+                    } else {
+                        thisUpdateAnsClass.remove();
+                    }
+                }
+
+            }
+        });
+        /** END **/
 
         /** Quesiton Option Update, Save change button actions **/
         const anyUnsavedOption = function () {
