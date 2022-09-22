@@ -31,6 +31,9 @@
 
         /** Jobs when modal pops */
         qoEditModal.on("shown.bs.modal", function () {
+            if (qoEditModalTblBody.find("tr").length === 4) {
+                return;
+            }
             addOptionDiv.show();
         });
         /**END*/
@@ -145,19 +148,18 @@
 
             if (qoEditSingleRadioBtn.prop("checked")) {
                 if (data.IsMarkedAsAnswer) {
-                    html += `<td><input type="radio" name="OptionEditModalRadio" checked/> </td>`;
+                    html += `<td><input type="radio" value=${data.OptionId} name="OptionEditModalAnsSelect" checked/> </td>`;
                 } else {
-                    html += `<td><input type="radio" name="OptionEditModalRadio"/> </td>`;
+                    html += `<td><input type="radio" value=${data.OptionId} name="OptionEditModalAnsSelect"/> </td>`;
                 }
-                
+
             }
 
             if (qoEditMultiRadioBtn.prop("checked")) {
                 if (data.IsMarkedAsAnswer) {
-                    html += `<td><input type = "checkbox" value=${data.OptionId
-                        } name="OptionEditModalChkBox" checked="checked"/></td>`;
+                    html += `<td><input type = "checkbox" value=${data.OptionId} name="OptionEditModalAnsSelect" checked="checked"/></td>`;
                 } else {
-                    html += `<td><input type = "checkbox" value=${data.OptionId} name="OptionEditModalChkBox"/></td>`;
+                    html += `<td><input type = "checkbox" value=${data.OptionId} name="OptionEditModalAnsSelect"/></td>`;
                 }
             }
 
@@ -275,11 +277,11 @@
             let isReordered = await reSequenceOptionTbl(currentOptions, examId, questionId);
             if (!isReordered) {
                 bootbox.alert("Re-Order Options failed!");
-                 return;
+                return;
             }
         };
 
-        $(document).on("click", ".js-editOptions-modal-remove-option",  function (event) {
+        $(document).on("click", ".js-editOptions-modal-remove-option", function (event) {
 
             bootbox.confirm("Are you sure?", async function (result) {
                 if (!result) return;
@@ -386,6 +388,25 @@
 
         /***END*/
 
+        /** Change option type selection **/
+        $(document).on("ifClicked", "#js-modal-editQo-oType-single", function () {
+            if (qoEditModalTblBody.find("input[type='radio']").length > 0) {
+                //Radio button already exists
+                return;
+            }
+            qoEditModalTblBody.find("input[type='checkbox']").attr("type", "radio");
+        });
+
+        $(document).on("ifClicked", "#js-modal-editQo-oType-multiple", function() {
+            if (qoEditModalTblBody.find("input[type='checkbox']").length > 0) {
+                //Checkbox already exists
+                return;
+            }
+            qoEditModalTblBody.find("input[type='radio']").attr("type", "checkbox");
+        });
+
+        /**END**/
+
         /** Quesiton Option Update, Save change button actions **/
         const anyUnsavedOption = function () {
             let isUnsaved = false;
@@ -404,21 +425,6 @@
                 bootbox.alert("Still unsaved option left or options are less than 4");
                 return;
             }
-
-            // prevent save if its a single option type but multiple answer is selected.
-
-            let correctAnswerCount = 0;
-            $("input[name='OptionEditModalChkBox']").each(function (index, item) {
-                if ($(this).is(":checked")) {
-                    correctAnswerCount++;
-                }
-            });
-
-            if (qoEditSingleRadioBtn.is(":checked") && correctAnswerCount !== 1) {
-                bootbox.alert("Multiple correct answers are selected for single answer type question");
-                return;
-            }
-
         });
         /*END*/
 
