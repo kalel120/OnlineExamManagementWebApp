@@ -408,41 +408,82 @@
         /**END**/
 
         /** Show unsaved state if correct answer selection is modified **/
+
+        const isRemovedUpdateCorrectAnsBtn = function (optionType, thisUpdateAnsClass) {
+            let result = false;
+            const tbodyUpdateAnsClass = qoEditModalTblBody.find(".js-editOptions-modal-tbl-updateAnswer");
+
+            // for single answer option type
+            if (optionType === "single") {
+                if (tbodyUpdateAnsClass.length !== 0) {
+                    tbodyUpdateAnsClass.remove();
+                    result = true;
+                }
+            }
+
+            // for multiple answer option type
+            if (optionType === "multiple") {
+                if ((thisUpdateAnsClass.length >= 1)) {
+                    thisUpdateAnsClass.remove();
+                    result = true;
+                }
+            }
+
+            return result;
+        };
+
+        const appendUpdateCorrectAnsBtn = function (optionId, eventTarget) {
+            const html = `<a href="#" data-option-id="${optionId}" class="js-editOptions-modal-tbl-updateAnswer btn btn-primary"><i class="avoid-clicks fa fa-database"> Update Answer </i> </a>`;
+
+            eventTarget.closest("tr").find("td:eq(3)").append(html);
+        };
+
+        const handleUpdateAnsBtnForSingleOptionType = function (checkedAttr, thisUpdateAnsClass, optionId, eventTarget) {
+            isRemovedUpdateCorrectAnsBtn("single", thisUpdateAnsClass);
+
+            // append update correct answer if no 'checked' attr exists and no update-answer button exists
+            if ((typeof checkedAttr === "undefined") && thisUpdateAnsClass.length === 0) {
+                appendUpdateCorrectAnsBtn(optionId, eventTarget);
+            }
+        };
+
+        const handleUpdateAnsBtnForMultiOptionType = function (checkedAttr, thisUpdateAnsClass, optionId, eventTarget) {
+            if (!isRemovedUpdateCorrectAnsBtn("multiple", thisUpdateAnsClass)) {
+
+                //  if this answer is saved on db and user has checked this as correct answer then return. Otherwise display update-ans button
+                if ((typeof checkedAttr !== "undefined") && eventTarget.prop("checked")) {
+                    return;
+                }
+                appendUpdateCorrectAnsBtn(optionId, eventTarget);
+            }
+        };
+
+
         $(document).on("change", "input[name='OptionEditModalAnsSelect']", function (event) {
             // $(event.target).prop("checked") // returns bool
             //$(event.target).attr("checked") //    returns string -> 'checked' or 'undefined'
             //$(event.target).val() //  returns string -> value or 'null'
 
-            let optionId = $(event.target).val();
-            let tbodyUpdateAnsClass = qoEditModalTblBody.find(".js-editOptions-modal-tbl-updateAnswer");
-            let thisUpdateAnsClass = $(this).closest("tr").find(".js-editOptions-modal-tbl-updateAnswer");
-            let html = `<a href="#" data-option-id="${optionId}" class="js-editOptions-modal-tbl-updateAnswer btn btn-primary"><i class="avoid-clicks fa fa-check-square"> Update Answer </i> </a>`;
+            let eventTarget = $(event.target);
+            let optionId = eventTarget.val();
+            let thisUpdateAnsClass = eventTarget.closest("tr").find(".js-editOptions-modal-tbl-updateAnswer");
 
-            let checkedAttr = $(event.target).attr("checked");
 
             if (optionId === "null") { // Option is not saved on server
-
-            }
-            else {  //option is saved on server
-                // for single option type
                 if (qoEditSingleRadioBtn.prop("checked")) {
-                    // remove existing update answer css class
-                    if (tbodyUpdateAnsClass.length !== 0) {
-                        tbodyUpdateAnsClass.remove();
-                    }
-
-                    // append html if no 'checked' found and no update-answer button exists
-                    if ((typeof checkedAttr === "undefined") && thisUpdateAnsClass.length === 0) {
-                        $(event.target).closest("tr").find("td:eq(3)").append(html);
-                    }
-                } else {
-                    if (!(thisUpdateAnsClass.length >= 1)) {
-                        $(event.target).closest("tr").find("td:eq(3)").append(html);
-                    } else {
-                        thisUpdateAnsClass.remove();
-                    }
                 }
 
+                if (qoEditMultiRadioBtn.prop("checked")) {
+
+                }
+            }
+            else {  //option is saved on server
+                if (qoEditSingleRadioBtn.prop("checked")) {
+                    handleUpdateAnsBtnForSingleOptionType(eventTarget.attr("checked"), thisUpdateAnsClass, optionId, eventTarget);
+                }
+                if (qoEditMultiRadioBtn.prop("checked")) {
+                    handleUpdateAnsBtnForMultiOptionType(eventTarget.attr("checked"), thisUpdateAnsClass, optionId, eventTarget);
+                }
             }
         });
         /** END **/
