@@ -460,30 +460,16 @@
 
 
         $(document).on("change", "input[name='OptionEditModalAnsSelect']", function (event) {
-            // $(event.target).prop("checked") // returns bool
-            //$(event.target).attr("checked") //    returns string -> 'checked' or 'undefined'
-            //$(event.target).val() //  returns string -> value or 'null'
-
             let eventTarget = $(event.target);
-            let optionId = eventTarget.val();
             let thisUpdateAnsClass = eventTarget.closest("tr").find(".js-editOptions-modal-tbl-updateAnswer");
 
-
-            if (optionId === "null") { // Option is not saved on server
-                if (qoEditSingleRadioBtn.prop("checked")) {
-                }
-
-                if (qoEditMultiRadioBtn.prop("checked")) {
-
-                }
+            if (qoEditSingleRadioBtn.prop("checked")) {
+                handleUpdateAnsBtnForSingleOptionType(eventTarget.attr("checked"), thisUpdateAnsClass, eventTarget.val(), eventTarget);
+                return;
             }
-            else {  //option is saved on server
-                if (qoEditSingleRadioBtn.prop("checked")) {
-                    handleUpdateAnsBtnForSingleOptionType(eventTarget.attr("checked"), thisUpdateAnsClass, optionId, eventTarget);
-                }
-                if (qoEditMultiRadioBtn.prop("checked")) {
-                    handleUpdateAnsBtnForMultiOptionType(eventTarget.attr("checked"), thisUpdateAnsClass, optionId, eventTarget);
-                }
+            if (qoEditMultiRadioBtn.prop("checked")) {
+                handleUpdateAnsBtnForMultiOptionType(eventTarget.attr("checked"), thisUpdateAnsClass, eventTarget.val(), eventTarget);
+                return;
             }
         });
         /** END **/
