@@ -48,7 +48,7 @@
         /**END */
 
         /** On any input change, will trigger an event to enable disable save button */
-        qoEditModalFormInputs.on("keyup change ifChanged", function () {
+        qoEditModalFormInputs.on("keyup change", function () {
             editQoSubmitBtn.show();
         });
 
@@ -179,13 +179,13 @@
             qoEditDescTextBox.val(data.Description);
 
             if (data.OptionType === qoEditSingleRadioBtn.val()) {
-                qoEditSingleRadioBtn.prop("checked", true).iCheck("update");
-                qoEditMultiRadioBtn.prop("checked", false).iCheck("update");
+                qoEditSingleRadioBtn.prop("checked", true);
+                qoEditMultiRadioBtn.prop("checked", false);
             }
 
             if (data.OptionType === qoEditMultiRadioBtn.val()) {
-                qoEditMultiRadioBtn.prop("checked", true).iCheck("update");
-                qoEditSingleRadioBtn.prop("checked", false).iCheck("update");
+                qoEditMultiRadioBtn.prop("checked", true);
+                qoEditSingleRadioBtn.prop("checked", false);
             }
         };
 
@@ -389,21 +389,34 @@
         /***END*/
 
         /** Change option type selection **/
-        $(document).on("ifClicked", "#js-modal-editQo-oType-single", function () {
-            if (qoEditModalTblBody.find("input[type='radio']").length > 0) {
-                //Radio button already exists
-                return;
-            }
-            qoEditModalTblBody.find("input[type='checkbox']").attr("type", "radio");
+
+
+        $(document).on("change", "input[name = 'OptionTypeEditModal']", function (event) {
+            bootbox.confirm({
+                size: "small",
+                message: "Are You Sure? This will clear out already selected correct answers",
+                callback: function (result) {
+                    if (!result) {
+                        $("input[name = 'OptionTypeEditModal']").not(':checked').prop("checked", true);
+                        return;
+                    }
+
+                    qoEditModalTblBody.find(".js-editOptions-modal-tbl-updateAnswer").remove();
+
+                    if (qoEditModalTblBody.find("input[type='radio']").length > 0) {
+                        qoEditModalTblBody.find("input[type='radio']").attr("type", "checkbox");
+                    } else {
+                        qoEditModalTblBody.find("input[type='checkbox']").attr("type", "radio");
+                    }
+                }
+            });
+
         });
 
-        $(document).on("ifClicked", "#js-modal-editQo-oType-multiple", function () {
-            if (qoEditModalTblBody.find("input[type='checkbox']").length > 0) {
-                //Checkbox already exists
-                return;
-            }
-            qoEditModalTblBody.find("input[type='radio']").attr("type", "checkbox");
-        });
+
+
+
+
 
         /**END**/
 
