@@ -500,9 +500,29 @@
             return isUnsaved;
         };
 
+        const anyUncheckedCorrectAns = function() {
+            let isUnchecked = false;
+
+            let notCheckedLength = $("input[name='OptionEditModalAnsSelect']").not(":checked").length;
+            if (notCheckedLength !== 0) {
+                isUnchecked = true;
+            }
+            return isUnchecked;
+        };
+
         editQoSubmitBtn.on("click", function () {
-            if (anyUnsavedOption() || qoEditModalTblBody.find("tr").length !== 4) {
-                bootbox.alert("Still unsaved option left or options are less than 4");
+            if (anyUncheckedCorrectAns()) {
+                bootbox.alert("Still unanswered option left");
+                return;
+            }
+
+            if (anyUnsavedOption()) {
+                bootbox.alert("Still unsaved options left");
+                return;
+            }
+
+            if (qoEditModalTblBody.find("tr").length !== 4) {
+                bootbox.alert("Options are less than 4");
                 return;
             }
         });
