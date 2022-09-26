@@ -389,8 +389,6 @@
         /***END*/
 
         /** Change option type selection **/
-
-
         $(document).on("change", "input[name = 'OptionTypeEditModal']", function (event) {
             bootbox.confirm({
                 size: "small",
@@ -405,6 +403,10 @@
 
                     if (qoEditModalTblBody.find("input[type='radio']").length > 0) {
                         qoEditModalTblBody.find("input[type='radio']").attr("type", "checkbox");
+
+                        //uncheck all checkboxes
+                        qoEditModalTblBody.find("input[type='checkbox']").prop("checked", false);
+
                     } else {
                         qoEditModalTblBody.find("input[type='checkbox']").attr("type", "radio");
                     }
@@ -412,12 +414,6 @@
             });
 
         });
-
-
-
-
-
-
         /**END**/
 
         /** Show unsaved state if correct answer selection is modified **/
@@ -471,7 +467,6 @@
             }
         };
 
-
         $(document).on("change", "input[name='OptionEditModalAnsSelect']", function (event) {
             let eventTarget = $(event.target);
             let thisUpdateAnsClass = eventTarget.closest("tr").find(".js-editOptions-modal-tbl-updateAnswer");
@@ -484,6 +479,27 @@
                 handleUpdateAnsBtnForMultiOptionType(eventTarget.attr("checked"), thisUpdateAnsClass, eventTarget.val(), eventTarget);
                 return;
             }
+        });
+        /** END **/
+
+        /** Save updated correct answer **/
+        const saveCorrectAnsForSingleAns = function(eventTarget) {
+            let optionId = eventTarget.find("td:eq(2)").children("input[name='OptionEditModalAnsSelect']").val();
+
+        };
+
+
+        $(document).on("click", ".js-editOptions-modal-tbl-updateAnswer", function(event) {
+            // for single answer type
+            if (qoEditSingleRadioBtn.prop("checked")) {
+                saveCorrectAnsForSingleAns($(event.target).closest("tr"));
+                return;
+            }
+
+            console.log("multiple answer");
+            return;
+            // for multiple answer type
+
         });
         /** END **/
 
