@@ -483,16 +483,52 @@
         /** END **/
 
         /** Save updated correct answer **/
-        const saveCorrectAnsForSingleAns = function(eventTarget) {
-            let optionId = eventTarget.find("td:eq(2)").children("input[name='OptionEditModalAnsSelect']").val();
+        const updateCorrectAnsById = async function (dataToUpdate) {
 
+            try {
+                let response = await $.ajax({
+                    type: "PUT",
+                    url: "/QuestionAnswer/UpdateCorrectAnsOfOption",
+                    dataType: "json",
+                    data: dataToUpdate
+                });
+
+                return true;
+
+            } catch (error) {
+                // Enable this before going live
+                //if (error.status === 500) {
+                //    window.location = "/Error/Error500";
+                //}
+                return false;
+            }
         };
 
 
-        $(document).on("click", ".js-editOptions-modal-tbl-updateAnswer", function(event) {
+        const saveCorrectAnsForSingleAns =  function (eventTarget) {
+            let optionId = eventTarget.find("td:eq(2)").children("input[name='OptionEditModalAnsSelect']").val();
+
+            // build object to send to server
+            let optionToUpdate = {
+                OptionId: optionId
+                , QuestionId: qoEditModalQuestionId.val()
+                , ExamId: qoEditModalExamId.val()
+                , OptionType: "Single Answer"
+            };
+
+            let response = updateCorrectAnsById(optionToUpdate);
+
+            return response;
+        };
+
+
+        $(document).on("click", ".js-editOptions-modal-tbl-updateAnswer", function (event) {
             // for single answer type
             if (qoEditSingleRadioBtn.prop("checked")) {
-                saveCorrectAnsForSingleAns($(event.target).closest("tr"));
+                if (!saveCorrectAnsForSingleAns($(event.target).closest("tr"))) {
+                    return;
+                }
+                $(event.target).remove();
                 return;
             }
 
@@ -516,7 +552,7 @@
             return isUnsaved;
         };
 
-        const anyUncheckedCorrectAns = function() {
+        const anyUncheckedCorrectAns = function () {
             let isUnchecked = false;
 
             let notCheckedLength = $("input[name='OptionEditModalAnsSelect']").not(":checked").length;

@@ -8,5 +8,6 @@ namespace OnlineExamManagementWebApp.DTOs.QuestionOption {
         public bool IsCorrectAnswer { get; set; }
         public int Order { get; set; }
         public int ExamId { get; set; }
+        public string OptionType { get; set; }
     }
 }

@@ -143,5 +143,9 @@ namespace OnlineExamManagementWebApp.Repository {
             var result = _dbContext.SaveChanges() > 0;
             return result;
         }
+
+        public bool IsCorrectAnsOfOptionUpdated(OptionToUpdate dto) {
+            throw new NotImplementedException();
+        }
     }
 }

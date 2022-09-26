@@ -88,6 +88,16 @@ namespace OnlineExamManagementWebApp.Controllers {
             var result = _qoManager.IsOptionReordered(dto, examId, questionId);
             return Json(result, JsonRequestBehavior.DenyGet);
         }
+
+        [HttpPut]
+        public JsonResult UpdateCorrectAnsOfOption(OptionToUpdate dto) {
+            if (dto == null || dto.ExamId == 0 || dto.OptionId == Guid.Empty) {
+                return Json(false, JsonRequestBehavior.DenyGet);
+            }
+
+            var result = _qoManager.IsCorrectAnsOfOptionUpdated(dto);
+            return Json(result, JsonRequestBehavior.DenyGet);
+        }
     }
 
 }

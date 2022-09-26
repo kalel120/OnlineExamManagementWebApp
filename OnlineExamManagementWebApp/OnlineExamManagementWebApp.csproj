@@ -543,6 +543,7 @@
     <Content Include="Views\Exam\Index.cshtml" />
     <Content Include="Views\QuestionAnswer\Entry.cshtml" />
     <Content Include="Views\Error\Error_404.cshtml" />
+    <Content Include="Views\Error\Error_500.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

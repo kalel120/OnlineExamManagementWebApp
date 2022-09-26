@@ -10,5 +10,9 @@ namespace OnlineExamManagementWebApp.Controllers {
         public ActionResult Error() {
             return View("Error");
         }
+
+        public ActionResult Error500() {
+            return View("Error_500");
+        }
     }
 }

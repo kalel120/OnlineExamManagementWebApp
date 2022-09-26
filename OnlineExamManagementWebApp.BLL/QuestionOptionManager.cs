@@ -88,5 +88,9 @@ namespace OnlineExamManagementWebApp.BLL {
         public bool IsSingleOptionSaved(SingleOptionToSave dtoOptionToSave) {
             return _unitOfWork.QuestionOptions.IsSingleOptionSaved(dtoOptionToSave);
         }
+
+        public bool IsCorrectAnsOfOptionUpdated(OptionToUpdate dto) {
+            return _unitOfWork.QuestionOptions.IsCorrectAnsOfOptionUpdated(dto);
+        }
     }
 }
