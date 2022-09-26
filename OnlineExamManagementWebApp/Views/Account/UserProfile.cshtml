@@ -42,10 +42,10 @@
             </div>
             <div class="x_content">
                 @{
-                    if (ViewBag.UpdateMessage!=null) {
+                    if (ViewBag.UpdateMessage != null) {
                         <div class="alert alert-success alert-dismissible" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <strong>@ViewBag.UpdateMessage</strong>  
+                            <strong>@ViewBag.UpdateMessage</strong>
                         </div>
                     }
                 }
@@ -72,7 +72,7 @@
                         <i class="fa fa-edit m-right-xs"></i>
                         Edit Profile
                     </a>
-                    <br/>
+                    <br />
                 </div>
             </div>
         </div>
@@ -84,11 +84,12 @@
 }
 
 @section scripts {
-    <!--jQuery Validation-->
-    <script type="text/javascript" src="~/Scripts/jquery.validate.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <!--jQuery Validation-->
+    @Scripts.Render("~/bundles/jqueryval")
 
     <script type="text/javascript" src="~/Scripts/dropzone/dropzone.js"></script>
+
+    <!-- Theme Specific Scripts -->
+    <script src="~/Theme/js/custom.js" defer></script>
+
     <script src="~/Scripts/CustomScripts/account/userProfile.js"></script>
 }

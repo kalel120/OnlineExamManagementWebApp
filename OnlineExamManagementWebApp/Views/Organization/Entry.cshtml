@@ -41,7 +41,7 @@
                 <div class="item form-group">
                     @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-3 col-sm-3 col-xs-12" })
                     <div class="col-md-6 col-sm-6 col-xs-12">
-                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control col-md-7 col-xs-12", placeholder= "Should Not Exceed 50 Characters" })
+                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control col-md-7 col-xs-12", placeholder = "Should Not Exceed 50 Characters" })
                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -105,5 +105,9 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript" src="~/Scripts/dropzone/dropzone.js"></script>
+
+    <!-- Theme Specific Scripts -->
+    <script src="~/Theme/js/custom.js" defer></script>
+
     <script type="text/javascript" src="~/Scripts/CustomScripts/organization/org-entry.js"></script>
 }

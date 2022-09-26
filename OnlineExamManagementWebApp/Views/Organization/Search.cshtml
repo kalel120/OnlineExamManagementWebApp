@@ -114,8 +114,7 @@
 
 
 @section scripts{
-    <script type="text/javascript" src="~/Scripts/jquery.validate.js"></script>
-
+    @Scripts.Render("~/bundles/jqueryval")
     <!-- DataTable Scripts -->
     <script src="~/Theme/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="~/Theme/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -132,6 +131,10 @@
     <!--DataTable end-->
 
     <script src="~/Scripts/bootbox.min.js"></script>
+
+    <!-- Theme Specific Scripts -->
+    <script src="~/Theme/js/custom.js" defer></script>
+
     <script src="~/Scripts/CustomScripts/organization/search-org.js"></script>
     <script src="~/Scripts/CustomScripts/organization/viewOrgModal.js"></script>
     <script src="~/Scripts/CustomScripts/organization/editOrgModal.js"></script>

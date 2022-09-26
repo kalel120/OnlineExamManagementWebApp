@@ -402,11 +402,10 @@
 @*END*@
 
 @section scripts {
-    <script src="~/Theme/vendors/iCheck/icheck.min.js"></script>
-
     @Scripts.Render("~/bundles/jquery-ui")
     @Scripts.Render("~/bundles/jqueryval")
 
+    <script src="~/Theme/vendors/iCheck/icheck.min.js"></script>
     <!-- DataTable Scripts -->
     <script src="~/Theme/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="~/Theme/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -421,9 +420,12 @@
     <script src="~/Theme/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
     <script src="~/Theme/vendors/datatables.net-scroller/js/dataTables.scroller.min.js"></script>
     <!--DataTable end-->
-    <!--bootbox end-->
+
     <script src="~/Scripts/bootbox.min.js"></script>
-    <!--bootbox end-->
+
+    <!-- Theme Specific Scripts -->
+    <script src="~/Theme/js/custom.js" defer></script>
+
     <!--Custom Scripts-->
     <script src="~/Scripts/CustomScripts/qa/questionAnswerEntry.js"></script>
     <script src="~/Scripts/CustomScripts/qa/questionAnswerViewModal.js"></script>
