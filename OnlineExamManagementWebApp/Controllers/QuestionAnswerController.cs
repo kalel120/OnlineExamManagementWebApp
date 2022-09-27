@@ -18,7 +18,7 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         public ActionResult Entry(int examId) {
-            if (examId == null || examId == 0) { return RedirectToAction("Error", "Error"); }
+            if (examId == 0) { return RedirectToAction("Error", "Error"); }
 
             var viewModel = new QuestionAnswerViewModel();
 
@@ -33,7 +33,7 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         public JsonResult GetQuestionsByExamId(int id) {
-            if (id == null || id == 0) { return Json(false, JsonRequestBehavior.AllowGet); }
+            if (id == 0) { return Json(false, JsonRequestBehavior.AllowGet); }
 
             ICollection<QuestionsDto> questions = _qoManager.GetQuestionsByExamId(id);
             return Json(questions, JsonRequestBehavior.AllowGet);
@@ -41,7 +41,7 @@ namespace OnlineExamManagementWebApp.Controllers {
 
 
         public JsonResult GetOptionsByQuestionId(Guid id) {
-            if (id == null || id == Guid.Empty) { return Json(false, JsonRequestBehavior.AllowGet); }
+            if (id == Guid.Empty) { return Json(false, JsonRequestBehavior.AllowGet); }
 
             ICollection<OptionDto> options = _qoManager.GetOptionsByQuestionId(id);
             return Json(options, JsonRequestBehavior.AllowGet);

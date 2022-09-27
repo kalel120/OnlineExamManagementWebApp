@@ -505,7 +505,7 @@
         };
 
 
-        const saveCorrectAnsForSingleAns =  function (eventTarget) {
+        const isCorrectAnswerSaved =  function (eventTarget) {
             let optionId = eventTarget.find("td:eq(2)").children("input[name='OptionEditModalAnsSelect']").val();
 
             // build object to send to server
@@ -516,16 +516,14 @@
                 , OptionType: "Single Answer"
             };
 
-            let response = updateCorrectAnsById(optionToUpdate);
-
-            return response;
+            return updateCorrectAnsById(optionToUpdate);
         };
 
 
         $(document).on("click", ".js-editOptions-modal-tbl-updateAnswer", function (event) {
             // for single answer type
             if (qoEditSingleRadioBtn.prop("checked")) {
-                if (!saveCorrectAnsForSingleAns($(event.target).closest("tr"))) {
+                if (!isCorrectAnswerSaved($(event.target).closest("tr"))) {
                     return;
                 }
                 $(event.target).remove();
