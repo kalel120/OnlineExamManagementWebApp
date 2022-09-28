@@ -19,7 +19,9 @@ namespace OnlineExamManagementWebApp {
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Theme/vendors/animate.css/animate.css",
+                      "~/Content/site.css",
+                      "~/Theme/css/custom.css"));
         }
     }
 }

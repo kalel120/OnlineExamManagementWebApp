@@ -20,6 +20,7 @@
         const qoEditModalTbl = $("#js-tbl-editOptions-modal");
         const qoEditModalTblBody = $("#js-tbl-editOptionModal-tbody");
         const addOptionDiv = $(".js-div-addOption-editQoModal");
+        const warningAlert = $("#js-editQo-alert-warning");
 
 
         const resetModalState = function () {
@@ -57,6 +58,20 @@
             editQoSubmitBtn.show();
         });
         /**END */
+
+        /** bootstrap alert **/
+        const showAndDismissWarningAlert = function (message) {
+            let html = `<div class="alert alert-warning" role="alert" id="js-editQo-alert-warning">`;
+            html += `<strong>Warning!</strong> ${message} </div>`;
+
+            $("#js-editQo-alert").append(html);
+            $("#js-editQo-alert-warning").addClass("animated bounceIn");
+
+            setTimeout(function() {
+                $("#js-editQo-alert-warning").addClass("animated bounceOut").remove();
+            },5000);
+        };
+        /**END**/
 
         /** validation **/
         const validation = function () {
@@ -397,7 +412,7 @@
                 ExamId: $EXAM_ID,
                 QuestionId: $QUESTION_ID.val()
             };
-            
+
             try {
                 let response = await $.ajax({
                     type: "PUT",
@@ -406,6 +421,7 @@
                     data: reqData
                 });
 
+                showAndDismissWarningAlert("Correct Answer Type of this question has modified");
                 return true;
             } catch (error) {
                 if (error.status === 500) {
@@ -435,6 +451,9 @@
 
                         //update option type on server
                         updateAnswerSelectionType(qoEditMultiRadioBtn.val());
+
+
+
                     } else {
                         qoEditModalTblBody.find("input[type='checkbox']").attr("type", "radio");
 

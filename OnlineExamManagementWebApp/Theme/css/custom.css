@@ -4885,7 +4885,8 @@ ul.verticle_bars {
 }
 
 .alert-warning {
-    color: #E9EDEF;
+    /*color: #E9EDEF;*/
+    color: #005b96;
     background-color: rgba(243, 156, 18, 0.88);
     border-color: rgba(243, 156, 18, 0.88)
 }
