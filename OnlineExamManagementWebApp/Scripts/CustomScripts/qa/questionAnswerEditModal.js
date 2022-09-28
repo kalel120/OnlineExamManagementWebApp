@@ -3,9 +3,10 @@
 (() => {
     $(() => {
         /**Initialization**/
+        const $EXAM_ID = $.trim($("#js_examId").val());
+        const $QUESTION_ID = $.trim($("#js-editModal-hidden-qId").val());
+
         const qoEditModal = $("#js-modal-editQo");
-        const qoEditModalExamId = $("#js_examId");
-        const qoEditModalQuestionId = $("#js-editModal-hidden-qId");
         const qoEditModalForm = $("#js-modal-editQo-form");
         const qoEditModalFormInputs = $("#js-modal-editQo-form :input");
         const qoEditOrderTextBox = $("#js-modal-editQo-order");
@@ -193,7 +194,7 @@
             try {
                 let tableRow = getRowOfQuestionTableAsObject($(event.target).closest("tr"));
                 bindToEditQoModal(tableRow);
-                qoEditModalQuestionId.val(tableRow.QuestionId);
+                $("#js-editModal-hidden-qId").val(tableRow.QuestionId);
 
                 // asynchronously get options data from server
                 let options = await getOptionsByQuestionId(tableRow.QuestionId);
@@ -295,10 +296,10 @@
                 else {
                     removeTrFromHtml(tr);
 
-                    let isRemovedFromDb = await removeOptionFromDb(optionId, qoEditModalExamId.val());
+                    let isRemovedFromDb = await removeOptionFromDb(optionId, $EXAM_ID);
                     if (!isRemovedFromDb) { return; }
 
-                    reOrderOptionTbl(qoEditModalExamId.val(), qoEditModalQuestionId.val());
+                    reOrderOptionTbl($EXAM_ID, $QUESTION_ID);
                 }
                 addOptionDiv.show();
             });
@@ -310,8 +311,8 @@
             return {
                 Order: qoEditModalTblBody.find("tr").length + 1,
                 Description: $.trim(qoEditAddOptionTextBox.val()),
-                QuestionId: $.trim(qoEditModalQuestionId.val()),
-                ExamId: $.trim(qoEditModalExamId.val()),
+                QuestionId: $QUESTION_ID,
+                ExamId: $EXAM_ID,
                 OptionId: null
             }
         };
@@ -321,8 +322,8 @@
                 SerialNo: tr.find("td:eq(0)").text(),
                 OptionText: tr.find("td:eq(1)").text(),
                 IsCorrectAnswer: tr.find("td:eq(2)").find("input[type='checkbox']").prop("checked"),
-                ExamId: $.trim(qoEditModalExamId.val()),
-                QuestionId: $.trim(qoEditModalQuestionId.val())
+                ExamId: $EXAM_ID,
+                QuestionId: $QUESTION_ID
             }
         };
 
@@ -473,10 +474,14 @@
 
             if (qoEditSingleRadioBtn.prop("checked")) {
                 handleUpdateAnsBtnForSingleOptionType(eventTarget.attr("checked"), thisUpdateAnsClass, eventTarget.val(), eventTarget);
+
+                //updateAnswerSelectionType("Single Answer", $QUESTION_ID, $EXAM_ID);
                 return;
             }
             if (qoEditMultiRadioBtn.prop("checked")) {
                 handleUpdateAnsBtnForMultiOptionType(eventTarget.attr("checked"), thisUpdateAnsClass, eventTarget.val(), eventTarget);
+
+                //updateAnswerSelectionType("Multiple Answer", $QUESTION_ID, $EXAM_ID);
                 return;
             }
         });
@@ -505,14 +510,14 @@
         };
 
 
-        const isCorrectAnswerSaved =  function (eventTarget) {
+        const isCorrectAnswerSaved = function (eventTarget) {
             let optionId = eventTarget.find("td:eq(2)").children("input[name='OptionEditModalAnsSelect']").val();
 
             // build object to send to server
             let optionToUpdate = {
                 OptionId: optionId
-                , QuestionId: qoEditModalQuestionId.val()
-                , ExamId: qoEditModalExamId.val()
+                , QuestionId: $QUESTION_ID
+                , ExamId: $EXAM_ID
                 , OptionType: "Single Answer"
             };
 
