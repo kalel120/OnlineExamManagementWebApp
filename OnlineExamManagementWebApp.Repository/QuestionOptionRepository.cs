@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using OnlineExamManagementWebApp.DatabaseContext;
 using OnlineExamManagementWebApp.DTOs.QuestionOption;
 using OnlineExamManagementWebApp.Models;
+using EntityState = System.Data.Entity.EntityState;
 
 namespace OnlineExamManagementWebApp.Repository {
     public class QuestionOptionRepository {
@@ -144,8 +146,11 @@ namespace OnlineExamManagementWebApp.Repository {
             return result;
         }
 
-        public bool IsCorrectAnsOfOptionUpdated(OptionToUpdate dto) {
-            throw new NotImplementedException();
+        public IEnumerable<QuestionOption> GetQuestionOptionsByQuestionAndExamId(Guid questionId, int examId) {
+            IEnumerable<QuestionOption> questionOptions = _dbContext.QuestionOptions
+                .Where(qo => qo.ExamId == examId && qo.QuestionId == questionId && qo.IsDeleted == false);
+
+            return questionOptions;
         }
     }
 }

@@ -530,10 +530,9 @@
                 return;
             }
 
-            console.log("multiple answer");
-            return;
             // for multiple answer type
-
+            bootbox.alert("Multiple answer is not yet implemented");
+            return;
         });
         /** END **/
 

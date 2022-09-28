@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using OnlineExamManagementWebApp.Repository;
 using OnlineExamManagementWebApp.DTOs.QuestionOption;
 using OnlineExamManagementWebApp.Models;
@@ -90,7 +91,25 @@ namespace OnlineExamManagementWebApp.BLL {
         }
 
         public bool IsCorrectAnsOfOptionUpdated(OptionToUpdate dto) {
-            return _unitOfWork.QuestionOptions.IsCorrectAnsOfOptionUpdated(dto);
+            IEnumerable<QuestionOption> questionOptionsToUpdate = _unitOfWork.QuestionOptions.GetQuestionOptionsByQuestionAndExamId(dto.QuestionId, dto.ExamId);
+            Question questionToUpdate = _unitOfWork.Questions.GetQuestionById(dto.QuestionId);
+
+            if (questionOptionsToUpdate == null || !questionOptionsToUpdate.Any() || questionToUpdate == null) {
+                return false;
+            }
+
+            foreach (var item in questionOptionsToUpdate) {
+                if (item.OptionId != dto.OptionId) {
+                    item.IsCorrectAnswer = false;
+                }
+                else {
+                    item.IsCorrectAnswer = true;
+                }
+            }
+
+            questionToUpdate.OptionType = dto.OptionType;
+
+            return _unitOfWork.Complete();
         }
     }
 }
