@@ -410,6 +410,9 @@
 
                     } else {
                         qoEditModalTblBody.find("input[type='checkbox']").attr("type", "radio");
+
+                        //uncheck radio button
+                        qoEditModalTblBody.find("input[type='radio']").prop("checked", false);
                     }
                 }
             });
