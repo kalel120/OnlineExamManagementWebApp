@@ -4,7 +4,7 @@
     $(() => {
         /**Initialization**/
         const $EXAM_ID = $.trim($("#js_examId").val());
-        const $QUESTION_ID = $.trim($("#js-editModal-hidden-qId").val());
+        const $QUESTION_ID = $("#js-editModal-hidden-qId");
 
         const qoEditModal = $("#js-modal-editQo");
         const qoEditModalForm = $("#js-modal-editQo-form");
@@ -194,7 +194,7 @@
             try {
                 let tableRow = getRowOfQuestionTableAsObject($(event.target).closest("tr"));
                 bindToEditQoModal(tableRow);
-                $("#js-editModal-hidden-qId").val(tableRow.QuestionId);
+                $QUESTION_ID.val(tableRow.QuestionId);
 
                 // asynchronously get options data from server
                 let options = await getOptionsByQuestionId(tableRow.QuestionId);
@@ -311,7 +311,7 @@
             return {
                 Order: qoEditModalTblBody.find("tr").length + 1,
                 Description: $.trim(qoEditAddOptionTextBox.val()),
-                QuestionId: $QUESTION_ID,
+                QuestionId: $QUESTION_ID.val(),
                 ExamId: $EXAM_ID,
                 OptionId: null
             }
@@ -323,7 +323,7 @@
                 OptionText: tr.find("td:eq(1)").text(),
                 IsCorrectAnswer: tr.find("td:eq(2)").find("input[type='checkbox']").prop("checked"),
                 ExamId: $EXAM_ID,
-                QuestionId: $QUESTION_ID
+                QuestionId: $QUESTION_ID.val()
             }
         };
 
@@ -390,6 +390,31 @@
         /***END*/
 
         /** Change option type selection **/
+        // Update Answer selection type of Question by exam and question id
+        const updateAnswerSelectionType = async function (optionType) {
+            let reqData = {
+                OptionType: optionType,
+                ExamId: $EXAM_ID,
+                QuestionId: $QUESTION_ID.val()
+            };
+            
+            try {
+                let response = await $.ajax({
+                    type: "PUT",
+                    url: "/QuestionAnswer/UpdateOptionTypeOfQuestion",
+                    dataType: "json",
+                    data: reqData
+                });
+
+                return true;
+            } catch (error) {
+                if (error.status === 500) {
+                    window.location = "/Error/Error500";
+                }
+                return false;
+            }
+        };
+
         $(document).on("change", "input[name = 'OptionTypeEditModal']", function (event) {
             bootbox.confirm({
                 size: "small",
@@ -408,11 +433,16 @@
                         //uncheck all checkboxes
                         qoEditModalTblBody.find("input[type='checkbox']").prop("checked", false);
 
+                        //update option type on server
+                        updateAnswerSelectionType(qoEditMultiRadioBtn.val());
                     } else {
                         qoEditModalTblBody.find("input[type='checkbox']").attr("type", "radio");
 
                         //uncheck radio button
                         qoEditModalTblBody.find("input[type='radio']").prop("checked", false);
+
+                        //update option type on server
+                        updateAnswerSelectionType(qoEditSingleRadioBtn.val());
                     }
                 }
             });
@@ -421,7 +451,6 @@
         /**END**/
 
         /** Show unsaved state if correct answer selection is modified **/
-
         const isRemovedUpdateCorrectAnsBtn = function (optionType, thisUpdateAnsClass) {
             let result = false;
             const tbodyUpdateAnsClass = qoEditModalTblBody.find(".js-editOptions-modal-tbl-updateAnswer");
@@ -477,14 +506,10 @@
 
             if (qoEditSingleRadioBtn.prop("checked")) {
                 handleUpdateAnsBtnForSingleOptionType(eventTarget.attr("checked"), thisUpdateAnsClass, eventTarget.val(), eventTarget);
-
-                //updateAnswerSelectionType("Single Answer", $QUESTION_ID, $EXAM_ID);
                 return;
             }
             if (qoEditMultiRadioBtn.prop("checked")) {
                 handleUpdateAnsBtnForMultiOptionType(eventTarget.attr("checked"), thisUpdateAnsClass, eventTarget.val(), eventTarget);
-
-                //updateAnswerSelectionType("Multiple Answer", $QUESTION_ID, $EXAM_ID);
                 return;
             }
         });
@@ -512,21 +537,19 @@
             }
         };
 
-
         const isCorrectAnswerSaved = function (eventTarget) {
             let optionId = eventTarget.find("td:eq(2)").children("input[name='OptionEditModalAnsSelect']").val();
 
             // build object to send to server
             let optionToUpdate = {
                 OptionId: optionId
-                , QuestionId: $QUESTION_ID
+                , QuestionId: $QUESTION_ID.val()
                 , ExamId: $EXAM_ID
                 , OptionType: "Single Answer"
             };
 
             return updateCorrectAnsById(optionToUpdate);
         };
-
 
         $(document).on("click", ".js-editOptions-modal-tbl-updateAnswer", function (event) {
             // for single answer type

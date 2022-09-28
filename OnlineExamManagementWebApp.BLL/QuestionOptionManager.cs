@@ -92,9 +92,8 @@ namespace OnlineExamManagementWebApp.BLL {
 
         public bool IsCorrectAnsOfOptionUpdated(OptionToUpdate dto) {
             IEnumerable<QuestionOption> questionOptionsToUpdate = _unitOfWork.QuestionOptions.GetQuestionOptionsByQuestionAndExamId(dto.QuestionId, dto.ExamId);
-            Question questionToUpdate = _unitOfWork.Questions.GetQuestionById(dto.QuestionId);
 
-            if (questionOptionsToUpdate == null || !questionOptionsToUpdate.Any() || questionToUpdate == null) {
+            if (questionOptionsToUpdate == null || !questionOptionsToUpdate.Any()) {
                 return false;
             }
 
@@ -106,7 +105,11 @@ namespace OnlineExamManagementWebApp.BLL {
                     item.IsCorrectAnswer = true;
                 }
             }
+            return _unitOfWork.Complete();
+        }
 
+        public bool IsOptionTypeOfQuestionUpdated(QuestionToUpdateDto dto) {
+            Question questionToUpdate = _unitOfWork.Questions.GetQuestionById(dto.QuestionId);
             questionToUpdate.OptionType = dto.OptionType;
 
             return _unitOfWork.Complete();
