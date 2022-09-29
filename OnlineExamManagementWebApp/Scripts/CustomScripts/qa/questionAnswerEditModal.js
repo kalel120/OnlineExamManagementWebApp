@@ -235,10 +235,8 @@
                 bindToEditQoModal(tableRow);
                 $QUESTION_ID.val(tableRow.QuestionId);
 
-                // asynchronously get options data from server
+                // asynchronously get options data from server and dynamically build html options table
                 let options = await getOptionsByQuestionId(tableRow.QuestionId);
-
-                // dynamically build html options table
                 options.forEach(bindNewOptionToTbl);
 
                 qoEditModal.modal("toggle");
@@ -416,7 +414,12 @@
             try {
                 // save single option to db and remove save button
                 await saveSingleOptionToDb(singleOptionToSaveDb);
-                tr.find("a.js-editOptions-modal-tbl-saveOption").remove();
+                //tr.find("a.js-editOptions-modal-tbl-saveOption").remove();
+
+                // asynchronously get options data from server and dynamically build html options table
+                qoEditModalTblBody.empty();
+                let options = await getOptionsByQuestionId($QUESTION_ID.val());
+                options.forEach(bindNewOptionToTbl);
             }
             catch (error) {
                 // Enable this before going live
@@ -536,6 +539,10 @@
         };
 
         $(document).on("change", "input[name='OptionEditModalAnsSelect']", function (event) {
+            if ($(event.target).closest("tr").find("td:eq(3) > a").hasClass("js-editOptions-modal-tbl-saveOption")) {
+                bootbox.alert("This option is not saved yet!");
+                return;
+            }
             let eventTarget = $(event.target);
             let thisUpdateAnsClass = eventTarget.closest("tr").find(".js-editOptions-modal-tbl-updateAnswer");
 
