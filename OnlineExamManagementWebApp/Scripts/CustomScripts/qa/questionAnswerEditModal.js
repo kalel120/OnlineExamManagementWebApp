@@ -552,8 +552,7 @@
         /** END **/
 
         /** Save updated correct answer **/
-        const updateCorrectAnsById = async function (dataToUpdate) {
-
+        const isCorrectAnsUpdatedOnServer = async function (dataToUpdate) {
             try {
                 let response = await $.ajax({
                     type: "PUT",
@@ -562,18 +561,17 @@
                     data: dataToUpdate
                 });
 
-                return true;
-
+                return response;
             } catch (error) {
+                return false;
                 // Enable this before going live
                 //if (error.status === 500) {
                 //    window.location = "/Error/Error500";
                 //}
-                return false;
             }
         };
 
-        const isCorrectAnsUpdated = function (eventTarget) {
+        const isCorrectAnsUpdated = async function (eventTarget) {
             let optionId = eventTarget.find("td:eq(2)").children("input[name='OptionEditModalAnsSelect']").val();
             let isCorrectAns = eventTarget.find("td:eq(2)").children("input[name='OptionEditModalAnsSelect']").prop("checked");
 
@@ -583,18 +581,21 @@
                 , QuestionId: $QUESTION_ID.val()
                 , ExamId: $EXAM_ID
                 , OptionType: $("input[name='OptionTypeEditModal']:checked").val()
-                , IsCorrectAnswer:isCorrectAns
+                , IsCorrectAnswer: isCorrectAns
             };
 
-            return updateCorrectAnsById(optionToUpdate);
+            return await isCorrectAnsUpdatedOnServer(optionToUpdate);
         };
 
         $(document).on("click", ".js-editOptions-modal-tbl-updateAnswer", function (event) {
-            if (!isCorrectAnsUpdated($(event.target).closest("tr"))) {
-                return;
-            }
-            $(event.target).remove();
-            return;
+            let result = isCorrectAnsUpdated($(event.target).closest("tr"));
+
+            result.then(function (resValue) {
+                if (!resValue) {
+                    return;
+                }
+                $(event.target).remove();
+            });
         });
         /** END **/
 
