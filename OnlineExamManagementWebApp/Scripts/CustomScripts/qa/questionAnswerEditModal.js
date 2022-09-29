@@ -20,7 +20,6 @@
         const qoEditModalTbl = $("#js-tbl-editOptions-modal");
         const qoEditModalTblBody = $("#js-tbl-editOptionModal-tbody");
         const addOptionDiv = $(".js-div-addOption-editQoModal");
-        const warningAlert = $("#js-editQo-alert-warning");
 
 
         const resetModalState = function () {
@@ -41,10 +40,35 @@
         /**END*/
 
         /** Jobs when modal got hidden */
+        // Get updated question from server for this Question
+        const getUpdatedQuestion = async function () {
+            try {
+                let response = await $.ajax({
+                    url: `/QuestionAnswer/GetQuestionsByExamId?id=${$EXAM_ID}`,
+                    contentType: "json",
+                    dataType: "json"
+                });
+                return response;
+
+            } catch (error) {
+                // Enable this before going live
+                //if (error.status === 500) {
+                //    window.location = "/Error/Error500";
+                //}
+            }
+        };
+
         qoEditModal.on("hidden.bs.modal", function () {
             $(this).find("form").trigger("reset");
             resetModalState();
             qoEditModalTblBody.empty();
+
+            // Refresh question jquery datatable for this exam
+            getUpdatedQuestion()
+                .then(function (resData) {
+                    $('#tbl-questions').DataTable().clear().rows.add(resData).draw();
+                });
+
         });
 
         /**END */
@@ -67,9 +91,9 @@
             $("#js-editQo-alert").append(html);
             $("#js-editQo-alert-warning").addClass("animated bounceIn");
 
-            setTimeout(function() {
+            setTimeout(function () {
                 $("#js-editQo-alert-warning").addClass("animated bounceOut").remove();
-            },5000);
+            }, 5000);
         };
         /**END**/
 
@@ -635,6 +659,7 @@
                 return;
             }
             editQoCloseBtn.attr("data-dismiss", "modal");
+            //window.location.reload();
         });
         /**END*/
     });
