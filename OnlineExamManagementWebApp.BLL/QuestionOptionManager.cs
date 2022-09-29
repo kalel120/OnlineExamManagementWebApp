@@ -91,20 +91,33 @@ namespace OnlineExamManagementWebApp.BLL {
         }
 
         public bool IsCorrectAnsOfOptionUpdated(OptionToUpdate dto) {
-            IEnumerable<QuestionOption> questionOptionsToUpdate = _unitOfWork.QuestionOptions.GetQuestionOptionsByQuestionAndExamId(dto.QuestionId, dto.ExamId);
+            if (dto.OptionType == "Single Answer") {
+                IEnumerable<QuestionOption> questionOptionsToUpdate = _unitOfWork.QuestionOptions.GetRowsByQuestionAndExamId(dto.QuestionId, dto.ExamId);
 
-            if (questionOptionsToUpdate == null || !questionOptionsToUpdate.Any()) {
-                return false;
+                if (questionOptionsToUpdate == null || !questionOptionsToUpdate.Any()) {
+                    return false;
+                }
+
+                foreach (var item in questionOptionsToUpdate) {
+                    if (item.OptionId != dto.OptionId) {
+                        item.IsCorrectAnswer = false;
+                    }
+                    else {
+                        item.IsCorrectAnswer = true;
+                    }
+                }
             }
 
-            foreach (var item in questionOptionsToUpdate) {
-                if (item.OptionId != dto.OptionId) {
-                    item.IsCorrectAnswer = false;
+            if (dto.OptionType == "Multiple Answer") {
+                QuestionOption questionOptionToUpdate = _unitOfWork.QuestionOptions.GetRowForSingleOptionById(dto.OptionId);
+
+                if (questionOptionToUpdate == null) {
+                    return false;
                 }
-                else {
-                    item.IsCorrectAnswer = true;
-                }
+
+                questionOptionToUpdate.IsCorrectAnswer = true;
             }
+
             return _unitOfWork.Complete();
         }
 

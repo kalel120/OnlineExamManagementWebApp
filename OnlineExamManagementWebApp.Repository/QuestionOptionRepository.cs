@@ -146,11 +146,15 @@ namespace OnlineExamManagementWebApp.Repository {
             return result;
         }
 
-        public IEnumerable<QuestionOption> GetQuestionOptionsByQuestionAndExamId(Guid questionId, int examId) {
+        public IEnumerable<QuestionOption> GetRowsByQuestionAndExamId(Guid questionId, int examId) {
             IEnumerable<QuestionOption> questionOptions = _dbContext.QuestionOptions
                 .Where(qo => qo.ExamId == examId && qo.QuestionId == questionId && qo.IsDeleted == false);
 
             return questionOptions;
+        }
+
+        public QuestionOption GetRowForSingleOptionById(Guid optionId) {
+            return _dbContext.QuestionOptions.SingleOrDefault(qo => qo.OptionId == optionId && qo.IsDeleted == false);
         }
     }
 }

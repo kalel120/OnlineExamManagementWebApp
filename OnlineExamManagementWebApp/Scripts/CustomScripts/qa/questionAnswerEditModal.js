@@ -588,24 +588,17 @@
                 OptionId: optionId
                 , QuestionId: $QUESTION_ID.val()
                 , ExamId: $EXAM_ID
-                , OptionType: "Single Answer"
+                , OptionType: $("input[name='OptionTypeEditModal']:checked").val()
             };
 
             return updateCorrectAnsById(optionToUpdate);
         };
 
         $(document).on("click", ".js-editOptions-modal-tbl-updateAnswer", function (event) {
-            // for single answer type
-            if (qoEditSingleRadioBtn.prop("checked")) {
-                if (!isCorrectAnswerSaved($(event.target).closest("tr"))) {
-                    return;
-                }
-                $(event.target).remove();
+            if (!isCorrectAnswerSaved($(event.target).closest("tr"))) {
                 return;
             }
-
-            // for multiple answer type
-            bootbox.alert("Multiple answer is not yet implemented");
+            $(event.target).remove();
             return;
         });
         /** END **/
@@ -627,7 +620,9 @@
             let isUnchecked = false;
 
             let notCheckedLength = $("input[name='OptionEditModalAnsSelect']").not(":checked").length;
-            if (notCheckedLength !== 0) {
+            let checkBoxCount = $("input[name='OptionEditModalAnsSelect']").length;
+
+            if (notCheckedLength === checkBoxCount) {
                 isUnchecked = true;
             }
             return isUnchecked;
@@ -653,11 +648,19 @@
 
         /** Modal close button actions*/
         editQoCloseBtn.on("click", function () {
+            if (anyUncheckedCorrectAns()) {
+                bootbox.alert("Still unanswered option left");
+                editQoCloseBtn.removeAttr("data-dismiss");
+                return;
+            }
+
             if (anyUnsavedOption()) {
                 bootbox.alert("Still unsaved option left");
                 editQoCloseBtn.removeAttr("data-dismiss");
                 return;
             }
+
+
             editQoCloseBtn.attr("data-dismiss", "modal");
             //window.location.reload();
         });
