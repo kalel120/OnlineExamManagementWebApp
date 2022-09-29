@@ -338,7 +338,7 @@
                     let isRemovedFromDb = await removeOptionFromDb(optionId, $EXAM_ID);
                     if (!isRemovedFromDb) { return; }
 
-                    reOrderOptionTbl($EXAM_ID, $QUESTION_ID);
+                    reOrderOptionTbl($EXAM_ID, $QUESTION_ID.val());
                 }
                 addOptionDiv.show();
             });
@@ -373,12 +373,7 @@
                 dataType: "json",
                 contentType: "application/json",
                 data: JSON.stringify(option)
-            })
-                .fail(function (res, textStatus, errorThrown) {
-                    console.log(res);
-                    console.log(textStatus);
-                    console.log(errorThrown);
-                });
+            });
         };
 
         const isOptionTextExistsOnTable = function (newOptionText) {
@@ -415,17 +410,21 @@
 
         /** Save newly added option to db **/
         $(document).on("click", ".js-editOptions-modal-tbl-saveOption", async function (event) {
-            // build savable object
             let tr = $(event.target).closest("tr");
             let singleOptionToSaveDb = getSingleOptionToSaveOnDb(tr);
 
-            // save single option to db
-            if (!await saveSingleOptionToDb(singleOptionToSaveDb)) { return; }
-
-            // remove individual save option button from table column
-            tr.find("a.js-editOptions-modal-tbl-saveOption").remove();
+            try {
+                // save single option to db and remove save button
+                await saveSingleOptionToDb(singleOptionToSaveDb);
+                tr.find("a.js-editOptions-modal-tbl-saveOption").remove();
+            }
+            catch (error) {
+                // Enable this before going live
+                //if (error.status === 500) {
+                //    window.location = "/Error/Error500";
+                //}
+            }
         });
-
         /***END*/
 
         /** Change option type selection **/
