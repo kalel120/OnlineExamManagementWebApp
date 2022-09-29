@@ -523,22 +523,15 @@
             eventTarget.closest("tr").find("td:eq(3)").append(html);
         };
 
-        const handleUpdateAnsBtnForSingleOptionType = function (checkedAttr, thisUpdateAnsClass, optionId, eventTarget) {
+        const handleUpdateAnsBtnForSingleOptionType = function (thisUpdateAnsClass, optionId, eventTarget) {
+            // For single, remove all update button from table body, then append update answer button
             isRemovedUpdateCorrectAnsBtn("single", thisUpdateAnsClass);
-
-            // append update correct answer if no 'checked' attr exists and no update-answer button exists
-            if ((typeof checkedAttr === "undefined") && thisUpdateAnsClass.length === 0) {
-                appendUpdateCorrectAnsBtn(optionId, eventTarget);
-            }
+            appendUpdateCorrectAnsBtn(optionId, eventTarget);
         };
 
-        const handleUpdateAnsBtnForMultiOptionType = function (checkedAttr, thisUpdateAnsClass, optionId, eventTarget) {
+        const handleUpdateAnsBtnForMultiOptionType = function (thisUpdateAnsClass, optionId, eventTarget) {
+            // For multiple, remove if update button already exits, then append update answer button
             if (!isRemovedUpdateCorrectAnsBtn("multiple", thisUpdateAnsClass)) {
-
-                //  if this answer is saved on db and user has checked this as correct answer then return. Otherwise display update-ans button
-                if ((typeof checkedAttr !== "undefined") && eventTarget.prop("checked")) {
-                    return;
-                }
                 appendUpdateCorrectAnsBtn(optionId, eventTarget);
             }
         };
@@ -548,11 +541,11 @@
             let thisUpdateAnsClass = eventTarget.closest("tr").find(".js-editOptions-modal-tbl-updateAnswer");
 
             if (qoEditSingleRadioBtn.prop("checked")) {
-                handleUpdateAnsBtnForSingleOptionType(eventTarget.attr("checked"), thisUpdateAnsClass, eventTarget.val(), eventTarget);
+                handleUpdateAnsBtnForSingleOptionType(thisUpdateAnsClass, eventTarget.val(), eventTarget);
                 return;
             }
             if (qoEditMultiRadioBtn.prop("checked")) {
-                handleUpdateAnsBtnForMultiOptionType(eventTarget.attr("checked"), thisUpdateAnsClass, eventTarget.val(), eventTarget);
+                handleUpdateAnsBtnForMultiOptionType(thisUpdateAnsClass, eventTarget.val(), eventTarget);
                 return;
             }
         });
@@ -580,8 +573,9 @@
             }
         };
 
-        const isCorrectAnswerSaved = function (eventTarget) {
+        const isCorrectAnsUpdated = function (eventTarget) {
             let optionId = eventTarget.find("td:eq(2)").children("input[name='OptionEditModalAnsSelect']").val();
+            let isCorrectAns = eventTarget.find("td:eq(2)").children("input[name='OptionEditModalAnsSelect']").prop("checked");
 
             // build object to send to server
             let optionToUpdate = {
@@ -589,13 +583,14 @@
                 , QuestionId: $QUESTION_ID.val()
                 , ExamId: $EXAM_ID
                 , OptionType: $("input[name='OptionTypeEditModal']:checked").val()
+                , IsCorrectAnswer:isCorrectAns
             };
 
             return updateCorrectAnsById(optionToUpdate);
         };
 
         $(document).on("click", ".js-editOptions-modal-tbl-updateAnswer", function (event) {
-            if (!isCorrectAnswerSaved($(event.target).closest("tr"))) {
+            if (!isCorrectAnsUpdated($(event.target).closest("tr"))) {
                 return;
             }
             $(event.target).remove();

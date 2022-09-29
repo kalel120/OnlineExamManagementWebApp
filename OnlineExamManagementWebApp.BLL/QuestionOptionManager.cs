@@ -98,12 +98,13 @@ namespace OnlineExamManagementWebApp.BLL {
                     return false;
                 }
 
+                // As there should be only one correct ans for single ans type, on update -> other options ans will be false by default
                 foreach (var item in questionOptionsToUpdate) {
                     if (item.OptionId != dto.OptionId) {
                         item.IsCorrectAnswer = false;
                     }
                     else {
-                        item.IsCorrectAnswer = true;
+                        item.IsCorrectAnswer = dto.IsCorrectAnswer;
                     }
                 }
             }
@@ -115,7 +116,7 @@ namespace OnlineExamManagementWebApp.BLL {
                     return false;
                 }
 
-                questionOptionToUpdate.IsCorrectAnswer = true;
+                questionOptionToUpdate.IsCorrectAnswer = dto.IsCorrectAnswer;
             }
 
             return _unitOfWork.Complete();
