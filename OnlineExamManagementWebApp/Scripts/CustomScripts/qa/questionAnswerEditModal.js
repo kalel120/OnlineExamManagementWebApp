@@ -86,6 +86,7 @@
         /** bootstrap alerts **/
         const showAndDismissWarningAlert = function (message) {
             let html = `<div class="alert alert-warning" role="alert" id="js-editQo-alert-warning">`;
+            html += `<button type="button" class="close" data-dismiss="alert" aria-label="Close" data-form-type=""><span aria-hidden="true">×</span></button>`;
             html += `<strong>Warning!</strong> ${message} </div>`;
 
             $("#js-editQo-alert").append(html);
@@ -98,13 +99,14 @@
 
         const showAndDismissSuccessAlert = function (message) {
             let html = `<div class="alert alert-success" role="alert" id="js-editQo-alert-success">`;
+            html += `<button type="button" class="close" data-dismiss="alert" aria-label="Close" data-form-type=""><span aria-hidden="true">×</span></button>`;
             html += `<strong>Success!</strong> ${message} </div>`;
 
             $("#js-editQo-alert").append(html);
-            $("#js-editQo-alert-success").addClass("animated fadeInDown");
+            $("#js-editQo-alert-success").addClass("animated tada");
 
             setTimeout(function () {
-                $("#js-editQo-alert-success").addClass("animated fadeOutDown").remove();
+                $("#js-editQo-alert-success").addClass("animated fadeOut").remove();
             }, 5000);
         };
 
@@ -114,7 +116,7 @@
             html += `<strong>Error!</strong> ${message} </div>`;
 
             $("#js-editQo-alert").append(html);
-            $("#js-editQo-alert-error").addClass("animated heartbeat");
+            $("#js-editQo-alert-error").addClass("animated flash");
 
             setTimeout(function () {
                 $("#js-editQo-alert-error").addClass("animated flash").remove();
@@ -623,34 +625,41 @@
         };
 
         const isCorrectAnsUpdated = async function (eventTarget) {
-            let optionId = eventTarget.find("td:eq(2)").children("input[name='OptionEditModalAnsSelect']").val();
-            let isCorrectAns = eventTarget.find("td:eq(2)").children("input[name='OptionEditModalAnsSelect']").prop("checked");
+            try {
+                let optionId = eventTarget.find("td:eq(2)").children("input[name='OptionEditModalAnsSelect']").val();
+                let isCorrectAns = eventTarget.find("td:eq(2)").children("input[name='OptionEditModalAnsSelect']").prop("checked");
 
-            // build object to send to server
-            let optionToUpdate = {
-                OptionId: optionId
-                , QuestionId: $QUESTION_ID.val()
-                , ExamId: $EXAM_ID
-                , OptionType: $("input[name='OptionTypeEditModal']:checked").val()
-                , IsCorrectAnswer: isCorrectAns
-            };
-
-            return await isCorrectAnsUpdatedOnServer(optionToUpdate);
+                // build object to send to server
+                let optionToUpdate = {
+                    OptionId: optionId
+                    , QuestionId: $QUESTION_ID.val()
+                    , ExamId: $EXAM_ID
+                    , OptionType: $("input[name='OptionTypeEditModal']:checked").val()
+                    , IsCorrectAnswer: isCorrectAns
+                };
+                return await isCorrectAnsUpdatedOnServer(optionToUpdate);
+            } catch (error) {
+                if (error.status === 500) {
+                    window.location = "/Error/Error500";
+                }
+            }
         };
 
         $(document).on("click", ".js-editOptions-modal-tbl-updateAnswer", function (event) {
-            let result = isCorrectAnsUpdated($(event.target).closest("tr"));
+            let resultAfterUpdate = isCorrectAnsUpdated($(event.target).closest("tr"));
 
-            result.then(function (resValue) {
+            resultAfterUpdate.then(function (resValue) {
                 if (!resValue) {
+                    showAndDismissErrorAlert("Correct Answer Update Failed!");
                     return;
                 }
                 $(event.target).remove();
+                showAndDismissSuccessAlert("Correct Answer Updated");
             });
         });
         /** END **/
 
-        /** Quesiton Option Update, Save change button actions **/
+        /** Save change button actions **/
         const anyUnsavedOption = function () {
             let isUnsaved = false;
 
