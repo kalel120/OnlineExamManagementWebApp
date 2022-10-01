@@ -649,12 +649,13 @@
             let resultAfterUpdate = isCorrectAnsUpdated($(event.target).closest("tr"));
 
             resultAfterUpdate.then(function (resValue) {
-                if (!resValue) {
-                    showAndDismissErrorAlert("Correct Answer Update Failed!");
-                    return;
-                }
                 $(event.target).remove();
-                showAndDismissSuccessAlert("Correct Answer Updated");
+
+                if (!resValue) {
+                    showAndDismissWarningAlert("Update Failed. Possible Reason: This is already marked as correct answer");
+                } else {
+                    showAndDismissSuccessAlert("Correct Answer Updated");
+                }
             });
         });
         /** END **/

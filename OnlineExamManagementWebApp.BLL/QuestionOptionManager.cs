@@ -105,6 +105,7 @@ namespace OnlineExamManagementWebApp.BLL {
                     }
                     else {
                         item.IsCorrectAnswer = dto.IsCorrectAnswer;
+                        //_unitOfWork.QuestionOptions.ModifyEntityState(item);
                     }
                 }
             }

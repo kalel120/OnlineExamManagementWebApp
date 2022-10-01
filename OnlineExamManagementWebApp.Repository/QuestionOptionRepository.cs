@@ -156,5 +156,9 @@ namespace OnlineExamManagementWebApp.Repository {
         public QuestionOption GetRowForSingleOptionById(Guid optionId) {
             return _dbContext.QuestionOptions.SingleOrDefault(qo => qo.OptionId == optionId && qo.IsDeleted == false);
         }
+
+        public void ModifyEntityState(QuestionOption questionOption) {
+            _dbContext.Entry(questionOption).State = EntityState.Modified;
+        }
     }
 }
