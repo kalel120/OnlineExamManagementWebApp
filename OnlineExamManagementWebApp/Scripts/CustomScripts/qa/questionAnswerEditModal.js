@@ -684,6 +684,47 @@
             return isUnchecked;
         };
 
+        const anyUpdatePending = function () {
+            let isUnsaved = false;
+
+            qoEditModalTblBody.find("tr").each(function (index, element) {
+                if ($(element).find("td:eq(3) > a").hasClass("js-editOptions-modal-tbl-updateAnswer")) {
+                    isUnsaved = true;
+                    return;
+                }
+            });
+            return isUnsaved;
+        };
+
+        const isQuestionTextAlreadyExists = function (newQuestionText) {
+            let result = false;
+            newQuestionText = newQuestionText.toLowerCase();
+
+            $("#tbl-questions tbody").find("tr").each(function (index, element) {
+                let tblQuestionText = $.trim($(element).find("td:eq(2)").text().toLowerCase());
+
+                if (newQuestionText === tblQuestionText) {
+                    result = true;
+                    return;
+                }
+            });
+            return result;
+        };
+
+        const getQuestionDetailsFromModal = function () {
+            const question = {
+                ExamId: $EXAM_ID,
+                QuestionId: $QUESTION_ID.val(),
+                Marks: $.trim($("#js-modal-editQo-marks").val()),
+                Description: $.trim($("#js-modal-editQo-qText").val())
+            };
+
+            if (isQuestionTextAlreadyExists(question.Description)) {
+                return null;
+            }
+            return question;
+        };
+
         editQoSubmitBtn.on("click", function () {
             if (anyUncheckedCorrectAns()) {
                 bootbox.alert("Still unanswered option left");
@@ -695,8 +736,19 @@
                 return;
             }
 
+            if (anyUpdatePending()) {
+                bootbox.alert("Still pending update");
+                return;
+            }
+
             if (qoEditModalTblBody.find("tr").length !== 4) {
                 bootbox.alert("Options are less than 4");
+                return;
+            }
+
+            let questionToUpdate = getQuestionDetailsFromModal();
+            if (!questionToUpdate) {
+                showAndDismissErrorAlert("This question already exists!");
                 return;
             }
         });
