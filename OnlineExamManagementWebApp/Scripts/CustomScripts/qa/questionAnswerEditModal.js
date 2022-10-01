@@ -97,14 +97,27 @@
         };
 
         const showAndDismissSuccessAlert = function(message) {
-            let html = `<div class="alert alert-success" role="alert" id="js-editQo-alert-warning">`;
+            let html = `<div class="alert alert-success" role="alert" id="js-editQo-alert-success">`;
             html += `<strong>Success!</strong> ${message} </div>`;
 
             $("#js-editQo-alert").append(html);
-            $("#js-editQo-alert-warning").addClass("animated fadeInDown");
+            $("#js-editQo-alert-success").addClass("animated fadeInDown");
 
             setTimeout(function () {
-                $("#js-editQo-alert-warning").addClass("animated fadeOutDown").remove();
+                $("#js-editQo-alert-success").addClass("animated fadeOutDown").remove();
+            }, 5000);
+        };
+
+        const showAndDismissErrorAlert = function(message) {
+            let html = `<div class="alert alert-danger" role="alert" id="js-editQo-alert-error">`;
+            html += `<button type="button" class="close" data-dismiss="alert" aria-label="Close" data-form-type=""><span aria-hidden="true">×</span></button>`;
+            html += `<strong>Error!</strong> ${message} </div>`;
+
+            $("#js-editQo-alert").append(html);
+            $("#js-editQo-alert-error").addClass("animated heartbeat");
+
+            setTimeout(function () {
+                $("#js-editQo-alert-error").addClass("animated flash").remove();
             }, 5000);
         };
         /**END**/
@@ -555,9 +568,28 @@
             }
         };
 
+
+        let previouslyChecked;
+        $(document).on("focus", "input[name='OptionEditModalAnsSelect']" ,function() {
+            previouslyChecked = $("input[name='OptionEditModalAnsSelect']:checked").val();
+        });
+
+
         $(document).on("change", "input[name='OptionEditModalAnsSelect']", function (event) {
             if ($(event.target).closest("tr").find("td:eq(3) > a").hasClass("js-editOptions-modal-tbl-saveOption")) {
-                bootbox.alert("This option is not saved yet!");
+                $(this).prop("checked", false);
+
+                $("input[name='OptionEditModalAnsSelect']").each(function () {
+                    if (typeof previouslyChecked === "undefined") {
+                        return;
+                    }
+
+                    if ($(this).val() === previouslyChecked) {
+                        $(this).prop("checked", true);
+                    }
+                });
+
+                showAndDismissErrorAlert("This option is not saved yet!");
                 return;
             }
             let eventTarget = $(event.target);
