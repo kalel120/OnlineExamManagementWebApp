@@ -83,7 +83,7 @@
         });
         /**END */
 
-        /** bootstrap alert **/
+        /** bootstrap alerts **/
         const showAndDismissWarningAlert = function (message) {
             let html = `<div class="alert alert-warning" role="alert" id="js-editQo-alert-warning">`;
             html += `<strong>Warning!</strong> ${message} </div>`;
@@ -276,7 +276,7 @@
         /*END*/
 
         /*** Remove Option from edit modal and db and re-sequence option serial */
-        const removeOptionFromDb = function (optionId, examId) {
+        const removeOptionOnServer = function (optionId, examId) {
             let optionToRemove = {
                 OptionId: optionId,
                 ExamId: examId
@@ -295,7 +295,7 @@
                 });
         };
 
-        const reSequenceOptionTbl = function (options, examId, questionId) {
+        const reOrderOptionsOnServer = function (options, examId, questionId) {
             return $.ajax({
                 type: "PUT",
                 url: `/QuestionAnswer/ReOrderOptionsOnRemove?examId=${examId}&questionId=${questionId}`,
@@ -310,22 +310,12 @@
                 });
         };
 
-        const removeTrFromHtml = function (tr) {
-            tr.remove();
-
-            qoEditModalTblBody.find("tr").each(function (index, element) {
-                $(element).find("td:eq(0)").html(index + 1);
-            });
-        };
-
-        const reOrderOptionTbl = async function (examId, questionId) {
-            let tableBodyRowCount = qoEditModalTblBody.children().length;
-            if (tableBodyRowCount === 0) {
-                bootbox.alert("No options are assigned to this question");
-                return;
+        const getReOrderedOptions = function () {
+            if (qoEditModalTblBody.children().length === 0) {
+                return null;
             }
 
-            let currentOptions = new Array();
+            let reOrderedOptions = new Array();
             qoEditModalTblBody.find("tr").each(function (index, element) {
                 let optionId = $(element).find("td:eq(3) > a").data("option-id");
                 if (!optionId) { return; }
@@ -334,36 +324,53 @@
                     Order: index + 1,
                     OptionId: $(element).find("td:eq(3) > a").attr("data-option-id")
                 };
-                currentOptions.push(option);
+                reOrderedOptions.push(option);
             });
 
-            let isReordered = await reSequenceOptionTbl(currentOptions, examId, questionId);
-            if (!isReordered) {
-                bootbox.alert("Re-Order Options failed!");
-                return;
-            }
+            return reOrderedOptions;
+        };
+
+        const removeRowAndReOrderOnClient = function (tr) {
+            tr.remove();
+
+            qoEditModalTblBody.find("tr").each(function (index, element) {
+                $(element).find("td:eq(0)").html(index + 1);
+            });
         };
 
         $(document).on("click", ".js-editOptions-modal-remove-option", function (event) {
-
-            bootbox.confirm("Are you sure?", async function (result) {
-                if (!result) return;
+            bootbox.confirm("Are you sure?", async function (confirmed) {
+                if (!confirmed) return;
 
                 let tr = $(event.target).closest("tr");
                 let optionId = tr.find("td:eq(3) > a").data("option-id");
 
-                if (!optionId) {
-                    removeTrFromHtml(tr);
-                }
-                else {
-                    removeTrFromHtml(tr);
+                try {
+                    // If optionId doesn't exists(returns null) then remove only from options table
+                    if (!optionId) {
+                        removeRowAndReOrderOnClient(tr);
+                    }
+                    else {
+                        removeRowAndReOrderOnClient(tr);
 
-                    let isRemovedFromDb = await removeOptionFromDb(optionId, $EXAM_ID);
-                    if (!isRemovedFromDb) { return; }
+                        let isRemoved = await removeOptionOnServer(optionId, $EXAM_ID);
+                        if (!isRemoved) { return; }
 
-                    reOrderOptionTbl($EXAM_ID, $QUESTION_ID.val());
+                        let reOrderedOptions = getReOrderedOptions();
+                        // if the last option gets removed then don't reorder
+                        if (!reOrderedOptions) { return; }
+
+                        await reOrderOptionsOnServer(reOrderedOptions, $EXAM_ID, $QUESTION_ID.val());
+
+                        showAndDismissWarningAlert("Option has removed and re-ordered");
+                    }
+                    addOptionDiv.show();
+
+                } catch (error) {
+                    if (error.status === 500) {
+                        window.location = "/Error/Error500";
+                    }
                 }
-                addOptionDiv.show();
             });
         });
         /*** END */
@@ -557,16 +564,17 @@
         };
 
 
+        // Hacky way to get previously selected correct answer.
         let previouslyChecked;
         $(document).on("focus", "input[name='OptionEditModalAnsSelect']", function () {
             previouslyChecked = $("input[name='OptionEditModalAnsSelect']:checked").val();
         });
 
-
         $(document).on("change", "input[name='OptionEditModalAnsSelect']", function (event) {
             if ($(event.target).closest("tr").find("td:eq(3) > a").hasClass("js-editOptions-modal-tbl-saveOption")) {
                 $(this).prop("checked", false);
 
+                // Compare options checkboxes with previously checked one and set it's status to 'checked'
                 $("input[name='OptionEditModalAnsSelect']").each(function () {
                     if (typeof previouslyChecked === "undefined") {
                         return;
