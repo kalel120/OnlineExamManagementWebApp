@@ -95,6 +95,18 @@
                 $("#js-editQo-alert-warning").addClass("animated bounceOut").remove();
             }, 5000);
         };
+
+        const showAndDismissSuccessAlert = function(message) {
+            let html = `<div class="alert alert-success" role="alert" id="js-editQo-alert-warning">`;
+            html += `<strong>Success!</strong> ${message} </div>`;
+
+            $("#js-editQo-alert").append(html);
+            $("#js-editQo-alert-warning").addClass("animated fadeInDown");
+
+            setTimeout(function () {
+                $("#js-editQo-alert-warning").addClass("animated fadeOutDown").remove();
+            }, 5000);
+        };
         /**END**/
 
         /** validation **/
@@ -413,13 +425,18 @@
 
             try {
                 // save single option to db and remove save button
-                await saveSingleOptionToDb(singleOptionToSaveDb);
-                //tr.find("a.js-editOptions-modal-tbl-saveOption").remove();
+                let resultOfSave = await saveSingleOptionToDb(singleOptionToSaveDb);
+                if (!resultOfSave) {
+                    return;
+                }
 
                 // asynchronously get options data from server and dynamically build html options table
                 qoEditModalTblBody.empty();
                 let options = await getOptionsByQuestionId($QUESTION_ID.val());
                 options.forEach(bindNewOptionToTbl);
+
+                // display alert
+                showAndDismissSuccessAlert("New Option Saved");
             }
             catch (error) {
                 // Enable this before going live
