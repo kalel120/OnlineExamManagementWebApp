@@ -477,7 +477,7 @@
                     data: reqData
                 });
 
-                showAndDismissWarningAlert("Correct Answer Type of this question has modified");
+                //showAndDismissWarningAlert("Correct Answer Type of this question has modified");
                 return true;
             } catch (error) {
                 if (error.status === 500) {
@@ -491,34 +491,22 @@
             bootbox.confirm({
                 size: "small",
                 message: "Are You Sure? This will clear out already selected correct answers",
-                callback: function (result) {
+                callback: async  function (result) {
                     if (!result) {
                         $("input[name = 'OptionTypeEditModal']").not(':checked').prop("checked", true);
                         return;
                     }
 
                     qoEditModalTblBody.find(".js-editOptions-modal-tbl-updateAnswer").remove();
+                    updateAnswerSelectionType(qoEditMultiRadioBtn.val());
+                    
 
-                    if (qoEditModalTblBody.find("input[type='radio']").length > 0) {
-                        qoEditModalTblBody.find("input[type='radio']").attr("type", "checkbox");
+                    // asynchronously get options data from server and dynamically build html options table
+                    qoEditModalTblBody.empty();
+                    let options = await getOptionsByQuestionId($QUESTION_ID.val());
+                    options.forEach(bindNewOptionToTbl);
 
-                        //uncheck all checkboxes
-                        qoEditModalTblBody.find("input[type='checkbox']").prop("checked", false);
-
-                        //update option type on server
-                        updateAnswerSelectionType(qoEditMultiRadioBtn.val());
-
-
-
-                    } else {
-                        qoEditModalTblBody.find("input[type='checkbox']").attr("type", "radio");
-
-                        //uncheck radio button
-                        qoEditModalTblBody.find("input[type='radio']").prop("checked", false);
-
-                        //update option type on server
-                        updateAnswerSelectionType(qoEditSingleRadioBtn.val());
-                    }
+                    showAndDismissWarningAlert("Correct Answer Type of this question has modified");
                 }
             });
 
