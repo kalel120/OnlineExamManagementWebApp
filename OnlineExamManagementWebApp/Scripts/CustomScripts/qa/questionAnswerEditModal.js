@@ -96,7 +96,7 @@
             }, 5000);
         };
 
-        const showAndDismissSuccessAlert = function(message) {
+        const showAndDismissSuccessAlert = function (message) {
             let html = `<div class="alert alert-success" role="alert" id="js-editQo-alert-success">`;
             html += `<strong>Success!</strong> ${message} </div>`;
 
@@ -108,7 +108,7 @@
             }, 5000);
         };
 
-        const showAndDismissErrorAlert = function(message) {
+        const showAndDismissErrorAlert = function (message) {
             let html = `<div class="alert alert-danger" role="alert" id="js-editQo-alert-error">`;
             html += `<button type="button" class="close" data-dismiss="alert" aria-label="Close" data-form-type=""><span aria-hidden="true">×</span></button>`;
             html += `<strong>Error!</strong> ${message} </div>`;
@@ -477,13 +477,11 @@
                     data: reqData
                 });
 
-                //showAndDismissWarningAlert("Correct Answer Type of this question has modified");
-                return true;
+                return response;
             } catch (error) {
                 if (error.status === 500) {
                     window.location = "/Error/Error500";
                 }
-                return false;
             }
         };
 
@@ -491,17 +489,19 @@
             bootbox.confirm({
                 size: "small",
                 message: "Are You Sure? This will clear out already selected correct answers",
-                callback: async  function (result) {
-                    if (!result) {
+                callback: async function (confirmed) {
+                    if (!confirmed) {
+                        // Reset Option type selection radio buttons and exit event
                         $("input[name = 'OptionTypeEditModal']").not(':checked').prop("checked", true);
                         return;
                     }
 
-                    qoEditModalTblBody.find(".js-editOptions-modal-tbl-updateAnswer").remove();
-                    updateAnswerSelectionType(qoEditMultiRadioBtn.val());
-                    
+                    let resultAfterUpdate = await updateAnswerSelectionType($("input[name='OptionTypeEditModal']:checked").val());
+                    if (!resultAfterUpdate) {
+                        return;
+                    }
 
-                    // asynchronously get options data from server and dynamically build html options table
+                    // Clear options table. Then get options data from server and dynamically build options table
                     qoEditModalTblBody.empty();
                     let options = await getOptionsByQuestionId($QUESTION_ID.val());
                     options.forEach(bindNewOptionToTbl);
@@ -558,7 +558,7 @@
 
 
         let previouslyChecked;
-        $(document).on("focus", "input[name='OptionEditModalAnsSelect']" ,function() {
+        $(document).on("focus", "input[name='OptionEditModalAnsSelect']", function () {
             previouslyChecked = $("input[name='OptionEditModalAnsSelect']:checked").val();
         });
 
