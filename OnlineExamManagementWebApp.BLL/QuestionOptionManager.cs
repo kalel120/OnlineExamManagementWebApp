@@ -5,6 +5,7 @@ using OnlineExamManagementWebApp.Repository;
 using OnlineExamManagementWebApp.DTOs.QuestionOption;
 using OnlineExamManagementWebApp.Models;
 
+
 namespace OnlineExamManagementWebApp.BLL {
     public class QuestionOptionManager {
         private readonly UnitOfWork _unitOfWork;
@@ -128,6 +129,27 @@ namespace OnlineExamManagementWebApp.BLL {
             questionToUpdate.OptionType = dto.OptionType;
 
             return _unitOfWork.Complete();
+        }
+
+        public bool IsQuestionUpdated(QuestionToUpdateDto dto) {
+            try {
+                Question questionToUpdate = _unitOfWork.Questions.GetQuestionById(dto.QuestionId);
+
+                if (questionToUpdate == null) {
+                    return false;
+                }
+
+                questionToUpdate.Description = dto.Description;
+                questionToUpdate.OptionType = dto.OptionType;
+                questionToUpdate.Marks = dto.Marks;
+                questionToUpdate.DateUpdated = DateTime.Now;
+
+                return _unitOfWork.Complete();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
         }
     }
 }

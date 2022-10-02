@@ -716,13 +716,11 @@
             const question = {
                 ExamId: $EXAM_ID,
                 QuestionId: $QUESTION_ID.val(),
+                OptionType: $("input[name='OptionTypeEditModal']:checked").val(),
                 Marks: $.trim($("#js-modal-editQo-marks").val()),
                 Description: $.trim($("#js-modal-editQo-qText").val())
             };
 
-            if (isQuestionTextAlreadyExists(question.Description)) {
-                return null;
-            }
             return question;
         };
 
@@ -735,6 +733,7 @@
                 data: JSON.stringify(question)
             });
         };
+
         editQoSubmitBtn.on("click", async function () {
             if (anyUncheckedCorrectAns()) {
                 bootbox.alert("Still unanswered option left");
@@ -757,7 +756,7 @@
             }
 
             let questionToUpdate = getQuestionDetailsFromModal();
-            if (!questionToUpdate) {
+            if (isQuestionTextAlreadyExists(questionToUpdate.Description)) {
                 showAndDismissErrorAlert("This question already exists!");
                 return;
             }
@@ -765,7 +764,11 @@
             // save on db
             try {
                 let resultAfterUpdate = await saveUpdatedQuestionOnServer(questionToUpdate);
-                console.log(resultAfterUpdate);
+                showAndDismissSuccessAlert("Updated Successfully");
+
+                setTimeout(function() {
+                    window.location.reload();
+                },2500);
 
             } catch (error) {
                 showAndDismissErrorAlert(`Error ${error.status} occurred`);
