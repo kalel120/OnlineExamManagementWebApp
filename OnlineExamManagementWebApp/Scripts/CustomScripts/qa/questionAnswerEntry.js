@@ -24,6 +24,30 @@
             middleRowPanel.show();
         });
 
+        // Showing alert (if any) after reloading page 
+        (function showSuccessAlertOnPageReload() {
+            if (typeof localStorage !== "undefined") {
+                let isMsgSend = JSON.parse(localStorage.getItem("success"));
+
+                if (isMsgSend) {
+                    let html = `<div class="alert alert-success" role="alert" id="js-entry-alert-success">`;
+                    html += `<button type="button" class="close" data-dismiss="alert" aria-label="Close" data-form-type=""><span aria-hidden="true">×</span></button>`;
+                    html += `<strong>Successfully Updated</strong></div>`;
+
+                    $("#js-qoEntry-bs-alert").append(html);
+                    $("#js-entry-alert-success").addClass("animated fadeInRight");
+
+                    setTimeout(function () {
+                        $("#js-entry-alert-success").addClass("animated fadeOutLeft").remove();
+                    }, 10000);
+                }
+                localStorage.removeItem("success");
+            }
+            else {
+                bootbox.alert("Your browser in incompatible for some features in this website");
+            }
+        })();
+        // END
         /**END */
 
         /**

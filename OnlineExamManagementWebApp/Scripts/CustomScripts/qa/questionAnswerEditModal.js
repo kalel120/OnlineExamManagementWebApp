@@ -751,9 +751,12 @@
                 let resultAfterUpdate = await saveUpdatedQuestionOnServer(questionToUpdate);
                 showAndDismissSuccessAlert("Updated Successfully");
 
-                setTimeout(function() {
+                setTimeout(function () {
+                    if (typeof localStorage !== "undefined") {
+                        localStorage.setItem("success", "true");
+                    }
                     window.location.reload();
-                },2500);
+                }, 2500);
 
             } catch (error) {
                 showAndDismissErrorAlert(`Error ${error.status} occurred`);
