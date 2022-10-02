@@ -471,17 +471,23 @@
 
         /** Change option type selection **/
         // Update Answer selection type of Question by exam and question id
-        const updateAnswerSelectionType = async function (optionType) {
-            let reqData = {
-                OptionType: optionType,
+        const getQuestionDetailsFromModal = function () {
+            const question = {
                 ExamId: $EXAM_ID,
-                QuestionId: $QUESTION_ID.val()
+                QuestionId: $QUESTION_ID.val(),
+                OptionType: $("input[name='OptionTypeEditModal']:checked").val(),
+                Marks: $.trim($("#js-modal-editQo-marks").val()),
+                Description: $.trim($("#js-modal-editQo-qText").val())
             };
 
+            return question;
+        };
+
+        const saveUpdatedQuestionOnServer = async function (reqData) {
             try {
                 let response = await $.ajax({
                     type: "PUT",
-                    url: "/QuestionAnswer/UpdateOptionTypeOfQuestion",
+                    url: "/QuestionAnswer/UpdateQuestion",
                     dataType: "json",
                     data: reqData
                 });
@@ -505,8 +511,9 @@
                         return;
                     }
 
-                    let resultAfterUpdate = await updateAnswerSelectionType($("input[name='OptionTypeEditModal']:checked").val());
+                    let resultAfterUpdate = await saveUpdatedQuestionOnServer(getQuestionDetailsFromModal());
                     if (!resultAfterUpdate) {
+                        showAndDismissErrorAlert("Update Failed!");
                         return;
                     }
 
@@ -710,28 +717,6 @@
                 }
             });
             return result;
-        };
-
-        const getQuestionDetailsFromModal = function () {
-            const question = {
-                ExamId: $EXAM_ID,
-                QuestionId: $QUESTION_ID.val(),
-                OptionType: $("input[name='OptionTypeEditModal']:checked").val(),
-                Marks: $.trim($("#js-modal-editQo-marks").val()),
-                Description: $.trim($("#js-modal-editQo-qText").val())
-            };
-
-            return question;
-        };
-
-        const saveUpdatedQuestionOnServer = function (question) {
-            return $.ajax({
-                type: "PUT",
-                url: "/QuestionAnswer/UpdateQuestion",
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(question)
-            });
         };
 
         editQoSubmitBtn.on("click", async function () {

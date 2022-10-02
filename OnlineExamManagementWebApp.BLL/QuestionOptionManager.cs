@@ -124,13 +124,6 @@ namespace OnlineExamManagementWebApp.BLL {
             return _unitOfWork.Complete();
         }
 
-        public bool IsOptionTypeOfQuestionUpdated(QuestionToUpdateDto dto) {
-            Question questionToUpdate = _unitOfWork.Questions.GetQuestionById(dto.QuestionId);
-            questionToUpdate.OptionType = dto.OptionType;
-
-            return _unitOfWork.Complete();
-        }
-
         public bool IsQuestionUpdated(QuestionToUpdateDto dto) {
             try {
                 Question questionToUpdate = _unitOfWork.Questions.GetQuestionById(dto.QuestionId);

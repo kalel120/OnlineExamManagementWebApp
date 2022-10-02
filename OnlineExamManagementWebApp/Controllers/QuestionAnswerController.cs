@@ -108,16 +108,6 @@ namespace OnlineExamManagementWebApp.Controllers {
             bool result = _qoManager.IsQuestionUpdated(dto);
             return Json(result, JsonRequestBehavior.DenyGet);
         }
-
-        [HttpPut]
-        public JsonResult UpdateOptionTypeOfQuestion(QuestionToUpdateDto dto) {
-            if (dto == null || dto.ExamId == 0 || dto.QuestionId == Guid.Empty) {
-                return Json(false, JsonRequestBehavior.DenyGet);
-            }
-
-            bool result = _qoManager.IsOptionTypeOfQuestionUpdated(dto);
-            return Json(result, JsonRequestBehavior.DenyGet);
-        }
     }
 
 }
