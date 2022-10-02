@@ -94,7 +94,7 @@
 
             setTimeout(function () {
                 $("#js-editQo-alert-warning").addClass("animated bounceOut").remove();
-            }, 5000);
+            }, 10000);
         };
 
         const showAndDismissSuccessAlert = function (message) {
@@ -107,7 +107,7 @@
 
             setTimeout(function () {
                 $("#js-editQo-alert-success").addClass("animated fadeOut").remove();
-            }, 5000);
+            }, 10000);
         };
 
         const showAndDismissErrorAlert = function (message) {
@@ -120,7 +120,7 @@
 
             setTimeout(function () {
                 $("#js-editQo-alert-error").addClass("animated flash").remove();
-            }, 5000);
+            }, 10000);
         };
         /**END**/
 
@@ -726,7 +726,16 @@
             return question;
         };
 
-        editQoSubmitBtn.on("click", function () {
+        const saveUpdatedQuestionOnServer = function (question) {
+            return $.ajax({
+                type: "PUT",
+                url: "/QuestionAnswer/UpdateQuestion",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(question)
+            });
+        };
+        editQoSubmitBtn.on("click", async function () {
             if (anyUncheckedCorrectAns()) {
                 bootbox.alert("Still unanswered option left");
                 return;
@@ -751,6 +760,16 @@
             if (!questionToUpdate) {
                 showAndDismissErrorAlert("This question already exists!");
                 return;
+            }
+
+            // save on db
+            try {
+                let resultAfterUpdate = await saveUpdatedQuestionOnServer(questionToUpdate);
+                console.log(resultAfterUpdate);
+
+            } catch (error) {
+                showAndDismissErrorAlert(`Error ${error.status} occurred`);
+                console.log(error);
             }
         });
         /*END*/
