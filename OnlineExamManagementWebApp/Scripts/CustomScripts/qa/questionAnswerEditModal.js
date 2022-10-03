@@ -1,6 +1,6 @@
-﻿// IIFE
+﻿// IIFE to wrap jQuery code
 
-(() => {
+(($) => {
     $(() => {
         /**Initialization**/
         const $EXAM_ID = $.trim($("#js_examId").val());
@@ -753,7 +753,7 @@
 
                 setTimeout(function () {
                     if (typeof localStorage !== "undefined") {
-                        localStorage.setItem("success", "true");
+                        localStorage.setItem("success", "Updated Successfully");
                     }
                     window.location.reload();
                 }, 2500);

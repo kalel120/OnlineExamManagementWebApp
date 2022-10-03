@@ -230,7 +230,7 @@
                                     <div class="item form-group">
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Order</label>
                                         <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <input type="hidden" name="QuestionId" id="js-editModal-hidden-qId" value=""/>
+                                            <input type="hidden" name="QuestionId" id="js-editModal-hidden-qId" value="" />
                                             <input id="js-modal-editQo-order" name="Order" class="form-control col-md-7 col-xs-12" type="text" readonly="readonly">
                                         </div>
                                     </div>
@@ -253,10 +253,10 @@
                                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Option Type</label>
                                         <div class="col-md-9 col-sm-9 col-xs-12">
                                             <div>
-                                                <input type="radio" name="OptionTypeEditModal" id="js-modal-editQo-oType-single" value="Single Answer" required=""/> Single Answer
+                                                <input type="radio" name="OptionTypeEditModal" id="js-modal-editQo-oType-single" value="Single Answer" required="" /> Single Answer
                                             </div>
                                             <div>
-                                                <input type="radio" name="OptionTypeEditModal" id="js-modal-editQo-oType-multiple" value="Multiple Answer"/> Multiple Answer
+                                                <input type="radio" name="OptionTypeEditModal" id="js-modal-editQo-oType-multiple" value="Multiple Answer" /> Multiple Answer
                                             </div>
                                         </div>
                                     </div>
@@ -265,7 +265,7 @@
                                         <div class="item form-group">
                                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Add New Option</label>
                                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                                <input type="text" id="js-modal-editQo-oText" name="OptionDescription" class="form-control col-md-7 col-xs-12" value="" placeholder="Enter Option Description (Maximum 50 characters)"/>
+                                                <input type="text" id="js-modal-editQo-oText" name="OptionDescription" class="form-control col-md-7 col-xs-12" value="" placeholder="Enter Option Description (Maximum 50 characters)" />
                                             </div>
                                         </div>
                                         <div class="item form-group">
@@ -284,15 +284,15 @@
                                     <div class="item form-group">
                                         <table class="table table-bordered table-hover table-responsive" id="js-tbl-editOptions-modal" style="width: 100%">
                                             <thead>
-                                            <tr>
-                                                <th>SL</th>
-                                                <th>Option</th>
-                                                <th>Correct Answer?</th>
-                                                <th>Action</th>
-                                            </tr>
+                                                <tr>
+                                                    <th>SL</th>
+                                                    <th>Option</th>
+                                                    <th>Correct Answer?</th>
+                                                    <th>Action</th>
+                                                </tr>
                                             </thead>
                                             <tbody id="js-tbl-editOptionModal-tbody">
-                                            @*table body is dynamically created*@
+                                                @*table body is dynamically created*@
                                             </tbody>
                                         </table>
                                     </div>
@@ -437,5 +437,6 @@
     <script src="~/Scripts/CustomScripts/qa/questionAnswerEntry.js"></script>
     <script src="~/Scripts/CustomScripts/qa/questionAnswerViewModal.js"></script>
     <script src="~/Scripts/CustomScripts/qa/questionAnswerEditModal.js"></script>
+    <script src="~/Scripts/CustomScripts/qa/questionAnswerRemoveQuestion.js"></script>
     <!--Custom Scripts End-->
 }

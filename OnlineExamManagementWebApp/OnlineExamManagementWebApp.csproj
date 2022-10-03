@@ -304,6 +304,7 @@
     <Content Include="Scripts\CustomScripts\organization\viewOrgModal.js" />
     <Content Include="Scripts\CustomScripts\qa\questionAnswerEditModal.js" />
     <Content Include="Scripts\CustomScripts\qa\questionAnswerEntry.js" />
+    <Content Include="Scripts\CustomScripts\qa\questionAnswerRemoveQuestion.js" />
     <Content Include="Scripts\CustomScripts\qa\questionAnswerViewModal.js" />
     <Content Include="Scripts\CustomScripts\search-course.js" />
     <Content Include="Scripts\CustomScripts\organization\search-org.js" />
