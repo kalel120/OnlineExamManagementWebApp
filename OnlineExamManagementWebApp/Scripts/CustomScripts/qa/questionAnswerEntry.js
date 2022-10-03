@@ -27,8 +27,8 @@
         // Showing alert (if any) after reloading page 
         (function showAlertOnPageReload() {
             if (typeof localStorage !== "undefined") {
-                let successMsg = JSON.parse(localStorage.getItem("success"));
-                
+                let successMsg = localStorage.getItem("success");
+
                 if (successMsg !== null) {
                     let html = `<div class="alert alert-success" role="alert" id="js-entry-alert-success">`;
                     html += `<button type="button" class="close" data-dismiss="alert" aria-label="Close" data-form-type=""><span aria-hidden="true">×</span></button>`;
@@ -40,10 +40,9 @@
                     setTimeout(function () {
                         $("#js-entry-alert-success").addClass("animated fadeOutLeft").remove();
                     }, 10000);
-
-                    localStorage.removeItem("success");
                 }
-
+                //localStorage.removeItem("success");
+                localStorage.clear();
             }
             else {
                 bootbox.alert("Your browser in incompatible for some features in this website");
