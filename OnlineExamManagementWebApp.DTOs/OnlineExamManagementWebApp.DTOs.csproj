@@ -53,6 +53,7 @@
     <Compile Include="QuestionOption\QuestionsDto.cs" />
     <Compile Include="QuestionOption\QuestionToSaveDto.cs" />
     <Compile Include="QuestionOption\QuestionToUpdateDto.cs" />
+    <Compile Include="QuestionOption\QuOpBridgeTblRemoveQuestionDto.cs" />
     <Compile Include="QuestionOption\SingleOptionToSave.cs" />
     <Compile Include="SearchCourseDto.cs" />
     <Compile Include="SearchOrgDto.cs" />
