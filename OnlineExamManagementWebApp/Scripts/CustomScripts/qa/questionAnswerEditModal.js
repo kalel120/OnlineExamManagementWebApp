@@ -40,35 +40,21 @@
         /**END*/
 
         /** Jobs when modal got hidden */
-        // Get updated question from server for this Question
-        const getUpdatedQuestion = async function () {
-            try {
-                let response = await $.ajax({
-                    url: `/QuestionAnswer/GetQuestionsByExamId?id=${$EXAM_ID}`,
-                    contentType: "json",
-                    dataType: "json"
-                });
-                return response;
-
-            } catch (error) {
-                // Enable this before going live
-                //if (error.status === 500) {
-                //    window.location = "/Error/Error500";
-                //}
-            }
-        };
-
-        qoEditModal.on("hidden.bs.modal", function () {
+        qoEditModal.on("hidden.bs.modal", async function () {
             $(this).find("form").trigger("reset");
             resetModalState();
             qoEditModalTblBody.empty();
 
-            // Refresh question jquery datatable for this exam
-            getUpdatedQuestion()
-                .then(function (resData) {
-                    $('#tbl-questions').DataTable().clear().rows.add(resData).draw();
-                });
-
+            try {
+                // Get updated question from server for this Question
+                await $('#tbl-questions').DataTable().ajax.reload();
+            }
+            catch (error) {
+                if (error.status === 500) {
+                    window.location = "/Error/Error500";
+                }
+                console.log({ error });
+            }
         });
 
         /**END */
