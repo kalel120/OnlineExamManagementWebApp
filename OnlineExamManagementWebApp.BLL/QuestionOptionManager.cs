@@ -129,7 +129,7 @@ namespace OnlineExamManagementWebApp.BLL {
             return _unitOfWork.Complete();
         }
 
-        public bool IsQuestionUpdated(QuestionToUpdateDto dto) {
+        public bool IsSingleQuestionUpdated(QuestionToUpdateDto dto) {
             try {
                 Question questionToUpdate = _unitOfWork.Questions.GetQuestionById(dto.QuestionId);
 
@@ -140,6 +140,7 @@ namespace OnlineExamManagementWebApp.BLL {
                 questionToUpdate.Description = dto.Description;
                 questionToUpdate.OptionType = dto.OptionType;
                 questionToUpdate.Marks = dto.Marks;
+                questionToUpdate.Serial = dto.Serial;
                 questionToUpdate.DateUpdated = DateTime.Now;
 
                 return _unitOfWork.Complete();

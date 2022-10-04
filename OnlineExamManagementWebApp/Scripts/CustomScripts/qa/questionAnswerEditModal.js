@@ -477,7 +477,8 @@
                 QuestionId: $QUESTION_ID.val(),
                 OptionType: $("input[name='OptionTypeEditModal']:checked").val(),
                 Marks: $.trim($("#js-modal-editQo-marks").val()),
-                Description: $.trim($("#js-modal-editQo-qText").val())
+                Description: $.trim($("#js-modal-editQo-qText").val()),
+                Serial: $.trim(qoEditOrderTextBox.val())
             };
 
             return question;
@@ -487,7 +488,7 @@
             try {
                 let response = await $.ajax({
                     type: "PUT",
-                    url: "/QuestionAnswer/UpdateQuestion",
+                    url: "/QuestionAnswer/UpdateSingleQuestion",
                     dataType: "json",
                     data: reqData
                 });

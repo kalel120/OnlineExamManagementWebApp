@@ -105,12 +105,12 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         [HttpPut]
-        public JsonResult UpdateQuestion(QuestionToUpdateDto dto) {
+        public JsonResult UpdateSingleQuestion(QuestionToUpdateDto dto) {
             if (dto == null || dto.ExamId == 0 || dto.QuestionId == Guid.Empty) {
                 return Json(false, JsonRequestBehavior.DenyGet);
             }
 
-            bool result = _qoManager.IsQuestionUpdated(dto);
+            bool result = _qoManager.IsSingleQuestionUpdated(dto);
             return Json(result, JsonRequestBehavior.DenyGet);
         }
 
