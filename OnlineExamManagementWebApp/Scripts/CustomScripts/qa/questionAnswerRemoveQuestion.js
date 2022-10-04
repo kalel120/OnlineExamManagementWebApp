@@ -18,12 +18,13 @@
                 ExamId: $("#js_examId").val(),
                 IsDeleted: true
             };
+
             return $.ajax({
                 type: "PUT",
                 url: "/QuestionAnswer/IsAssignedQuestionRemoved",
                 contentType: "application/json",
                 dataType: "json",
-                data: reqData
+                data: JSON.stringify(reqData)
             });
         };
 
@@ -63,18 +64,18 @@
                         // refresh questions table (from server)
                         await reDrawQuestionDataTable();
 
-                        //if (typeof localStorage !== "undefined") {
-                        //    localStorage.setItem("success", "Question Removed");
-                        //}
+                        if (typeof localStorage !== "undefined") {
+                            localStorage.setItem("success", "Question Removed");
+                        }
                         //window.location.reload();
                     } catch (error) {
                         if (error.status === 500) {
-                            window.location = "/Error/Error500";
+                            //window.location = "/Error/Error500";
                             return;
                         }
 
                         if (error.status === 404) {
-                            window.location = "/Error/Error404";
+                            //window.location = "/Error/Error404";
                             return;
                         }
 

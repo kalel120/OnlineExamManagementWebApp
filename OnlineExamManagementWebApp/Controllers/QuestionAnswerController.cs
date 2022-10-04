@@ -32,6 +32,7 @@ namespace OnlineExamManagementWebApp.Controllers {
             return View(viewModel);
         }
 
+        #region GET Requests
         public JsonResult GetQuestionsByExamId(int id) {
             if (id == 0) { return Json(false, JsonRequestBehavior.AllowGet); }
 
@@ -39,14 +40,15 @@ namespace OnlineExamManagementWebApp.Controllers {
             return Json(questions, JsonRequestBehavior.AllowGet);
         }
 
-
         public JsonResult GetOptionsByQuestionId(Guid id) {
             if (id == Guid.Empty) { return Json(false, JsonRequestBehavior.AllowGet); }
 
             ICollection<OptionDto> options = _qoManager.GetOptionsByQuestionId(id);
             return Json(options, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region POST Requests
         [HttpPost]
         public JsonResult Entry(QuestionAnswerEntryViewModel qaEntryViewModel) {
             if (qaEntryViewModel == null) { return Json(false, JsonRequestBehavior.AllowGet); }
@@ -63,6 +65,7 @@ namespace OnlineExamManagementWebApp.Controllers {
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
         public JsonResult SaveSingleOption(SingleOptionToSave dtoOptionToSave) {
             if (dtoOptionToSave == null) { return Json(false, JsonRequestBehavior.AllowGet); }
 
@@ -70,7 +73,9 @@ namespace OnlineExamManagementWebApp.Controllers {
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region PUT Requests
         [HttpPut]
         public JsonResult RemoveAnOption(OptionToUpdate dto) {
             if (dto == null) { return Json(false, JsonRequestBehavior.DenyGet); }
@@ -108,6 +113,17 @@ namespace OnlineExamManagementWebApp.Controllers {
             bool result = _qoManager.IsQuestionUpdated(dto);
             return Json(result, JsonRequestBehavior.DenyGet);
         }
+
+        [HttpPut]
+        public JsonResult IsAssignedQuestionRemoved(QuOpBridgeTblRemoveQuestionDto dto) {
+            if (dto == null || dto.ExamId == 0 || dto.QuestionId == Guid.Empty) {
+                return Json(false, JsonRequestBehavior.DenyGet);
+            }
+
+            bool result = _qoManager.IsAssignedQuestionRemoved(dto);
+            return Json(result, JsonRequestBehavior.DenyGet);
+        }
+        #endregion
     }
 
 }

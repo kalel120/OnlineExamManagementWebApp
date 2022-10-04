@@ -18,7 +18,8 @@ namespace OnlineExamManagementWebApp.BLL {
             return _unitOfWork.QuestionOptions.GetQuestionsByExamId(examId);
         }
 
-        public bool IsQuestionAnswerSaved(QuestionToSaveDto questionToSaveDto, ICollection<OptionToSaveDto> optionsToSaveDto) {
+        public bool IsQuestionAnswerSaved(QuestionToSaveDto questionToSaveDto,
+            ICollection<OptionToSaveDto> optionsToSaveDto) {
             DateTime currentDateTime = DateTime.Now;
             ICollection<Option> optionsToSave = new List<Option>();
             ICollection<QuestionOption> questionAndOptionsToSave = new List<QuestionOption>();
@@ -29,13 +30,15 @@ namespace OnlineExamManagementWebApp.BLL {
             foreach (var item in optionsToSaveDto) {
                 var option = MapOptionWithDto(item, currentDateTime);
                 optionsToSave.Add(option);
-                questionAndOptionsToSave.Add(MapQuestionOptionBridgeTable(questionToSave, option, item.SerialNo, item.IsCorrectAnswer, currentDateTime, questionToSave.ExamId));
+                questionAndOptionsToSave.Add(MapQuestionOptionBridgeTable(questionToSave, option, item.SerialNo,
+                    item.IsCorrectAnswer, currentDateTime, questionToSave.ExamId));
             }
 
             return _unitOfWork.QuestionOptions.IsQuestionAnswerSaved(questionAndOptionsToSave);
         }
 
-        private QuestionOption MapQuestionOptionBridgeTable(Question question, Option option, int serialNo, bool isCorrectAnswer, DateTime currentDateTime, int examId) {
+        private QuestionOption MapQuestionOptionBridgeTable(Question question, Option option, int serialNo,
+            bool isCorrectAnswer, DateTime currentDateTime, int examId) {
             return new QuestionOption {
                 QuestionId = question.Id,
                 OptionId = option.Id,
@@ -93,7 +96,8 @@ namespace OnlineExamManagementWebApp.BLL {
 
         public bool IsCorrectAnsOfOptionUpdated(OptionToUpdate dto) {
             if (dto.OptionType == "Single Answer") {
-                IEnumerable<QuestionOption> questionOptionsToUpdate = _unitOfWork.QuestionOptions.GetRowsByQuestionAndExamId(dto.QuestionId, dto.ExamId);
+                IEnumerable<QuestionOption> questionOptionsToUpdate =
+                    _unitOfWork.QuestionOptions.GetRowsByQuestionAndExamId(dto.QuestionId, dto.ExamId);
 
                 if (questionOptionsToUpdate == null || !questionOptionsToUpdate.Any()) {
                     return false;
@@ -112,7 +116,8 @@ namespace OnlineExamManagementWebApp.BLL {
             }
 
             if (dto.OptionType == "Multiple Answer") {
-                QuestionOption questionOptionToUpdate = _unitOfWork.QuestionOptions.GetRowForSingleOptionById(dto.OptionId);
+                QuestionOption questionOptionToUpdate =
+                    _unitOfWork.QuestionOptions.GetRowForSingleOptionById(dto.OptionId);
 
                 if (questionOptionToUpdate == null) {
                     return false;
@@ -136,6 +141,29 @@ namespace OnlineExamManagementWebApp.BLL {
                 questionToUpdate.OptionType = dto.OptionType;
                 questionToUpdate.Marks = dto.Marks;
                 questionToUpdate.DateUpdated = DateTime.Now;
+
+                return _unitOfWork.Complete();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
+        public bool IsAssignedQuestionRemoved(QuOpBridgeTblRemoveQuestionDto dto) {
+            try {
+                DateTime currentDateTime = DateTime.Now;
+                IEnumerable<QuestionOption> questionOptionsToUpdate =
+                    _unitOfWork.QuestionOptions.GetRowsByQuestionAndExamId(dto.QuestionId, dto.ExamId);
+
+                if (questionOptionsToUpdate == null || !questionOptionsToUpdate.Any()) {
+                    return false;
+                }
+
+                foreach (var item in questionOptionsToUpdate) {
+                    item.IsDeleted = dto.IsDeleted;
+                    item.DateUpdated = currentDateTime;
+                }
 
                 return _unitOfWork.Complete();
             }
