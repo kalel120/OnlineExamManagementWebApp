@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using OnlineExamManagementWebApp.Repository;
 using OnlineExamManagementWebApp.DTOs.QuestionOption;
@@ -131,17 +132,13 @@ namespace OnlineExamManagementWebApp.BLL {
 
         public bool IsSingleQuestionUpdated(QuestionToUpdateDto dto) {
             try {
-                Question questionToUpdate = _unitOfWork.Questions.GetQuestionById(dto.QuestionId);
+                Question questionToUpdate = _unitOfWork.Questions.GetSingleQuestionById(dto.QuestionId);
 
                 if (questionToUpdate == null) {
                     return false;
                 }
 
-                questionToUpdate.Description = dto.Description;
-                questionToUpdate.OptionType = dto.OptionType;
-                questionToUpdate.Marks = dto.Marks;
-                questionToUpdate.Serial = dto.Serial;
-                questionToUpdate.DateUpdated = DateTime.Now;
+                questionToUpdate = MapAndReturnSingleQuestionToDto(questionToUpdate, dto);
 
                 return _unitOfWork.Complete();
             }
@@ -149,6 +146,16 @@ namespace OnlineExamManagementWebApp.BLL {
                 Console.WriteLine(e.Message);
                 return false;
             }
+        }
+
+        private Question MapAndReturnSingleQuestionToDto(Question questionToUpdate, QuestionToUpdateDto dto) {
+            questionToUpdate.Description = dto.Description;
+            questionToUpdate.OptionType = dto.OptionType;
+            questionToUpdate.Marks = dto.Marks;
+            questionToUpdate.Serial = dto.Serial;
+            questionToUpdate.DateUpdated = DateTime.Now;
+
+            return questionToUpdate;
         }
 
         public bool IsAssignedQuestionRemoved(QuOpBridgeTblRemoveQuestionDto dto) {
@@ -166,6 +173,37 @@ namespace OnlineExamManagementWebApp.BLL {
                     item.DateUpdated = currentDateTime;
                 }
 
+                return _unitOfWork.Complete();
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
+                return false;
+            }
+        }
+
+        public bool IsQuestionsReOrdered(IEnumerable<QuestionToUpdateDto> questionsToUpdateDto) {
+            try {
+                // A cast to System.Data.SqlTypes.SqlGuid is needed to perform
+                // the same in-memory linq-sorting-result in comparison to SQL-Server sorting of UNIQUE ID
+
+                var dtoList = questionsToUpdateDto.OrderBy(x => new SqlGuid(x.QuestionId)).ToList();
+                var examId = dtoList.Select(q => q.ExamId).FirstOrDefault();
+
+
+                List<Question> questions = _unitOfWork.QuestionOptions
+                    .GetRowsByExamIdWithQuestion(examId)
+                    .Select(qo => qo.Question)
+                    .Distinct()
+                    .OrderBy(q => new SqlGuid(q.Id))
+                    .ToList();
+
+                if (!questions.Any()) {
+                    return false;
+                }
+
+                for (int index = 0; index < questions.Count; index++) {
+                    questions[index] = MapAndReturnSingleQuestionToDto(questions[index], dtoList[index]);
+                }
                 return _unitOfWork.Complete();
             }
             catch (Exception e) {

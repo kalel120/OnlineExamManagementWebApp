@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
 using OnlineExamManagementWebApp.BLL;
@@ -111,6 +112,16 @@ namespace OnlineExamManagementWebApp.Controllers {
             }
 
             bool result = _qoManager.IsSingleQuestionUpdated(dto);
+            return Json(result, JsonRequestBehavior.DenyGet);
+        }
+
+        [HttpPut]
+        public JsonResult IsQuestionsReOrdered(IEnumerable<QuestionToUpdateDto> questionsToUpdateDto) {
+            if (questionsToUpdateDto == null || !questionsToUpdateDto.Any()) {
+                return Json(false, JsonRequestBehavior.DenyGet);
+            }
+
+            bool result = _qoManager.IsQuestionsReOrdered(questionsToUpdateDto);
             return Json(result, JsonRequestBehavior.DenyGet);
         }
 

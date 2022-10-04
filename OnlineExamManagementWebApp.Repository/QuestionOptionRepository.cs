@@ -160,5 +160,12 @@ namespace OnlineExamManagementWebApp.Repository {
         public void ModifyEntityState(QuestionOption questionOption) {
             _dbContext.Entry(questionOption).State = EntityState.Modified;
         }
+
+        public IEnumerable<QuestionOption> GetRowsByExamIdWithQuestion(int examId) {
+            IEnumerable<QuestionOption> questionOptions = _dbContext.QuestionOptions.Include(qo => qo.Question)
+                .Where(qo => qo.ExamId == examId && qo.IsDeleted == false);
+
+            return questionOptions;
+        }
     }
 }
