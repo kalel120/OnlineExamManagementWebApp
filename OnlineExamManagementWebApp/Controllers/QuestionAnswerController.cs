@@ -20,18 +20,25 @@ namespace OnlineExamManagementWebApp.Controllers {
             _qoManager = new QuestionOptionManager();
         }
 
-        public ActionResult Entry(int examId) {
-            if (examId == 0) { return RedirectToAction("Error", "Error"); }
+        public ActionResult Entry(int? examId) {
+            if (examId == null) {
+                return RedirectToAction("Index", "Exam");
+            }
 
-            var viewModel = new QuestionAnswerViewModel();
+            int notNullId = examId ?? default(int);
 
-            // Get Organization, Course, Exam Code info. from BLL
-            var examDetails = _examManager.GetExamDetailsById(examId);
-            viewModel.CourseName = examDetails.CourseName;
-            viewModel.OrganizationName = examDetails.OrganizationName;
-            viewModel.ExamCode = examDetails.Code;
+            var examDetailsDto = _examManager.GetExamDetailsById(notNullId);
 
-            // Display Them on entry page
+            if (examDetailsDto == null) {
+                return RedirectToAction("Error", "Error");
+            }
+
+            var viewModel = new QuestionAnswerViewModel {
+                CourseName = examDetailsDto.CourseName,
+                OrganizationName = examDetailsDto.OrganizationName,
+                ExamCode = examDetailsDto.Code
+            };
+
             return View(viewModel);
         }
 
