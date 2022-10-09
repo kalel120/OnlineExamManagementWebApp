@@ -8,7 +8,7 @@ using OnlineExamManagementWebApp.DTOs;
 using OnlineExamManagementWebApp.ViewModels;
 
 namespace OnlineExamManagementWebApp.Controllers {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class ExamController : Controller {
         private readonly Uri _webApiUri;
 

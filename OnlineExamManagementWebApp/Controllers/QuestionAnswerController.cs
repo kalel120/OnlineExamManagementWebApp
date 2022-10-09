@@ -9,8 +9,7 @@ using OnlineExamManagementWebApp.ViewModels;
 
 
 namespace OnlineExamManagementWebApp.Controllers {
-
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class QuestionAnswerController : Controller {
         private readonly ExamManager _examManager;
         private readonly QuestionOptionManager _qoManager;

@@ -3,6 +3,7 @@ using OnlineExamManagementWebApp.BLL;
 using OnlineExamManagementWebApp.DTOs;
 
 namespace OnlineExamManagementWebApp.Controllers.Api {
+    [Authorize(Roles = "Admin")]
     public class TrainerController : ApiController {
         private readonly TrainerManager _trainerManager;
 

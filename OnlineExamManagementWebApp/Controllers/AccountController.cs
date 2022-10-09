@@ -163,6 +163,10 @@ namespace OnlineExamManagementWebApp.Controllers {
 
         public ActionResult GetUserProfilePicture(int id) {
             var user = UserManager.FindById(id);
+            if (user.Image == null) {
+                return File(new byte[0], "image/jpg");
+            }
+
             var imageData = user.Image;
             return File(imageData, "image/jpg");
         }

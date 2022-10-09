@@ -10,7 +10,7 @@ using OnlineExamManagementWebApp.Models;
 using OnlineExamManagementWebApp.ViewModels;
 
 namespace OnlineExamManagementWebApp.Controllers {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class OrganizationController : Controller {
 
         private readonly OrganizationManager _orgManager;

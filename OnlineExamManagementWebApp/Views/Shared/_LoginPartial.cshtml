@@ -6,8 +6,8 @@
         <ul class="nav navbar-nav navbar-right">
             <li class="">
                 <a href="" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="@Url.Action("GetUserProfilePicture", "Account", new { id = User.Identity.GetUserId() })" alt="~/Theme/images/user.png" /> @User.Identity.GetUserName()
-                    
+                    <img src="@Url.Action("GetUserProfilePicture", "Account", new { id = User.Identity.GetUserId() })" alt="No Image Found"> @User.Identity.GetUserName()
+
                     <span class="fa fa-angle-down"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right">
