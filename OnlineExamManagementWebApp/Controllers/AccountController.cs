@@ -37,44 +37,42 @@ namespace OnlineExamManagementWebApp.Controllers {
         }
 
         #region Registration
+        // Don't delete it. Might need later
+        //private List<SelectListItem> GetRoles() {
+        //    var roles = new List<SelectListItem>();
+
+        //    foreach (var item in RoleManager.Roles) {
+        //        roles.Add(new SelectListItem {
+        //            Value = item.Id.ToString(),
+        //            Text = item.Name
+        //        });
+        //    }
+        //    return roles;
+        //}
+
         [AllowAnonymous]
         public ActionResult Register() {
-            var viewModel = new RegisterViewModel {
-                RoleList = GetRoles()
-            };
-            return View(viewModel);
+            return View(new RegisterViewModel());
         }
 
-        private List<SelectListItem> GetRoles() {
-            var roles = new List<SelectListItem>();
-
-            foreach (var item in RoleManager.Roles) {
-                roles.Add(new SelectListItem {
-                    Value = item.Id.ToString(),
-                    Text = item.Name
-                });
-            }
-            return roles;
-        }
-
-        [HttpPost]
         [AllowAnonymous]
+        [HttpPost]
         public async Task<ActionResult> Register(RegisterViewModel viewModel) {
-            if (ModelState.IsValid) {
-                var user = Mapper.Map<AppUser>(viewModel);
-                var result = await UserManager.CreateAsync(user, viewModel.Password);
+            if (!ModelState.IsValid)
+                return View();
 
-                if (!result.Succeeded) {
-                    ViewBag.Errors = result.Errors.ToList();
-                    return View();
-                }
+            var user = Mapper.Map<AppUser>(viewModel);
+            var result = await UserManager.CreateAsync(user, viewModel.Password);
 
-                await UserManager.AddToRoleAsync(user.Id, viewModel.RoleText);
-
-                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                return RedirectToAction("Index", "Home", null);
+            if (!result.Succeeded) {
+                ViewBag.Errors = result.Errors.ToList();
+                return View();
             }
-            return View();
+
+            await UserManager.AddToRoleAsync(user.Id, "Participant");
+            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+            return RedirectToAction("Index", "Home", null);
         }
         #endregion
 

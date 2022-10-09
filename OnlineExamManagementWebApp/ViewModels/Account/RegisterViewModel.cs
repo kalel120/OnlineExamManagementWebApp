@@ -25,11 +25,6 @@ namespace OnlineExamManagementWebApp.ViewModels.Account {
 
         public string ConfirmPassword { get; set; }
 
-        [Required]
-        public string Role { get; set; }
-
         public string RoleText { get; set; }
-
-        public List<SelectListItem> RoleList { get; set; }
     }
 }
